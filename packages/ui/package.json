@@ -1,0 +1,20 @@
+{
+  "name": "@ipb/ui",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./nuxt.config.ts",
+  "exports": {
+    ".": "./nuxt.config.ts",
+    "./theme.css": "./assets/theme.css"
+  },
+  "dependencies": {
+    "reka-ui": "catalog:",
+    "tailwind-variants": "catalog:"
+  },
+  "devDependencies": {
+    "nuxt": "catalog:",
+    "typescript": "catalog:",
+    "vue": "catalog:"
+  }
+}

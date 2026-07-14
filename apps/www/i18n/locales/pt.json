@@ -1,0 +1,209 @@
+{
+  "nav": {
+    "manifest": "Manifesto",
+    "association": "Estatutos da Associação",
+    "regulations": "Regulamento da Associação",
+    "research": "Investigação",
+    "education": "Educação",
+    "training": "Formações",
+    "news": "Notícias",
+    "faq": "FAQ",
+    "team": "Equipa",
+    "donations": "Juntar-me",
+    "donate": "Doar",
+    "join": "Junte-se a Nós",
+    "information": "Informação",
+    "contacts": "Contactos"
+  },
+  "main": {
+    "header": "A construir o Futuro de Bitcoin em Portugal",
+    "cta": {
+      "readManifest": "Ler Manifesto",
+      "join": "Juntar-me"
+    }
+  },
+  "newsletter": {
+    "title": "Newsletter",
+    "description": "Inscreva-se para receber as últimas novidades de análise de políticas, notícias e investigação original.",
+    "descriptionFooter": "Receba a nossa newsletter no seu email",
+    "cta": "Susbcrever",
+    "success": "Obrigado pela sua subscrição!",
+    "error": "Erro ao subscrever. Tente novamente mais tarde."
+  },
+  "values": {
+    "title": "Valores",
+    "lead": {
+      "title": "Liderar",
+      "description": "Actuar como voz líder da Bitcoin em Portugal e promover a sua adoção e utilização como uma tecnologia inovadora, descentralizada e segura."
+    },
+    "influence": {
+      "title": "Influenciar",
+      "description": "Interagir regularmente com legisladores e reguladores para influenciar e aconselhar no desenvolvimento de leis favoráveis à Bitcoin."
+    },
+    "sovereignty": {
+      "title": "Soberania",
+      "description": "Promover a soberania individual e a resiliência nacional através da custódia de Bitcoin, dando capacidade aos cidadãos e empresas portuguesas de enfrentar os desafios economicos globais."
+    },
+    "education": {
+      "title": "Educação",
+      "description": "Criar e partilhar material educativo sobre Bitcoin, sobre o cenário político e económico em seu redor e a tecnologia que torna a rede possível."
+    },
+    "inclusion": {
+      "title": "Inclusão",
+      "description": "Assegurar que todos os cidadãos e empresas beneficiam da Bitcoin como tecnologia emergente e disruptiva."
+    },
+    "community": {
+      "title": "Comunidade",
+      "description": "Fomentar o envolvimento ativo com utilizadores, desenvolvedores, organizações e entusiastas de Bitcoin em Portugal."
+    }
+  },
+  "partners": {
+    "title": "Parceiros"
+  },
+  "research": {
+    "title": "Investigação",
+    "description": "Exploramos o potencial do Bitcoin como ativo estratégico e tecnologia disruptiva, promovendo estudos inovadores para posicionar Portugal na vanguarda da economia digital.",
+    "category": {
+      "money": "Dinheiro",
+      "energyAndMining": "Energia e Mineração",
+      "economyAndNationalSecurity": "Economia e Segurança Nacional",
+      "humanRights": "Direitos Humanos"
+    }
+  },
+  "education": {
+    "title": "Educação",
+    "description": "Inspiramos a adoção do Bitcoin através de programas educativos, formações práticas e materiais acessíveis, promovendo literacia financeira para a era digital.",
+    "books": {
+      "title": "Livros",
+      "filterByPublisher": "Filtrar por editora",
+      "allPublishers": "Todas",
+      "showMore": "Ver mais livros",
+      "showLess": "Ver menos livros"
+    },
+    "articles": {
+      "title": "Artigos"
+    }
+  },
+  "news": {
+    "title": "Notícias",
+    "description": "Partilhamos as novidades mais relevantes do ecossistema Bitcoin, atualizações da comunidade e desenvolvimentos do nosso projeto, mantendo-te informado sobre tudo o que importa no mundo da moeda digital.",
+    "empty": "Sem notícias"
+  },
+  "documents": {
+    "title": "Documentos",
+    "cta": "Ler documento"
+  },
+  "faq": {
+    "title": "Perguntas Frequentes"
+  },
+  "join": {
+    "donate": "Doar",
+    "member": "Torne-se Membro",
+    "contact": "Fale connosco",
+    "mission": "Como organização sem fins lucrativos dependemos de donativos para nos ajudar a cumprir a nossa missão.",
+    "missionPoints": {
+      "promote": {
+        "bold": "Promover",
+        "text": "conhecimento, educação e debate informado sobre Bitcoin em Portugal de forma independente e apartidária."
+      },
+      "establish": {
+        "bold": "Assumir-se",
+        "text": "como o instituto de referência nacional em educação, investigação e políticas públicas sobre Bitcoin."
+      },
+      "accelerate": {
+        "bold": "Acelerar",
+        "text": "a adoção de Bitcoin em Portugal e na Europa através de informação rigorosa e diálogo com empresas e instituições."
+      },
+      "engage": {
+        "bold": "Interagir",
+        "text": "com governo, reguladores, empresas e cidadãos de forma pedagógica para clarificar temas técnicos e promover políticas bem fundamentadas."
+      }
+    },
+    "orgInfo": "O Instituto Português de Bitcoin é uma associação sem fins lucrativos registada com o nome Associação IPBitcoin e tem o número de pessoa coletiva 519024427.",
+    "supportImpact": "O seu apoio impulsiona a investigação que promove a educação, que capacita cidadãos comuns, legisladores, e o envolvimento direto que molda resultados. Com a sua ajuda, podemos proteger a liberdade individual, fortalecer a democracia e garantir a liderança de Portugal na era digital.",
+    "donationsTitle": "Donativos",
+    "donationsDescription": "Escolha o tipo e o método de donativo que preferir para apoiar o IPB. Os donativos podem ser anónimos ou identificados.",
+    "anonymous": "Anónimo",
+    "identified": "Identificado",
+    "anonymousNotice": "Os donativos anónimos têm um limite máximo de 300€ por ano (donativos únicos e recorrentes). Não será solicitada qualquer informação pessoal.",
+    "fiatDescription": "Simples e seguro para donativos únicos ou recorrentes.",
+    "btcDescription": "Rápido, sem fronteiras e que preserva a privacidade.",
+    "fiatCardTitle": "Donativo em Fiat (Cartão)",
+    "btcTitle": "Donativo em Bitcoin",
+    "amountEur": "Montante (EUR)",
+    "other": "Outro",
+    "ceilingWarning": "Os donativos anónimos não podem exceder 300€ por ano.",
+    "oneTime": "Donativo único",
+    "recurringYearly": "Recorrente (anual)",
+    "recurringMonthly": "Recorrente (mensal)",
+    "donorName": "Nome",
+    "donorNamePlaceholder": "O seu nome",
+    "donorEmail": "E-mail",
+    "donorEmailPlaceholder": "O seu e-mail",
+    "donateCard": "Doar com Cartão",
+    "donateBtc": "Doar com Bitcoin",
+    "memberTitle": "Tornar-se Membro",
+    "memberDescription": "O custo para se tornar membro é de 250€ por ano. Pode pagar de uma só vez ou dividido em 12 mensalidades. O pagamento é feito exclusivamente em fiat (cartão).",
+    "memberBenefitsTitle": "Benefícios de Membro",
+    "benefits": {
+      "earlyAccess": "Acesso antecipado a eventos",
+      "trainingDiscount": "Desconto nas formações",
+      "memberCard": "Cartão de membro oficial do IPB enviado por correio",
+      "exclusiveNetwork": "Rede exclusiva de membros e parceiros nacionais e internacionais"
+    },
+    "memberFormTitle": "Formulário de Inscrição",
+    "form": {
+      "name": "Nome completo",
+      "namePlaceholder": "O seu nome completo",
+      "email": "E-mail",
+      "emailPlaceholder": "O seu e-mail",
+      "dateOfBirth": "Data de nascimento",
+      "citizenCard": "Número do cartão de cidadão",
+      "citizenCardPlaceholder": "Ex: 12345678 9 ZZ0",
+      "fiscalNumber": "Número de identificação fiscal (NIF)",
+      "fiscalNumberPlaceholder": "Ex: 123456789",
+      "address": "Morada completa",
+      "addressPlaceholder": "Rua, número, código postal, cidade",
+      "paymentPlan": "Plano de pagamento",
+      "annual": "Pagamento único anual (250€)",
+      "monthly": "12 mensalidades (~20,83€/mês)",
+      "submit": "Inscrever-me e Pagar"
+    },
+    "successDonation": "Obrigado pelo seu apoio!",
+    "successMember": "Obrigado! A sua inscrição como membro foi concluída com sucesso.",
+    "cancelled": "Pagamento cancelado. Pode tentar novamente.",
+    "errorPayment": "Erro ao processar o pagamento. Tente novamente.",
+    "errorMember": "Erro ao processar a inscrição. Tente novamente.",
+    "disclaimer": "O IPB garante que os fundos serão utilizados exclusivamente em alinhamento com a sua missão e não apoiarão candidatos políticos nem os seus partidos."
+  },
+  "input": {
+    "email": "E-mail",
+    "name": "Nome"
+  },
+  "seo": {
+    "title": "Instituto Português de Bitcoin",
+    "description": "A construir o Futuro de Bitcoin em Portugal"
+  },
+  "common": {
+    "by": "Por"
+  },
+  "article": {
+    "readingTime": "Tempo de leitura",
+    "listenToAudio": "Ouvir áudio",
+    "generated": "Gerado com Google NotebookLM"
+  },
+  "training": {
+    "tag": "Formação presencial",
+    "cta": {
+      "info": "Pedir Informações",
+      "schedule": "Agendar Chamada"
+    },
+    "seo": {
+      "title": "Bitcoin para Todos — Formação | Instituto Português de Bitcoin",
+      "description": "Formação presencial sobre Bitcoin. Aprenda o essencial de forma simples e prática com o Instituto Português de Bitcoin."
+    }
+  },
+  "time": {
+    "minute": "Minuto | Minutos"
+  }
+}

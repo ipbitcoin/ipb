@@ -1,0 +1,25 @@
+/* Shared IPB theme tokens. Import AFTER "tailwindcss" in each app's main.css. */
+@theme {
+  --font-brand: "Inter", "sans-serif";
+
+  @keyframes slideDown {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--reka-accordion-content-height);
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      height: var(--reka-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+
+  --animate-slide-down: slideDown 300ms cubic-bezier(0.87, 0, 0.13, 1);
+  --animate-slide-up: slideUp 300ms cubic-bezier(0.87, 0, 0.13, 1);
+}

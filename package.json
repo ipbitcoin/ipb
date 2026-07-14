@@ -1,0 +1,40 @@
+{
+  "name": "ipbitcoin",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ],
+    "catalog": {
+      "nuxt": "4.4.8",
+      "vue": "3.5.39",
+      "vue-router": "^4.5.0",
+      "reka-ui": "2.10.1",
+      "tailwindcss": "4.3.2",
+      "@tailwindcss/vite": "4.3.2",
+      "convex": "1.42.1",
+      "convex-nuxt": "0.1.5",
+      "typescript": "5.9.3",
+      "tailwind-variants": "3.2.2",
+      "vue-sonner": "2.0.9"
+    }
+  },
+  "scripts": {
+    "dev": "bun run --filter './apps/*' dev",
+    "dev:www": "bun --cwd apps/www dev",
+    "dev:admin": "bun --cwd apps/admin dev",
+    "dev:backend": "bun --cwd packages/backend dev",
+    "build": "bun run --filter './apps/*' build",
+    "build:www": "bun --cwd apps/www build",
+    "build:admin": "bun --cwd apps/admin build",
+    "lint": "ultracite check",
+    "format": "ultracite fix"
+  },
+  "devDependencies": {
+    "oxfmt": "0.59.0",
+    "oxlint": "1.74.0",
+    "ultracite": "7.9.4"
+  },
+  "packageManager": "bun@1.3.14"
+}

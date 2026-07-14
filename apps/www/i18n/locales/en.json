@@ -1,0 +1,209 @@
+{
+  "nav": {
+    "manifest": "Manifest",
+    "association": "Articles of Association",
+    "regulations": "Internal Regulation",
+    "research": "Research",
+    "education": "Education",
+    "news": "News",
+    "faq": "FAQ",
+    "team": "Team",
+    "donations": "Join Us",
+    "donate": "Donate",
+    "join": "Join Us",
+    "information": "Information",
+    "contacts": "Contacts",
+    "training": "Training"
+  },
+  "main": {
+    "header": "Building the Future of Bitcoin in Portugal",
+    "cta": {
+      "readManifest": "Read manifest",
+      "join": "Join"
+    }
+  },
+  "newsletter": {
+    "title": "Newsletter",
+    "description": "Sign up to receive the latest policy analysis, news, and original research.",
+    "descriptionFooter": "Receive our newsletter in your inbox",
+    "cta": "Subscribe",
+    "success": "Thank you for subscribing!",
+    "error": "Error subscribing. Please try again later."
+  },
+  "values": {
+    "title": "Values",
+    "lead": {
+      "title": "Lead",
+      "description": "Act as the leading voice for Bitcoin in Portugal and promote its adoption and use as an innovative, decentralized, and secure technology."
+    },
+    "influence": {
+      "title": "Influence",
+      "description": "Regularly engage with legislators and regulators to influence and advise on the development of Bitcoin-friendly laws."
+    },
+    "sovereignty": {
+      "title": "Sovereignty",
+      "description": "Promote individual sovereignty and national resilience through Bitcoin custody, empowering Portuguese citizens and businesses to face global economic challenges."
+    },
+    "education": {
+      "title": "Education",
+      "description": "Create and share educational material about Bitcoin, the political and economic landscape around it, and the technology that makes the network possible."
+    },
+    "inclusion": {
+      "title": "Inclusion",
+      "description": "Ensure that all citizens and businesses benefit from Bitcoin as an emerging and disruptive technology."
+    },
+    "community": {
+      "title": "Community",
+      "description": "Foster active engagement with Bitcoin users, developers, organizations, and enthusiasts in Portugal."
+    }
+  },
+  "partners": {
+    "title": "Partnerships"
+  },
+  "research": {
+    "title": "Research",
+    "description": "We explore the potential of Bitcoin as a strategic asset and disruptive technology, promoting innovative studies to position Portugal at the forefront of the digital economy.",
+    "category": {
+      "money": "Money",
+      "energyAndMining": "Energy and Mining",
+      "economyAndNationalSecurity": "Economy and National Security",
+      "humanRights": "Human Rights"
+    }
+  },
+  "education": {
+    "title": "Education",
+    "description": "We inspire the adoption of Bitcoin through educational programs, practical training, and accessible materials, promoting financial literacy for the digital age.",
+    "books": {
+      "title": "Books",
+      "filterByPublisher": "Filter by publisher",
+      "allPublishers": "All",
+      "showMore": "Show more books",
+      "showLess": "Show fewer books"
+    },
+    "articles": {
+      "title": "Articles"
+    }
+  },
+  "news": {
+    "title": "News",
+    "description": "We share the most relevant news from the Bitcoin ecosystem, community updates, and developments from our project, keeping you informed about everything that matters in the world of digital currency.",
+    "empty": "No news to show right now. Check back soon!"
+  },
+  "documents": {
+    "title": "Documents",
+    "cta": "Read document"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions"
+  },
+  "join": {
+    "donate": "Donate",
+    "member": "Become a Member",
+    "contact": "Talk to Us",
+    "mission": "As a non-profit organization, we rely on donations to help us fulfill our mission.",
+    "missionPoints": {
+      "promote": {
+        "bold": "Promote",
+        "text": "knowledge, education, and informed debate about Bitcoin in Portugal in an independent and non-partisan way."
+      },
+      "establish": {
+        "bold": "Establish",
+        "text": "ourselves as the national reference institute for Bitcoin education, research, and public policy."
+      },
+      "accelerate": {
+        "bold": "Accelerate",
+        "text": "Bitcoin adoption in Portugal and across Europe through rigorous information and dialogue with companies and institutions."
+      },
+      "engage": {
+        "bold": "Engage",
+        "text": "with government, regulators, businesses, and citizens in a pedagogical manner to clarify technical issues and promote well-founded policies."
+      }
+    },
+    "orgInfo": "The Portuguese Bitcoin Institute is a non-profit association registered under the name Associação IPBitcoin and has the corporate entity number 519024427.",
+    "supportImpact": "Your support powers the research that drives education that empowers regular people, lawmakers, and the direct engagement that shapes outcomes. With your help, we can protect individual liberty, strengthen democracy, and secure Portugal's leadership in the digital age.",
+    "donationsTitle": "Donations",
+    "donationsDescription": "Choose the type and method of donation you prefer to support the IPB. Donations can be anonymous or identified.",
+    "anonymous": "Anonymous",
+    "identified": "Identified",
+    "anonymousNotice": "Anonymous donations have a maximum limit of €300 per year (one-time and recurring). No personal information will be requested.",
+    "fiatDescription": "Simple and secure for one-time or recurring gifts.",
+    "btcDescription": "Fast, borderless, and privacy-preserving giving.",
+    "fiatCardTitle": "Fiat Donation (Card)",
+    "btcTitle": "Bitcoin Donation",
+    "amountEur": "Amount (EUR)",
+    "other": "Other",
+    "ceilingWarning": "Anonymous donations cannot exceed €300 per year.",
+    "oneTime": "One-time",
+    "recurringYearly": "Recurring (yearly)",
+    "recurringMonthly": "Recurring (monthly)",
+    "donorName": "Name",
+    "donorNamePlaceholder": "Your name",
+    "donorEmail": "Email",
+    "donorEmailPlaceholder": "Your email",
+    "donateCard": "Donate with Card",
+    "donateBtc": "Donate with Bitcoin",
+    "memberTitle": "Become a Member",
+    "memberDescription": "The annual membership fee is €250 per year. You can pay in full or split into 12 monthly instalments. Payment is exclusively in fiat (card).",
+    "memberBenefitsTitle": "Member Benefits",
+    "benefits": {
+      "earlyAccess": "Early access to events",
+      "trainingDiscount": "Discount on training courses",
+      "memberCard": "Official IPB member card sent by mail",
+      "exclusiveNetwork": "Exclusive network of national and international members and partners"
+    },
+    "memberFormTitle": "Registration Form",
+    "form": {
+      "name": "Full name",
+      "namePlaceholder": "Your full name",
+      "email": "Email",
+      "emailPlaceholder": "Your email",
+      "dateOfBirth": "Date of birth",
+      "citizenCard": "Citizen card number",
+      "citizenCardPlaceholder": "E.g.: 12345678 9 ZZ0",
+      "fiscalNumber": "Tax identification number (NIF)",
+      "fiscalNumberPlaceholder": "E.g.: 123456789",
+      "address": "Full address",
+      "addressPlaceholder": "Street, number, postal code, city",
+      "paymentPlan": "Payment plan",
+      "annual": "Annual one-time payment (€250)",
+      "monthly": "12 monthly instalments (~€20.83/month)",
+      "submit": "Register and Pay"
+    },
+    "successDonation": "Thank you for your support!",
+    "successMember": "Thank you! Your membership registration was completed successfully.",
+    "cancelled": "Payment cancelled. You can try again.",
+    "errorPayment": "Error processing payment. Please try again.",
+    "errorMember": "Error processing registration. Please try again.",
+    "disclaimer": "The IPB ensures that funds will be used solely in alignment with its mission and will not support political candidates or their parties."
+  },
+  "input": {
+    "email": "Email",
+    "name": "Name"
+  },
+  "seo": {
+    "title": "Instituto Português de Bitcoin",
+    "description": "Building the Future of Bitcoin in Portugal"
+  },
+  "common": {
+    "by": "By"
+  },
+  "article": {
+    "readingTime": "Reading time",
+    "listenToAudio": "Listen to audio",
+    "generated": "Generated with Google NotebookLM"
+  },
+  "training": {
+    "tag": "In-person training",
+    "cta": {
+      "info": "Request Information",
+      "schedule": "Schedule a Call"
+    },
+    "seo": {
+      "title": "Bitcoin for Everyone — Training | Instituto Português de Bitcoin",
+      "description": "In-person Bitcoin training. Learn the essentials in a simple and practical way with the Portuguese Bitcoin Institute."
+    }
+  },
+  "time": {
+    "minute": "Minute | Minutes"
+  }
+}

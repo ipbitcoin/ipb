@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@import "@ipb/ui/theme.css";
+@plugin "@tailwindcss/typography";
+
+/* Scan the shared UI layer for Tailwind classes (outside default sources) */
+@source "../../../../../packages/ui/components";

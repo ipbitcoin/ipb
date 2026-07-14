@@ -1,0 +1,11 @@
+node_modules
+.nuxt
+.output
+.vercel
+dist
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
+scratch/

@@ -1,0 +1,31 @@
+{
+  "name": "@ipb/admin",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev --dotenv .env.local",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@ipb/backend": "workspace:*",
+    "@ipb/ui": "workspace:*",
+    "@nuxtjs/mdc": "0.22.1",
+    "@tailwindcss/vite": "catalog:",
+    "convex": "catalog:",
+    "nuxt": "catalog:",
+    "nuxt-auth-utils": "0.5.29",
+    "reka-ui": "catalog:",
+    "tailwind-variants": "catalog:",
+    "tailwindcss": "catalog:",
+    "vue": "catalog:",
+    "vue-router": "catalog:",
+    "vue-sonner": "catalog:"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "0.5.20",
+    "typescript": "catalog:"
+  }
+}

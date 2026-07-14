@@ -1,0 +1,39 @@
+{
+  "name": "@ipb/www",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev --dotenv .env.local",
+    "dev:prod": "nuxt dev --dotenv .env",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@ipb/backend": "workspace:*",
+    "@ipb/ui": "workspace:*",
+    "@nuxt/image": "2.0.0",
+    "@nuxtjs/google-fonts": "3.2.0",
+    "@nuxtjs/i18n": "10.4.1",
+    "@nuxtjs/mdc": "0.22.1",
+    "@nuxtjs/seo": "5.3.2",
+    "@stripe/stripe-js": "9.10.0",
+    "@tailwindcss/vite": "catalog:",
+    "@vercel/analytics": "2.0.1",
+    "@vueuse/nuxt": "14.3.0",
+    "convex": "catalog:",
+    "motion-v": "2.3.0",
+    "nuxt": "catalog:",
+    "reka-ui": "catalog:",
+    "tailwind-variants": "catalog:",
+    "tailwindcss": "catalog:",
+    "vue": "catalog:",
+    "vue-router": "catalog:",
+    "vue-sonner": "catalog:"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "0.5.20",
+    "typescript": "catalog:"
+  }
+}
