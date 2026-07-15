@@ -14,7 +14,7 @@ const locOpt = v.object({
 
 export default defineSchema({
   articles: defineTable({
-    audioKey: v.optional(v.string()), // R2 key (audio/mp4)
+    audioKey: v.optional(locOpt), // R2 keys (audio/mp4) — narration differs per locale
     authorIds: v.array(v.id("authors")),
     categoryId: v.optional(v.id("categories")),
     content: loc, // markdown

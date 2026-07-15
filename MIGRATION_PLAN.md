@@ -145,9 +145,13 @@ ipbitcoin-v2/
 
 Human/owner tasks (agent should produce exact instructions where it cannot do these itself):
 
-1. Convex account + project `ipbitcoin`. Two deployments (dev + prod) come by default.
-2. Cloudflare: create R2 bucket `ipbitcoin-media`; API token with Object Read & Write scoped to it; CORS policy on the bucket allowing `GET, PUT` with `Content-Type` header from `http://localhost:3000`, `http://localhost:3001`, `https://institutobitcoin.pt`, admin's prod domain. Attach custom domain `cdn.institutobitcoin.pt` to the bucket (DNS is presumably already on Cloudflare; if not, this needs the zone).
-3. Set Convex env vars (per deployment): `R2_TOKEN`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_ENDPOINT`, `R2_BUCKET`, `SERVICE_KEY` (random 32+ bytes).
+1. Convex account + **one** project `ipbitcoin`. Convex's native model gives it two deployments: your personal **dev** deployment (`convex dev`) and one **production** deployment (`convex deploy`). Env vars are set per deployment; no second project needed.
+2. Cloudflare: **two** R2 buckets so dev admin testing (uploads/deletes) never touches live media:
+   - `ipbitcoin-media-dev` — dev. Enable public access via its `r2.dev` URL (rate-limited, fine for dev). No custom domain.
+   - `ipbitcoin-media` — production. Attach custom domain `cdn.institutobitcoin.pt` (DNS is presumably already on Cloudflare; if not, this needs the zone). Never serve prod from `r2.dev`. One API token with Object Read & Write scoped to both buckets (or one token each). CORS policy per bucket allowing `GET, PUT` with `Content-Type` header — dev bucket: `http://localhost:3000`, `http://localhost:3001`; prod bucket: `https://institutobitcoin.pt`, `https://admin.institutobitcoin.pt`, Vercel preview URLs if needed.
+3. Set Convex env vars **per deployment** (`bunx convex env set NAME value` for dev, `... --prod` for production): `R2_TOKEN`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_ENDPOINT`, `SERVICE_KEY` (random 32+ bytes, different per deployment), plus the per-deployment pair:
+   - dev: `R2_BUCKET=ipbitcoin-media-dev`, `CDN_HOST=<bucket-hash>.r2.dev`
+   - prod: `R2_BUCKET=ipbitcoin-media`, `CDN_HOST=cdn.institutobitcoin.pt` The media URL helper reads `CDN_HOST`, so all query results automatically point at the right bucket. `NUXT_PUBLIC_CDN_HOST` in the admin app must match its deployment's `CDN_HOST`.
 4. Vercel: two new projects from the repo — `ipbitcoin-www` (root directory `apps/www`) and `ipbitcoin-admin` (root directory `apps/admin`). Enable "Include source files outside of the Root Directory". Add `CONVEX_DEPLOY_KEY` (production-scoped) to the www project only.
 5. Keep the current Vercel project serving production until cutover (Phase 8).
 
@@ -484,17 +488,25 @@ New Nuxt app, desktop-first, no SEO/i18n modules needed (admin UI language: matc
 
 | Var | Where | Notes |
 | --- | --- | --- |
-| `CONVEX_URL` | www + admin (public) | injected by `convex deploy` for www; manual for admin |
-| `CONVEX_DEPLOY_KEY` | www Vercel project | production-scoped |
-| `SERVICE_KEY` | Convex env + www server + admin server | shared secret for service mutations |
-| `R2_TOKEN`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_ENDPOINT`, `R2_BUCKET` | Convex env | R2 component |
-| `NUXT_PUBLIC_CDN_HOST` | www + admin | `cdn.institutobitcoin.pt` |
-| `APP_URL` | www server | unchanged |
-| `SUBSTACK_URL` | www public | fix camelCase access bug |
-| `NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | www public | document it this time |
-| `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `OPENNODE_API_KEY` | www server | ROTATE at cutover (§1.3 bug 7) |
-| `NUXT_SESSION_PASSWORD`, `ADMIN_EMAIL`, `ADMIN_PASSWORD_HASH` | admin server | nuxt-auth-utils |
-| (migration only) `STRAPI_URL`, `STRAPI_SECRET_KEY` | local scripts | delete after |
+| One Convex project, two deployments (dev + prod); two R2 buckets (`ipbitcoin-media-dev` served via `r2.dev`, `ipbitcoin-media` served via `cdn.institutobitcoin.pt`). Convex vars are set per deployment and differ only in `R2_BUCKET`/`CDN_HOST`/`SERVICE_KEY`. |
+
+| Var | Where | dev value | prod value |
+| --- | --- | --- | --- |
+| `CONVEX_URL` | www + admin (public) | dev deployment URL (from `packages/backend/.env.local`) | injected by `convex deploy` for www; set manually on admin Vercel project |
+| `CONVEX_DEPLOY_KEY` | www Vercel project only | — | production-scoped, from Convex dashboard |
+| `SERVICE_KEY` | Convex env + www server + admin server | random secret A | random secret B (different) |
+| `R2_TOKEN`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_ENDPOINT` | Convex env (per deployment) | same token may cover both buckets | 〃 |
+| `R2_BUCKET` | Convex env | `ipbitcoin-media-dev` | `ipbitcoin-media` |
+| `CDN_HOST` | Convex env | `<bucket-hash>.r2.dev` | `cdn.institutobitcoin.pt` |
+| `NUXT_PUBLIC_CDN_HOST` | admin (media previews) | matches dev `CDN_HOST` | matches prod `CDN_HOST` |
+| `APP_URL` | www server | `http://localhost:3000` | `https://institutobitcoin.pt` |
+| `SUBSTACK_URL` | www public | optional | same |
+| `NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | www public | test key | live key |
+| `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `OPENNODE_API_KEY` | www server | test keys / `stripe listen` secret | live — ROTATE at cutover (§1.3 bug 7) |
+| `NUXT_SESSION_PASSWORD` | admin server | any 32+ chars | strong random |
+| (migration only) `STRAPI_URL`, `STRAPI_SECRET_KEY` | local scripts | prod Strapi (source of truth) | same; delete after cutover |
+
+Admin accounts are not env vars: rows created by hand in the Convex dashboard `adminUsers` table (per deployment), password set on first login.
 
 Gotcha: Convex CLI writes `.env.local`; the old repo's `dev` script already uses `--dotenv .env.local` — keep that convention in both apps.
 

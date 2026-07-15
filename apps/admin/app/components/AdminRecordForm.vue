@@ -289,7 +289,12 @@ function buildPayload(): Record<string, unknown> {
         break;
       }
       case "locMedia": {
-        payload[field.key] = { pt: value?.pt || "", en: value?.en || "" };
+        // Missing side stays undefined; required-both fields (docs) are
+        // rejected by the Convex validator, optional ones (audio) pass.
+        payload[field.key] = {
+          pt: value?.pt || undefined,
+          en: value?.en || undefined,
+        };
         break;
       }
       case "locText":

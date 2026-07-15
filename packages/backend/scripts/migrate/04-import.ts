@@ -17,9 +17,31 @@ type ImportableTable = FunctionArgs<typeof api.migrate.importRecords>["table"];
 type Raw = Record<string, any>;
 interface Merged {
   importId: string;
+  /** ids of split per-language documents fused into this record (step 2) */
+  aliasImportIds?: string[];
   published: boolean;
   pt: Raw;
   en: Raw;
+}
+
+/**
+ * Relation references may point at a document that was fused into another
+ * record during the merge step — make the absorbed ids resolve too.
+ */
+function withAliases(
+  idMap: Record<string, string>,
+  rows: Merged[]
+): Record<string, string> {
+  const extended = { ...idMap };
+  for (const row of rows) {
+    for (const alias of row.aliasImportIds ?? []) {
+      const target = idMap[row.importId];
+      if (target) {
+        extended[alias] = target;
+      }
+    }
+  }
+  return extended;
 }
 
 const client = new ConvexHttpClient(env("CONVEX_URL"));
@@ -116,7 +138,7 @@ const read = (table: string) => readJson<Merged[]>(`${table}.merged.json`);
 
 // ── publishers ──────────────────────────────────────────────────────────────
 const publishers = await read("publishers");
-const publisherIds = await importTable(
+const publisherIdsRaw = await importTable(
   "publishers",
   publishers.map((m) => ({
     data: {
@@ -128,16 +150,18 @@ const publisherIds = await importTable(
     importId: m.importId,
   }))
 );
+const publisherIds = withAliases(publisherIdsRaw, publishers);
 
 // ── categories ──────────────────────────────────────────────────────────────
 const categories = await read("categories");
-const categoryIds = await importTable(
+const categoryIdsRaw = await importTable(
   "categories",
   categories.map((m) => ({
     data: { name: loc(m, "name"), slug: loc(m, "slug"), type: m.pt.type },
     importId: m.importId,
   }))
 );
+const categoryIds = withAliases(categoryIdsRaw, categories);
 
 // ── authors (materialize slug, fail loudly on collisions) ──────────────────
 const authors = await read("authors");
@@ -152,7 +176,7 @@ for (const m of authors) {
   }
   authorSlugs.set(slug, m.importId);
 }
-const authorIds = await importTable(
+const authorIdsRaw = await importTable(
   "authors",
   authors.map((m) => ({
     data: {
@@ -165,6 +189,7 @@ const authorIds = await importTable(
     importId: m.importId,
   }))
 );
+const authorIds = withAliases(authorIdsRaw, authors);
 
 // ── teamMembers ─────────────────────────────────────────────────────────────
 const teamMembers = await read("teamMembers");
@@ -256,7 +281,7 @@ await importTable(
 
 // ── trainings ───────────────────────────────────────────────────────────────
 const trainings = await read("trainings");
-const trainingIds = await importTable(
+const trainingIdsRaw = await importTable(
   "trainings",
   trainings.map((m) => ({
     data: {
@@ -278,6 +303,7 @@ const trainingIds = await importTable(
     importId: m.importId,
   }))
 );
+const trainingIds = withAliases(trainingIdsRaw, trainings);
 
 // ── books ───────────────────────────────────────────────────────────────────
 const books = await read("books");
@@ -326,11 +352,11 @@ await importTable(
   "articles",
   articles.map((m) => ({
     data: {
-      audioKey: flattenLocalizedMedia(
-        m,
-        "audio",
-        `articles/${m.importId}.audio`
-      ),
+      // audio narration is per-locale content — keep both keys
+      audioKey: {
+        en: mediaKey(m.en.audio, `articles/${m.importId}.audio.en`),
+        pt: mediaKey(m.pt.audio, `articles/${m.importId}.audio.pt`),
+      },
       authorIds: (m.pt.authors ?? [])
         .map((a: Raw) => authorIds[a.documentId])
         .filter(Boolean),

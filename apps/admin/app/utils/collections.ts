@@ -60,7 +60,12 @@ export const COLLECTIONS: Record<string, CollectionDef> = {
         required: true,
         accept: "image/*",
       },
-      { key: "audioKey", label: "Áudio", type: "media", accept: "audio/*" },
+      {
+        key: "audioKey",
+        label: "Áudio (por língua)",
+        type: "locMedia",
+        accept: "audio/*",
+      },
       {
         key: "categoryId",
         label: "Categoria",

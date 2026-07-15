@@ -1,4 +1,10 @@
-/** Shared config + helpers for the Strapi → Convex migration scripts. */
+/**
+ * Shared config + helpers for the Strapi → Convex migration scripts.
+ *
+ * Env vars (STRAPI_URL, STRAPI_SECRET_KEY, CONVEX_URL, SERVICE_KEY, R2_*) are
+ * read from process.env — put them in packages/backend/.env.local (gitignored;
+ * Bun auto-loads it when scripts run from that directory). Never hardcode.
+ */
 import { mkdirSync } from "node:fs";
 import { join } from "node:path";
 

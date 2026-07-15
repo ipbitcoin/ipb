@@ -1,6 +1,7 @@
 /**
  * Step 3: download every Strapi upload and push it to R2 under key
- * "strapi/<hash><ext>". Emits _media-map.json: { [strapi url]: r2Key }.
+ * "strapi/<hash><ext>" (namespaced so migrated files are distinguishable from
+ * future admin uploads). Emits _media-map.json: { [strapi url]: r2Key }.
  *
  * Usage: STRAPI_URL=... R2_ACCESS_KEY_ID=... R2_SECRET_ACCESS_KEY=...
  *        R2_ENDPOINT=... R2_BUCKET=... bun scripts/migrate/03-media-to-r2.ts

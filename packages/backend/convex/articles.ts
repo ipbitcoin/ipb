@@ -31,8 +31,11 @@ async function toPublicArticle(
     await Promise.all(article.authorIds.map((id) => ctx.db.get(id)))
   ).filter((a): a is Doc<"authors"> => a !== null);
 
+  // Strict per-locale: a pt page must not fall back to the en narration
+  const audioKey = article.audioKey?.[locale];
+
   return {
-    audio: article.audioKey ? { url: mediaUrl(article.audioKey) } : null,
+    audio: audioKey ? { url: mediaUrl(audioKey) } : null,
     authors: authors.map((a) => ({
       name: a.name,
       slug: a.slug,
@@ -216,9 +219,13 @@ export const adminGet = query({
 });
 
 const localizedString = v.object({ en: v.string(), pt: v.string() });
+const localizedOptionalString = v.object({
+  en: v.optional(v.string()),
+  pt: v.optional(v.string()),
+});
 
 const articleFields = {
-  audioKey: v.optional(v.string()),
+  audioKey: v.optional(localizedOptionalString),
   authorIds: v.array(v.id("authors")),
   categoryId: v.optional(v.id("categories")),
   content: localizedString,
