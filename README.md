@@ -62,4 +62,4 @@ One Convex project, two deployments (dev via `convex dev`, prod via `convex depl
 
 See `MIGRATION_PLAN.md` for the full cutover runbook (Stripe webhook events, key rotation, DNS switch).
 
-### Deploy: 1
+### Deploy: 2

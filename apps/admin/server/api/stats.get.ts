@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
     counts: {
       articles: articles.length,
       enrollments: enrollments.length,
-      members: members.length,
+      members: members.filter((m) => m.paymentStatus !== "pending").length,
       newsletters: newsletters.length,
       trainings: trainings.length,
     },

@@ -49,7 +49,13 @@
     </section>
 
     <section v-if="stats?.recentMembers?.length" class="flex flex-col gap-2">
-      <h2 class="text-xl font-light">Membros recentes</h2>
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl font-light">Membros recentes</h2>
+        <label class="flex items-center gap-2 text-sm text-neutral-500">
+          <input v-model="hidePending" type="checkbox" />
+          Ocultar pendentes
+        </label>
+      </div>
       <div class="overflow-x-auto rounded border bg-white">
         <table class="w-full text-left text-sm">
           <thead
@@ -64,7 +70,7 @@
           </thead>
           <tbody>
             <tr
-              v-for="m in stats.recentMembers"
+              v-for="m in visibleMembers"
               :key="m._id"
               class="border-b last:border-0"
             >
@@ -90,4 +96,13 @@ const labels: Record<string, string> = {
 };
 
 const { data: stats } = useFetch("/api/stats");
+
+const hidePending = ref(true);
+
+const visibleMembers = computed(() => {
+  const members = stats.value?.recentMembers ?? [];
+  return hidePending.value
+    ? members.filter((m) => m.paymentStatus !== "pending")
+    : members;
+});
 </script>
