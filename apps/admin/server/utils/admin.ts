@@ -23,10 +23,13 @@ export const TABLE_NAMES = [
   "docs",
   "enrollments",
   "faqs",
+  "ideaCategories",
   "members",
   "newsletters",
   "partners",
   "publishers",
+  "socialMediaIdeas",
+  "tasks",
   "teamMembers",
   "trainings",
   "values",
@@ -39,6 +42,9 @@ const writableTables = new Set<string>([
   "articles",
   "authors",
   "categories",
+  "ideaCategories",
+  "socialMediaIdeas",
+  "tasks",
   "teamMembers",
   "values",
   "partners",
@@ -48,6 +54,9 @@ const writableTables = new Set<string>([
   "publishers",
   "trainings",
 ]);
+
+/** Tables whose docs move between status columns via /api/data/[table]/move. */
+export const kanbanTables = new Set<string>(["socialMediaIdeas", "tasks"]);
 
 /**
  * Untyped Convex function references for the dynamic per-collection proxy.

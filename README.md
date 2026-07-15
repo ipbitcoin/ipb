@@ -49,10 +49,14 @@ Re-runnable: a final delta run just before cutover picks up late edits.
 
 ## Deploy (Vercel)
 
-Two projects from this repo (enable "Include source files outside of Root Directory"):
+Convex functions deploy via GitHub Actions (`.github/workflows/convex-deploy.yml`) on pushes to `main` that touch `packages/backend/convex/**` — repo secret `CONVEX_DEPLOY_KEY` (production deploy key from the Convex dashboard). Vercel never runs `convex deploy`.
 
-- **www** — root `apps/www`, build command `cd ../../packages/backend && bunx convex deploy --cmd 'cd ../../apps/www && bun run build' --cmd-url-env-var-name CONVEX_URL`, env `CONVEX_DEPLOY_KEY` + the vars in `apps/www/.env.example`.
-- **admin** — root `apps/admin`, plain `bun run build`, env per `apps/admin/.env.example`. Domain `admin.institutobitcoin.pt`, noindex.
+Two Vercel projects from this repo (enable "Include source files outside of Root Directory"):
+
+- **www** — root `apps/www`, default build (`bun run build`), env per `apps/www/.env.example` with `CONVEX_URL` set manually to the production deployment URL.
+- **admin** — root `apps/admin`, default build, env per `apps/admin/.env.example`. Domain `admin.institutobitcoin.pt`, noindex.
+
+Order matters on schema changes: the Convex workflow must run before (or without) app redeploys that depend on new functions — push backend changes first or rerun the app deploy after.
 
 One Convex project, two deployments (dev via `convex dev`, prod via `convex deploy`). Two R2 buckets: `ipbitcoin-media-dev` (public `r2.dev` URL) and `ipbitcoin-media` (custom domain `cdn.institutobitcoin.pt`). Per-deployment Convex env vars: `SERVICE_KEY`, `CDN_HOST`, `R2_TOKEN`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_ENDPOINT`, `R2_BUCKET` — dev points at the dev bucket/`r2.dev` host, prod at the prod bucket/CDN domain.
 

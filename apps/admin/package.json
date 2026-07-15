@@ -12,6 +12,7 @@
   "dependencies": {
     "@ipb/backend": "workspace:*",
     "@ipb/ui": "workspace:*",
+    "@nuxtjs/google-fonts": "3.2.0",
     "@nuxtjs/mdc": "0.22.1",
     "@tailwindcss/vite": "catalog:",
     "convex": "catalog:",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "0.5.20",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vue-tsc": "^3.3.7"
   }
 }

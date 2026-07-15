@@ -75,7 +75,7 @@ const buttonClass = computed(() =>
     base: "relative inline-flex items-center py-1.5 justify-center cursor-pointer rounded-[3px] font-semibold uppercase text-sm bg-black duration-200",
     variants: {
       size: {
-        default: "px-4 py-1",
+        default: "px-4 py-1.5",
         lg: "px-6 py-2",
       },
       variant: {

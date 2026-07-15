@@ -15,11 +15,17 @@ export default defineNuxtConfig({
   },
   devtools: { enabled: false },
   extends: ["@ipb/ui"],
+  googleFonts: {
+    families: {
+      Inter: [300, 400, 500, 600, 700],
+    },
+  },
   modules: [
     "reka-ui/nuxt",
     "nuxt-auth-utils",
     "vue-sonner/nuxt",
     "@nuxtjs/mdc",
+    "@nuxtjs/google-fonts",
   ],
   runtimeConfig: {
     SERVICE_KEY: process.env.SERVICE_KEY,
