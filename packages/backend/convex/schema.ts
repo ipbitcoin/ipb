@@ -191,12 +191,64 @@ export default defineSchema({
     importId: v.optional(v.string()),
   }).index("by_email", ["email"]),
 
+  ideaCategories: defineTable({
+    name: v.string(),
+  }).index("by_name", ["name"]),
+
+  socialMediaIdeas: defineTable({
+    categoryId: v.optional(v.id("ideaCategories")),
+    createdAt: v.number(),
+    description: v.string(),
+    order: v.number(), // position within the status column
+    platforms: v.array(
+      v.union(
+        v.literal("youtube"),
+        v.literal("tiktok"),
+        v.literal("instagram"),
+        v.literal("x")
+      )
+    ),
+    status: v.union(
+      v.literal("draft"),
+      v.literal("pending"),
+      v.literal("approved"),
+      v.literal("recorded"),
+      v.literal("edited"),
+      v.literal("posted")
+    ),
+    title: v.string(),
+    updatedAt: v.number(),
+  })
+    .index("by_status_order", ["status", "order"])
+    .index("by_category", ["categoryId"]),
+
+  tasks: defineTable({
+    assigneeId: v.optional(v.id("adminUsers")),
+    createdAt: v.number(),
+    description: v.optional(v.string()),
+    dueDate: v.optional(v.string()), // ISO date "YYYY-MM-DD"
+    order: v.number(), // position within the status column
+    status: v.union(
+      v.literal("backlog"),
+      v.literal("todo"),
+      v.literal("in_progress"),
+      v.literal("in_review"),
+      v.literal("done")
+    ),
+    title: v.string(),
+    updatedAt: v.number(),
+  }).index("by_status_order", ["status", "order"]),
+
   // Admin app accounts. Rows are created by hand in the Convex dashboard
   // (invite-only); the password hash is set on first login.
   adminUsers: defineTable({
     active: v.boolean(),
+    avatarKey: v.optional(v.string()),
     email: v.string(),
     name: v.optional(v.string()),
     passwordHash: v.optional(v.string()),
-  }).index("by_email", ["email"]),
+    username: v.optional(v.string()),
+  })
+    .index("by_email", ["email"])
+    .index("by_username", ["username"]),
 });

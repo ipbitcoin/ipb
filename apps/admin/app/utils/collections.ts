@@ -201,6 +201,12 @@ export const COLLECTIONS: Record<string, CollectionDef> = {
     readOnly: true,
     table: "enrollments",
   },
+  ideaCategories: {
+    fields: [{ key: "name", label: "Nome", type: "text", required: true }],
+    label: "Categorias de Ideias",
+    listFields: [{ key: "name", label: "Nome" }],
+    table: "ideaCategories",
+  },
   faqs: {
     fields: [
       { key: "question", label: "Pergunta", type: "locText", required: true },

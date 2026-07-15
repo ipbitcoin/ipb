@@ -477,7 +477,7 @@ New Nuxt app, desktop-first, no SEO/i18n modules needed (admin UI language: matc
 ## 10. Phase 6 — Deploy & wire Vercel
 
 1. Push repo to GitHub `ipbitcoin/website` branch `monorepo`.
-2. Vercel `ipbitcoin-www` project: root dir `apps/www`, framework Nuxt auto-detected, install `bun install` (auto via `bun.lock`), build command override: `cd ../../packages/backend && bunx convex deploy --cmd 'cd ../../apps/www && bun run build' --cmd-url-env-var-name CONVEX_URL` with `CONVEX_DEPLOY_KEY` env. (Only www runs `convex deploy`.) Env vars per §11.
+2. Vercel `ipbitcoin-www` project: root dir `apps/www`, framework Nuxt auto-detected, install `bun install` (auto via `bun.lock`), default build (`bun run build`), `CONVEX_URL` set manually to the production deployment URL. Convex functions deploy separately via GitHub Actions (`.github/workflows/convex-deploy.yml`, repo secret `CONVEX_DEPLOY_KEY`) on pushes touching `packages/backend/convex/**` — Vercel never runs `convex deploy`. Env vars per §11.
 3. Vercel `ipbitcoin-admin` project: root dir `apps/admin`, plain `bun run build`, env: `CONVEX_URL` (prod deployment URL, set manually), `SERVICE_KEY`, session secret (`NUXT_SESSION_PASSWORD`), admin credentials. Domain: `admin.institutobitcoin.pt`. Additionally protect with Vercel Deployment Protection or at least ensure robots noindex.
 4. Preview deployments: optional — preview-scoped `CONVEX_DEPLOY_KEY` gives per-branch Convex backends; skip for v1 (previews can point at dev deployment).
 5. Verify both preview URLs fully (repeat Phase 4/5 acceptance against preview).
