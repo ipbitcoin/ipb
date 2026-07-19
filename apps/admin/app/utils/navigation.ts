@@ -8,10 +8,12 @@ export interface NavItem {
 export interface NavSection {
   label: string;
   items: NavItem[];
+  defaultCollapsed?: boolean;
 }
 
 export const NAV_SECTIONS: NavSection[] = [
   {
+    defaultCollapsed: true,
     items: Object.entries(COLLECTIONS)
       .filter(([key]) => key !== "ideaCategories")
       .map(([key, def]) => ({ label: def.label, to: `/c/${key}` })),

@@ -101,8 +101,10 @@ const hidePending = ref(true);
 
 const visibleMembers = computed(() => {
   const members = stats.value?.recentMembers ?? [];
-  return hidePending.value
-    ? members.filter((m) => m.paymentStatus !== "pending")
-    : members;
+  return (
+    hidePending.value
+      ? members.filter((m) => m.paymentStatus !== "pending")
+      : members
+  ).slice(0, 10);
 });
 </script>

@@ -23,6 +23,6 @@ export default defineEventHandler(async (event) => {
       trainings: trainings.length,
     },
     recentEnrollments: enrollments.slice(0, 10),
-    recentMembers: members.slice(0, 10),
+    recentMembers: members.slice(0, 50),
   };
 });

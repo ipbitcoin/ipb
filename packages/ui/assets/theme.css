@@ -2,6 +2,10 @@
 @theme {
   --font-brand: "Inter", "sans-serif";
 
+  /* Brand accent, taken from the logo "B" */
+  --color-brand: #f29500;
+  --color-brand-soft: #fef3e2;
+
   @keyframes slideDown {
     from {
       height: 0;
