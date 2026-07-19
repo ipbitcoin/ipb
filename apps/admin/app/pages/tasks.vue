@@ -17,6 +17,12 @@
       <template #card="{ card }">
         <div class="flex flex-col gap-2">
           <p class="font-medium">{{ card.title }}</p>
+          <p
+            v-if="card.description"
+            class="line-clamp-2 text-xs text-neutral-500"
+          >
+            {{ card.description }}
+          </p>
           <div class="flex items-center justify-between">
             <span
               v-if="card.dueDate"
