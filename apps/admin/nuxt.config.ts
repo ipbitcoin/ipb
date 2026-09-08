@@ -27,6 +27,11 @@ export default defineNuxtConfig({
     "@nuxtjs/mdc",
     "@nuxtjs/google-fonts",
   ],
+  // Admin panel: no SEO, every page is behind auth, and data comes from Nitro
+  // routes anyway, so a pure client app avoids SSR hydration work and keeps the
+  // door open for client-side Convex live queries later.
+  ssr: false,
+  spaLoadingTemplate: true,
   runtimeConfig: {
     SERVICE_KEY: process.env.SERVICE_KEY,
     public: {
