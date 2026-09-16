@@ -4,3 +4,30 @@
 
 /* Scan the shared UI layer for Tailwind classes (outside default sources) */
 @source "../../../../../packages/ui/components";
+
+@layer components {
+  /* One control style for every input / textarea / select in the admin. */
+  .field-input {
+    @apply w-full rounded border border-neutral-200 bg-white px-3 py-2 text-sm text-neutral-900 outline-none transition-[border-color,box-shadow] duration-150 ease-out placeholder:text-neutral-400 read-only:bg-neutral-100 read-only:text-neutral-500 focus:border-brand focus:ring-3 focus:ring-brand/15;
+  }
+
+  .field-label {
+    @apply text-sm font-medium text-neutral-900;
+  }
+
+  /* Keyboard focus ring shared by links, icon buttons, rows. */
+  .focus-ring {
+    @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand;
+  }
+}
+
+/* Reduced motion: keep opacity cues, drop movement and scale. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --animate-scale-in: fadeIn 150ms ease-out;
+    --animate-scale-out: fadeOut 100ms ease-out;
+    --animate-fade-up: fadeIn 200ms ease-out both;
+    --animate-slide-down: fadeIn 150ms ease-out;
+    --animate-slide-up: fadeOut 100ms ease-out;
+  }
+}

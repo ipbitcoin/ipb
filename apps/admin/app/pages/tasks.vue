@@ -26,7 +26,7 @@
           <div class="flex items-center justify-between">
             <span
               v-if="card.dueDate"
-              class="text-xs"
+              class="text-xs tabular-nums"
               :class="
                 isOverdue(card)
                   ? 'font-medium text-red-600'
@@ -48,12 +48,11 @@
     </KanbanBoard>
 
     <TaskEditor
-      v-if="editorOpen"
+      v-model:open="editorOpen"
       :task="editingTask"
       :admins="admins ?? []"
       :default-status="editorStatus"
       :default-order="appendOrder(tasks ?? [], editorStatus)"
-      @close="editorOpen = false"
       @saved="onSaved"
     />
   </div>

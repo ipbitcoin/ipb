@@ -1,7 +1,7 @@
 <template>
   <component
     :is="component"
-    :class="buttonClass"
+    :class="[buttonClass, props.class]"
     :href="props.href"
     :to="props.to"
     :target="props.target"
@@ -45,13 +45,15 @@ import type { AnchorHTMLAttributes, HTMLAttributes } from "vue";
 
 interface ButtonProps {
   as?: string;
-  variant?: "primary" | "inverse" | "outline" | "subtle";
+  variant?: "primary" | "inverse" | "outline" | "subtle" | "danger";
   size?: "default" | "lg";
   href?: AnchorHTMLAttributes["href"];
   to?: string;
   target?: AnchorHTMLAttributes["target"];
   disabled?: boolean;
   loading?: boolean;
+  /** Disable the scale-on-press feedback where motion would distract. */
+  static?: boolean;
   class?: HTMLAttributes["class"];
 }
 
@@ -60,6 +62,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   disabled: false,
   loading: false,
   size: "default",
+  static: false,
   variant: "primary",
 });
 
@@ -72,22 +75,26 @@ const component = computed(() => {
 
 const buttonClass = computed(() =>
   tv({
-    base: "relative inline-flex items-center py-1.5 justify-center cursor-pointer rounded-[3px] font-semibold uppercase text-sm bg-black duration-200",
+    base: "relative inline-flex cursor-pointer items-center justify-center rounded-[3px] text-sm font-semibold uppercase transition-[background-color,color,border-color,scale] duration-150 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand disabled:cursor-not-allowed disabled:opacity-50",
     variants: {
+      pressable: {
+        false: "",
+        true: "active:not-disabled:scale-[0.96]",
+      },
       size: {
         default: "px-4 py-1.5",
         lg: "px-6 py-2",
       },
       variant: {
-        inverse: "bg-white text-black",
-        outline:
-          "border border-black bg-white transition-colors hover:bg-black hover:text-white",
-        primary: "bg-black text-white",
-        subtle:
-          "border border-[#C2C2C2] bg-white transition-colors hover:bg-[#f8f8f8]",
+        danger:
+          "border border-red-600 bg-white text-red-600 hover:bg-red-600 hover:text-white",
+        inverse: "bg-white text-black hover:bg-neutral-100",
+        outline: "border border-black bg-white hover:bg-black hover:text-white",
+        primary: "bg-black text-white hover:bg-neutral-800",
+        subtle: "border border-[#C2C2C2] bg-white hover:bg-[#f8f8f8]",
       },
     },
-  })(props)
+  })({ pressable: !props.static, size: props.size, variant: props.variant })
 );
 
 const loadingClass = computed(() =>
@@ -95,12 +102,13 @@ const loadingClass = computed(() =>
     base: "size-4 animate-spin mt-0!",
     variants: {
       variant: {
+        danger: "text-red-600",
         inverse: "text-black",
         outline: "text-black",
         primary: "text-white",
         subtle: "text-black",
       },
     },
-  })(props)
+  })({ variant: props.variant })
 );
 </script>

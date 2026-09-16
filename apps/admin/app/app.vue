@@ -3,6 +3,7 @@
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
+    <AdminConfirmHost />
     <Toaster position="top-right" invert />
   </div>
 </template>

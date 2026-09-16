@@ -1,50 +1,49 @@
 <template>
-  <form class="flex max-w-3xl flex-col gap-6" @submit.prevent="save">
-    <div
+  <form
+    class="flex max-w-3xl flex-col gap-6 rounded-lg bg-white p-6 shadow-border"
+    @submit.prevent="save"
+  >
+    <AdminField
       v-for="field in def.fields"
       :key="field.key"
-      class="flex flex-col gap-1"
+      :label="field.label"
+      :required="field.required"
+      :hint="field.hint"
+      :html-for="isScalar(field.type) ? `field-${field.key}` : undefined"
     >
-      <label class="text-sm font-medium">
-        {{ field.label
-        }}<span v-if="field.required" class="text-red-600">*</span>
-        <span
-          v-if="field.hint"
-          class="ml-2 text-xs font-normal text-neutral-500"
-          >{{ field.hint }}</span
-        >
-      </label>
-
       <!-- plain scalar fields -->
       <input
         v-if="field.type === 'text' || field.type === 'datetime'"
+        :id="`field-${field.key}`"
         v-model="model[field.key]"
         type="text"
         :required="field.required"
-        class="rounded border bg-white px-2 py-1.5"
+        class="field-input"
       />
       <textarea
         v-else-if="field.type === 'textarea'"
+        :id="`field-${field.key}`"
         v-model="model[field.key]"
         rows="4"
         :required="field.required"
-        class="rounded border bg-white px-2 py-1.5"
+        class="field-input"
       />
       <input
         v-else-if="field.type === 'number'"
+        :id="`field-${field.key}`"
         v-model.number="model[field.key]"
         type="number"
         :required="field.required"
-        class="w-40 rounded border bg-white px-2 py-1.5"
+        class="field-input w-40 tabular-nums"
       />
       <label
         v-else-if="field.type === 'boolean'"
-        class="flex w-fit cursor-pointer items-center gap-2"
+        class="flex w-fit cursor-pointer items-center gap-2 py-1"
       >
         <input
           v-model="model[field.key]"
           type="checkbox"
-          class="size-4 accent-black"
+          class="size-4 accent-neutral-900"
         />
         <span class="text-sm text-neutral-600">{{
           model[field.key] ? "Sim" : "Não"
@@ -52,9 +51,10 @@
       </label>
       <select
         v-else-if="field.type === 'select'"
+        :id="`field-${field.key}`"
         v-model="model[field.key]"
         :required="field.required"
-        class="w-60 rounded border bg-white px-2 py-1.5"
+        class="field-input w-60"
       >
         <option v-for="option in field.options" :key="option" :value="option">
           {{ option }}
@@ -68,37 +68,42 @@
           field.type === 'locTextarea' ||
           field.type === 'locMarkdown'
         "
-        class="grid grid-cols-1 gap-2 md:grid-cols-2"
+        class="grid grid-cols-1 gap-3 md:grid-cols-2"
       >
         <div
           v-for="lang in ['pt', 'en'] as const"
           :key="lang"
-          class="flex flex-col gap-1"
+          class="flex flex-col gap-1.5"
         >
-          <span class="text-xs uppercase tracking-wider text-neutral-500">{{
-            lang
-          }}</span>
+          <span
+            class="text-[11px] font-medium tracking-wider text-neutral-400 uppercase"
+            >{{ lang }}</span
+          >
           <input
             v-if="field.type === 'locText'"
             v-model="model[field.key][lang]"
             type="text"
             :required="field.required"
-            class="rounded border bg-white px-2 py-1.5"
+            class="field-input"
+            :aria-label="`${field.label} (${lang})`"
           />
           <textarea
             v-else
             v-model="model[field.key][lang]"
             :rows="field.type === 'locMarkdown' ? 16 : 4"
             :required="field.required"
-            class="rounded border bg-white px-2 py-1.5 font-mono text-sm"
+            class="field-input font-mono"
+            :aria-label="`${field.label} (${lang})`"
           />
           <details v-if="field.type === 'locMarkdown'" class="text-sm">
-            <summary class="cursor-pointer text-neutral-500">
+            <summary
+              class="focus-ring w-fit cursor-pointer rounded text-neutral-500 transition-colors duration-100 hover:text-neutral-900"
+            >
               Pré-visualizar
             </summary>
             <MDC
               :value="model[field.key][lang] || ''"
-              class="prose mt-2 max-w-none rounded border bg-white p-3"
+              class="prose mt-2 max-w-none rounded-lg bg-white p-4 shadow-border"
             />
           </details>
         </div>
@@ -112,16 +117,17 @@
       />
       <div
         v-else-if="field.type === 'locMedia'"
-        class="grid grid-cols-1 gap-2 md:grid-cols-2"
+        class="grid grid-cols-1 gap-3 md:grid-cols-2"
       >
         <div
           v-for="lang in ['pt', 'en'] as const"
           :key="lang"
-          class="flex flex-col gap-1"
+          class="flex flex-col gap-1.5"
         >
-          <span class="text-xs uppercase tracking-wider text-neutral-500">{{
-            lang
-          }}</span>
+          <span
+            class="text-[11px] font-medium tracking-wider text-neutral-400 uppercase"
+            >{{ lang }}</span
+          >
           <AdminMediaUpload
             v-model="model[field.key][lang]"
             :accept="field.accept"
@@ -132,8 +138,9 @@
       <!-- relations -->
       <select
         v-else-if="field.type === 'relation'"
+        :id="`field-${field.key}`"
         v-model="model[field.key]"
-        class="w-72 rounded border bg-white px-2 py-1.5"
+        class="field-input w-72"
       >
         <option :value="undefined">—</option>
         <option
@@ -151,30 +158,26 @@
         <label
           v-for="option in relationOptions[field.key]"
           :key="option.id"
-          class="flex w-fit cursor-pointer items-center gap-2 text-sm"
+          class="flex w-fit cursor-pointer items-center gap-2 py-0.5 text-sm"
         >
           <input
             type="checkbox"
-            class="size-4 accent-black"
+            class="size-4 accent-neutral-900"
             :checked="model[field.key].includes(option.id)"
             @change="toggleMulti(field.key, option.id)"
           />
           {{ option.label }}
         </label>
       </div>
-    </div>
+    </AdminField>
 
-    <p v-if="error" class="text-sm text-red-600">{{ error }}</p>
+    <p v-if="error" class="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+      {{ error }}
+    </p>
 
-    <div class="flex items-center gap-3">
+    <div class="flex items-center gap-3 border-t border-neutral-100 pt-5">
       <UiButton type="submit" :loading="saving">Guardar</UiButton>
-      <UiButton
-        v-if="recordId"
-        type="button"
-        variant="outline"
-        class="!border-red-600 !text-red-600"
-        @click="remove"
-      >
+      <UiButton v-if="recordId" type="button" variant="danger" @click="remove">
         Apagar
       </UiButton>
     </div>
@@ -184,7 +187,7 @@
 <script setup lang="ts">
 import { toast } from "vue-sonner";
 
-import type { CollectionDef } from "~/utils/collections";
+import type { CollectionDef, FieldType } from "~/utils/collections";
 
 const props = defineProps<{
   collection: string;
@@ -193,8 +196,22 @@ const props = defineProps<{
   initial?: Record<string, unknown>;
 }>();
 
+const { confirm } = useConfirm();
+
 const saving = ref(false);
 const error = ref("");
+
+/** Field types rendered as a single control that can take an id / label. */
+function isScalar(type: FieldType): boolean {
+  return (
+    type === "text" ||
+    type === "datetime" ||
+    type === "textarea" ||
+    type === "number" ||
+    type === "select" ||
+    type === "relation"
+  );
+}
 
 // ── Build the reactive model from field defs + existing record ─────────────
 function emptyValue(type: string): unknown {
@@ -339,7 +356,13 @@ async function remove() {
   if (!props.recordId) {
     return;
   }
-  if (!confirm("Apagar este registo? Esta ação é irreversível.")) {
+  const confirmed = await confirm({
+    confirmLabel: "Apagar",
+    danger: true,
+    description: "Esta ação é irreversível.",
+    title: "Apagar este registo?",
+  });
+  if (!confirmed) {
     return;
   }
   await $fetch(`/api/data/${props.collection}/${props.recordId}`, {

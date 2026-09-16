@@ -1,69 +1,58 @@
 <template>
-  <AdminModal :open="true" @update:open="emit('close')">
+  <AdminModal v-model:open="open" :title="idea ? 'Editar ideia' : 'Nova ideia'">
     <form class="flex flex-col gap-4" @submit.prevent="save">
-      <h2 class="text-xl font-light">
-        {{ idea ? "Editar ideia" : "Nova ideia" }}
-      </h2>
-
-      <div class="flex flex-col gap-1">
-        <label class="text-sm font-medium">
-          Título<span class="text-red-600">*</span>
-        </label>
+      <AdminField label="Título" required html-for="idea-title">
         <input
+          id="idea-title"
           v-model="form.title"
           type="text"
           required
-          class="rounded border bg-white px-2 py-1.5"
+          class="field-input"
         />
-      </div>
+      </AdminField>
 
-      <div class="flex flex-col gap-1">
-        <label class="text-sm font-medium">
-          Descrição<span class="text-red-600">*</span>
-        </label>
+      <AdminField label="Descrição" required html-for="idea-description">
         <textarea
+          id="idea-description"
           v-model="form.description"
           rows="5"
           required
-          class="rounded border bg-white px-2 py-1.5"
+          class="field-input"
         />
-      </div>
+      </AdminField>
 
-      <div class="flex flex-col gap-1">
-        <label class="text-sm font-medium">Estado</label>
-        <select
-          v-model="form.status"
-          class="w-60 rounded border bg-white px-2 py-1.5"
-        >
-          <option
-            v-for="column in IDEA_COLUMNS"
-            :key="column.key"
-            :value="column.key"
+      <div class="grid gap-4 sm:grid-cols-2">
+        <AdminField label="Estado" html-for="idea-status">
+          <select id="idea-status" v-model="form.status" class="field-input">
+            <option
+              v-for="column in IDEA_COLUMNS"
+              :key="column.key"
+              :value="column.key"
+            >
+              {{ column.label }}
+            </option>
+          </select>
+        </AdminField>
+
+        <AdminField label="Categoria" html-for="idea-category">
+          <select
+            id="idea-category"
+            v-model="form.categoryId"
+            class="field-input"
           >
-            {{ column.label }}
-          </option>
-        </select>
+            <option value="">—</option>
+            <option
+              v-for="category in categories"
+              :key="category._id"
+              :value="category._id"
+            >
+              {{ category.name }}
+            </option>
+          </select>
+        </AdminField>
       </div>
 
-      <div class="flex flex-col gap-1">
-        <label class="text-sm font-medium">Categoria</label>
-        <select
-          v-model="form.categoryId"
-          class="w-60 rounded border bg-white px-2 py-1.5"
-        >
-          <option value="">—</option>
-          <option
-            v-for="category in categories"
-            :key="category._id"
-            :value="category._id"
-          >
-            {{ category.name }}
-          </option>
-        </select>
-      </div>
-
-      <div class="flex flex-col gap-1">
-        <label class="text-sm font-medium">Plataformas</label>
+      <AdminField label="Plataformas">
         <div class="flex flex-wrap gap-x-4 gap-y-1">
           <label
             v-for="platform in PLATFORMS"
@@ -72,32 +61,31 @@
           >
             <input
               type="checkbox"
-              class="size-4 accent-black"
+              class="size-4 accent-neutral-900"
               :checked="form.platforms.includes(platform.key)"
               @change="togglePlatform(platform.key)"
             />
             {{ platform.label }}
           </label>
         </div>
-      </div>
+      </AdminField>
 
-      <p v-if="error" class="text-sm text-red-600">{{ error }}</p>
+      <p
+        v-if="error"
+        class="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700"
+      >
+        {{ error }}
+      </p>
 
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-3 pt-1">
         <UiButton type="submit" :loading="saving">Guardar</UiButton>
-        <UiButton
-          v-if="idea"
-          type="button"
-          variant="outline"
-          class="!border-red-600 !text-red-600"
-          @click="remove"
-        >
+        <UiButton v-if="idea" type="button" variant="danger" @click="remove">
           Apagar
         </UiButton>
         <button
           type="button"
-          class="cursor-pointer text-sm text-neutral-500 underline"
-          @click="emit('close')"
+          class="focus-ring ml-auto cursor-pointer rounded text-sm text-neutral-500 transition-colors duration-100 hover:text-neutral-900"
+          @click="open = false"
         >
           Cancelar
         </button>
@@ -119,18 +107,41 @@ const props = defineProps<{
   idea?: IdeaDoc | null;
 }>();
 
-const emit = defineEmits<{ close: []; saved: [] }>();
+const open = defineModel<boolean>("open", { default: false });
+const emit = defineEmits<{ saved: [] }>();
+
+const { confirm } = useConfirm();
 
 const saving = ref(false);
 const error = ref("");
 
-const form = reactive({
-  categoryId: props.idea?.categoryId ?? "",
-  description: props.idea?.description ?? "",
-  platforms: [...(props.idea?.platforms ?? [])],
-  status: props.idea?.status ?? props.defaultStatus,
-  title: props.idea?.title ?? "",
+interface IdeaForm {
+  categoryId: string;
+  description: string;
+  platforms: string[];
+  status: string;
+  title: string;
+}
+
+const form = reactive<IdeaForm>({
+  categoryId: "",
+  description: "",
+  platforms: [],
+  status: props.defaultStatus,
+  title: "",
 });
+
+function resetForm() {
+  form.categoryId = props.idea?.categoryId ?? "";
+  form.description = props.idea?.description ?? "";
+  form.platforms = [...(props.idea?.platforms ?? [])];
+  form.status = props.idea?.status ?? props.defaultStatus;
+  form.title = props.idea?.title ?? "";
+  error.value = "";
+}
+
+// Stays mounted so the close animation can play; re-seed on every open.
+watch(open, (isOpen) => isOpen && resetForm(), { immediate: true });
 
 function togglePlatform(key: string) {
   form.platforms = form.platforms.includes(key)
@@ -174,7 +185,13 @@ async function remove() {
   if (!props.idea) {
     return;
   }
-  if (!confirm("Apagar esta ideia? Esta ação é irreversível.")) {
+  const confirmed = await confirm({
+    confirmLabel: "Apagar",
+    danger: true,
+    description: "Esta ação é irreversível.",
+    title: "Apagar esta ideia?",
+  });
+  if (!confirmed) {
     return;
   }
   await $fetch(`/api/data/socialMediaIdeas/${props.idea._id}`, {

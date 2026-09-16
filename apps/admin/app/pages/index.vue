@@ -2,91 +2,73 @@
   <div class="flex flex-col gap-8">
     <h1 class="text-3xl font-light">Dashboard</h1>
 
-    <div v-if="stats" class="grid grid-cols-2 gap-4 md:grid-cols-5">
-      <div
-        v-for="(count, key) in stats.counts"
-        :key="key"
-        class="rounded border bg-white p-4"
-      >
-        <div class="text-3xl font-light">{{ count }}</div>
-        <div class="text-sm uppercase tracking-wider text-neutral-500">
-          {{ labels[key] ?? key }}
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-5">
+      <template v-if="stats">
+        <div
+          v-for="(count, key) in stats.counts"
+          :key="key"
+          class="flex flex-col gap-1 rounded-lg bg-white p-4 shadow-border"
+        >
+          <div class="text-3xl font-light tabular-nums">{{ count }}</div>
+          <div class="text-xs tracking-wider text-neutral-500 uppercase">
+            {{ labels[key] ?? key }}
+          </div>
         </div>
-      </div>
+      </template>
+      <template v-else>
+        <div
+          v-for="n in 5"
+          :key="n"
+          class="flex flex-col gap-2 rounded-lg bg-white p-4 shadow-border"
+        >
+          <div class="h-8 w-16 animate-pulse rounded bg-neutral-100" />
+          <div class="h-3 w-24 animate-pulse rounded bg-neutral-100" />
+        </div>
+      </template>
     </div>
 
-    <section
-      v-if="stats?.recentEnrollments?.length"
-      class="flex flex-col gap-2"
-    >
+    <section class="flex flex-col gap-3">
       <h2 class="text-xl font-light">Inscrições recentes</h2>
-      <div class="overflow-x-auto rounded border bg-white">
-        <table class="w-full text-left text-sm">
-          <thead
-            class="border-b bg-neutral-50 uppercase tracking-wider text-neutral-500"
-          >
-            <tr>
-              <th class="px-3 py-2">Nome</th>
-              <th class="px-3 py-2">Email</th>
-              <th class="px-3 py-2">Pagamento</th>
-              <th class="px-3 py-2">Valor</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="e in stats.recentEnrollments"
-              :key="e._id"
-              class="border-b last:border-0"
-            >
-              <td class="px-3 py-2">{{ e.name }}</td>
-              <td class="px-3 py-2">{{ e.email }}</td>
-              <td class="px-3 py-2">{{ e.paymentStatus }}</td>
-              <td class="px-3 py-2">{{ e.value }}€</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <AdminTable
+        :columns="enrollmentColumns"
+        :rows="stats?.recentEnrollments"
+        :pending="status === 'pending'"
+        empty-label="Sem inscrições recentes."
+      >
+        <template #cell="{ column, value }">
+          <template v-if="column.key === 'value'">{{ value }}€</template>
+          <template v-else>{{ value }}</template>
+        </template>
+      </AdminTable>
     </section>
 
-    <section v-if="stats?.recentMembers?.length" class="flex flex-col gap-2">
+    <section class="flex flex-col gap-3">
       <div class="flex items-center justify-between">
         <h2 class="text-xl font-light">Membros recentes</h2>
-        <label class="flex items-center gap-2 text-sm text-neutral-500">
-          <input v-model="hidePending" type="checkbox" />
+        <label
+          class="flex cursor-pointer items-center gap-2 text-sm text-neutral-500"
+        >
+          <input
+            v-model="hidePending"
+            type="checkbox"
+            class="size-4 accent-neutral-900"
+          />
           Ocultar pendentes
         </label>
       </div>
-      <div class="overflow-x-auto rounded border bg-white">
-        <table class="w-full text-left text-sm">
-          <thead
-            class="border-b bg-neutral-50 uppercase tracking-wider text-neutral-500"
-          >
-            <tr>
-              <th class="px-3 py-2">Nome</th>
-              <th class="px-3 py-2">Email</th>
-              <th class="px-3 py-2">Plano</th>
-              <th class="px-3 py-2">Estado</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="m in visibleMembers"
-              :key="m._id"
-              class="border-b last:border-0"
-            >
-              <td class="px-3 py-2">{{ m.name }}</td>
-              <td class="px-3 py-2">{{ m.email }}</td>
-              <td class="px-3 py-2">{{ m.paymentPlan }}</td>
-              <td class="px-3 py-2">{{ m.paymentStatus }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <AdminTable
+        :columns="memberColumns"
+        :rows="visibleMembers"
+        :pending="status === 'pending'"
+        empty-label="Sem membros recentes."
+      />
     </section>
   </div>
 </template>
 
 <script setup lang="ts">
+import type { TableColumn } from "~/utils/table";
+
 const labels: Record<string, string> = {
   articles: "Artigos",
   enrollments: "Inscrições",
@@ -95,7 +77,43 @@ const labels: Record<string, string> = {
   trainings: "Formações",
 };
 
-const { data: stats } = useFetch("/api/stats");
+const enrollmentColumns: TableColumn[] = [
+  { key: "name", label: "Nome" },
+  { key: "email", label: "Email" },
+  { key: "paymentStatus", label: "Pagamento" },
+  { key: "value", label: "Valor", numeric: true },
+];
+
+const memberColumns: TableColumn[] = [
+  { key: "name", label: "Nome" },
+  { key: "email", label: "Email" },
+  { key: "paymentPlan", label: "Plano" },
+  { key: "paymentStatus", label: "Estado" },
+];
+
+interface RecentEnrollment {
+  _id: string;
+  email: string;
+  name: string;
+  paymentStatus: string;
+  value: number;
+}
+
+interface RecentMember {
+  _id: string;
+  email: string;
+  name: string;
+  paymentPlan: string;
+  paymentStatus: string;
+}
+
+interface DashboardStats {
+  counts: Record<string, number>;
+  recentEnrollments: RecentEnrollment[];
+  recentMembers: RecentMember[];
+}
+
+const { data: stats, status } = useFetch<DashboardStats>("/api/stats");
 
 const hidePending = ref(true);
 

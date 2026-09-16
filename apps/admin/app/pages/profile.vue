@@ -3,37 +3,40 @@
     <h1 class="text-3xl font-light">Perfil</h1>
 
     <form
-      class="flex flex-col gap-4 rounded border bg-white p-6"
+      class="flex flex-col gap-5 rounded-lg bg-white p-6 shadow-border"
       @submit.prevent="save"
     >
-      <div class="flex flex-col gap-1">
-        <label class="text-sm font-medium">Email</label>
-        <p class="text-sm text-neutral-600">{{ profile?.email }}</p>
-      </div>
+      <AdminField label="Email">
+        <p class="py-1 text-sm text-neutral-600">{{ profile?.email }}</p>
+      </AdminField>
 
-      <div class="flex flex-col gap-1">
-        <label class="text-sm font-medium">
-          Username<span class="text-red-600">*</span>
-          <span class="ml-2 text-xs font-normal text-neutral-500">
-            2-30 caracteres: letras, números, . _ -
-          </span>
-        </label>
+      <AdminField
+        label="Username"
+        required
+        hint="2-30 caracteres: letras, números, . _ -"
+        html-for="profile-username"
+      >
         <input
+          id="profile-username"
           v-model="username"
           type="text"
           required
-          class="rounded border bg-white px-2 py-1.5"
+          class="field-input"
         />
-      </div>
+      </AdminField>
 
-      <div class="flex flex-col gap-1">
-        <label class="text-sm font-medium">Fotografia</label>
+      <AdminField label="Fotografia">
         <AdminMediaUpload v-model="avatarKey" accept="image/*" />
-      </div>
+      </AdminField>
 
-      <p v-if="error" class="text-sm text-red-600">{{ error }}</p>
+      <p
+        v-if="error"
+        class="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700"
+      >
+        {{ error }}
+      </p>
 
-      <div>
+      <div class="border-t border-neutral-100 pt-5">
         <UiButton type="submit" :loading="saving">Guardar</UiButton>
       </div>
     </form>

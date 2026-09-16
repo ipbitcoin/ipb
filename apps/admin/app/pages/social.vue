@@ -2,10 +2,10 @@
   <div class="flex flex-col gap-6">
     <div class="flex items-center justify-between">
       <h1 class="text-3xl font-light">Ideias</h1>
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-4">
         <NuxtLink
           to="/c/ideaCategories"
-          class="text-sm text-neutral-500 underline"
+          class="focus-ring rounded text-sm text-neutral-500 transition-colors duration-100 hover:text-neutral-900"
         >
           Gerir categorias
         </NuxtLink>
@@ -35,7 +35,7 @@
             <span
               v-for="platform in card.platforms"
               :key="platform"
-              class="rounded border px-1.5 py-0.5 text-[10px] uppercase tracking-wider text-neutral-500"
+              class="rounded px-1.5 py-0.5 text-[10px] tracking-wider text-neutral-500 uppercase shadow-[0_0_0_1px_oklch(0_0_0/0.08)]"
             >
               {{ platformLabel(platform) }}
             </span>
@@ -45,12 +45,11 @@
     </KanbanBoard>
 
     <IdeaEditor
-      v-if="editorOpen"
+      v-model:open="editorOpen"
       :idea="editingIdea"
       :categories="categories ?? []"
       :default-status="editorStatus"
       :default-order="appendOrder(ideas ?? [], editorStatus)"
-      @close="editorOpen = false"
       @saved="onSaved"
     />
   </div>

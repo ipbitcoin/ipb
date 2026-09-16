@@ -3,7 +3,7 @@
     v-if="avatarKey"
     :src="url"
     alt=""
-    class="shrink-0 rounded-full border object-cover"
+    class="shrink-0 rounded-full object-cover outline -outline-offset-1 outline-black/10"
     :class="sizeClass"
   />
   <span

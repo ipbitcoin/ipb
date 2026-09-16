@@ -1,26 +1,29 @@
 <template>
   <div class="flex items-start gap-4 overflow-x-auto pb-4">
+    <!-- Column 16px radius, 8px padding, cards 8px radius: concentric -->
     <section
       v-for="column in columns"
       :key="column.key"
-      class="flex w-64 shrink-0 flex-col gap-2 rounded border bg-white p-2"
+      class="flex w-64 shrink-0 flex-col gap-2 rounded-2xl bg-white p-2 shadow-border"
       @dragover.prevent="onColumnDragOver(column.key)"
       @drop.prevent="onDrop(column.key)"
     >
-      <header class="flex items-center justify-between px-1">
+      <header class="flex items-center justify-between px-1 py-0.5">
         <h2
-          class="text-xs font-medium uppercase tracking-wider text-neutral-500"
+          class="text-xs font-medium tracking-wider text-neutral-500 uppercase"
         >
           {{ column.label }}
-          <span class="ml-1 font-normal">{{ cardsIn(column.key).length }}</span>
+          <span class="ml-1 font-normal tabular-nums">{{
+            cardsIn(column.key).length
+          }}</span>
         </h2>
         <button
           type="button"
-          class="cursor-pointer rounded px-1.5 text-lg leading-none text-neutral-500 hover:bg-neutral-100"
+          class="focus-ring -my-1 flex size-7 cursor-pointer items-center justify-center rounded-md text-neutral-500 transition-colors duration-100 hover:bg-neutral-100 hover:text-neutral-900"
           :aria-label="`Adicionar em ${column.label}`"
           @click="emit('add', column.key)"
         >
-          +
+          <IconPlus class="size-4" />
         </button>
       </header>
 
@@ -28,23 +31,25 @@
         <template v-for="(card, index) in cardsIn(column.key)" :key="card._id">
           <div
             v-if="isDropAt(column.key, index)"
-            class="h-0.5 rounded bg-black"
+            class="h-0.5 rounded-full bg-brand"
           />
           <article
             draggable="true"
-            class="cursor-grab rounded border bg-white p-3 text-sm shadow-sm hover:border-neutral-400"
+            tabindex="0"
+            class="focus-ring cursor-grab rounded-lg bg-white p-3 text-sm shadow-border transition-[box-shadow,opacity] duration-150 ease-out hover:shadow-border-hover active:cursor-grabbing"
             :class="card._id === draggingId ? 'opacity-40' : ''"
             @dragstart="onDragStart(card._id, $event)"
             @dragend="onDragEnd"
             @dragover.prevent.stop="onCardDragOver(column.key, index, $event)"
             @click="emit('open', card)"
+            @keydown.enter.prevent="emit('open', card)"
           >
             <slot name="card" :card="card" />
           </article>
         </template>
         <div
           v-if="isDropAt(column.key, cardsIn(column.key).length)"
-          class="h-0.5 rounded bg-black"
+          class="h-0.5 rounded-full bg-brand"
         />
       </div>
     </section>

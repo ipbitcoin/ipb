@@ -121,13 +121,13 @@
             <button
               type="submit"
               :disabled="loading"
-              class="group flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-neutral-950 px-5 py-3.5 text-sm font-semibold uppercase tracking-[0.15em] text-white transition-all hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
+              class="group flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-neutral-950 px-5 py-3.5 text-sm font-semibold uppercase tracking-[0.15em] text-white transition-[background-color,scale] duration-150 ease-out hover:bg-neutral-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand active:not-disabled:scale-[0.96] disabled:cursor-not-allowed disabled:opacity-50"
             >
               <span>{{ submitLabel }}</span>
               <svg
                 v-if="!loading"
                 aria-hidden="true"
-                class="size-4 transition-transform group-hover:translate-x-1"
+                class="size-4 transition-transform duration-150 ease-out group-hover:translate-x-1"
                 fill="none"
                 stroke="currentColor"
                 stroke-linecap="round"
@@ -150,7 +150,7 @@
           <button
             v-if="needsSetup"
             type="button"
-            class="self-start text-sm text-neutral-500 transition-opacity hover:opacity-70"
+            class="focus-ring self-start rounded text-sm text-neutral-500 transition-colors duration-100 hover:text-neutral-900"
             @click="resetSetup"
           >
             ← Usar outro email
@@ -164,8 +164,8 @@
 <script setup lang="ts">
 definePageMeta({ layout: false });
 
-const inputClass =
-  "rounded-lg border border-neutral-200 bg-white px-4 py-3 text-base outline-none transition-all placeholder:text-neutral-300 read-only:bg-neutral-100 read-only:text-neutral-500 focus:border-brand focus:ring-4 focus:ring-brand/15";
+// Larger variant of `.field-input` for the sign-in form.
+const inputClass = "field-input rounded-lg px-4 py-3 text-base";
 
 const email = ref("");
 const password = ref("");
