@@ -43,11 +43,7 @@
           <AccordionContent
             class="overflow-hidden data-[state=closed]:animate-slide-up data-[state=open]:animate-slide-down"
           >
-            <!-- Text fades slightly behind the height so it does not
-                 appear to slide in from nowhere -->
-            <div
-              class="flex max-w-2xl flex-col gap-3 pb-7 text-black/60 duration-300 ease-out data-[state=closed]:opacity-0"
-            >
+            <div class="flex max-w-2xl flex-col gap-3 pb-7 text-black/60">
               <p
                 v-for="(line, lineIndex) in answerLines(faq.answer)"
                 :key="lineIndex"

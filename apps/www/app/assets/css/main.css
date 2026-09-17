@@ -56,6 +56,44 @@
   }
 }
 
+/*
+  Scroll/enter reveal, done in CSS rather than JS.
+
+  Content must be readable when JavaScript never runs, so the hidden state is
+  only applied once `.js-reveal-ready` lands on <html> (set by a plugin on the
+  client). Without JS the elements simply render in place.
+*/
+.js-reveal-ready .reveal {
+  opacity: 0;
+  translate: 0 16px;
+}
+
+.js-reveal-ready .reveal-coin {
+  opacity: 0;
+  translate: 0 28px;
+}
+
+.reveal,
+.reveal-coin {
+  transition:
+    opacity 600ms var(--ease-out-strong),
+    translate 600ms var(--ease-out-strong);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.js-reveal-ready .reveal.is-visible,
+.js-reveal-ready .reveal-coin.is-visible {
+  opacity: 1;
+  translate: 0 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-reveal-ready .reveal,
+  .js-reveal-ready .reveal-coin {
+    translate: none;
+  }
+}
+
 /* Route transition. Paired with app.pageTransition in nuxt.config.ts. */
 .page-enter-active {
   transition:

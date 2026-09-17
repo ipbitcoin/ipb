@@ -3,38 +3,25 @@
     <div
       class="section flex min-h-[78vh] flex-col justify-end pt-24 pb-0 sm:min-h-[82vh]"
     >
-      <motion.p
-        class="eyebrow"
-        :initial="reveal.hidden"
-        :animate="reveal.shown"
-        :transition="{ duration: 0.5, ease: EASE_OUT }"
-      >
-        {{ $t("main.eyebrow") }}
-      </motion.p>
+      <p class="reveal eyebrow">{{ $t("main.eyebrow") }}</p>
 
-      <motion.h1
-        class="mt-5 max-w-4xl text-5xl leading-[0.95] font-light tracking-tight text-balance sm:text-7xl lg:text-8xl"
-        :initial="reveal.hidden"
-        :animate="reveal.shown"
-        :transition="{ delay: 0.08, duration: 0.6, ease: EASE_OUT }"
+      <h1
+        class="reveal mt-5 max-w-4xl text-5xl leading-[0.95] font-light tracking-tight text-balance sm:text-7xl lg:text-8xl"
+        style="--reveal-delay: 80ms"
       >
         {{ $t("main.header") }}
-      </motion.h1>
+      </h1>
 
-      <motion.p
-        class="mt-7 max-w-xl text-lg text-balance text-black/60"
-        :initial="reveal.hidden"
-        :animate="reveal.shown"
-        :transition="{ delay: 0.16, duration: 0.6, ease: EASE_OUT }"
+      <p
+        class="reveal mt-7 max-w-xl text-lg text-balance text-black/60"
+        style="--reveal-delay: 160ms"
       >
         {{ $t("main.subheader") }}
-      </motion.p>
+      </p>
 
-      <motion.ul
-        class="mt-10 flex flex-wrap items-center gap-4"
-        :initial="reveal.hidden"
-        :animate="reveal.shown"
-        :transition="{ delay: 0.24, duration: 0.6, ease: EASE_OUT }"
+      <ul
+        class="reveal mt-10 flex flex-wrap items-center gap-4"
+        style="--reveal-delay: 240ms"
       >
         <li>
           <UiButton size="lg" :to="localePath('manifesto')">
@@ -46,7 +33,7 @@
             {{ $t("main.cta.join") }}
           </UiButton>
         </li>
-      </motion.ul>
+      </ul>
 
       <!-- Coins sit on the hero's bottom edge and overlap the divider.
            Decorative: the headline already carries the meaning. -->
@@ -54,19 +41,13 @@
         aria-hidden="true"
         class="pointer-events-none mt-12 -mb-10 flex items-end justify-between gap-2 sm:-mb-14 lg:-mb-20"
       >
-        <motion.img
+        <img
           v-for="(coin, index) in COINS"
-          :key="coin.src"
-          :src="coin.src"
+          :key="coin"
+          :src="coin"
           alt=""
-          class="w-[22%] max-w-[170px] object-contain"
-          :initial="{ opacity: 0, y: 28 }"
-          :animate="{ opacity: 1, y: 0 }"
-          :transition="{
-            delay: 0.36 + index * 0.09,
-            duration: 0.7,
-            ease: EASE_OUT,
-          }"
+          class="reveal-coin w-[22%] max-w-[170px] object-contain"
+          :style="{ '--reveal-delay': `${360 + index * 90}ms` }"
         />
       </div>
     </div>
@@ -74,24 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import { motion } from "motion-v";
-
 const localePath = useLocalePath();
 
-const EASE_OUT = [0.23, 1, 0.32, 1];
-
-const COINS = [
-  { src: "/coin1.png" },
-  { src: "/coin2.png" },
-  { src: "/coin3.png" },
-  { src: "/coin4.svg" },
-];
-
-// One shared enter definition; reduced motion drops the rise, keeps the fade.
-const reducedMotion = useReducedMotion();
-
-const reveal = computed(() => ({
-  hidden: reducedMotion.value ? { opacity: 0 } : { opacity: 0, y: 16 },
-  shown: { opacity: 1, y: 0 },
-}));
+const COINS = ["/coin1.png", "/coin2.png", "/coin3.png", "/coin4.svg"];
 </script>
