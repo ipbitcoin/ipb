@@ -265,7 +265,7 @@
                 />
                 <h3 class="text-xl font-semibold">António Neves da Silva</h3>
                 <p>Fundador da MoT Inteligência Energética</p>
-                <p>Ex-Diretor e Vice-Presidente da Veolia</p>
+                <p>Ex-Diretor e Vice-Presidente na Veolia</p>
                 <p>
                   Pós-graduação MIT Portugal e Licenciatura em Eng.ª Mecânica no
                   Instituto Superior Técnico
