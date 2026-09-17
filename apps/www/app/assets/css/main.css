@@ -42,7 +42,7 @@
 
   /* Vertical rhythm between major sections. */
   .section-gap {
-    @apply py-20 sm:py-28;
+    @apply py-14 sm:py-20;
   }
 
   /* Small uppercase category label above section headings. */

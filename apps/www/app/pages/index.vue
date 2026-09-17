@@ -9,7 +9,7 @@
       :title="$t('news.title')"
       :articles="newsArticles"
       :pending="pendingArticles"
-      :initial-count="3"
+      :initial-count="6"
       :to="localePath('noticias')"
       :empty-label="$t('news.empty')"
     />
@@ -23,7 +23,7 @@
       :description="$t('research.description')"
       :articles="researchArticles"
       :pending="pendingArticles"
-      :initial-count="3"
+      :initial-count="6"
       :to="localePath('investigacao')"
       show-category
       :show-date="false"
@@ -35,7 +35,7 @@
       :title="$t('education.title')"
       :articles="educationArticles"
       :pending="pendingArticles"
-      :initial-count="3"
+      :initial-count="6"
       :to="localePath('educacao')"
       :show-date="false"
     />

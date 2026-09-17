@@ -32,8 +32,9 @@
     "cta": "Subscribe",
     "success": "Thank you for subscribing!",
     "error": "Error subscribing. Please try again later.",
-    "eyebrow": "Newsletter",
-    "submit": "Subscribe to newsletter"
+    "eyebrow": "Stay informed",
+    "submit": "Subscribe to newsletter",
+    "footerLabel": "Newsletter"
   },
   "values": {
     "title": "Values",
@@ -103,7 +104,7 @@
   "documents": {
     "title": "Documents",
     "cta": "Read document",
-    "eyebrow": "Documentation",
+    "eyebrow": "Public record",
     "empty": "No documents."
   },
   "faq": {

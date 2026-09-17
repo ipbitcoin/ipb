@@ -32,8 +32,9 @@
     "cta": "Subscrever",
     "success": "Obrigado pela sua subscrição!",
     "error": "Erro ao subscrever. Tente novamente mais tarde.",
-    "eyebrow": "Newsletter",
-    "submit": "Subscrever newsletter"
+    "eyebrow": "Fique a par",
+    "submit": "Subscrever newsletter",
+    "footerLabel": "Newsletter"
   },
   "values": {
     "title": "Valores",
@@ -103,7 +104,7 @@
   "documents": {
     "title": "Documentos",
     "cta": "Ler documento",
-    "eyebrow": "Documentação",
+    "eyebrow": "Registo público",
     "empty": "Sem documentos."
   },
   "faq": {

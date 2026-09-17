@@ -1,8 +1,8 @@
 <template>
   <section class="relative overflow-hidden border-b border-black/10">
-    <div
-      class="section flex min-h-[78vh] flex-col justify-end pt-24 pb-0 sm:min-h-[82vh]"
-    >
+    <!-- Height comes from the content, not the viewport: a tall hero on a
+         short headline is just empty space above the fold. -->
+    <div class="section flex flex-col justify-end pt-12 pb-0 sm:pt-16">
       <p class="reveal eyebrow">{{ $t("main.eyebrow") }}</p>
 
       <h1

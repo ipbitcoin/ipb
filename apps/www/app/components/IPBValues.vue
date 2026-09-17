@@ -21,7 +21,9 @@
         <h3 class="text-2xl leading-tight font-light text-balance md:text-3xl">
           {{ value.title }}
         </h3>
-        <p class="col-start-2 max-w-2xl text-black/60 md:col-start-3 md:text-lg">
+        <p
+          class="col-start-2 max-w-2xl text-black/60 md:col-start-3 md:text-lg"
+        >
           {{ value.description }}
         </p>
       </li>

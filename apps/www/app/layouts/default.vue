@@ -94,7 +94,7 @@
             <p
               class="text-xs font-medium tracking-[0.18em] text-white/40 uppercase"
             >
-              {{ $t("newsletter.eyebrow") }}
+              {{ $t("newsletter.footerLabel") }}
             </p>
             <p class="max-w-xs text-lg text-balance text-white/70">
               {{ $t("newsletter.descriptionFooter") }}
@@ -151,11 +151,6 @@
                 </NuxtLink>
               </li>
               <li>
-                <NuxtLink :class="footerLinkClass" :to="localePath('noticias')">
-                  {{ $t("nav.news") }}
-                </NuxtLink>
-              </li>
-              <li>
                 <NuxtLink
                   :class="footerLinkClass"
                   to="https://bitcoin.org/bitcoin.pdf"
@@ -171,6 +166,11 @@
           <div class="flex flex-col gap-4">
             <h3 :class="footerHeadingClass">{{ $t("nav.information") }}</h3>
             <ul class="flex flex-col gap-3">
+              <li>
+                <NuxtLink :class="footerLinkClass" :to="localePath('noticias')">
+                  {{ $t("nav.news") }}
+                </NuxtLink>
+              </li>
               <li>
                 <NuxtLink
                   :class="footerLinkClass"
@@ -255,12 +255,12 @@
         </div>
       </div>
 
-      <!-- Oversized wordmark bleeding off the bottom edge -->
+      <!-- Oversized wordmark. Fully visible, sitting on the bottom edge. -->
       <div
         aria-hidden="true"
-        class="relative z-10 -mb-[3%] w-full overflow-hidden px-6 sm:px-8"
+        class="relative z-10 w-full overflow-hidden px-6 pb-8 sm:px-8"
       >
-        <IPBLogoInverse class="w-full opacity-[0.14]" />
+        <IPBLogoInverse class="w-full opacity-[0.16]" />
       </div>
     </footer>
   </div>

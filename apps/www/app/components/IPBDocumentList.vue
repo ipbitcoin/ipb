@@ -6,30 +6,37 @@
 
     <IPBSkeleton v-if="pending" variant="text" :count="3" class="mt-8" />
 
-    <ul v-else-if="documents?.length" class="mt-8 max-w-3xl">
+    <!-- Rows span the section; the hover tint is inset so the hit area
+         reads as deliberate rather than running to the page edge. -->
+    <ul v-else-if="documents?.length" class="mt-8 border-t border-black/10">
       <li v-for="doc in documents" :key="doc.documentId">
         <NuxtLink
           :to="doc.document.url"
           target="_blank"
           external
-          class="focus-ring group flex items-center justify-between gap-6 border-t border-black/10 py-4 transition-colors duration-150 ease-out hover:bg-black/[0.02]"
+          class="focus-ring group -mx-4 flex items-center justify-between gap-6 rounded-[3px] border-b border-black/10 px-4 py-5 transition-colors duration-150 ease-out hover:bg-black/3"
         >
           <span class="flex min-w-0 items-center gap-3">
             <IconDocument
-              class="size-4 shrink-0 text-black/35 transition-colors duration-150 ease-out group-hover:text-black/70"
+              class="size-4 shrink-0 text-black/30 transition-colors duration-150 ease-out group-hover:text-black/70"
             />
-            <span class="truncate text-sm">{{ doc.title }}</span>
+            <span class="truncate">{{ doc.title }}</span>
           </span>
           <span
-            class="shrink-0 text-xs tracking-wider text-black/40 uppercase transition-colors duration-150 ease-out group-hover:text-black"
+            class="hidden shrink-0 text-xs tracking-[0.14em] text-black/40 uppercase transition-colors duration-150 ease-out group-hover:text-black sm:inline"
           >
             {{ $t("documents.cta") }}
             <span
-              class="inline-block transition-transform duration-150 ease-out group-hover:translate-x-0.5"
+              class="ml-1 inline-block transition-transform duration-150 ease-out group-hover:translate-x-0.5"
               aria-hidden="true"
               >&rarr;</span
             >
           </span>
+          <span
+            class="shrink-0 text-black/40 transition-colors duration-150 ease-out group-hover:text-black sm:hidden"
+            aria-hidden="true"
+            >&rarr;</span
+          >
         </NuxtLink>
       </li>
     </ul>

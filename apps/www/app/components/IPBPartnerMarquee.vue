@@ -1,41 +1,33 @@
 <template>
-  <section id="partners" class="section-gap border-t border-black/10">
-    <div class="section">
-      <p class="eyebrow">{{ $t("partners.eyebrow") }}</p>
-      <h2 class="section-title mt-4">{{ $t("partners.title") }}</h2>
-    </div>
+  <section id="partners" class="section section-gap">
+    <p class="eyebrow">{{ $t("partners.eyebrow") }}</p>
+    <h2 class="section-title mt-4">{{ $t("partners.title") }}</h2>
 
-    <IPBSkeleton
-      v-if="pending"
-      variant="text"
-      :count="2"
-      class="section mt-12"
-    />
+    <IPBSkeleton v-if="pending" variant="text" :count="2" class="mt-10" />
 
     <template v-else-if="partners?.length">
-      <!-- Visual strip. Duplicated list + translateX(-50%) = seamless loop.
-           Hovering anywhere pauses the whole track; the hovered logo alone
-           returns to full colour and names itself. -->
+      <!-- Track holds two identical halves; -50% lands exactly on the seam.
+           Hovering anywhere pauses it; the hovered logo alone colours up. -->
       <div
         aria-hidden="true"
-        class="group mt-12 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]"
+        class="marquee-mask group relative mt-10 overflow-hidden"
       >
         <div
-          class="marquee-track flex w-max items-center gap-16 pr-16 group-hover:[animation-play-state:paused] sm:gap-24 sm:pr-24"
+          class="marquee-track flex w-max items-center group-hover:[animation-play-state:paused]"
         >
           <div
             v-for="(partner, index) in loopedPartners"
             :key="`${partner.documentId}-${index}`"
-            class="relative flex h-24 shrink-0 flex-col items-center justify-center"
+            class="group/logo relative flex h-20 w-44 shrink-0 flex-col items-center justify-center sm:w-56"
           >
             <img
               :src="partner.logo.url"
               :alt="partner.name"
               loading="lazy"
-              class="max-h-14 w-auto max-w-[180px] object-contain opacity-45 grayscale transition-[opacity,filter] duration-300 ease-out hover:opacity-100 hover:grayscale-0"
+              class="max-h-10 w-auto max-w-[150px] object-contain opacity-40 grayscale transition-[opacity,filter] duration-300 ease-out group-hover/logo:opacity-100 group-hover/logo:grayscale-0"
             />
             <span
-              class="pointer-events-none absolute -bottom-1 text-[11px] tracking-[0.14em] text-black/50 uppercase opacity-0 transition-opacity duration-300 ease-out"
+              class="pointer-events-none absolute bottom-0 text-[10px] tracking-[0.14em] whitespace-nowrap text-black/45 uppercase opacity-0 transition-opacity duration-300 ease-out group-hover/logo:opacity-100"
             >
               {{ partner.name }}
             </span>
@@ -44,7 +36,7 @@
       </div>
 
       <!-- Real, reachable list: the strip above is decorative -->
-      <ul class="section sr-only">
+      <ul class="sr-only">
         <li v-for="partner in partners" :key="partner.documentId">
           <a v-if="partner.link" :href="partner.link">{{ partner.name }}</a>
           <span v-else>{{ partner.name }}</span>
@@ -67,18 +59,18 @@ const props = defineProps<{
   pending?: boolean;
 }>();
 
-// Two copies so the -50% keyframe lands exactly on the seam. Short lists get
-// padded first, otherwise a couple of logos leave visible gaps mid-scroll.
+/** Enough logos that one half always overflows the container, so the loop
+ *  never shows a gap. Then duplicated for the seamless -50% wrap. */
 const loopedPartners = computed(() => {
   const list = props.partners ?? [];
   if (list.length === 0) {
     return [];
   }
-  const padded = [...list];
-  while (padded.length < 6) {
-    padded.push(...list);
+  const half = [...list];
+  while (half.length < 8) {
+    half.push(...list);
   }
-  return [...padded, ...padded];
+  return [...half, ...half];
 });
 </script>
 
@@ -87,8 +79,14 @@ const loopedPartners = computed(() => {
   animation: var(--animate-marquee);
 }
 
-/* Reveal the name alongside its own logo without a wrapper hover state */
-.marquee-track > div:hover span {
-  opacity: 1;
+/* Logos dissolve into the page at both edges rather than being clipped. */
+.marquee-mask {
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    #000 12%,
+    #000 88%,
+    transparent 100%
+  );
 }
 </style>
