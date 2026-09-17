@@ -1,11 +1,31 @@
 <template>
   <div
-    class="inline-flex items-center gap-4 border-b px-1 font-body justify-between"
+    class="inline-flex items-center justify-between gap-4 border-b border-black/25 px-1"
   >
     <span>{{ truncated }}</span>
-    <button @click="copyText" class="cursor-pointer">
-      <IconClipboard v-if="!wasCopied" class="size-5" />
-      <IconCheck v-else class="size-5" />
+    <!-- Both icons stay mounted so the swap cross-fades in both directions -->
+    <button
+      class="relative size-5 shrink-0 cursor-pointer rounded transition-colors duration-100 hover:text-black/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+      type="button"
+      :aria-label="wasCopied ? copiedLabel : copyLabel"
+      @click="copyText"
+    >
+      <IconCheck
+        class="absolute inset-0 size-5 transition-[opacity,filter,scale] duration-300 ease-[cubic-bezier(0.2,0,0,1)]"
+        :class="
+          wasCopied
+            ? 'scale-100 opacity-100 blur-0'
+            : 'scale-[0.25] opacity-0 blur-[4px]'
+        "
+      />
+      <IconClipboard
+        class="size-5 transition-[opacity,filter,scale] duration-300 ease-[cubic-bezier(0.2,0,0,1)]"
+        :class="
+          wasCopied
+            ? 'scale-[0.25] opacity-0 blur-[4px]'
+            : 'scale-100 opacity-100 blur-0'
+        "
+      />
     </button>
   </div>
 </template>
@@ -13,11 +33,17 @@
 <script setup lang="ts">
 interface CopyTextProps {
   text: string;
+  copyLabel?: string;
+  copiedLabel?: string;
 }
 
-const props = defineProps<CopyTextProps>();
+const props = withDefaults(defineProps<CopyTextProps>(), {
+  copiedLabel: "Copiado",
+  copyLabel: "Copiar",
+});
 
 const wasCopied = ref(false);
+let resetTimer: ReturnType<typeof setTimeout> | undefined;
 
 const truncated = computed(
   () => `${props.text.slice(0, 10)}...${props.text.slice(-10)}`
@@ -26,8 +52,11 @@ const truncated = computed(
 function copyText() {
   navigator.clipboard.writeText(String(props.text));
   wasCopied.value = true;
-  setTimeout(() => {
+  clearTimeout(resetTimer);
+  resetTimer = setTimeout(() => {
     wasCopied.value = false;
   }, 2000);
 }
+
+onBeforeUnmount(() => clearTimeout(resetTimer));
 </script>

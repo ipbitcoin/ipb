@@ -1,30 +1,31 @@
 <template>
   <NuxtLink
     :to="localePath({ name: 'artigo-slug', params: { slug } })"
-    class="relative group border overflow-hidden max-w-[400px]"
+    class="group focus-ring relative max-w-[400px] overflow-hidden border border-black/15 transition-colors duration-150 ease-out hover:border-black/40"
   >
-    <div class="overflow-hidden w-full h-60">
+    <div class="h-60 w-full overflow-hidden">
       <img
         :src="image"
         :alt="title"
-        class="w-full transition-transform duration-500 group-hover:scale-105 object-cover h-full"
+        loading="lazy"
+        class="h-full w-full object-cover outline -outline-offset-1 outline-black/10 transition-transform duration-500 ease-out group-hover:scale-105"
       />
     </div>
     <div class="flex flex-col p-4">
-      <span v-if="category" class="uppercase text-sm">{{ category }}</span>
+      <span v-if="category" class="text-sm uppercase">{{ category }}</span>
       <NuxtTime
         v-if="createdAt"
-        class="uppercase text-sm text-neutral-500"
+        class="text-sm text-neutral-500 uppercase tabular-nums"
         :datetime="createdAt"
         :locale="locale"
         day="2-digit"
         month="2-digit"
         year="numeric"
       />
-      <div class="flex justify-between gap-4 items-baseline">
+      <div class="flex items-baseline justify-between gap-4">
         <h3 class="text-xl">{{ title }}</h3>
         <svg
-          class="stroke-[1.5px] -mr-1 ml-1.5 min-h-[14px] min-w-[14px]"
+          class="-mr-1 ml-1.5 min-h-[14px] min-w-[14px] stroke-[1.5px]"
           fill="none"
           stroke="currentColor"
           width="14"
@@ -33,11 +34,11 @@
           aria-hidden="true"
         >
           <path
-            class="opacity-0 transition group-hover:opacity-100"
+            class="opacity-0 transition-opacity duration-150 ease-out group-hover:opacity-100"
             d="M0 5h7"
           ></path>
           <path
-            class="transition group-hover:translate-x-[3px]"
+            class="transition-transform duration-150 ease-out group-hover:translate-x-[3px]"
             d="M1 1l4 4-4 4"
           ></path>
         </svg>

@@ -5,8 +5,9 @@
         {{ $t("nav.manifest") }}
       </h1>
       <p
-        v-for="p in locale === 'pt' ? manifestPt : manifestEn"
-        class="text-lg max-w-3xl"
+        v-for="(p, index) in locale === 'pt' ? manifestPt : manifestEn"
+        :key="index"
+        class="max-w-3xl text-lg"
         :class="[p.startsWith('*') ? '' : 'py-2']"
       >
         {{ p }}

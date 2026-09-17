@@ -7,7 +7,7 @@
       <img
         :src="article.main_image.url"
         :alt="article.title"
-        class="max-w-[400px]"
+        class="max-w-[400px] outline -outline-offset-1 outline-black/10"
       />
       <h1 class="text-4xl uppercase font-semibold">{{ article?.title }}</h1>
       <div class="flex flex-col gap-1">
@@ -26,7 +26,7 @@
                   params: { slug: author.slug },
                 })
               "
-              class="underline underline-offset-2 hover:no-underline"
+              class="focus-ring rounded underline underline-offset-2 transition-[text-decoration-color] duration-150 ease-out hover:decoration-transparent"
               >{{ author.name }}</NuxtLink
             ><span v-if="i < (article.authors?.length ?? 0) - 1">, </span>
           </template>
@@ -39,7 +39,7 @@
       <div v-if="article.audio">
         <button
           v-if="!listenToAudio"
-          class="cursor-pointer inline-flex items-center gap-1.5 font-medium border rounded-md py-1 px-1.5 hover:bg-gray-100 transition-colors duration-200"
+          class="focus-ring inline-flex cursor-pointer items-center gap-1.5 rounded-md border border-black/20 px-1.5 py-1 font-medium transition-[background-color,scale] duration-150 ease-out hover:bg-black/5 active:scale-[0.96]"
           @click="listenToAudio = true"
         >
           <IconHeadphones class="size-5" />

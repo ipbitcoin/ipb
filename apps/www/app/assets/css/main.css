@@ -4,3 +4,44 @@
 
 /* Scan the shared UI layer for Tailwind classes (outside default sources) */
 @source "../../../../../packages/ui/components";
+
+@layer components {
+  /* Boxed form control. Keeps the brand's 3px radius and hairline border. */
+  .field-box {
+    @apply w-full rounded-[3px] border border-black/25 bg-white px-4 py-2 text-sm text-black outline-none transition-[border-color,box-shadow] duration-150 ease-out placeholder:text-black/40 focus:border-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand;
+  }
+
+  /* Underlined form control, used inside the enrollment form. */
+  .field-line {
+    @apply border-b border-black/25 bg-transparent px-1 py-2 text-black outline-none transition-[border-color] duration-150 ease-out placeholder:text-black/30 focus:border-black focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand;
+  }
+
+  /* Keyboard focus ring shared by links and icon buttons. */
+  .focus-ring {
+    @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand;
+  }
+
+  /* Chip-style toggle used by the donation presets and tabs. */
+  .chip {
+    @apply cursor-pointer rounded-[3px] border px-4 py-2 text-sm font-semibold transition-[background-color,color,border-color,scale] duration-150 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand active:scale-[0.96];
+  }
+
+  .chip-on {
+    @apply border-black bg-black text-white;
+  }
+
+  .chip-off {
+    @apply border-black/25 bg-white text-black hover:bg-black/5;
+  }
+}
+
+/* Reduced motion: keep opacity cues, drop movement and scale. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --animate-scale-in: fadeIn 150ms ease-out;
+    --animate-scale-out: fadeOut 100ms ease-out;
+    --animate-fade-up: fadeIn 200ms ease-out both;
+    --animate-slide-down: fadeIn 150ms ease-out;
+    --animate-slide-up: fadeOut 100ms ease-out;
+  }
+}

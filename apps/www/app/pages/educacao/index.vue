@@ -17,7 +17,7 @@
 
         <div class="flex flex-col lg:flex-row gap-10 items-start">
           <div class="flex-1 flex flex-col gap-8">
-            <div class="grid grid-cols-3 gap-x-4 gap-y-8">
+            <div class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3">
               <IPBBookCard
                 v-for="book in visibleBooks"
                 :key="book.documentId"
@@ -36,14 +36,14 @@
               <button
                 v-if="hasMoreBooks"
                 @click="showMore"
-                class="cursor-pointer border border-black px-6 py-2.5 text-sm font-medium uppercase tracking-wide hover:bg-black hover:text-white transition-colors duration-200"
+                class="focus-ring cursor-pointer border border-black px-6 py-2.5 text-sm font-medium tracking-wide uppercase transition-[background-color,color,scale] duration-150 ease-out hover:bg-black hover:text-white active:scale-[0.96]"
               >
                 {{ $t("education.books.showMore") }}
               </button>
               <button
                 v-if="canShowLess"
                 @click="showLess"
-                class="cursor-pointer border border-black/30 px-6 py-2.5 text-sm font-medium uppercase tracking-wide hover:border-black transition-colors duration-200"
+                class="focus-ring cursor-pointer border border-black/30 px-6 py-2.5 text-sm font-medium tracking-wide uppercase transition-[border-color,scale] duration-150 ease-out hover:border-black active:scale-[0.96]"
               >
                 {{ $t("education.books.showLess") }}
               </button>
@@ -60,10 +60,10 @@
               {{ $t("education.books.filterByPublisher") }}
             </p>
             <div class="flex flex-col gap-2">
-              <label class="flex items-center gap-2 cursor-pointer">
+              <label class="flex cursor-pointer items-center gap-2">
                 <input
-                  type="radio"
                   v-model="selectedPublisher"
+                  type="radio"
                   value=""
                   class="accent-black"
                 />
@@ -74,11 +74,11 @@
               <label
                 v-for="publisher in publishers"
                 :key="publisher"
-                class="flex items-center gap-2 cursor-pointer"
+                class="flex cursor-pointer items-center gap-2"
               >
                 <input
-                  type="radio"
                   v-model="selectedPublisher"
+                  type="radio"
                   :value="publisher"
                   class="accent-black"
                 />

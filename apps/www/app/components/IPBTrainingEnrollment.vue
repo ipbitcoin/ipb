@@ -25,10 +25,12 @@
     <!-- ── LOADING ────────────────────────────────────────────────────── -->
     <div
       v-else-if="trainingsLoading"
+      role="status"
       class="flex items-center gap-2 text-sm text-black/50"
     >
       <span
-        class="animate-spin inline-block w-4 h-4 border-2 border-black/20 border-t-black rounded-full"
+        aria-hidden="true"
+        class="inline-block size-4 animate-spin rounded-full border-2 border-black/20 border-t-black"
       ></span>
       <span>{{
         locale === "pt" ? "A carregar datas..." : "Loading dates..."
@@ -53,11 +55,11 @@
             v-for="training in trainings"
             :key="training.documentId"
             :class="[
-              'flex items-start gap-3 border p-4 rounded-[3px] cursor-pointer transition-colors',
+              'flex cursor-pointer items-start gap-3 rounded-[3px] border p-4 transition-[border-color,background-color] duration-150 ease-out has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-brand',
               form.trainingDocumentId === training.documentId
                 ? 'border-black bg-black/5'
                 : 'border-black/25 hover:border-black/50',
-              training.stock_left === 0 ? 'opacity-40 cursor-not-allowed' : '',
+              training.stock_left === 0 ? 'cursor-not-allowed opacity-40' : '',
             ]"
           >
             <input
@@ -82,7 +84,7 @@
                 :href="training.location_url"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-sm text-black/60 underline underline-offset-2 hover:text-black transition-colors"
+                class="focus-ring rounded text-sm text-black/60 underline underline-offset-2 transition-colors duration-150 ease-out hover:text-black"
                 @click.stop
                 >{{ training.location }}</a
               >
@@ -107,7 +109,11 @@
             </div>
           </label>
         </div>
-        <p v-if="errors.trainingDocumentId" class="text-sm text-red-600">
+        <p
+          v-if="errors.trainingDocumentId"
+          role="alert"
+          class="text-sm text-red-600"
+        >
           {{ errors.trainingDocumentId }}
         </p>
       </div>
@@ -131,7 +137,7 @@
             class="w-full py-2"
             @blur="validateField('name')"
           />
-          <p v-if="errors.name" class="text-sm text-red-600">
+          <p v-if="errors.name" role="alert" class="text-sm text-red-600">
             {{ errors.name }}
           </p>
         </div>
@@ -146,7 +152,7 @@
             class="w-full py-2"
             @blur="validateField('email')"
           />
-          <p v-if="errors.email" class="text-sm text-red-600">
+          <p v-if="errors.email" role="alert" class="text-sm text-red-600">
             {{ errors.email }}
           </p>
         </div>
@@ -182,7 +188,7 @@
               inputmode="numeric"
               maxlength="2"
               placeholder="DD"
-              class="font-body placeholder:text-black/30 focus:outline-none text-black border-b px-1 py-2 bg-transparent w-10 text-center"
+              class="field-line w-10 text-center tabular-nums"
               @blur="validateField('birthday')"
             />
             <span class="text-black/30">/</span>
@@ -192,7 +198,7 @@
               inputmode="numeric"
               maxlength="2"
               placeholder="MM"
-              class="font-body placeholder:text-black/30 focus:outline-none text-black border-b px-1 py-2 bg-transparent w-10 text-center"
+              class="field-line w-10 text-center tabular-nums"
               @blur="validateField('birthday')"
             />
             <span class="text-black/30">/</span>
@@ -202,11 +208,11 @@
               inputmode="numeric"
               maxlength="4"
               :placeholder="locale === 'pt' ? 'AAAA' : 'YYYY'"
-              class="font-body placeholder:text-black/30 focus:outline-none text-black border-b px-1 py-2 bg-transparent w-16 text-center"
+              class="field-line w-16 text-center tabular-nums"
               @blur="validateField('birthday')"
             />
           </div>
-          <p v-if="errors.birthday" class="text-sm text-red-600">
+          <p v-if="errors.birthday" role="alert" class="text-sm text-red-600">
             {{ errors.birthday }}
           </p>
         </div>
@@ -229,7 +235,9 @@
             class="w-full py-2"
             @blur="validateField('nif')"
           />
-          <p v-if="errors.nif" class="text-sm text-red-600">{{ errors.nif }}</p>
+          <p v-if="errors.nif" role="alert" class="text-sm text-red-600">
+            {{ errors.nif }}
+          </p>
         </div>
       </div>
 
@@ -315,11 +323,15 @@
                 ? 'Partilhe as suas expectativas...'
                 : 'Share your expectations...'
             "
-            class="font-body text-base placeholder:text-black/45 focus:outline-none text-black border border-black/25 rounded-[3px] px-3 py-2 resize-none focus:border-black transition-colors w-full"
+            class="field-box resize-none text-base"
             @input="validateField('expectations')"
           ></textarea>
           <div class="flex justify-between">
-            <p v-if="errors.expectations" class="text-sm text-red-600">
+            <p
+              v-if="errors.expectations"
+              role="alert"
+              class="text-sm text-red-600"
+            >
               {{ errors.expectations }}
             </p>
             <p class="text-xs text-black/40 ml-auto">
@@ -330,12 +342,12 @@
       </div>
 
       <!-- ── PREÇO E SUBMIT ──────────────────────────────────────────── -->
-      <div class="flex flex-col gap-4 border-t pt-6">
+      <div class="flex flex-col gap-4 border-t border-black/10 pt-6">
         <div class="flex items-center justify-between">
           <span class="text-base font-medium">{{
             locale === "pt" ? "Total (IVA incluído)" : "Total (VAT included)"
           }}</span>
-          <span class="text-2xl font-bold">200 €</span>
+          <span class="text-2xl font-bold tabular-nums">200 €</span>
         </div>
         <UiButton type="submit" size="lg" class="w-full sm:w-auto">
           {{ locale === "pt" ? "Inscrever e pagar" : "Register and pay" }}
@@ -353,10 +365,12 @@
     <!-- ── A SUBMETER ────────────────────────────────────────────────── -->
     <div
       v-else-if="paymentState === 'submitting'"
-      class="flex flex-col gap-4 py-8 items-center text-center"
+      role="status"
+      class="flex flex-col items-center gap-4 py-8 text-center"
     >
       <span
-        class="animate-spin inline-block w-8 h-8 border-2 border-black/20 border-t-black rounded-full"
+        aria-hidden="true"
+        class="inline-block size-8 animate-spin rounded-full border-2 border-black/20 border-t-black"
       ></span>
       <p class="text-base font-medium">
         {{ locale === "pt" ? "A processar..." : "Processing..." }}
@@ -388,12 +402,12 @@
       <!-- Container onde o Stripe Payment Element é montado -->
       <div id="stripe-payment-element" class="min-h-[200px]"></div>
 
-      <div class="flex flex-col gap-4 border-t pt-6">
+      <div class="flex flex-col gap-4 border-t border-black/10 pt-6">
         <div class="flex items-center justify-between">
           <span class="text-base font-medium">{{
             locale === "pt" ? "Total" : "Total"
           }}</span>
-          <span class="text-2xl font-bold">200 €</span>
+          <span class="text-2xl font-bold tabular-nums">200 €</span>
         </div>
         <UiButton
           size="lg"
@@ -409,10 +423,12 @@
     <!-- ── A CONFIRMAR PAGAMENTO ──────────────────────────────────────── -->
     <div
       v-else-if="paymentState === 'confirming'"
-      class="flex flex-col gap-4 py-8 items-center text-center"
+      role="status"
+      class="flex flex-col items-center gap-4 py-8 text-center"
     >
       <span
-        class="animate-spin inline-block w-8 h-8 border-2 border-black/20 border-t-black rounded-full"
+        aria-hidden="true"
+        class="inline-block size-8 animate-spin rounded-full border-2 border-black/20 border-t-black"
       ></span>
       <p class="text-base font-medium">
         {{
@@ -431,13 +447,14 @@
     <!-- ── SUCESSO ─────────────────────────────────────────────────────── -->
     <div
       v-else-if="paymentState === 'success'"
+      role="status"
       class="flex flex-col gap-6 py-4"
     >
-      <div class="flex flex-col gap-3 items-center text-center">
+      <div class="flex flex-col items-center gap-3 text-center">
         <div
-          class="w-16 h-16 rounded-full bg-black flex items-center justify-center"
+          class="flex size-16 items-center justify-center rounded-full bg-black"
         >
-          <span class="text-2xl text-white font-bold">&#x2713;</span>
+          <IconCheck class="size-8 text-white" aria-hidden="true" />
         </div>
         <h3 class="text-xl font-semibold">
           {{
@@ -457,7 +474,11 @@
     </div>
 
     <!-- ── ERRO ───────────────────────────────────────────────────────── -->
-    <div v-else-if="paymentState === 'error'" class="flex flex-col gap-4 py-4">
+    <div
+      v-else-if="paymentState === 'error'"
+      role="alert"
+      class="flex flex-col gap-4 py-4"
+    >
       <h3 class="text-lg font-semibold">
         {{ locale === "pt" ? "Ocorreu um problema" : "Something went wrong" }}
       </h3>

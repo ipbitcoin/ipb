@@ -4,24 +4,16 @@
     <div class="flex gap-2">
       <button
         type="button"
-        :class="[
-          'px-4 py-1.5 text-sm font-semibold uppercase rounded-[3px] border transition-colors duration-150',
-          modelValue === true
-            ? 'bg-black text-white border-black'
-            : 'bg-white text-black border-black/25 hover:border-black/60',
-        ]"
+        :aria-pressed="modelValue === true"
+        :class="[baseClass, modelValue === true ? selectedClass : idleClass]"
         @click="toggle(true)"
       >
         {{ yesLabel }}
       </button>
       <button
         type="button"
-        :class="[
-          'px-4 py-1.5 text-sm font-semibold uppercase rounded-[3px] border transition-colors duration-150',
-          modelValue === false
-            ? 'bg-black text-white border-black'
-            : 'bg-white text-black border-black/25 hover:border-black/60',
-        ]"
+        :aria-pressed="modelValue === false"
+        :class="[baseClass, modelValue === false ? selectedClass : idleClass]"
         @click="toggle(false)"
       >
         {{ noLabel }}
@@ -47,6 +39,11 @@ const props = withDefaults(
 const emit = defineEmits<{
   (e: "update:modelValue", value: boolean | null): void;
 }>();
+
+const baseClass =
+  "cursor-pointer rounded-[3px] border px-4 py-1.5 text-sm font-semibold uppercase transition-[background-color,color,border-color,scale] duration-150 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand active:scale-[0.96]";
+const selectedClass = "border-black bg-black text-white";
+const idleClass = "border-black/25 bg-white text-black hover:border-black/60";
 
 // Clicking the already-selected button clears the selection (back to null)
 function toggle(value: boolean) {

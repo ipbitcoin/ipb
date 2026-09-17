@@ -8,7 +8,8 @@
         <img
           :src="author.picture.url"
           :alt="author.name"
-          class="w-32 h-32 object-cover rounded-full shrink-0"
+          loading="lazy"
+          class="h-32 w-32 shrink-0 rounded-full object-cover outline -outline-offset-1 outline-black/10"
         />
         <div class="flex flex-col gap-3">
           <h1 class="text-5xl font-light">{{ author.name }}</h1>
@@ -24,7 +25,7 @@
               :href="author.linkedin"
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center gap-1.5 text-sm font-medium border rounded-md py-1 px-2 hover:bg-gray-100 transition-colors duration-200"
+              class="focus-ring inline-flex items-center gap-1.5 rounded-md border border-black/20 px-2 py-1 text-sm font-medium transition-[background-color,scale] duration-150 ease-out hover:bg-black/5 active:scale-[0.96]"
             >
               <IconLinkedIn class="size-4" />
               LinkedIn

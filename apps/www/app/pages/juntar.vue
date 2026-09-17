@@ -7,19 +7,22 @@
         </h1>
         <div
           v-if="status === 'success'"
-          class="bg-green-50 border border-green-300 text-green-800 px-4 py-3 rounded"
+          role="status"
+          class="rounded border border-green-300 bg-green-50 px-4 py-3 text-green-800"
         >
           {{ t("join.successDonation") }}
         </div>
         <div
           v-if="status === 'member-success'"
-          class="bg-green-50 border border-green-300 text-green-800 px-4 py-3 rounded"
+          role="status"
+          class="rounded border border-green-300 bg-green-50 px-4 py-3 text-green-800"
         >
           {{ t("join.successMember") }}
         </div>
         <div
           v-if="status === 'cancel' || status === 'member-cancel'"
-          class="bg-yellow-50 border border-yellow-300 text-yellow-800 px-4 py-3 rounded"
+          role="status"
+          class="rounded border border-yellow-300 bg-yellow-50 px-4 py-3 text-yellow-800"
         >
           {{ t("join.cancelled") }}
         </div>
@@ -76,26 +79,25 @@
           <div
             class="flex flex-col gap-0 lg:sticky lg:top-8 border-t-2 border-black pt-6"
           >
-            <div class="flex gap-0 mb-6">
+            <div class="mb-6 flex gap-0" role="tablist">
               <button
+                type="button"
+                role="tab"
+                :aria-selected="activeTab === 'member'"
+                :class="[TAB_CLASS, activeTab === 'member' ? TAB_ON : TAB_OFF]"
                 @click="activeTab = 'member'"
-                :class="[
-                  'cursor-pointer flex-1 py-2.5 text-sm font-semibold uppercase tracking-wide border-b-2 transition-colors',
-                  activeTab === 'member'
-                    ? 'border-black text-black'
-                    : 'border-transparent text-black/40 hover:text-black/70',
-                ]"
               >
                 {{ t("join.memberTitle") }}
               </button>
               <button
-                @click="activeTab = 'donations'"
+                type="button"
+                role="tab"
+                :aria-selected="activeTab === 'donations'"
                 :class="[
-                  'cursor-pointer flex-1 py-2.5 text-sm font-semibold uppercase tracking-wide border-b-2 transition-colors',
-                  activeTab === 'donations'
-                    ? 'border-black text-black'
-                    : 'border-transparent text-black/40 hover:text-black/70',
+                  TAB_CLASS,
+                  activeTab === 'donations' ? TAB_ON : TAB_OFF,
                 ]"
+                @click="activeTab = 'donations'"
               >
                 {{ t("join.donationsTitle") }}
               </button>
@@ -150,7 +152,7 @@
                           ? 'O seu nome ou nickname'
                           : 'Your name or nickname'
                       "
-                      class="px-4 py-2 rounded-[3px] border border-gray-300 text-sm focus:outline-none focus:border-black"
+                      class="field-box"
                     />
                   </div>
                   <div class="flex flex-col gap-1">
@@ -162,7 +164,7 @@
                       type="email"
                       required
                       :placeholder="t('join.form.emailPlaceholder')"
-                      class="px-4 py-2 rounded-[3px] border border-gray-300 text-sm focus:outline-none focus:border-black"
+                      class="field-box"
                     />
                   </div>
                   <div class="flex flex-col gap-1">
@@ -179,7 +181,7 @@
                         inputmode="numeric"
                         maxlength="2"
                         placeholder="DD"
-                        class="px-1 py-2 rounded-[3px] border border-gray-300 text-sm focus:outline-none focus:border-black w-12 text-center"
+                        class="field-box w-12 px-1 text-center tabular-nums"
                       />
                       <span class="text-gray-400">/</span>
                       <input
@@ -188,7 +190,7 @@
                         inputmode="numeric"
                         maxlength="2"
                         placeholder="MM"
-                        class="px-1 py-2 rounded-[3px] border border-gray-300 text-sm focus:outline-none focus:border-black w-12 text-center"
+                        class="field-box w-12 px-1 text-center tabular-nums"
                       />
                       <span class="text-gray-400">/</span>
                       <input
@@ -197,7 +199,7 @@
                         inputmode="numeric"
                         maxlength="4"
                         placeholder="AAAA"
-                        class="px-1 py-2 rounded-[3px] border border-gray-300 text-sm focus:outline-none focus:border-black w-16 text-center"
+                        class="field-box w-16 px-1 text-center tabular-nums"
                       />
                     </div>
                   </div>
@@ -212,7 +214,7 @@
                       v-model="memberForm.citizenCardNumber"
                       type="text"
                       :placeholder="t('join.form.citizenCardPlaceholder')"
-                      class="px-4 py-2 rounded-[3px] border border-gray-300 text-sm focus:outline-none focus:border-black"
+                      class="field-box"
                     />
                   </div>
                   <div class="flex flex-col gap-1">
@@ -226,7 +228,7 @@
                       v-model="memberForm.fiscalNumber"
                       type="text"
                       :placeholder="t('join.form.fiscalNumberPlaceholder')"
-                      class="px-4 py-2 rounded-[3px] border border-gray-300 text-sm focus:outline-none focus:border-black"
+                      class="field-box"
                     />
                   </div>
                   <div class="flex flex-col gap-1">
@@ -240,7 +242,7 @@
                       v-model="memberForm.address"
                       rows="3"
                       :placeholder="t('join.form.addressPlaceholder')"
-                      class="px-4 py-2 rounded-[3px] border border-gray-300 text-sm focus:outline-none focus:border-black resize-none"
+                      class="field-box resize-none"
                     ></textarea>
                   </div>
                   <div class="flex flex-col gap-2">
@@ -248,7 +250,7 @@
                       >{{ t("join.form.paymentPlan") }} *</label
                     >
                     <div class="flex gap-4">
-                      <label class="flex items-center gap-2 cursor-pointer">
+                      <label class="flex cursor-pointer items-center gap-2">
                         <input
                           type="radio"
                           v-model="memberForm.paymentPlan"
@@ -257,7 +259,7 @@
                         />
                         <span class="text-sm">{{ t("join.form.annual") }}</span>
                       </label>
-                      <label class="flex items-center gap-2 cursor-pointer">
+                      <label class="flex cursor-pointer items-center gap-2">
                         <input
                           type="radio"
                           v-model="memberForm.paymentPlan"
@@ -279,7 +281,11 @@
                   >
                     {{ t("join.form.submit") }}
                   </UiButton>
-                  <p v-if="memberError" class="text-red-600 text-sm">
+                  <p
+                    v-if="memberError"
+                    role="alert"
+                    class="text-sm text-red-600"
+                  >
                     {{ memberError }}
                   </p>
                 </form>
@@ -289,24 +295,24 @@
               <p class="mb-4 text-base">{{ t("join.donationsDescription") }}</p>
               <div class="flex gap-4 mt-4">
                 <button
-                  @click="donationType = 'anonymous'"
+                  type="button"
+                  :aria-pressed="donationType === 'anonymous'"
                   :class="[
-                    'px-5 py-2 rounded-[3px] border text-sm font-semibold cursor-pointer transition-colors duration-200',
-                    donationType === 'anonymous'
-                      ? 'bg-black text-white border-black'
-                      : 'bg-white text-black border-gray-300 hover:bg-gray-100',
+                    'chip px-5',
+                    donationType === 'anonymous' ? 'chip-on' : 'chip-off',
                   ]"
+                  @click="donationType = 'anonymous'"
                 >
                   {{ t("join.anonymous") }}
                 </button>
                 <button
-                  @click="donationType = 'identified'"
+                  type="button"
+                  :aria-pressed="donationType === 'identified'"
                   :class="[
-                    'px-5 py-2 rounded-[3px] border text-sm font-semibold cursor-pointer transition-colors duration-200',
-                    donationType === 'identified'
-                      ? 'bg-black text-white border-black'
-                      : 'bg-white text-black border-gray-300 hover:bg-gray-100',
+                    'chip px-5',
+                    donationType === 'identified' ? 'chip-on' : 'chip-off',
                   ]"
+                  @click="donationType = 'identified'"
                 >
                   {{ t("join.identified") }}
                 </button>
@@ -329,16 +335,18 @@
                     <button
                       v-for="preset in fiatPresetsForType"
                       :key="preset"
+                      type="button"
+                      :aria-pressed="fiatAmount === preset && !fiatCustom"
+                      :class="[
+                        'chip tabular-nums',
+                        fiatAmount === preset && !fiatCustom
+                          ? 'chip-on'
+                          : 'chip-off',
+                      ]"
                       @click="
                         fiatAmount = preset;
                         fiatCustom = '';
                       "
-                      :class="[
-                        'px-4 py-2 rounded-[3px] border text-sm font-semibold cursor-pointer transition-colors duration-200',
-                        fiatAmount === preset && !fiatCustom
-                          ? 'bg-black text-white border-black'
-                          : 'bg-white text-black border-gray-300 hover:bg-gray-100',
-                      ]"
                     >
                       €{{ preset }}
                     </button>
@@ -348,7 +356,7 @@
                       min="1"
                       :max="donationType === 'anonymous' ? 300 : undefined"
                       :placeholder="t('join.other')"
-                      class="px-4 py-2 rounded-[3px] border border-gray-300 text-sm w-24 focus:outline-none focus:border-black"
+                      class="field-box w-24 tabular-nums"
                       @input="fiatAmount = 0"
                     />
                   </div>
@@ -358,12 +366,13 @@
                         fiatMode === 'subscription_month') &&
                       effectiveFiatAmount > 300
                     "
-                    class="text-red-600 text-sm"
+                    role="alert"
+                    class="text-sm text-red-600"
                   >
                     {{ t("join.ceilingWarning") }}
                   </p>
                   <div class="flex flex-wrap gap-x-4 gap-y-2 mt-2">
-                    <label class="flex items-center gap-2 cursor-pointer"
+                    <label class="flex cursor-pointer items-center gap-2"
                       ><input
                         type="radio"
                         v-model="fiatMode"
@@ -373,7 +382,7 @@
                         t("join.oneTime")
                       }}</span></label
                     >
-                    <label class="flex items-center gap-2 cursor-pointer"
+                    <label class="flex cursor-pointer items-center gap-2"
                       ><input
                         type="radio"
                         v-model="fiatMode"
@@ -383,7 +392,7 @@
                         t("join.recurringMonthly")
                       }}</span></label
                     >
-                    <label class="flex items-center gap-2 cursor-pointer"
+                    <label class="flex cursor-pointer items-center gap-2"
                       ><input
                         type="radio"
                         v-model="fiatMode"
@@ -405,7 +414,7 @@
                       v-model="donorName"
                       type="text"
                       :placeholder="t('join.donorNamePlaceholder')"
-                      class="px-4 py-2 rounded-[3px] border border-gray-300 text-sm focus:outline-none focus:border-black"
+                      class="field-box"
                     />
                     <label class="text-sm font-medium">{{
                       t("join.donorEmail")
@@ -414,7 +423,7 @@
                       v-model="donorEmail"
                       type="email"
                       :placeholder="t('join.donorEmailPlaceholder')"
-                      class="px-4 py-2 rounded-[3px] border border-gray-300 text-sm focus:outline-none focus:border-black"
+                      class="field-box"
                     />
                   </div>
                   <UiButton
@@ -425,7 +434,11 @@
                     class="mt-2 w-fit"
                     >{{ t("join.donateCard") }}</UiButton
                   >
-                  <p v-if="stripeError" class="text-red-600 text-sm">
+                  <p
+                    v-if="stripeError"
+                    role="alert"
+                    class="text-sm text-red-600"
+                  >
                     {{ stripeError }}
                   </p>
                 </div>
@@ -440,16 +453,18 @@
                     <button
                       v-for="preset in btcPresetsForType"
                       :key="preset"
+                      type="button"
+                      :aria-pressed="btcAmount === preset && !btcCustom"
+                      :class="[
+                        'chip tabular-nums',
+                        btcAmount === preset && !btcCustom
+                          ? 'chip-on'
+                          : 'chip-off',
+                      ]"
                       @click="
                         btcAmount = preset;
                         btcCustom = '';
                       "
-                      :class="[
-                        'px-4 py-2 rounded-[3px] border text-sm font-semibold cursor-pointer transition-colors duration-200',
-                        btcAmount === preset && !btcCustom
-                          ? 'bg-black text-white border-black'
-                          : 'bg-white text-black border-gray-300 hover:bg-gray-100',
-                      ]"
                     >
                       €{{ preset }}
                     </button>
@@ -459,7 +474,7 @@
                       min="1"
                       :max="donationType === 'anonymous' ? 300 : undefined"
                       :placeholder="t('join.other')"
-                      class="px-4 py-2 rounded-[3px] border border-gray-300 text-sm w-24 focus:outline-none focus:border-black"
+                      class="field-box w-24 tabular-nums"
                       @input="btcAmount = 0"
                     />
                   </div>
@@ -467,7 +482,8 @@
                     v-if="
                       donationType === 'anonymous' && effectiveBtcAmount > 300
                     "
-                    class="text-red-600 text-sm"
+                    role="alert"
+                    class="text-sm text-red-600"
                   >
                     {{ t("join.ceilingWarning") }}
                   </p>
@@ -482,7 +498,7 @@
                       v-model="btcDonorName"
                       type="text"
                       :placeholder="t('join.donorNamePlaceholder')"
-                      class="px-4 py-2 rounded-[3px] border border-gray-300 text-sm focus:outline-none focus:border-black"
+                      class="field-box"
                     />
                     <label class="text-sm font-medium">{{
                       t("join.donorEmail")
@@ -491,7 +507,7 @@
                       v-model="btcDonorEmail"
                       type="email"
                       :placeholder="t('join.donorEmailPlaceholder')"
-                      class="px-4 py-2 rounded-[3px] border border-gray-300 text-sm focus:outline-none focus:border-black"
+                      class="field-box"
                     />
                   </div>
                   <UiButton
@@ -502,7 +518,11 @@
                     class="mt-2 w-fit"
                     >{{ t("join.donateBtc") }}</UiButton
                   >
-                  <p v-if="opennodeError" class="text-red-600 text-sm">
+                  <p
+                    v-if="opennodeError"
+                    role="alert"
+                    class="text-sm text-red-600"
+                  >
                     {{ opennodeError }}
                   </p>
                 </div>
@@ -519,6 +539,12 @@
 </template>
 
 <script setup lang="ts">
+// Tab strip: the bottom border carries the state, so no layout shift on switch.
+const TAB_CLASS =
+  "flex-1 cursor-pointer border-b-2 py-2.5 text-sm font-semibold tracking-wide uppercase transition-[color,border-color] duration-150 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand";
+const TAB_ON = "border-black text-black";
+const TAB_OFF = "border-transparent text-black/40 hover:text-black/70";
+
 const { locale, t } = useI18n();
 const route = useRoute();
 

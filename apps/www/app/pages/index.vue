@@ -30,6 +30,7 @@
           type="email"
           required
           :placeholder="t('input.email')"
+          :aria-label="t('input.email')"
           class="w-fit"
         />
         <UiButton class="w-fit" :loading="loading">{{
@@ -44,7 +45,7 @@
         <motion.img
           src="/coin1.png"
           alt="Moeda Real"
-          class="w-[250px] h-[250px] object-cover"
+          class="h-[250px] w-[250px] object-cover"
           :initial="{ opacity: 0 }"
           :while-in-view="{ opacity: 1 }"
           :in-view-options="{ once: true }"
@@ -53,7 +54,7 @@
         <motion.img
           src="/coin2.png"
           alt="Moeda Escudo"
-          class="w-[250px] h-[250px] object-cover"
+          class="h-[250px] w-[250px] object-cover"
           :initial="{ opacity: 0 }"
           :while-in-view="{ opacity: 1 }"
           :in-view-options="{ once: true }"
@@ -62,7 +63,7 @@
         <motion.img
           src="/coin3.png"
           alt="Moeda Euro"
-          class="w-[250px] h-[250px] object-cover"
+          class="h-[250px] w-[250px] object-cover"
           :initial="{ opacity: 0 }"
           :while-in-view="{ opacity: 1 }"
           :in-view-options="{ once: true }"
@@ -71,7 +72,7 @@
         <motion.img
           src="/coin4.svg"
           alt="Bitcoin"
-          class="w-[250px] h-[255px] object-cover"
+          class="h-[255px] w-[250px] object-cover"
           :initial="{ opacity: 0 }"
           :while-in-view="{ opacity: 1 }"
           :in-view-options="{ once: true }"
@@ -194,13 +195,13 @@
             >
               <AccordionHeader>
                 <AccordionTrigger
-                  class="text-left flex flex-1 gap-2 cursor-pointer justify-between w-full group"
+                  class="group focus-ring flex w-full flex-1 cursor-pointer justify-between gap-2 rounded text-left"
                 >
                   <span class="font-bold"
                     >{{ index + 1 }}. {{ faq.question }}</span
                   >
                   <IconArrowDown
-                    class="size-6 min-w-[1.5rem] min-h-[1.5rem] ease-[cubic-bezier(0.87,_0,_0.13,_1)] transition-transform duration-300 group-data-[state=open]:rotate-180"
+                    class="size-6 min-h-[1.5rem] min-w-[1.5rem] transition-transform duration-200 ease-out group-data-[state=open]:rotate-180"
                   />
                 </AccordionTrigger>
               </AccordionHeader>
@@ -208,7 +209,11 @@
                 class="overflow-hidden data-[state=open]:animate-slide-down data-[state=closed]:animate-slide-up max-w-3xl"
               >
                 <div class="flex flex-col py-2 gap-2">
-                  <p v-for="p in faq.answer.split('\n')" class="text-[#6a6a6b]">
+                  <p
+                    v-for="(p, pIndex) in faq.answer.split('\n')"
+                    :key="pIndex"
+                    class="text-[#6a6a6b]"
+                  >
                     {{ p }}
                   </p>
                 </div>

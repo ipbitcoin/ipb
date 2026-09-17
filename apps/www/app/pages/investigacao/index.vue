@@ -9,7 +9,8 @@
       </p>
       <div
         v-for="category in researchCategories"
-        class="flex flex-col gap-2 mt-4"
+        :key="category.slug"
+        class="mt-4 flex flex-col gap-2"
       >
         <h2 class="uppercase text-xl font-semibold">{{ category.name }}</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

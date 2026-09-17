@@ -1,5 +1,5 @@
 <template>
-  <input v-model="model" :class="textInputClass" />
+  <input v-model="model" :class="[textInputClass, props.class]" />
 </template>
 
 <script setup lang="ts">
@@ -17,14 +17,15 @@ const props = withDefaults(defineProps<TextInputProps>(), {
 
 const textInputClass = computed(() =>
   tv({
-    base: "font-body placeholder:text-black/45 focus:outline-none",
+    base: "placeholder:text-black/45 outline-none transition-[border-color,box-shadow] duration-150 ease-out",
     variants: {
       variant: {
-        inverse: "bg-white text-black rounded-[3px] px-2 py-0.5",
-        line: "text-black border-b px-1",
+        inverse:
+          "rounded-[3px] bg-white px-2 py-0.5 text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand",
+        line: "border-b border-black/25 px-1 text-black focus:border-black focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand",
       },
     },
-  })(props)
+  })({ variant: props.variant })
 );
 
 const model = defineModel({ type: String });
