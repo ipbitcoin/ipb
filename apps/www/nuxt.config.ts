@@ -7,12 +7,16 @@ export default defineNuxtConfig({
       meta: [{ name: "theme-color", content: "#0f0f0f" }],
       titleTemplate: "%s | Instituto Português de Bitcoin",
     },
+    pageTransition: { name: "page", mode: "out-in" },
   },
   compatibilityDate: "2025-07-15",
   css: ["~/assets/css/main.css"],
   devtools: { enabled: true },
   experimental: {
     typedPages: true,
+    // Shared-element transitions for article images (Chromium today,
+    // degrades to the plain page fade elsewhere).
+    viewTransition: true,
   },
   extends: ["@ipb/ui"],
   googleFonts: {
@@ -105,11 +109,8 @@ export default defineNuxtConfig({
     disallow: ["/api/", "/_nuxt/", "/_ipx/", "/__nuxt_error"],
     sitemap: "https://institutobitcoin.pt/sitemap.xml",
   },
-  router: {
-    options: {
-      scrollBehaviorType: "smooth",
-    },
-  },
+  // Scroll behaviour lives in app/router.options.ts: hash targets on another
+  // page need to be awaited before we can scroll to them.
   runtimeConfig: {
     APP_URL: process.env.APP_URL,
     OPENNODE_API_KEY: process.env.OPENNODE_API_KEY,

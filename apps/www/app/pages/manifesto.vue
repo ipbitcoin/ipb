@@ -1,7 +1,9 @@
 <template>
   <main class="px-8">
-    <div class="max-w-screen-xl mx-auto flex flex-col mb-12 mt-20 gap-4 px-8">
-      <h1 class="text-6xl sm:text-7xl font-light max-w-3xl text-balance">
+    <div class="section flex flex-col gap-4 pt-20 pb-16 sm:pt-28">
+      <h1
+        class="max-w-3xl text-5xl leading-[1.02] font-light text-balance sm:text-6xl"
+      >
         {{ $t("nav.manifest") }}
       </h1>
       <p

@@ -2,12 +2,17 @@
   <NuxtLink
     :to="localePath({ name: 'artigo-slug', params: { slug } })"
     class="group focus-ring relative max-w-[400px] overflow-hidden border border-black/15 transition-colors duration-150 ease-out hover:border-black/40"
+    @click="markAsTransitionTarget"
   >
     <div class="h-60 w-full overflow-hidden">
+      <!-- Shared-element transition into the article page. The name is only
+           applied while this card is the navigation target, because
+           view-transition-name must be unique in the document. -->
       <img
         :src="image"
         :alt="title"
         loading="lazy"
+        :style="transitionStyle"
         class="h-full w-full object-cover outline -outline-offset-1 outline-black/10 transition-transform duration-500 ease-out group-hover:scale-105"
       />
     </div>
@@ -59,5 +64,28 @@ interface ArticleCardProps {
   createdAt?: string;
 }
 
-defineProps<ArticleCardProps>();
+const props = defineProps<ArticleCardProps>();
+
+// Only the clicked card carries the name, so it stays unique in the document.
+const isTransitionTarget = ref(false);
+
+const transitionStyle = computed(() =>
+  isTransitionTarget.value
+    ? { viewTransitionName: `article-image-${props.slug}` }
+    : undefined
+);
+
+function markAsTransitionTarget() {
+  isTransitionTarget.value = true;
+}
+
+// Release the name once we land, so a card that survives the navigation
+// (back button, related-articles grid) does not keep claiming it.
+const route = useRoute();
+watch(
+  () => route.fullPath,
+  () => {
+    isTransitionTarget.value = false;
+  }
+);
 </script>

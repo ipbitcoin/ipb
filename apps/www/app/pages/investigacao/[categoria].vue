@@ -1,22 +1,27 @@
 <template>
   <main>
-    <div class="max-w-screen-xl mx-auto flex flex-col mb-12 mt-20 gap-4 px-8">
-      <h1 class="text-6xl sm:text-7xl font-light max-w-3xl text-balance">
-        {{ $t("nav.research") }}
+    <div class="section pt-20 sm:pt-28">
+      <NuxtLink
+        :to="localePath('investigacao')"
+        class="focus-ring eyebrow rounded transition-colors duration-150 ease-out hover:text-black"
+      >
+        &larr; {{ $t("nav.research") }}
+      </NuxtLink>
+      <h1
+        class="mt-4 max-w-3xl text-5xl leading-[1.02] font-light text-balance sm:text-6xl"
+      >
+        {{ category?.name ?? categoria }}
       </h1>
-      <h2 class="text-lg font-semibold uppercase">{{ categoria }}</h2>
-      <div class="flex flex-col gap-2 mt-4">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          <IPBArticleCard
-            v-for="article in researchArticles"
-            :key="article.documentId"
-            :title="article.title"
-            :slug="article.slug"
-            :image="article.main_image.url"
-          />
-        </div>
-      </div>
     </div>
+
+    <IPBArticleGrid
+      :title="category?.name ?? categoria"
+      heading-level="h1"
+      :articles="researchArticles"
+      :pending="pending"
+      :initial-count="9"
+      :show-date="false"
+    />
   </main>
 </template>
 
@@ -27,6 +32,7 @@ const { locale } = useI18n();
 const appLocale = useAppLocale();
 const convex = useConvex();
 const route = useRoute();
+const localePath = useLocalePath();
 
 const categoria = String(route.params.categoria);
 
@@ -37,7 +43,8 @@ const { data: category } = useAsyncData(
       locale: appLocale.value,
       slug: categoria,
       type: "research",
-    })
+    }),
+  { lazy: true }
 );
 
 watchEffect(() => {
@@ -113,13 +120,17 @@ watchEffect(() => {
   });
 });
 
-const { data: researchArticles } = useAsyncData(
-  `articles-research-${categoria}`,
+// Locale belongs in the key: without it a PT payload satisfies an EN request.
+const { data: researchArticles, status } = useAsyncData(
+  `articles-research-${categoria}-${locale.value}`,
   () =>
     convex.query(api.articles.listPublished, {
       categorySlug: categoria,
       categoryType: "research",
       locale: appLocale.value,
-    })
+    }),
+  { lazy: true }
 );
+
+const pending = computed(() => status.value === "pending");
 </script>
