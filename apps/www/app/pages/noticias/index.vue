@@ -1,24 +1,14 @@
 <template>
   <main>
-    <div class="max-w-screen-xl mx-auto flex flex-col mb-12 mt-20 gap-4 px-8">
-      <h1 class="text-6xl sm:text-7xl font-light max-w-3xl text-balance">
-        {{ $t("nav.news") }}
-      </h1>
-      <p class="text-lg max-w-4xl text-balance">{{ $t("news.description") }}</p>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <IPBArticleCard
-          v-for="article in newsArticles"
-          :key="article.documentId"
-          :title="article.title"
-          :slug="article.slug"
-          :image="article.main_image.url"
-          :created-at="article.createdAt"
-        />
-      </div>
-      <span v-if="!newsArticles?.length" class="text-neutral-500">
-        {{ $t("news.empty") }}
-      </span>
-    </div>
+    <IPBArticleGrid
+      :eyebrow="$t('news.eyebrow')"
+      :title="$t('news.title')"
+      :description="$t('news.description')"
+      :articles="newsArticles"
+      :pending="pending"
+      :initial-count="9"
+      :empty-label="$t('news.empty')"
+    />
   </main>
 </template>
 
@@ -56,12 +46,15 @@ useSeoMeta({
 const appLocale = useAppLocale();
 const convex = useConvex();
 
-const { data: newsArticles } = useAsyncData(
+const { data: newsArticles, status } = useAsyncData(
   `articles-news-${locale.value}`,
   () =>
     convex.query(api.articles.listPublished, {
       categoryType: "news",
       locale: appLocale.value,
-    })
+    }),
+  { lazy: true }
 );
+
+const pending = computed(() => status.value === "pending");
 </script>

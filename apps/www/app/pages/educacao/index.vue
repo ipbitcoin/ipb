@@ -1,23 +1,30 @@
 <template>
   <main>
-    <div class="max-w-screen-xl mx-auto flex flex-col mb-12 mt-20 gap-16 px-8">
+    <div class="section flex flex-col gap-16 pt-20 pb-12 sm:pt-28">
       <div class="flex flex-col gap-4">
-        <h1 class="text-6xl sm:text-7xl font-light max-w-3xl text-balance">
+        <p class="eyebrow">{{ $t("education.eyebrow") }}</p>
+        <h1
+          class="max-w-3xl text-5xl leading-[1.02] font-light text-balance sm:text-6xl"
+        >
           {{ $t("nav.education") }}
         </h1>
-        <p class="text-lg max-w-4xl text-balance">
+        <p class="max-w-3xl text-lg text-balance text-black/60">
           {{ $t("education.description") }}
         </p>
       </div>
 
-      <section v-if="books && books.length > 0" class="flex flex-col gap-8">
-        <h2 class="text-3xl font-light border-b border-black/10 pb-4">
+      <section
+        v-if="pendingBooks || (books && books.length > 0)"
+        class="flex flex-col gap-8"
+      >
+        <h2 class="border-b border-black/10 pb-4 text-3xl font-light">
           {{ $t("education.books.title") }}
         </h2>
 
         <div class="flex flex-col lg:flex-row gap-10 items-start">
           <div class="flex-1 flex flex-col gap-8">
-            <div class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3">
+            <IPBSkeleton v-if="pendingBooks" variant="card" :count="6" />
+            <div v-else class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3">
               <IPBBookCard
                 v-for="book in visibleBooks"
                 :key="book.documentId"
@@ -38,14 +45,14 @@
                 @click="showMore"
                 class="focus-ring cursor-pointer border border-black px-6 py-2.5 text-sm font-medium tracking-wide uppercase transition-[background-color,color,scale] duration-150 ease-out hover:bg-black hover:text-white active:scale-[0.96]"
               >
-                {{ $t("education.books.showMore") }}
+                {{ $t("common.showMore") }}
               </button>
               <button
                 v-if="canShowLess"
                 @click="showLess"
                 class="focus-ring cursor-pointer border border-black/30 px-6 py-2.5 text-sm font-medium tracking-wide uppercase transition-[border-color,scale] duration-150 ease-out hover:border-black active:scale-[0.96]"
               >
-                {{ $t("education.books.showLess") }}
+                {{ $t("common.showLess") }}
               </button>
             </div>
           </div>
@@ -88,22 +95,15 @@
           </aside>
         </div>
       </section>
-
-      <section class="flex flex-col gap-8">
-        <h2 class="text-3xl font-light border-b border-black/10 pb-4">
-          {{ $t("education.articles.title") }}
-        </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          <IPBArticleCard
-            v-for="article in educationArticles"
-            :key="article.documentId"
-            :title="article.title"
-            :slug="article.slug"
-            :image="article.main_image.url"
-          />
-        </div>
-      </section>
     </div>
+
+    <IPBArticleGrid
+      :title="$t('education.articles.title')"
+      :articles="educationArticles"
+      :pending="pendingArticles"
+      :initial-count="6"
+      :show-date="false"
+    />
   </main>
 </template>
 
@@ -168,15 +168,21 @@ useHead({
   ],
 });
 
-const { data: books } = useAsyncData(`books-${locale.value}`, async () => {
-  try {
-    return await convex.query(api.books.listActive, {
-      locale: appLocale.value,
-    });
-  } catch {
-    return [];
-  }
-});
+const { data: books, status: statusBooks } = useAsyncData(
+  `books-${locale.value}`,
+  async () => {
+    try {
+      return await convex.query(api.books.listActive, {
+        locale: appLocale.value,
+      });
+    } catch {
+      return [];
+    }
+  },
+  { lazy: true }
+);
+
+const pendingBooks = computed(() => statusBooks.value === "pending");
 
 const selectedPublisher = ref("");
 const visibleCount = ref(PAGE_SIZE);
@@ -266,12 +272,15 @@ watchEffect(() => {
   });
 });
 
-const { data: educationArticles } = useAsyncData(
+const { data: educationArticles, status: statusArticles } = useAsyncData(
   `articles-education-${locale.value}`,
   () =>
     convex.query(api.articles.listPublished, {
       categoryType: "education",
       locale: appLocale.value,
-    })
+    }),
+  { lazy: true }
 );
+
+const pendingArticles = computed(() => statusArticles.value === "pending");
 </script>

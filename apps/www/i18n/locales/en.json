@@ -21,7 +21,9 @@
     "cta": {
       "readManifest": "Read manifest",
       "join": "Join"
-    }
+    },
+    "eyebrow": "Portuguese Bitcoin Institute",
+    "subheader": "Independent research, education and public policy to put Portugal at the forefront of Bitcoin."
   },
   "newsletter": {
     "title": "Newsletter",
@@ -29,7 +31,9 @@
     "descriptionFooter": "Receive our newsletter in your inbox",
     "cta": "Subscribe",
     "success": "Thank you for subscribing!",
-    "error": "Error subscribing. Please try again later."
+    "error": "Error subscribing. Please try again later.",
+    "eyebrow": "Newsletter",
+    "submit": "Subscribe to newsletter"
   },
   "values": {
     "title": "Values",
@@ -56,10 +60,13 @@
     "community": {
       "title": "Community",
       "description": "Foster active engagement with Bitcoin users, developers, organizations, and enthusiasts in Portugal."
-    }
+    },
+    "eyebrow": "What we stand for"
   },
   "partners": {
-    "title": "Partnerships"
+    "title": "Partnerships",
+    "eyebrow": "Who walks with us",
+    "description": "Organisations supporting the Institute's mission."
   },
   "research": {
     "title": "Research",
@@ -69,7 +76,8 @@
       "energyAndMining": "Energy and Mining",
       "economyAndNationalSecurity": "Economy and National Security",
       "humanRights": "Human Rights"
-    }
+    },
+    "eyebrow": "Research"
   },
   "education": {
     "title": "Education",
@@ -83,19 +91,25 @@
     },
     "articles": {
       "title": "Articles"
-    }
+    },
+    "eyebrow": "Learn"
   },
   "news": {
     "title": "News",
     "description": "We share the most relevant news from the Bitcoin ecosystem, community updates, and developments from our project, keeping you informed about everything that matters in the world of digital currency.",
-    "empty": "No news to show right now. Check back soon!"
+    "empty": "No news to show right now. Check back soon!",
+    "eyebrow": "Latest"
   },
   "documents": {
     "title": "Documents",
-    "cta": "Read document"
+    "cta": "Read document",
+    "eyebrow": "Documentation",
+    "empty": "No documents."
   },
   "faq": {
-    "title": "Frequently Asked Questions"
+    "title": "Frequently Asked Questions",
+    "eyebrow": "Questions",
+    "description": "The questions we are asked most often."
   },
   "join": {
     "donate": "Donate",
@@ -186,7 +200,11 @@
     "description": "Building the Future of Bitcoin in Portugal"
   },
   "common": {
-    "by": "By"
+    "by": "By",
+    "showMore": "Show more",
+    "showLess": "Show less",
+    "seeAll": "See all",
+    "loading": "Loading…"
   },
   "article": {
     "readingTime": "Reading time",

@@ -1,10 +1,9 @@
 <template>
   <main>
-    <div
-      v-if="author"
-      class="max-w-screen-xl mx-auto flex flex-col mb-12 mt-20 gap-12 px-8"
-    >
-      <div class="flex flex-col sm:flex-row gap-8 items-start border-b pb-12">
+    <div v-if="author" class="section flex flex-col pt-20 sm:pt-28">
+      <div
+        class="flex flex-col items-start gap-8 border-b border-black/10 pb-12 sm:flex-row"
+      >
         <img
           :src="author.picture.url"
           :alt="author.name"
@@ -33,26 +32,17 @@
           </div>
         </div>
       </div>
-
-      <div v-if="articles?.length" class="flex flex-col gap-8">
-        <h2 class="text-4xl font-light">
-          {{ locale === "pt" ? "Artigos" : "Articles" }}
-        </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          <IPBArticleCard
-            v-for="article in articles"
-            :key="article.documentId"
-            :title="article.title"
-            :slug="article.slug"
-            :category="article.category?.name"
-            :image="article.main_image.url"
-            :created-at="article.createdAt"
-          />
-        </div>
-      </div>
     </div>
 
-    <div v-else class="max-w-screen-xl mx-auto mt-20 px-8">
+    <IPBArticleGrid
+      v-if="author"
+      :title="locale === 'pt' ? 'Artigos' : 'Articles'"
+      :articles="articles"
+      :initial-count="6"
+      show-category
+    />
+
+    <div v-if="!author" class="section mt-20">
       <p class="text-lg text-neutral-500">
         {{ locale === "pt" ? "Autor não encontrado." : "Author not found." }}
       </p>
@@ -71,7 +61,8 @@ const convex = useConvex();
 const slug = String(route.params.slug);
 
 // Author slug is materialized in Convex — direct indexed lookup
-const { data: author } = useAsyncData(`author-${slug}`, () =>
+// Non-lazy and locale-keyed: page meta is built from this data.
+const { data: author } = useAsyncData(`author-${slug}-${locale.value}`, () =>
   convex.query(api.authors.getBySlug, {
     slug,
     locale: appLocale.value,

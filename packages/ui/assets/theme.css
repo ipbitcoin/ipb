@@ -88,6 +88,18 @@
     }
   }
 
+  /* Continuous logo strip. Track holds two copies, so -50% loops seamlessly. */
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  --animate-marquee: marquee 45s linear infinite;
+
   --animate-slide-down: slideDown 200ms var(--ease-out-strong);
   --animate-slide-up: slideUp 200ms var(--ease-out-strong);
   --animate-fade-up: fadeUp 500ms cubic-bezier(0.16, 1, 0.3, 1) both;

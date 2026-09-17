@@ -33,6 +33,47 @@
   .chip-off {
     @apply border-black/25 bg-white text-black hover:bg-black/5;
   }
+
+  /* Page gutter + max width. Replaces the repeated
+     `max-w-screen-xl mx-auto px-8` on every section. */
+  .section {
+    @apply mx-auto w-full max-w-screen-xl px-6 sm:px-8;
+  }
+
+  /* Vertical rhythm between major sections. */
+  .section-gap {
+    @apply py-20 sm:py-28;
+  }
+
+  /* Small uppercase category label above section headings. */
+  .eyebrow {
+    @apply text-xs font-medium tracking-[0.18em] text-black/50 uppercase;
+  }
+
+  /* Section heading, shared by every block on the site. */
+  .section-title {
+    @apply text-4xl font-light text-balance sm:text-5xl;
+  }
+}
+
+/* Route transition. Paired with app.pageTransition in nuxt.config.ts. */
+.page-enter-active {
+  transition:
+    opacity 200ms var(--ease-out-strong),
+    translate 200ms var(--ease-out-strong);
+}
+.page-leave-active {
+  transition:
+    opacity 150ms var(--ease-out-strong),
+    translate 150ms var(--ease-out-strong);
+}
+.page-enter-from {
+  opacity: 0;
+  translate: 0 6px;
+}
+.page-leave-to {
+  opacity: 0;
+  translate: 0 -4px;
 }
 
 /* Reduced motion: keep opacity cues, drop movement and scale. */
@@ -43,5 +84,18 @@
     --animate-fade-up: fadeIn 200ms ease-out both;
     --animate-slide-down: fadeIn 150ms ease-out;
     --animate-slide-up: fadeOut 100ms ease-out;
+    --animate-marquee: none;
+  }
+
+  .page-enter-from,
+  .page-leave-to {
+    translate: none;
+  }
+
+  /* Cross-document/shared-element transitions move things around. */
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 }

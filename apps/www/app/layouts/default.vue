@@ -84,20 +84,35 @@
       <slot />
     </div>
 
-    <footer class="w-full bg-black tracking-wider text-white">
-      <div class="mx-auto flex max-w-screen-xl flex-col p-8">
-        <div class="flex items-center justify-between">
-          <IPBLogoInverse class="w-[180px]" />
-          <IPBLanguageSelector />
-        </div>
-        <div class="flex flex-col justify-between gap-8 lg:flex-row">
-          <div class="flex flex-col gap-2">
-            <NuxtLink
-              class="w-fit rounded font-bold uppercase focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-              :to="localePath('investigacao')"
-              >{{ $t("nav.research") }}</NuxtLink
+    <footer class="relative w-full overflow-hidden bg-black text-white">
+      <IPBFooterArt />
+
+      <div class="section relative z-10 pt-16 pb-10 sm:pt-20">
+        <div class="grid gap-12 lg:grid-cols-[1.2fr_repeat(3,minmax(0,1fr))]">
+          <!-- Newsletter leads: it is the one action we want here -->
+          <div class="flex flex-col gap-5">
+            <p
+              class="text-xs font-medium tracking-[0.18em] text-white/40 uppercase"
             >
-            <ul class="flex flex-col gap-2">
+              {{ $t("newsletter.eyebrow") }}
+            </p>
+            <p class="max-w-xs text-lg text-balance text-white/70">
+              {{ $t("newsletter.descriptionFooter") }}
+            </p>
+            <IPBNewsletterForm inverse />
+          </div>
+
+          <div class="flex flex-col gap-4">
+            <h3 :class="footerHeadingClass">{{ $t("nav.research") }}</h3>
+            <ul class="flex flex-col gap-3">
+              <li>
+                <NuxtLink
+                  :class="footerLinkClass"
+                  :to="localePath('investigacao')"
+                >
+                  {{ $t("common.seeAll") }}
+                </NuxtLink>
+              </li>
               <li
                 v-for="category in categories?.filter(
                   (c) => c.type === 'research'
@@ -118,42 +133,68 @@
               </li>
             </ul>
           </div>
+
           <div class="flex flex-col gap-4">
-            <div class="flex flex-col gap-2">
-              <NuxtLink
-                class="w-fit rounded font-bold uppercase focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                :to="localePath('educacao')"
-                >{{ $t("nav.education") }}</NuxtLink
-              >
-              <NuxtLink
-                :class="footerLinkClass"
-                :to="localePath('formacoes')"
-                >{{ $t("nav.training") }}</NuxtLink
-              >
-              <NuxtLink
-                :class="footerLinkClass"
-                to="https://bitcoin.org/bitcoin.pdf"
-                external
-                >Whitepaper</NuxtLink
-              >
-            </div>
-            <div class="flex flex-col gap-2">
-              <NuxtLink
-                class="w-fit rounded font-bold uppercase focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                :to="localePath('noticias')"
-                >{{ $t("nav.news") }}</NuxtLink
-              >
-            </div>
+            <h3 :class="footerHeadingClass">{{ $t("nav.education") }}</h3>
+            <ul class="flex flex-col gap-3">
+              <li>
+                <NuxtLink :class="footerLinkClass" :to="localePath('educacao')">
+                  {{ $t("nav.education") }}
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink
+                  :class="footerLinkClass"
+                  :to="localePath('formacoes')"
+                >
+                  {{ $t("nav.training") }}
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink :class="footerLinkClass" :to="localePath('noticias')">
+                  {{ $t("nav.news") }}
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink
+                  :class="footerLinkClass"
+                  to="https://bitcoin.org/bitcoin.pdf"
+                  external
+                  target="_blank"
+                >
+                  Whitepaper
+                </NuxtLink>
+              </li>
+            </ul>
           </div>
-          <div class="flex flex-col gap-2">
-            <h3 class="font-bold uppercase">{{ $t("nav.information") }}</h3>
-            <ul class="flex flex-col gap-2">
+
+          <div class="flex flex-col gap-4">
+            <h3 :class="footerHeadingClass">{{ $t("nav.information") }}</h3>
+            <ul class="flex flex-col gap-3">
               <li>
                 <NuxtLink
                   :class="footerLinkClass"
                   :to="localePath('manifesto')"
                 >
                   {{ $t("nav.manifest") }}
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink :class="footerLinkClass" :to="localePath('equipa')">
+                  {{ $t("nav.team") }}
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink :class="footerLinkClass" :to="localePath('juntar')">
+                  {{ $t("nav.donations") }}
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink
+                  :class="footerLinkClass"
+                  :to="localePath('contactos')"
+                >
+                  {{ $t("nav.contacts") }}
                 </NuxtLink>
               </li>
               <li>
@@ -174,54 +215,27 @@
                   {{ $t("nav.regulations") }}
                 </a>
               </li>
-              <li>
-                <NuxtLink :class="footerLinkClass" :to="localePath('equipa')">
-                  {{ $t("nav.team") }}
-                </NuxtLink>
-              </li>
-              <li>
-                <NuxtLink :class="footerLinkClass" :to="localePath('juntar')">
-                  {{ $t("nav.donations") }}
-                </NuxtLink>
-              </li>
-              <li>
-                <NuxtLink
-                  :class="footerLinkClass"
-                  :to="localePath('contactos')"
-                >
-                  {{ $t("nav.contacts") }}
-                </NuxtLink>
-              </li>
             </ul>
           </div>
-          <div class="flex flex-col gap-6">
-            <form class="flex flex-col gap-2" @submit.prevent="handleSubscribe">
-              <span>{{ $t("newsletter.descriptionFooter") }}</span>
-              <div class="flex flex-col gap-2 sm:flex-row">
-                <UiTextInput
-                  v-model="newsletterEmail"
-                  variant="inverse"
-                  type="email"
-                  required
-                  :placeholder="t('input.email')"
-                  :aria-label="t('input.email')"
-                  class="w-full sm:w-fit"
-                />
-                <UiButton variant="inverse" :loading="loading">{{
-                  $t("newsletter.cta")
-                }}</UiButton>
-              </div>
-            </form>
-            <ul class="flex items-center gap-3">
+        </div>
+
+        <div
+          class="mt-16 flex flex-wrap items-center justify-between gap-6 border-t border-white/15 pt-8"
+        >
+          <p class="text-sm text-white/40">
+            &copy; {{ new Date().getFullYear() }} Instituto Português de Bitcoin
+          </p>
+          <div class="flex items-center gap-6">
+            <ul class="flex items-center gap-4">
               <li>
                 <NuxtLink
                   to="https://x.com/ipbitcoin"
                   target="_blank"
                   external
                   aria-label="X"
-                  class="block rounded transition-opacity duration-150 ease-out hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  class="block rounded text-white/60 transition-colors duration-150 ease-out hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
-                  <IconX class="size-6" />
+                  <IconX class="size-5" />
                 </NuxtLink>
               </li>
               <li>
@@ -230,14 +244,23 @@
                   target="_blank"
                   external
                   aria-label="LinkedIn"
-                  class="block rounded transition-opacity duration-150 ease-out hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  class="block rounded text-white/60 transition-colors duration-150 ease-out hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
-                  <IconLinkedIn class="size-6" />
+                  <IconLinkedIn class="size-5" />
                 </NuxtLink>
               </li>
             </ul>
+            <IPBLanguageSelector />
           </div>
         </div>
+      </div>
+
+      <!-- Oversized wordmark bleeding off the bottom edge -->
+      <div
+        aria-hidden="true"
+        class="relative z-10 -mb-[3%] w-full overflow-hidden px-6 sm:px-8"
+      >
+        <IPBLogoInverse class="w-full opacity-[0.14]" />
       </div>
     </footer>
   </div>
@@ -269,12 +292,14 @@ const navLinkClass =
   "focus-ring rounded font-medium uppercase tracking-wider underline decoration-transparent decoration-1 underline-offset-2 transition-[text-decoration-color] duration-150 ease-out hover:decoration-current";
 
 const footerLinkClass =
-  "w-fit rounded underline decoration-transparent underline-offset-2 transition-[text-decoration-color] duration-150 ease-out hover:decoration-current focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
+  "w-fit rounded text-sm text-white/60 transition-colors duration-150 ease-out hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
+
+const footerHeadingClass =
+  "text-xs font-medium uppercase tracking-[0.18em] text-white/40";
 
 const localePath = useLocalePath();
-const { t, locale } = useI18n();
+const { locale } = useI18n();
 const { y } = useWindowScroll();
-const { subscribe, loading } = useNewsletter();
 const appLocale = useAppLocale();
 const convex = useConvex();
 const route = useRoute();
@@ -322,18 +347,14 @@ onBeforeUnmount(() => {
   }
 });
 
-const newsletterEmail = ref("");
-
-async function handleSubscribe() {
-  await subscribe(newsletterEmail);
-}
-
+// Lazy: the footer link list must never hold up a route change.
 const { data: categories, refresh } = useAsyncData(
   `categories-${locale.value}`,
   () =>
     convex.query(api.categories.list, {
       locale: appLocale.value,
-    })
+    }),
+  { lazy: true }
 );
 
 watch(

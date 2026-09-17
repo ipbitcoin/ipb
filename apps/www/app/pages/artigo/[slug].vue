@@ -1,15 +1,15 @@
 <template>
   <main>
-    <article
-      v-if="article"
-      class="max-w-screen-xl mx-auto flex flex-col mt-20 px-8 mb-12 gap-4"
-    >
+    <article v-if="article" class="section flex flex-col gap-5 pt-20 pb-12">
       <img
         :src="article.main_image.url"
         :alt="article.title"
+        :style="{ viewTransitionName: `article-image-${slug}` }"
         class="max-w-[400px] outline -outline-offset-1 outline-black/10"
       />
-      <h1 class="text-4xl uppercase font-semibold">{{ article?.title }}</h1>
+      <h1 class="max-w-3xl text-4xl font-semibold text-balance uppercase">
+        {{ article?.title }}
+      </h1>
       <div class="flex flex-col gap-1">
         <span>{{
           new Intl.DateTimeFormat(locale === "pt" ? "pt-PT" : "en-US", {
@@ -62,23 +62,16 @@
       </div>
     </article>
 
-    <section v-if="relatedArticles?.length" class="border-t mt-4">
-      <div class="max-w-screen-xl mx-auto px-8 py-12 flex flex-col gap-8">
-        <h2 class="text-3xl font-light">
-          {{ locale === "pt" ? "Artigos relacionados" : "Related articles" }}
-        </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          <IPBArticleCard
-            v-for="related in relatedArticles"
-            :key="related.documentId"
-            :title="related.title"
-            :slug="related.slug"
-            :category="related.category?.name"
-            :image="related.main_image.url"
-            :created-at="related.createdAt"
-          />
-        </div>
-      </div>
+    <section
+      v-if="relatedArticles?.length"
+      class="mt-10 border-t border-black/10"
+    >
+      <IPBArticleGrid
+        :title="locale === 'pt' ? 'Artigos relacionados' : 'Related articles'"
+        :articles="relatedArticles"
+        :initial-count="3"
+        show-category
+      />
     </section>
   </main>
 </template>
@@ -94,7 +87,8 @@ const convex = useConvex();
 
 const slug = String(route.params.slug);
 
-const { data: article } = useAsyncData(`article-${slug}`, () =>
+// Non-lazy and locale-keyed: page meta and JSON-LD are built from this data.
+const { data: article } = useAsyncData(`article-${slug}-${locale.value}`, () =>
   convex.query(api.articles.getBySlug, {
     slug,
     locale: appLocale.value,

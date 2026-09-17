@@ -1,12 +1,16 @@
 <template>
   <div>
     <main>
-      <div class="max-w-screen-xl mx-auto flex flex-col mb-12 mt-20 gap-4 px-8">
-        <h1 class="text-6xl sm:text-7xl font-light max-w-3xl text-balance">
+      <div class="section flex flex-col gap-4 pt-20 pb-16 sm:pt-28">
+        <h1
+          class="max-w-3xl text-5xl leading-[1.02] font-light text-balance sm:text-6xl"
+        >
           {{ $t("nav.team") }}
         </h1>
+        <IPBSkeleton v-if="pending" variant="card" :count="6" class="mt-10" />
         <div
-          class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 mt-10 gap-8 xl:gap-12"
+          v-else
+          class="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3 xl:gap-12"
         >
           <IPBTeamMemberCard
             v-for="member in team"
@@ -49,11 +53,16 @@ useSeoMeta({
   twitterTitle: locale.value === "pt" ? "Equipa | IPB" : "Team | IPB",
 });
 
-const { data: team } = useAsyncData(`team-${locale.value}`, () =>
-  convex.query(api.teamMembers.list, {
-    locale: appLocale.value,
-  })
+const { data: team, status } = useAsyncData(
+  `team-${locale.value}`,
+  () =>
+    convex.query(api.teamMembers.list, {
+      locale: appLocale.value,
+    }),
+  { lazy: true }
 );
+
+const pending = computed(() => status.value === "pending");
 
 // Person schema — helps Google surface team members by name in search
 watchEffect(() => {

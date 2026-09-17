@@ -1,5 +1,6 @@
 <template>
   <div class="font-brand">
+    <NuxtLoadingIndicator color="#f29500" :height="2" />
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>

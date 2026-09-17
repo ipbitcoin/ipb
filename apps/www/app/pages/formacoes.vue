@@ -1,17 +1,20 @@
 <template>
   <div>
     <main>
-      <div class="max-w-screen-xl mx-auto flex flex-col mb-12 mt-20 gap-4 px-8">
+      <div class="section flex flex-col gap-4 pt-20 pb-16 sm:pt-24">
         <span class="uppercase font-medium tracking-wider text-sm">{{
           $t("training.tag")
         }}</span>
         <h1
-          class="text-6xl sm:text-7xl font-light max-w-3xl"
+          class="max-w-3xl text-5xl leading-[1.02] font-light text-balance sm:text-6xl"
           v-if="locale === 'pt'"
         >
           Bitcoin para Todos
         </h1>
-        <h1 class="text-6xl sm:text-7xl font-light max-w-3xl" v-else>
+        <h1
+          class="max-w-3xl text-5xl leading-[1.02] font-light text-balance sm:text-6xl"
+          v-else
+        >
           Bitcoin for Everyone
         </h1>
         <p class="max-w-2xl text-balance text-lg" v-if="locale === 'pt'">
