@@ -145,6 +145,7 @@ export default defineSchema({
     hasExposure: v.optional(v.boolean()),
     hasSelfCustody: v.optional(v.boolean()),
     invoice: v.optional(v.string()),
+    memberLayer: v.optional(v.union(v.literal(1), v.literal(2))),
     name: v.string(),
     nif: v.optional(v.string()),
     orderId: v.string(),

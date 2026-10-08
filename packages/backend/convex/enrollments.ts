@@ -2,8 +2,7 @@ import { v } from "convex/values";
 
 import { mutation, query } from "./_generated/server";
 import { assertServiceKey } from "./lib";
-
-const PRICE_EUR = 200;
+import { activeLayerForEmail, coursePriceEur } from "./pricing";
 
 /**
  * Public mutation used by the www enrollment form.
@@ -39,6 +38,10 @@ export const create = mutation({
       throw new Error("Training is sold out");
     }
 
+    // Members get their layer's price; everyone else pays the base price.
+    const memberLayer = await activeLayerForEmail(ctx, args.email);
+    const priceEur = coursePriceEur(memberLayer);
+
     const orderId = `ORD-${Date.now()}-${Math.random()
       .toString(36)
       .slice(2, 8)
@@ -51,6 +54,7 @@ export const create = mutation({
       expectations: args.expectations ?? "",
       hasExposure: args.hasExposure,
       hasSelfCustody: args.hasSelfCustody,
+      memberLayer,
       name: args.name,
       nif: args.nif ?? "",
       orderId,
@@ -58,10 +62,10 @@ export const create = mutation({
       paymentStatus: "pending",
       phone: args.phone ?? "",
       trainingId: args.trainingId,
-      value: PRICE_EUR,
+      value: priceEur,
     });
 
-    return { enrollmentId, orderId, priceEur: PRICE_EUR };
+    return { enrollmentId, memberLayer, orderId, priceEur };
   },
 });
 

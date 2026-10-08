@@ -22,6 +22,7 @@ import type * as members from "../members.js";
 import type * as migrate from "../migrate.js";
 import type * as newsletters from "../newsletters.js";
 import type * as partners from "../partners.js";
+import type * as pricing from "../pricing.js";
 import type * as publishers from "../publishers.js";
 import type * as r2 from "../r2.js";
 import type * as socialMediaIdeas from "../socialMediaIdeas.js";
@@ -51,6 +52,7 @@ declare const fullApi: ApiFromModules<{
   migrate: typeof migrate;
   newsletters: typeof newsletters;
   partners: typeof partners;
+  pricing: typeof pricing;
   publishers: typeof publishers;
   r2: typeof r2;
   socialMediaIdeas: typeof socialMediaIdeas;

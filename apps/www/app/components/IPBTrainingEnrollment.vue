@@ -150,10 +150,21 @@
             type="email"
             :placeholder="locale === 'pt' ? 'O seu email' : 'Your email'"
             class="w-full py-2"
-            @blur="validateField('email')"
+            @blur="onEmailBlur"
           />
           <p v-if="errors.email" role="alert" class="text-sm text-red-600">
             {{ errors.email }}
+          </p>
+          <p
+            v-else-if="memberLayer"
+            role="status"
+            class="text-sm font-medium text-green-700"
+          >
+            {{
+              locale === "pt"
+                ? `Desconto de membro aplicado (Camada ${memberLayer}).`
+                : `Member discount applied (Layer ${memberLayer}).`
+            }}
           </p>
         </div>
 
@@ -347,7 +358,16 @@
           <span class="text-base font-medium">{{
             locale === "pt" ? "Total (IVA incluído)" : "Total (VAT included)"
           }}</span>
-          <span class="text-2xl font-bold tabular-nums">200 €</span>
+          <span class="flex items-baseline gap-2">
+            <span
+              v-if="memberLayer && priceEur < BASE_PRICE_EUR"
+              class="text-base text-black/40 line-through tabular-nums"
+              >{{ BASE_PRICE_EUR }} €</span
+            >
+            <span class="text-2xl font-bold tabular-nums"
+              >{{ priceEur }} €</span
+            >
+          </span>
         </div>
         <UiButton type="submit" size="lg" class="w-full sm:w-auto">
           {{ locale === "pt" ? "Inscrever e pagar" : "Register and pay" }}
@@ -407,7 +427,16 @@
           <span class="text-base font-medium">{{
             locale === "pt" ? "Total" : "Total"
           }}</span>
-          <span class="text-2xl font-bold tabular-nums">200 €</span>
+          <span class="flex items-baseline gap-2">
+            <span
+              v-if="memberLayer && priceEur < BASE_PRICE_EUR"
+              class="text-base text-black/40 line-through tabular-nums"
+              >{{ BASE_PRICE_EUR }} €</span
+            >
+            <span class="text-2xl font-bold tabular-nums"
+              >{{ priceEur }} €</span
+            >
+          </span>
         </div>
         <UiButton
           size="lg"
@@ -415,7 +444,7 @@
           :disabled="paymentState !== 'awaiting_payment'"
           @click="handleConfirmPayment"
         >
-          {{ locale === "pt" ? "Pagar 200 €" : "Pay €200" }}
+          {{ locale === "pt" ? `Pagar ${priceEur} €` : `Pay €${priceEur}` }}
         </UiButton>
       </div>
     </div>
@@ -630,6 +659,44 @@ function validateField(field: keyof typeof errors) {
           ? "Máximo 500 caracteres."
           : "Maximum 500 characters."
         : "";
+  }
+}
+
+// ── Preço (descontos de membro) ──────────────────────────────────────────────
+// O servidor volta a calcular o preço ao inscrever; isto é só para mostrar.
+const BASE_PRICE_EUR = 200;
+const priceEur = ref(BASE_PRICE_EUR);
+const memberLayer = ref<1 | 2 | undefined>();
+
+async function refreshPrice() {
+  const email = form.email.trim();
+  try {
+    const result = await $fetch<{
+      memberLayer?: 1 | 2;
+      priceEur: number;
+    }>("/api/enrollment-price", { body: { email }, method: "POST" });
+    if (email === form.email.trim()) {
+      priceEur.value = result.priceEur;
+      memberLayer.value = result.memberLayer;
+    }
+  } catch {
+    priceEur.value = BASE_PRICE_EUR;
+    memberLayer.value = undefined;
+  }
+}
+
+watch(
+  () => form.email,
+  () => {
+    priceEur.value = BASE_PRICE_EUR;
+    memberLayer.value = undefined;
+  }
+);
+
+function onEmailBlur() {
+  validateField("email");
+  if (!errors.email) {
+    refreshPrice();
   }
 }
 

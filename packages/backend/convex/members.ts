@@ -2,6 +2,7 @@ import { v } from "convex/values";
 
 import { mutation, query } from "./_generated/server";
 import { assertServiceKey } from "./lib";
+import { activeLayerForEmail, coursePriceEur } from "./pricing";
 
 /**
  * Creates a member record (called from the www member-register server route).
@@ -96,6 +97,19 @@ export const cancelBySubscription = mutation({
     if (member) {
       await ctx.db.patch(member._id, { paymentStatus: "cancelled" });
     }
+  },
+});
+
+/**
+ * Course price for an email (called from the www enrollment-price route so the
+ * form can show the member discount before paying).
+ */
+export const coursePriceByEmail = query({
+  args: { email: v.string(), serviceKey: v.string() },
+  handler: async (ctx, args) => {
+    assertServiceKey(args.serviceKey);
+    const memberLayer = await activeLayerForEmail(ctx, args.email);
+    return { memberLayer, priceEur: coursePriceEur(memberLayer) };
   },
 });
 

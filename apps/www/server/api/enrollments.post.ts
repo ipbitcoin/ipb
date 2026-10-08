@@ -1,9 +1,6 @@
 import { api } from "@ipb/backend/api";
 import type { Id } from "@ipb/backend/dataModel";
 
-const PRICE_EUR = 200;
-const PRICE_CENTS = PRICE_EUR * 100;
-
 interface EnrollmentBody {
   name?: string;
   email?: string;
@@ -43,7 +40,11 @@ export default defineEventHandler(async (event) => {
   const convex = convexClient();
 
   // ── Create enrollment (validates training active + stock in the mutation) ──
-  let enrollment: { enrollmentId: Id<"enrollments">; orderId: string };
+  let enrollment: {
+    enrollmentId: Id<"enrollments">;
+    orderId: string;
+    priceEur: number;
+  };
   try {
     enrollment = await convex.mutation(api.enrollments.create, {
       birthday,
@@ -75,7 +76,8 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const { enrollmentId, orderId } = enrollment;
+  // Price is decided server-side (members get their layer's price).
+  const { enrollmentId, orderId, priceEur } = enrollment;
 
   // ── DEV mode: no Stripe key → auto-confirm + decrement stock ─────────
   if (!config.STRIPE_SECRET_KEY) {
@@ -95,7 +97,7 @@ export default defineEventHandler(async (event) => {
 
   // ── Create Stripe PaymentIntent ──────────────────────────────────────
   const params = new URLSearchParams();
-  params.append("amount", String(PRICE_CENTS));
+  params.append("amount", String(Math.round(priceEur * 100)));
   params.append("currency", "eur");
   params.append("automatic_payment_methods[enabled]", "true");
   params.append("receipt_email", email);
