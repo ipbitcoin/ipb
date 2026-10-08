@@ -118,6 +118,9 @@ export default defineNuxtConfig({
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
     STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
     public: {
+      COMMUNITY_URL:
+        process.env.COMMUNITY_URL ||
+        "https://chat.whatsapp.com/DWpVIfz1zuG0J1fzj4nWE5",
       CONVEX_URL: process.env.CONVEX_URL,
       SUBSTACK_URL: process.env.SUBSTACK_URL,
       stripePublishableKey: process.env.NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
