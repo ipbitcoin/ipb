@@ -203,9 +203,7 @@ const emit = defineEmits<{ select: [plan: "annual" | "monthly"] }>();
 
 const { t, te } = useI18n();
 const localePath = useLocalePath();
-const communityUrl = useRuntimeConfig().public.COMMUNITY_URL as
-  | string
-  | undefined;
+const communityUrl = useRuntimeConfig().public.COMMUNITY_URL;
 
 // Columns: tier 0, tier 1, tier 2.
 const rows: { key: string; cells: [Cell, Cell, Cell] }[] = [

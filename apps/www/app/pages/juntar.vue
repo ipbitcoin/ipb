@@ -545,6 +545,9 @@ function unlockScroll() {
   document.body.classList.remove("overflow-hidden");
 }
 
+// Leaving the page with the dialog open removes it without a `close` event.
+onBeforeUnmount(unlockScroll);
+
 watch([memberBirthDay, memberBirthMonth, memberBirthYear], ([d, m, y]) => {
   if (d && m && y && y.length === 4) {
     memberForm.dateOfBirth = `${y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`;

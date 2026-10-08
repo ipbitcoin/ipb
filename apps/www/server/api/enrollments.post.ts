@@ -42,6 +42,7 @@ export default defineEventHandler(async (event) => {
   // ── Create enrollment (validates training active + stock in the mutation) ──
   let enrollment: {
     enrollmentId: Id<"enrollments">;
+    memberLayer?: 1 | 2;
     orderId: string;
     priceEur: number;
   };
@@ -77,7 +78,7 @@ export default defineEventHandler(async (event) => {
   }
 
   // Price is decided server-side (members get their layer's price).
-  const { enrollmentId, orderId, priceEur } = enrollment;
+  const { enrollmentId, memberLayer, orderId, priceEur } = enrollment;
 
   // ── DEV mode: no Stripe key → auto-confirm + decrement stock ─────────
   if (!config.STRIPE_SECRET_KEY) {
@@ -92,7 +93,7 @@ export default defineEventHandler(async (event) => {
       .catch((error: unknown) => {
         console.error("[enrollments] Failed to auto-confirm (dev):", error);
       });
-    return { clientSecret: "", devMode: true, orderId };
+    return { clientSecret: "", devMode: true, memberLayer, orderId, priceEur };
   }
 
   // ── Create Stripe PaymentIntent ──────────────────────────────────────
@@ -132,6 +133,8 @@ export default defineEventHandler(async (event) => {
   return {
     clientSecret: intent.client_secret,
     devMode: false,
+    memberLayer,
     orderId,
+    priceEur,
   };
 });

@@ -156,7 +156,7 @@
             {{ errors.email }}
           </p>
           <p
-            v-else-if="memberLayer"
+            v-else-if="memberLayer && priceEur < BASE_PRICE_EUR"
             role="status"
             class="text-sm font-medium text-green-700"
           >
@@ -719,7 +719,12 @@ async function handleSubmit() {
   if (!validateAll()) {
     return;
   }
-  await submitEnrollment({ ...form });
+  const price = await submitEnrollment({ ...form });
+  // O passo de pagamento mostra o valor que o servidor vai cobrar.
+  if (price) {
+    priceEur.value = price.priceEur;
+    memberLayer.value = price.memberLayer;
+  }
 }
 
 async function handleConfirmPayment() {
