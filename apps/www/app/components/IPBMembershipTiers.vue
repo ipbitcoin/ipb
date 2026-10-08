@@ -56,7 +56,7 @@
         </div>
         <p class="text-black/70">{{ t("join.tiers.t1.tagline") }}</p>
         <ul class="flex flex-1 flex-col gap-2 text-sm">
-          <li v-for="i in 5" :key="i" class="flex items-start gap-2">
+          <li v-for="i in 6" :key="i" class="flex items-start gap-2">
             <IconCheck class="mt-0.5 size-4 shrink-0" aria-hidden="true" />
             <span>{{ t(`join.tiers.t1.points[${i - 1}]`) }}</span>
           </li>
