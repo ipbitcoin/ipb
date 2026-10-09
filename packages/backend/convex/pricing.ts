@@ -27,15 +27,12 @@ export function planLayer(plan: PaymentPlan): MemberLayer {
 }
 
 /**
- * Layer of a member. Explicit `layer` wins; members imported from Strapi
- * (they have an importId) are all Layer 2 whatever they used to pay;
- * everyone else follows their payment plan.
+ * Layer of a member. Every sign-up since the layers launched stores `layer`.
+ * Rows without it are older members (Strapi imports and sign-ups on the old
+ * €250/year plans): all Layer 2, whatever they pay.
  */
 export function layerOfMember(member: Doc<"members">): MemberLayer {
-  if (member.layer) {
-    return member.layer;
-  }
-  return member.importId ? 2 : planLayer(member.paymentPlan);
+  return member.layer ?? 2;
 }
 
 const normalizeEmail = (email: string) => email.trim().toLowerCase();

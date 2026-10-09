@@ -175,9 +175,12 @@ export default defineSchema({
     layer: v.optional(v.union(v.literal(1), v.literal(2))),
     name: v.string(),
     paymentPlan: v.union(v.literal("yearly"), v.literal("monthly")),
-    // Previous subscription to cancel after a layer change; cleared once
-    // Stripe confirms the cancel (see members.activate).
-    replacesSubscriptionId: v.optional(v.string()),
+    // Subscriptions a newer checkout replaced, still to cancel in Stripe; each
+    // is removed once Stripe confirms (see members.activate).
+    cancelSubscriptionIds: v.optional(v.array(v.string())),
+    // Stripe `created` (seconds) of the newest checkout applied, so a
+    // redelivered older checkout event can't undo a newer one.
+    lastCheckoutAt: v.optional(v.number()),
     paymentStatus: v.union(
       v.literal("pending"),
       v.literal("active"),

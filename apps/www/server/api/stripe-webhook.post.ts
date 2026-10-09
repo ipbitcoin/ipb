@@ -37,10 +37,10 @@ function errorStatus(error: unknown): number | undefined {
 }
 
 /**
- * Cancel the subscription a layer change replaced, then clear it on the member.
+ * Cancel a subscription a newer checkout replaced, then clear it on the member.
  * 400/404 mean it's already gone. Any other failure answers 500 so Stripe
- * retries the event: `activate` hands the same id back until it's cleared, so
- * the member is never left paying for two subscriptions.
+ * retries the event: `activate` hands the same ids back until they're
+ * cleared, so the member is never left paying for two subscriptions.
  */
 async function cancelReplacedSubscription(
   memberId: Id<"members">,
@@ -70,7 +70,7 @@ async function cancelReplacedSubscription(
     );
   }
 
-  await convexClient().mutation(api.members.clearReplacedSubscription, {
+  await convexClient().mutation(api.members.clearCancelledSubscription, {
     id: memberId,
     serviceKey: config.SERVICE_KEY,
     stripeSubscriptionId: subscriptionId,
@@ -108,11 +108,13 @@ export default defineEventHandler(async (event) => {
     const { type, memberId, paymentPlan } = session.metadata ?? {};
 
     if (type === "membership" && memberId) {
-      let cancelSubscriptionId: string | undefined;
+      let cancelSubscriptionIds: string[] = [];
       try {
-        ({ cancelSubscriptionId } = await convex.mutation(
+        ({ cancelSubscriptionIds } = await convex.mutation(
           api.members.activate,
           {
+            checkoutCreatedAt:
+              typeof session.created === "number" ? session.created : undefined,
             id: memberId,
             paymentPlan:
               paymentPlan === "yearly" || paymentPlan === "monthly"
@@ -125,14 +127,25 @@ export default defineEventHandler(async (event) => {
         ));
       } catch (error: unknown) {
         console.error("[stripe-webhook] Failed to update member:", error);
+        // `activate` is safe to repeat: answer 500 so Stripe retries the event
+        // instead of leaving a paid member pending.
+        throw createError({
+          message: "Failed to update member",
+          statusCode: 500,
+        });
       }
 
       // Layer upgrade/downgrade: the new subscription is paid, so end the old one.
-      if (cancelSubscriptionId && config.STRIPE_SECRET_KEY) {
-        await cancelReplacedSubscription(
-          memberId,
-          cancelSubscriptionId,
-          config.STRIPE_SECRET_KEY
+      const stripeSecretKey = config.STRIPE_SECRET_KEY;
+      if (stripeSecretKey) {
+        await Promise.all(
+          cancelSubscriptionIds.map((subscriptionId) =>
+            cancelReplacedSubscription(
+              memberId,
+              subscriptionId,
+              stripeSecretKey
+            )
+          )
         );
       }
     }

@@ -4,6 +4,8 @@ import { mutation, query } from "./_generated/server";
 import { assertServiceKey } from "./lib";
 import { findMemberByEmail, layerOfMember, planLayer } from "./pricing";
 
+const nonEmpty = (ids: string[]) => (ids.length > 0 ? ids : undefined);
+
 /**
  * Sign-up from the www member-register server route.
  *
@@ -57,9 +59,12 @@ export const create = mutation({
 
     if (existing.paymentStatus !== "active") {
       // Replace the old record (a stale `pending` sign-up, or a lapsed member).
+      // Keep queued cancels and checkout ordering across the replacement.
       await ctx.db.replace(existing._id, {
         ...fields,
+        cancelSubscriptionIds: existing.cancelSubscriptionIds,
         importId: existing.importId,
+        lastCheckoutAt: existing.lastCheckoutAt,
         layer,
       });
       return existing._id;
@@ -85,13 +90,16 @@ export const create = mutation({
  * from the plan that was actually paid (checkout metadata), not from the
  * record, which a later unpaid sign-up may have changed.
  *
- * One member = one subscription: if a different subscription was active, it
- * is returned so the webhook cancels it (layer change, or a double checkout).
- * It stays in `replacesSubscriptionId` until the webhook confirms the cancel,
- * so a Stripe retry of this event retries the cancel too.
+ * One member = one subscription, and the newest checkout wins. The
+ * subscription it replaces (layer change, double checkout), or the older one
+ * when Stripe redelivers an older checkout event, is queued in
+ * `cancelSubscriptionIds` and returned for the webhook to cancel. Ids stay
+ * queued until the webhook confirms each cancel, so a Stripe retry of the
+ * event retries the cancels too.
  */
 export const activate = mutation({
   args: {
+    checkoutCreatedAt: v.optional(v.number()),
     id: v.id("members"),
     paymentPlan: v.optional(v.union(v.literal("yearly"), v.literal("monthly"))),
     serviceKey: v.string(),
@@ -102,34 +110,58 @@ export const activate = mutation({
     assertServiceKey(args.serviceKey);
     const member = await ctx.db.get(args.id);
     if (!member) {
-      return { cancelSubscriptionId: undefined };
+      return { cancelSubscriptionIds: [] };
+    }
+
+    const subscriptionId = args.stripeSubscriptionId ?? "";
+    const queued = member.cancelSubscriptionIds ?? [];
+    const queue = (id: string | undefined) =>
+      id && !queued.includes(id) ? [...queued, id] : queued;
+
+    // Redelivered older checkout: keep the newer one, cancel this one.
+    if (
+      args.checkoutCreatedAt !== undefined &&
+      member.lastCheckoutAt !== undefined &&
+      args.checkoutCreatedAt < member.lastCheckoutAt
+    ) {
+      const cancelSubscriptionIds = queue(
+        subscriptionId === member.stripeSubscriptionId
+          ? undefined
+          : subscriptionId
+      );
+      await ctx.db.patch(args.id, {
+        cancelSubscriptionIds: nonEmpty(cancelSubscriptionIds),
+      });
+      return { cancelSubscriptionIds };
     }
 
     const replaced =
       member.paymentStatus === "active" &&
-      member.stripeSubscriptionId &&
-      member.stripeSubscriptionId !== args.stripeSubscriptionId
+      member.stripeSubscriptionId !== subscriptionId
         ? member.stripeSubscriptionId
         : undefined;
-    const cancelSubscriptionId = replaced ?? member.replacesSubscriptionId;
+    const cancelSubscriptionIds = queue(replaced).filter(
+      (id) => id !== subscriptionId
+    );
     // Checkouts created before the plan was in the metadata: keep the record's.
     const paymentPlan = args.paymentPlan ?? member.paymentPlan;
 
     await ctx.db.patch(args.id, {
+      cancelSubscriptionIds: nonEmpty(cancelSubscriptionIds),
+      lastCheckoutAt: args.checkoutCreatedAt ?? member.lastCheckoutAt,
       layer: args.paymentPlan ? planLayer(paymentPlan) : member.layer,
       paymentPlan,
       paymentStatus: "active",
-      replacesSubscriptionId: cancelSubscriptionId,
       stripeCustomerId: args.stripeCustomerId ?? "",
-      stripeSubscriptionId: args.stripeSubscriptionId ?? "",
+      stripeSubscriptionId: subscriptionId,
     });
 
-    return { cancelSubscriptionId };
+    return { cancelSubscriptionIds };
   },
 });
 
-/** Called by the webhook once the replaced subscription is cancelled in Stripe. */
-export const clearReplacedSubscription = mutation({
+/** Called by the webhook once a queued subscription is cancelled in Stripe. */
+export const clearCancelledSubscription = mutation({
   args: {
     id: v.id("members"),
     serviceKey: v.string(),
@@ -138,8 +170,13 @@ export const clearReplacedSubscription = mutation({
   handler: async (ctx, args) => {
     assertServiceKey(args.serviceKey);
     const member = await ctx.db.get(args.id);
-    if (member?.replacesSubscriptionId === args.stripeSubscriptionId) {
-      await ctx.db.patch(args.id, { replacesSubscriptionId: undefined });
+    const queued = member?.cancelSubscriptionIds ?? [];
+    if (queued.includes(args.stripeSubscriptionId)) {
+      await ctx.db.patch(args.id, {
+        cancelSubscriptionIds: nonEmpty(
+          queued.filter((id) => id !== args.stripeSubscriptionId)
+        ),
+      });
     }
   },
 });
