@@ -13,7 +13,9 @@ import type * as articles from "../articles.js";
 import type * as authors from "../authors.js";
 import type * as books from "../books.js";
 import type * as categories from "../categories.js";
+import type * as crons from "../crons.js";
 import type * as docs from "../docs.js";
+import type * as email from "../email.js";
 import type * as enrollments from "../enrollments.js";
 import type * as faqs from "../faqs.js";
 import type * as ideaCategories from "../ideaCategories.js";
@@ -44,7 +46,9 @@ declare const fullApi: ApiFromModules<{
   authors: typeof authors;
   books: typeof books;
   categories: typeof categories;
+  crons: typeof crons;
   docs: typeof docs;
+  email: typeof email;
   enrollments: typeof enrollments;
   faqs: typeof faqs;
   ideaCategories: typeof ideaCategories;
@@ -92,4 +96,5 @@ export declare const internal: FilterApi<
 
 export declare const components: {
   r2: import("@convex-dev/r2/_generated/component.js").ComponentApi<"r2">;
+  resend: import("@convex-dev/resend/_generated/component.js").ComponentApi<"resend">;
 };

@@ -58,7 +58,7 @@ Two Vercel projects from this repo (enable "Include source files outside of Root
 
 Order matters on schema changes: the Convex workflow must run before (or without) app redeploys that depend on new functions — push backend changes first or rerun the app deploy after.
 
-One Convex project, two deployments (dev via `convex dev`, prod via `convex deploy`). Two R2 buckets: `ipbitcoin-media-dev` (public `r2.dev` URL) and `ipbitcoin-media` (custom domain `cdn.institutobitcoin.pt`). Per-deployment Convex env vars: `SERVICE_KEY`, `CDN_HOST`, `R2_TOKEN`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_ENDPOINT`, `R2_BUCKET` — dev points at the dev bucket/`r2.dev` host, prod at the prod bucket/CDN domain.
+One Convex project, two deployments (dev via `convex dev`, prod via `convex deploy`). Two R2 buckets: `ipbitcoin-media-dev` (public `r2.dev` URL) and `ipbitcoin-media` (custom domain `cdn.institutobitcoin.pt`). Per-deployment Convex env vars: `SERVICE_KEY`, `CDN_HOST`, `R2_TOKEN`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_ENDPOINT`, `R2_BUCKET` — dev points at the dev bucket/`r2.dev` host, prod at the prod bucket/CDN domain. Email goes through the Convex Resend component: `RESEND_API_KEY` (unset in dev = no email, the www dev server returns verification codes instead) and optional `EMAIL_FROM` (default `IPB <no-reply@institutobitcoin.pt>`, domain must be verified in Resend).
 
 See `MIGRATION_PLAN.md` for the full cutover runbook (Stripe webhook events, key rotation, DNS switch).
 

@@ -1,7 +1,9 @@
 import { v } from "convex/values";
 
 import { mutation, query } from "./_generated/server";
-import { assertServiceKey } from "./lib";
+import { canSendEmail, emailFrom, resend } from "./email";
+import { assertServiceKey, localeArg } from "./lib";
+import type { Locale } from "./lib";
 import {
   coursePriceEur,
   findActiveMemberByEmail,
@@ -16,20 +18,39 @@ const MAX_ATTEMPTS = 5;
 
 const normalizeEmail = (email: string) => email.trim().toLowerCase();
 
+function codeEmail(code: string, locale: Locale) {
+  const big = `<p style="font-size:28px;font-weight:700;letter-spacing:4px">${code}</p>`;
+  return locale === "en"
+    ? {
+        html: `<p>Your IPB verification code is:</p>${big}<p>Valid for 10 minutes. If you didn't request it, ignore this email.</p>`,
+        subject: "IPB verification code",
+      }
+    : {
+        html: `<p>O seu código de verificação IPB é:</p>${big}<p>Válido durante 10 minutos. Se não pediu este código, ignore este e-mail.</p>`,
+        subject: "Código de verificação IPB",
+      };
+}
+
 /**
- * Store a one-time code for an active member's email. Hashes only: the www
- * server route generates the code, emails it, and keeps it out of the DB.
- * `send` tells the route whether to email the code. It is false for non-members
- * and when rate-limited, and the route answers the same either way so the
- * endpoint never reveals who is a member.
+ * Email a one-time code to an active member. The www server route generates
+ * the code; only its hash is stored here, and the email is queued in this
+ * same transaction (Resend component). Returns nothing: non-members and
+ * rate-limited requests look the same as a sent code, so the endpoint never
+ * reveals who is a member.
  */
 export const request = mutation({
-  args: { codeHash: v.string(), email: v.string(), serviceKey: v.string() },
+  args: {
+    code: v.string(),
+    codeHash: v.string(),
+    email: v.string(),
+    locale: localeArg,
+    serviceKey: v.string(),
+  },
   handler: async (ctx, args) => {
     assertServiceKey(args.serviceKey);
     const member = await findActiveMemberByEmail(ctx, args.email);
     if (!member) {
-      return { send: false };
+      return;
     }
 
     const email = normalizeEmail(args.email);
@@ -43,7 +64,7 @@ export const request = mutation({
       (t) => now - t < SEND_WINDOW_MS
     );
     if (recent.length >= MAX_SENDS_PER_WINDOW) {
-      return { send: false };
+      return;
     }
 
     const fields = {
@@ -57,7 +78,19 @@ export const request = mutation({
     } else {
       await ctx.db.insert("memberVerifications", { email, ...fields });
     }
-    return { send: true };
+
+    if (!canSendEmail()) {
+      // Local dev without an email provider: the www route returns the code.
+      console.warn(
+        "[memberVerification] RESEND_API_KEY not set — code not emailed"
+      );
+      return;
+    }
+    await resend.sendEmail(ctx, {
+      from: emailFrom(),
+      to: member.email.trim(),
+      ...codeEmail(args.code, args.locale),
+    });
   },
 });
 
