@@ -170,8 +170,15 @@ export default defineSchema({
     citizenCardNumber: v.optional(v.string()),
     email: v.string(),
     fiscalNumber: v.optional(v.string()),
+    // Membership layer (1 = participant, 2 = ambassador). Unset on legacy rows:
+    // see layerOfMember() in pricing.ts.
+    layer: v.optional(v.union(v.literal(1), v.literal(2))),
     name: v.string(),
     paymentPlan: v.union(v.literal("yearly"), v.literal("monthly")),
+    // Layer change in flight: applied (and the old subscription cancelled)
+    // once the new payment completes.
+    pendingPlan: v.optional(v.union(v.literal("yearly"), v.literal("monthly"))),
+    replacesSubscriptionId: v.optional(v.string()),
     paymentStatus: v.union(
       v.literal("pending"),
       v.literal("active"),
@@ -185,6 +192,19 @@ export default defineSchema({
     .index("by_email", ["email"])
     .index("by_subscription", ["stripeSubscriptionId"])
     .index("by_fiscal_number", ["fiscalNumber"]),
+
+  // One-time email codes proving someone owns a member's email (course discount).
+  memberVerifications: defineTable({
+    attempts: v.number(),
+    codeExpiresAt: v.number(),
+    codeHash: v.string(),
+    email: v.string(), // lowercased
+    sentAt: v.array(v.number()),
+    tokenExpiresAt: v.optional(v.number()),
+    tokenHash: v.optional(v.string()),
+  })
+    .index("by_email", ["email"])
+    .index("by_token_hash", ["tokenHash"]),
 
   newsletters: defineTable({
     email: v.string(),

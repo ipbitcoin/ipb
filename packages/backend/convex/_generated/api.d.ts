@@ -18,6 +18,7 @@ import type * as enrollments from "../enrollments.js";
 import type * as faqs from "../faqs.js";
 import type * as ideaCategories from "../ideaCategories.js";
 import type * as lib from "../lib.js";
+import type * as memberVerification from "../memberVerification.js";
 import type * as members from "../members.js";
 import type * as migrate from "../migrate.js";
 import type * as newsletters from "../newsletters.js";
@@ -48,6 +49,7 @@ declare const fullApi: ApiFromModules<{
   faqs: typeof faqs;
   ideaCategories: typeof ideaCategories;
   lib: typeof lib;
+  memberVerification: typeof memberVerification;
   members: typeof members;
   migrate: typeof migrate;
   newsletters: typeof newsletters;

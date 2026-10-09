@@ -91,7 +91,8 @@ export default function useTrainingEnrollment() {
   // ── Submeter enrollment (passo 1: criar registo + PaymentIntent) ──────────
   // Devolve o preço decidido pelo servidor (o que vai ser cobrado).
   async function submitEnrollment(
-    form: EnrollmentForm
+    form: EnrollmentForm,
+    memberToken?: string
   ): Promise<{ memberLayer?: 1 | 2; priceEur: number } | undefined> {
     paymentState.value = "submitting";
     errorMessage.value = "";
@@ -111,6 +112,7 @@ export default function useTrainingEnrollment() {
           expectations: form.expectations || undefined,
           has_exposure: form.has_exposure,
           has_self_custody: form.has_self_custody,
+          memberToken: memberToken || undefined,
           name: form.name,
           nif: form.nif || undefined,
           participated_workshop: form.participated_workshop,

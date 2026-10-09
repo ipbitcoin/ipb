@@ -113,7 +113,9 @@ export default defineNuxtConfig({
   // page need to be awaited before we can scroll to them.
   runtimeConfig: {
     APP_URL: process.env.APP_URL,
+    EMAIL_FROM: process.env.EMAIL_FROM,
     OPENNODE_API_KEY: process.env.OPENNODE_API_KEY,
+    RESEND_API_KEY: process.env.RESEND_API_KEY,
     SERVICE_KEY: process.env.SERVICE_KEY,
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
     STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,

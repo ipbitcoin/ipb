@@ -59,12 +59,33 @@ export default defineEventHandler(async (event) => {
 
     if (type === "membership" && memberId) {
       try {
-        await convex.mutation(api.members.activate, {
-          id: memberId,
-          serviceKey,
-          stripeCustomerId: session.customer ?? "",
-          stripeSubscriptionId: session.subscription ?? "",
-        });
+        const { cancelSubscriptionId } = await convex.mutation(
+          api.members.activate,
+          {
+            id: memberId,
+            serviceKey,
+            stripeCustomerId: session.customer ?? "",
+            stripeSubscriptionId: session.subscription ?? "",
+          }
+        );
+
+        // Layer upgrade/downgrade: the new subscription is paid, so end the old one.
+        if (cancelSubscriptionId && config.STRIPE_SECRET_KEY) {
+          await $fetch(
+            `https://api.stripe.com/v1/subscriptions/${cancelSubscriptionId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${config.STRIPE_SECRET_KEY}`,
+              },
+              method: "DELETE",
+            }
+          ).catch((error: unknown) => {
+            console.error(
+              `[stripe-webhook] Failed to cancel previous subscription ${cancelSubscriptionId}:`,
+              error
+            );
+          });
+        }
       } catch (error: unknown) {
         console.error("[stripe-webhook] Failed to update member:", error);
       }

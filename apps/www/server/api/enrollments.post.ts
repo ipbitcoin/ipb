@@ -13,6 +13,7 @@ interface EnrollmentBody {
   bought_bitcoin?: boolean;
   has_self_custody?: boolean;
   expectations?: string;
+  memberToken?: string;
 }
 
 export default defineEventHandler(async (event) => {
@@ -31,6 +32,7 @@ export default defineEventHandler(async (event) => {
     bought_bitcoin,
     has_self_custody,
     expectations,
+    memberToken,
   } = body ?? {};
 
   if (!name || !email || !birthday || !trainingId) {
@@ -54,6 +56,7 @@ export default defineEventHandler(async (event) => {
       expectations: expectations ?? undefined,
       hasExposure: has_exposure ?? undefined,
       hasSelfCustody: has_self_custody ?? undefined,
+      memberTokenHash: memberToken ? hashToken(memberToken) : undefined,
       name,
       nif: nif ?? undefined,
       participatedWorkshop: participated_workshop ?? undefined,
