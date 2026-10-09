@@ -175,9 +175,8 @@ export default defineSchema({
     layer: v.optional(v.union(v.literal(1), v.literal(2))),
     name: v.string(),
     paymentPlan: v.union(v.literal("yearly"), v.literal("monthly")),
-    // Layer change in flight: applied (and the old subscription cancelled)
-    // once the new payment completes.
-    pendingPlan: v.optional(v.union(v.literal("yearly"), v.literal("monthly"))),
+    // Previous subscription to cancel after a layer change; cleared once
+    // Stripe confirms the cancel (see members.activate).
     replacesSubscriptionId: v.optional(v.string()),
     paymentStatus: v.union(
       v.literal("pending"),

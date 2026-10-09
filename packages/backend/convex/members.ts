@@ -11,9 +11,10 @@ import { findMemberByEmail, layerOfMember, planLayer } from "./pricing";
  * - Existing email, not active (pending / cancelled / expired): the old record
  *   is replaced by this sign-up.
  * - Existing active member on a different layer: this is an upgrade/downgrade.
- *   The current layer stays in force until the new payment completes; then
- *   `activate` switches the layer and hands back the old subscription to
- *   cancel. In dev mode (no Stripe) the switch is immediate.
+ *   Nothing changes here (the sign-up isn't authenticated): the current layer
+ *   stays in force until the new payment completes, then `activate` switches
+ *   the layer and hands back the old subscription to cancel. In dev mode (no
+ *   Stripe) the switch is immediate.
  * - Existing active member on the same layer: rejected.
  *
  * Fiscal number stays unique across members.
@@ -68,27 +69,11 @@ export const create = mutation({
       throw new Error("unique: already an active member on this layer");
     }
 
-    // Active member switching layer.
-    const personalData = {
-      address: args.address ?? existing.address,
-      birthday: args.birthday ?? existing.birthday,
-      citizenCardNumber: args.citizenCardNumber ?? existing.citizenCardNumber,
-      fiscalNumber: args.fiscalNumber ?? existing.fiscalNumber,
-      name: args.name,
-    };
+    // Active member switching layer: only dev mode (no payment) switches here.
     if (args.paymentStatus === "active") {
       await ctx.db.patch(existing._id, {
-        ...personalData,
         layer,
         paymentPlan: args.paymentPlan,
-        pendingPlan: undefined,
-        replacesSubscriptionId: undefined,
-      });
-    } else {
-      await ctx.db.patch(existing._id, {
-        ...personalData,
-        pendingPlan: args.paymentPlan,
-        replacesSubscriptionId: existing.stripeSubscriptionId || undefined,
       });
     }
     return existing._id;
@@ -96,13 +81,19 @@ export const create = mutation({
 });
 
 /**
- * Activate on checkout.session.completed (stores Stripe ids). If this payment
- * completes a layer change, switches the layer and returns the previous
- * subscription so the webhook can cancel it.
+ * Activate on checkout.session.completed (stores Stripe ids). The layer comes
+ * from the plan that was actually paid (checkout metadata), not from the
+ * record, which a later unpaid sign-up may have changed.
+ *
+ * One member = one subscription: if a different subscription was active, it
+ * is returned so the webhook cancels it (layer change, or a double checkout).
+ * It stays in `replacesSubscriptionId` until the webhook confirms the cancel,
+ * so a Stripe retry of this event retries the cancel too.
  */
 export const activate = mutation({
   args: {
     id: v.id("members"),
+    paymentPlan: v.optional(v.union(v.literal("yearly"), v.literal("monthly"))),
     serviceKey: v.string(),
     stripeCustomerId: v.optional(v.string()),
     stripeSubscriptionId: v.optional(v.string()),
@@ -114,26 +105,42 @@ export const activate = mutation({
       return { cancelSubscriptionId: undefined };
     }
 
-    const switching = member.pendingPlan;
+    const replaced =
+      member.paymentStatus === "active" &&
+      member.stripeSubscriptionId &&
+      member.stripeSubscriptionId !== args.stripeSubscriptionId
+        ? member.stripeSubscriptionId
+        : undefined;
+    const cancelSubscriptionId = replaced ?? member.replacesSubscriptionId;
+    // Checkouts created before the plan was in the metadata: keep the record's.
+    const paymentPlan = args.paymentPlan ?? member.paymentPlan;
+
     await ctx.db.patch(args.id, {
+      layer: args.paymentPlan ? planLayer(paymentPlan) : member.layer,
+      paymentPlan,
       paymentStatus: "active",
+      replacesSubscriptionId: cancelSubscriptionId,
       stripeCustomerId: args.stripeCustomerId ?? "",
       stripeSubscriptionId: args.stripeSubscriptionId ?? "",
-      ...(switching && {
-        layer: planLayer(switching),
-        paymentPlan: switching,
-        pendingPlan: undefined,
-        replacesSubscriptionId: undefined,
-      }),
     });
 
-    const previous = member.replacesSubscriptionId;
-    return {
-      cancelSubscriptionId:
-        switching && previous && previous !== args.stripeSubscriptionId
-          ? previous
-          : undefined,
-    };
+    return { cancelSubscriptionId };
+  },
+});
+
+/** Called by the webhook once the replaced subscription is cancelled in Stripe. */
+export const clearReplacedSubscription = mutation({
+  args: {
+    id: v.id("members"),
+    serviceKey: v.string(),
+    stripeSubscriptionId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    assertServiceKey(args.serviceKey);
+    const member = await ctx.db.get(args.id);
+    if (member?.replacesSubscriptionId === args.stripeSubscriptionId) {
+      await ctx.db.patch(args.id, { replacesSubscriptionId: undefined });
+    }
   },
 });
 

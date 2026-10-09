@@ -51,7 +51,9 @@ export async function findMemberByEmail(
 ): Promise<Doc<"members"> | undefined> {
   const wanted = normalizeEmail(email);
   const members = await ctx.db.query("members").collect();
-  return members.find((m) => normalizeEmail(m.email) === wanted);
+  const matches = members.filter((m) => normalizeEmail(m.email) === wanted);
+  // Older rows can repeat an email with different case: prefer the active one.
+  return matches.find((m) => m.paymentStatus === "active") ?? matches[0];
 }
 
 export async function findActiveMemberByEmail(

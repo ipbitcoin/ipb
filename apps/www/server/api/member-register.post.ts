@@ -107,6 +107,11 @@ export default defineEventHandler(async (event) => {
   // Pass member id as metadata for webhook reconciliation
   params.append("metadata[memberId]", memberId);
   params.append("metadata[type]", "membership");
+  // The webhook sets the layer from the plan actually paid for.
+  params.append(
+    "metadata[paymentPlan]",
+    paymentPlan === "annual" ? "yearly" : "monthly"
+  );
 
   params.append("mode", "subscription");
   if (paymentPlan === "monthly") {

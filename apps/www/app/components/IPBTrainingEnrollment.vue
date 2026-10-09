@@ -163,11 +163,16 @@
               role="status"
               class="text-sm font-medium text-green-700"
             >
-              {{
+              <template v-if="priceEur < BASE_PRICE_EUR">{{
                 locale === "pt"
                   ? `Membro verificado. Desconto da Camada ${memberLayer} aplicado.`
                   : `Member verified. Layer ${memberLayer} discount applied.`
-              }}
+              }}</template>
+              <template v-else>{{
+                locale === "pt"
+                  ? "Membro verificado. Esta formação não tem desconto para a sua camada."
+                  : "Member verified. This course has no discount for your layer."
+              }}</template>
             </p>
             <template v-else>
               <button
