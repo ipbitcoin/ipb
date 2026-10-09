@@ -13,15 +13,19 @@ import type * as articles from "../articles.js";
 import type * as authors from "../authors.js";
 import type * as books from "../books.js";
 import type * as categories from "../categories.js";
+import type * as crons from "../crons.js";
 import type * as docs from "../docs.js";
+import type * as email from "../email.js";
 import type * as enrollments from "../enrollments.js";
 import type * as faqs from "../faqs.js";
 import type * as ideaCategories from "../ideaCategories.js";
 import type * as lib from "../lib.js";
+import type * as memberVerification from "../memberVerification.js";
 import type * as members from "../members.js";
 import type * as migrate from "../migrate.js";
 import type * as newsletters from "../newsletters.js";
 import type * as partners from "../partners.js";
+import type * as pricing from "../pricing.js";
 import type * as publishers from "../publishers.js";
 import type * as r2 from "../r2.js";
 import type * as socialMediaIdeas from "../socialMediaIdeas.js";
@@ -42,15 +46,19 @@ declare const fullApi: ApiFromModules<{
   authors: typeof authors;
   books: typeof books;
   categories: typeof categories;
+  crons: typeof crons;
   docs: typeof docs;
+  email: typeof email;
   enrollments: typeof enrollments;
   faqs: typeof faqs;
   ideaCategories: typeof ideaCategories;
   lib: typeof lib;
+  memberVerification: typeof memberVerification;
   members: typeof members;
   migrate: typeof migrate;
   newsletters: typeof newsletters;
   partners: typeof partners;
+  pricing: typeof pricing;
   publishers: typeof publishers;
   r2: typeof r2;
   socialMediaIdeas: typeof socialMediaIdeas;
@@ -88,4 +96,5 @@ export declare const internal: FilterApi<
 
 export declare const components: {
   r2: import("@convex-dev/r2/_generated/component.js").ComponentApi<"r2">;
+  resend: import("@convex-dev/resend/_generated/component.js").ComponentApi<"resend">;
 };

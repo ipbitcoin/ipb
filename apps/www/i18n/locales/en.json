@@ -116,7 +116,7 @@
     "donate": "Donate",
     "member": "Become a Member",
     "contact": "Talk to Us",
-    "mission": "As a non-profit organization, we rely on donations to help us fulfill our mission.",
+    "mission": "As a non-profit organization, we rely on our members and on donations to fulfill our mission. Every member strengthens the independent voice of Bitcoin in Portugal.",
     "missionPoints": {
       "promote": {
         "bold": "Promote",
@@ -138,35 +138,20 @@
     "orgInfo": "The Portuguese Bitcoin Institute is a non-profit association registered under the name Associação IPBitcoin and has the corporate entity number 519024427.",
     "supportImpact": "Your support powers the research that drives education that empowers regular people, lawmakers, and the direct engagement that shapes outcomes. With your help, we can protect individual liberty, strengthen democracy, and secure Portugal's leadership in the digital age.",
     "donationsTitle": "Donations",
-    "donationsDescription": "Choose the type and method of donation you prefer to support the IPB. Donations can be anonymous or identified.",
-    "anonymous": "Anonymous",
-    "identified": "Identified",
+    "donationsDescription": "Choose an amount and frequency. Donations can be anonymous or identified.",
     "anonymousNotice": "Anonymous donations have a maximum limit of €300 per year (one-time and recurring). No personal information will be requested.",
-    "fiatDescription": "Simple and secure for one-time or recurring gifts.",
-    "btcDescription": "Fast, borderless, and privacy-preserving giving.",
-    "fiatCardTitle": "Fiat Donation (Card)",
-    "btcTitle": "Bitcoin Donation",
     "amountEur": "Amount (EUR)",
     "other": "Other",
     "ceilingWarning": "Anonymous donations cannot exceed €300 per year.",
     "oneTime": "One-time",
-    "recurringYearly": "Recurring (yearly)",
-    "recurringMonthly": "Recurring (monthly)",
+    "recurringYearly": "Yearly",
+    "recurringMonthly": "Monthly",
     "donorName": "Name",
     "donorNamePlaceholder": "Your name",
     "donorEmail": "Email",
     "donorEmailPlaceholder": "Your email",
     "donateCard": "Donate with Card",
     "donateBtc": "Donate with Bitcoin",
-    "memberTitle": "Become a Member",
-    "memberDescription": "The annual membership fee is €250 per year. You can pay in full or split into 12 monthly instalments. Payment is exclusively in fiat (card).",
-    "memberBenefitsTitle": "Member Benefits",
-    "benefits": {
-      "earlyAccess": "Early access to events",
-      "trainingDiscount": "Discount on training courses",
-      "memberCard": "Official IPB member card sent by mail",
-      "exclusiveNetwork": "Exclusive network of national and international members and partners"
-    },
     "memberFormTitle": "Registration Form",
     "form": {
       "name": "Full name",
@@ -180,9 +165,6 @@
       "fiscalNumberPlaceholder": "E.g.: 123456789",
       "address": "Full address",
       "addressPlaceholder": "Street, number, postal code, city",
-      "paymentPlan": "Payment plan",
-      "annual": "Annual one-time payment (€250)",
-      "monthly": "12 monthly instalments (~€20.83/month)",
       "submit": "Register and Pay"
     },
     "successDonation": "Thank you for your support!",
@@ -190,7 +172,118 @@
     "cancelled": "Payment cancelled. You can try again.",
     "errorPayment": "Error processing payment. Please try again.",
     "errorMember": "Error processing registration. Please try again.",
-    "disclaimer": "The IPB ensures that funds will be used solely in alignment with its mission and will not support political candidates or their parties."
+    "disclaimer": "The IPB ensures that funds will be used solely in alignment with its mission and will not support political candidates or their parties.",
+    "subtitle": "Three levels of engagement with the Portuguese Bitcoin Institute. Pick yours.",
+    "tiers": {
+      "heading": "Choose how you want to take part",
+      "popular": "Most complete",
+      "free": "Free",
+      "perYear": "/year",
+      "perMonth": "/month",
+      "t0": {
+        "label": "Layer 0",
+        "name": "Community follower",
+        "tagline": "Stay in the loop on everything happening at the IPB.",
+        "cta": "Join the community",
+        "points": [
+          "Official announcements on WhatsApp",
+          "No cost, no registration"
+        ]
+      },
+      "t1": {
+        "label": "Layer 1",
+        "name": "Participating member",
+        "tagline": "Join the conversation and your local communities.",
+        "equiv": "Just €1.75 a month",
+        "cta": "Become a participating member",
+        "points": [
+          "General discussion on WhatsApp",
+          "IPB newsletter",
+          "Take part in themed and district groups on WhatsApp",
+          "Participate in Meetups and P2P markets",
+          "Member price on the annual conference, annual dinner, workshops and 101 technical support",
+          "Online support for local communities"
+        ]
+      },
+      "t2": {
+        "label": "Layer 2",
+        "name": "Ambassador member",
+        "tagline": "Lead, organize and represent the IPB in your community.",
+        "equiv": "Equals €252 a year",
+        "cta": "Become an ambassador member",
+        "points": [
+          "Everything in Layer 1",
+          "Create themed and district groups on WhatsApp",
+          "Organize Meetups and P2P markets",
+          "Annual conference and annual dinner included",
+          "50% off workshops and 101 technical support",
+          "In-person support for local communities"
+        ]
+      }
+    },
+    "compare": {
+      "heading": "Compare all layers",
+      "member": "Members",
+      "fee": "Fee",
+      "feeT0": "Free",
+      "feeT1": "€21/year",
+      "feeT2": "€21/month",
+      "values": {
+        "participate": "Participate",
+        "create": "Create",
+        "organize": "Organize",
+        "memberPrice": "Member price",
+        "includedF": "Included",
+        "includedM": "Included",
+        "discount": "50% off",
+        "digital": "Online",
+        "inPerson": "In person"
+      },
+      "rows": {
+        "announcements": {
+          "bold": "Announcements",
+          "text": "WhatsApp"
+        },
+        "discussion": {
+          "bold": "General Discussion",
+          "text": "WhatsApp"
+        },
+        "newsletter": {
+          "bold": "Newsletter"
+        },
+        "themedGroups": {
+          "bold": "Themed Discussion Groups",
+          "text": "WhatsApp"
+        },
+        "districtGroups": {
+          "bold": "District groups"
+        },
+        "p2p": {
+          "bold": "P2P Markets"
+        },
+        "conference": {
+          "bold": "Annual Conference"
+        },
+        "dinner": {
+          "bold": "Annual Dinner"
+        },
+        "workshops": {
+          "bold": "Workshops"
+        },
+        "support101": {
+          "bold": "101 technical support",
+          "text": "Buy, store and use Bitcoin safely"
+        },
+        "localCommunities": {
+          "bold": "Support for Local Communities",
+          "text": "Bitcoin Apes Cascais, Aceita Bitcoin, Free Madeira…"
+        }
+      },
+      "included": "Included"
+    },
+    "close": "Close",
+    "identifyMe": "I want to be identified (optional)",
+    "btcOneTimeNote": "Bitcoin donations are always one-time."
   },
   "input": {
     "email": "Email",

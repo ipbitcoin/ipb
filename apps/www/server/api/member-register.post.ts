@@ -81,7 +81,13 @@ export default defineEventHandler(async (event) => {
   params.append("line_items[0][price_data][currency]", "eur");
   params.append(
     "line_items[0][price_data][product_data][name]",
-    locale === "pt" ? "Membro IPB – Quota Anual" : "IPB Member – Annual Fee"
+    paymentPlan === "annual"
+      ? locale === "pt"
+        ? "Membro IPB – Camada 1 (Participante)"
+        : "IPB Member – Layer 1 (Participant)"
+      : locale === "pt"
+        ? "Membro IPB – Camada 2 (Embaixador)"
+        : "IPB Member – Layer 2 (Ambassador)"
   );
   params.append(
     "line_items[0][price_data][product_data][description]",
@@ -101,16 +107,21 @@ export default defineEventHandler(async (event) => {
   // Pass member id as metadata for webhook reconciliation
   params.append("metadata[memberId]", memberId);
   params.append("metadata[type]", "membership");
+  // The webhook sets the layer from the plan actually paid for.
+  params.append(
+    "metadata[paymentPlan]",
+    paymentPlan === "annual" ? "yearly" : "monthly"
+  );
 
   params.append("mode", "subscription");
   if (paymentPlan === "monthly") {
-    // Monthly subscription: ~20.83€/month (250€ / 12)
-    params.append("line_items[0][price_data][unit_amount]", "2083");
+    // Layer 2 (ambassador): 21€/month
+    params.append("line_items[0][price_data][unit_amount]", "2100");
     params.append("line_items[0][price_data][recurring][interval]", "month");
     params.append("line_items[0][price_data][recurring][interval_count]", "1");
   } else {
-    // Annual subscription: 250€/year
-    params.append("line_items[0][price_data][unit_amount]", "25000");
+    // Layer 1 (participant): 21€/year
+    params.append("line_items[0][price_data][unit_amount]", "2100");
     params.append("line_items[0][price_data][recurring][interval]", "year");
     params.append("line_items[0][price_data][recurring][interval_count]", "1");
   }

@@ -2,8 +2,7 @@ import { v } from "convex/values";
 
 import { mutation, query } from "./_generated/server";
 import { assertServiceKey } from "./lib";
-
-const PRICE_EUR = 200;
+import { coursePriceEur, verifiedMemberLayer } from "./pricing";
 
 /**
  * Public mutation used by the www enrollment form.
@@ -17,6 +16,8 @@ export const create = mutation({
     expectations: v.optional(v.string()),
     hasExposure: v.optional(v.boolean()),
     hasSelfCustody: v.optional(v.boolean()),
+    // Hash of the token from the email-code check; unlocks the member price.
+    memberTokenHash: v.optional(v.string()),
     name: v.string(),
     nif: v.optional(v.string()),
     participatedWorkshop: v.optional(v.boolean()),
@@ -39,6 +40,14 @@ export const create = mutation({
       throw new Error("Training is sold out");
     }
 
+    // Only email-verified members get their layer's price.
+    const memberLayer = await verifiedMemberLayer(
+      ctx,
+      args.email,
+      args.memberTokenHash
+    );
+    const priceEur = coursePriceEur(memberLayer);
+
     const orderId = `ORD-${Date.now()}-${Math.random()
       .toString(36)
       .slice(2, 8)
@@ -51,6 +60,7 @@ export const create = mutation({
       expectations: args.expectations ?? "",
       hasExposure: args.hasExposure,
       hasSelfCustody: args.hasSelfCustody,
+      memberLayer,
       name: args.name,
       nif: args.nif ?? "",
       orderId,
@@ -58,10 +68,10 @@ export const create = mutation({
       paymentStatus: "pending",
       phone: args.phone ?? "",
       trainingId: args.trainingId,
-      value: PRICE_EUR,
+      value: priceEur,
     });
 
-    return { enrollmentId, orderId, priceEur: PRICE_EUR };
+    return { enrollmentId, memberLayer, orderId, priceEur };
   },
 });
 

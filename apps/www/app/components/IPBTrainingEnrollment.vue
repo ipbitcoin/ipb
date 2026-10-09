@@ -155,6 +155,75 @@
           <p v-if="errors.email" role="alert" class="text-sm text-red-600">
             {{ errors.email }}
           </p>
+
+          <!-- Desconto de membro: verificado com um código enviado por email -->
+          <div v-if="!errors.email && form.email" class="flex flex-col gap-2">
+            <p
+              v-if="memberToken"
+              role="status"
+              class="text-sm font-medium text-green-700"
+            >
+              <template v-if="priceEur < BASE_PRICE_EUR">{{
+                locale === "pt"
+                  ? `Membro verificado. Desconto da Camada ${memberLayer} aplicado.`
+                  : `Member verified. Layer ${memberLayer} discount applied.`
+              }}</template>
+              <template v-else>{{
+                locale === "pt"
+                  ? "Membro verificado. Esta formação não tem desconto para a sua camada."
+                  : "Member verified. This course has no discount for your layer."
+              }}</template>
+            </p>
+            <template v-else>
+              <button
+                v-if="verifyStep === 'idle'"
+                type="button"
+                class="focus-ring w-fit cursor-pointer text-left text-sm underline underline-offset-2"
+                :disabled="verifyLoading"
+                @click="requestCode"
+              >
+                {{
+                  locale === "pt"
+                    ? "É membro do IPB? Verifique o seu email para obter desconto."
+                    : "Are you an IPB member? Verify your email to get a discount."
+                }}
+              </button>
+              <div v-else class="flex flex-col gap-2">
+                <p class="text-sm text-black/70">
+                  {{
+                    locale === "pt"
+                      ? "Se este email for de um membro, enviámos um código de 6 dígitos."
+                      : "If this email belongs to a member, we sent a 6-digit code."
+                  }}
+                </p>
+                <div class="flex gap-2">
+                  <input
+                    v-model="verifyCode"
+                    type="text"
+                    inputmode="numeric"
+                    maxlength="6"
+                    autocomplete="one-time-code"
+                    placeholder="000000"
+                    :aria-label="locale === 'pt' ? 'Código' : 'Code'"
+                    class="field-box w-32 tabular-nums tracking-widest"
+                    @keydown.enter.prevent="confirmCode"
+                  />
+                  <UiButton
+                    type="button"
+                    variant="outline"
+                    :loading="verifyLoading"
+                    :disabled="verifyCode.length !== 6 || verifyLoading"
+                    @click="confirmCode"
+                  >
+                    {{ locale === "pt" ? "Verificar" : "Verify" }}
+                  </UiButton>
+                </div>
+              </div>
+              <p v-if="verifyError" role="alert" class="text-sm text-red-600">
+                {{ verifyError }}
+              </p>
+            </template>
+          </div>
         </div>
 
         <!-- Telefone -->
@@ -347,7 +416,16 @@
           <span class="text-base font-medium">{{
             locale === "pt" ? "Total (IVA incluído)" : "Total (VAT included)"
           }}</span>
-          <span class="text-2xl font-bold tabular-nums">200 €</span>
+          <span class="flex items-baseline gap-2">
+            <span
+              v-if="memberLayer && priceEur < BASE_PRICE_EUR"
+              class="text-base text-black/40 line-through tabular-nums"
+              >{{ BASE_PRICE_EUR }} €</span
+            >
+            <span class="text-2xl font-bold tabular-nums"
+              >{{ priceEur }} €</span
+            >
+          </span>
         </div>
         <UiButton type="submit" size="lg" class="w-full sm:w-auto">
           {{ locale === "pt" ? "Inscrever e pagar" : "Register and pay" }}
@@ -407,7 +485,16 @@
           <span class="text-base font-medium">{{
             locale === "pt" ? "Total" : "Total"
           }}</span>
-          <span class="text-2xl font-bold tabular-nums">200 €</span>
+          <span class="flex items-baseline gap-2">
+            <span
+              v-if="memberLayer && priceEur < BASE_PRICE_EUR"
+              class="text-base text-black/40 line-through tabular-nums"
+              >{{ BASE_PRICE_EUR }} €</span
+            >
+            <span class="text-2xl font-bold tabular-nums"
+              >{{ priceEur }} €</span
+            >
+          </span>
         </div>
         <UiButton
           size="lg"
@@ -415,7 +502,7 @@
           :disabled="paymentState !== 'awaiting_payment'"
           @click="handleConfirmPayment"
         >
-          {{ locale === "pt" ? "Pagar 200 €" : "Pay €200" }}
+          {{ locale === "pt" ? `Pagar ${priceEur} €` : `Pay €${priceEur}` }}
         </UiButton>
       </div>
     </div>
@@ -633,6 +720,82 @@ function validateField(field: keyof typeof errors) {
   }
 }
 
+// ── Preço (descontos de membro) ──────────────────────────────────────────────
+// O servidor volta a calcular o preço ao inscrever; isto é só para mostrar.
+const BASE_PRICE_EUR = 200;
+const priceEur = ref(BASE_PRICE_EUR);
+const memberLayer = ref<1 | 2 | undefined>();
+
+// ── Verificação de membro (código por email) ────────────────────────────────
+// O servidor só aplica o desconto com o token devolvido por esta verificação.
+const verifyStep = ref<"idle" | "code">("idle");
+const verifyCode = ref("");
+const verifyLoading = ref(false);
+const verifyError = ref("");
+const memberToken = ref("");
+
+function resetVerification() {
+  verifyStep.value = "idle";
+  verifyCode.value = "";
+  verifyError.value = "";
+  memberToken.value = "";
+  priceEur.value = BASE_PRICE_EUR;
+  memberLayer.value = undefined;
+}
+
+// Mudar o email invalida a verificação.
+watch(() => form.email, resetVerification);
+
+async function requestCode() {
+  verifyLoading.value = true;
+  verifyError.value = "";
+  try {
+    const result = await $fetch<{ devCode?: string }>(
+      "/api/member-verify/request",
+      {
+        body: { email: form.email.trim(), locale: locale.value },
+        method: "POST",
+      }
+    );
+    verifyStep.value = "code";
+    if (result.devCode) {
+      console.info("[dev] member verification code:", result.devCode);
+    }
+  } catch {
+    verifyError.value =
+      locale.value === "pt"
+        ? "Não foi possível enviar o código. Tente novamente."
+        : "Could not send the code. Please try again.";
+  } finally {
+    verifyLoading.value = false;
+  }
+}
+
+async function confirmCode() {
+  verifyLoading.value = true;
+  verifyError.value = "";
+  try {
+    const result = await $fetch<{
+      memberLayer?: 1 | 2;
+      priceEur: number;
+      token: string;
+    }>("/api/member-verify/confirm", {
+      body: { code: verifyCode.value, email: form.email.trim() },
+      method: "POST",
+    });
+    memberToken.value = result.token;
+    priceEur.value = result.priceEur;
+    memberLayer.value = result.memberLayer;
+  } catch {
+    verifyError.value =
+      locale.value === "pt"
+        ? "Código inválido ou expirado."
+        : "Invalid or expired code.";
+  } finally {
+    verifyLoading.value = false;
+  }
+}
+
 function validateAll(): boolean {
   (
     [
@@ -652,7 +815,12 @@ async function handleSubmit() {
   if (!validateAll()) {
     return;
   }
-  await submitEnrollment({ ...form });
+  const price = await submitEnrollment({ ...form }, memberToken.value);
+  // O passo de pagamento mostra o valor que o servidor vai cobrar.
+  if (price) {
+    priceEur.value = price.priceEur;
+    memberLayer.value = price.memberLayer;
+  }
 }
 
 async function handleConfirmPayment() {

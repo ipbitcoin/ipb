@@ -1,6 +1,7 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 
 import { api } from "@ipb/backend/api";
+import type { Id } from "@ipb/backend/dataModel";
 
 function verifyStripeSignature(
   rawBody: string,
@@ -25,6 +26,55 @@ function verifyStripeSignature(
   } catch {
     return false;
   }
+}
+
+function errorStatus(error: unknown): number | undefined {
+  const status =
+    error !== null && typeof error === "object"
+      ? Reflect.get(error, "statusCode")
+      : undefined;
+  return typeof status === "number" ? status : undefined;
+}
+
+/**
+ * Cancel a subscription a newer checkout replaced, then clear it on the member.
+ * 400/404 mean it's already gone. Any other failure answers 500 so Stripe
+ * retries the event: `activate` hands the same ids back until they're
+ * cleared, so the member is never left paying for two subscriptions.
+ */
+async function cancelReplacedSubscription(
+  memberId: Id<"members">,
+  subscriptionId: string,
+  stripeSecretKey: string
+) {
+  const config = useRuntimeConfig();
+  try {
+    await $fetch(`https://api.stripe.com/v1/subscriptions/${subscriptionId}`, {
+      headers: { Authorization: `Bearer ${stripeSecretKey}` },
+      method: "DELETE",
+    });
+  } catch (error: unknown) {
+    const status = errorStatus(error);
+    if (status !== 400 && status !== 404) {
+      console.error(
+        `[stripe-webhook] Failed to cancel previous subscription ${subscriptionId}:`,
+        error
+      );
+      throw createError({
+        message: "Failed to cancel previous subscription",
+        statusCode: 500,
+      });
+    }
+    console.warn(
+      `[stripe-webhook] Previous subscription ${subscriptionId} already gone (${status})`
+    );
+  }
+
+  await convexClient().mutation(api.members.clearCancelledSubscription, {
+    id: memberId,
+    serviceKey: config.SERVICE_KEY,
+    stripeSubscriptionId: subscriptionId,
+  });
 }
 
 export default defineEventHandler(async (event) => {
@@ -55,18 +105,48 @@ export default defineEventHandler(async (event) => {
   // Fires for one-time payments (mode: payment) and first payment of subscriptions
   if (stripeEvent.type === "checkout.session.completed") {
     const session = stripeEvent.data.object;
-    const { type, memberId } = session.metadata ?? {};
+    const { type, memberId, paymentPlan } = session.metadata ?? {};
 
     if (type === "membership" && memberId) {
+      let cancelSubscriptionIds: string[] = [];
       try {
-        await convex.mutation(api.members.activate, {
-          id: memberId,
-          serviceKey,
-          stripeCustomerId: session.customer ?? "",
-          stripeSubscriptionId: session.subscription ?? "",
-        });
+        ({ cancelSubscriptionIds } = await convex.mutation(
+          api.members.activate,
+          {
+            checkoutCreatedAt:
+              typeof session.created === "number" ? session.created : undefined,
+            id: memberId,
+            paymentPlan:
+              paymentPlan === "yearly" || paymentPlan === "monthly"
+                ? paymentPlan
+                : undefined,
+            serviceKey,
+            stripeCustomerId: session.customer ?? "",
+            stripeSubscriptionId: session.subscription ?? "",
+          }
+        ));
       } catch (error: unknown) {
         console.error("[stripe-webhook] Failed to update member:", error);
+        // `activate` is safe to repeat: answer 500 so Stripe retries the event
+        // instead of leaving a paid member pending.
+        throw createError({
+          message: "Failed to update member",
+          statusCode: 500,
+        });
+      }
+
+      // Layer upgrade/downgrade: the new subscription is paid, so end the old one.
+      const stripeSecretKey = config.STRIPE_SECRET_KEY;
+      if (stripeSecretKey) {
+        await Promise.all(
+          cancelSubscriptionIds.map((subscriptionId) =>
+            cancelReplacedSubscription(
+              memberId,
+              subscriptionId,
+              stripeSecretKey
+            )
+          )
+        );
       }
     }
   }

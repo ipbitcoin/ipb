@@ -116,7 +116,7 @@
     "donate": "Doar",
     "member": "Torne-se Membro",
     "contact": "Fale connosco",
-    "mission": "Como organização sem fins lucrativos dependemos de donativos para nos ajudar a cumprir a nossa missão.",
+    "mission": "Como organização sem fins lucrativos, dependemos dos nossos membros e dos donativos para cumprir a nossa missão. Cada membro fortalece a voz independente do Bitcoin em Portugal.",
     "missionPoints": {
       "promote": {
         "bold": "Promover",
@@ -138,35 +138,20 @@
     "orgInfo": "O Instituto Português de Bitcoin é uma associação sem fins lucrativos registada com o nome Associação IPBitcoin e tem o número de pessoa coletiva 519024427.",
     "supportImpact": "O seu apoio impulsiona a investigação que promove a educação, que capacita cidadãos comuns, legisladores, e o envolvimento direto que molda resultados. Com a sua ajuda, podemos proteger a liberdade individual, fortalecer a democracia e garantir a liderança de Portugal na era digital.",
     "donationsTitle": "Donativos",
-    "donationsDescription": "Escolha o tipo e o método de donativo que preferir para apoiar o IPB. Os donativos podem ser anónimos ou identificados.",
-    "anonymous": "Anónimo",
-    "identified": "Identificado",
+    "donationsDescription": "Escolha o valor e a frequência. Os donativos podem ser anónimos ou identificados.",
     "anonymousNotice": "Os donativos anónimos têm um limite máximo de 300€ por ano (donativos únicos e recorrentes). Não será solicitada qualquer informação pessoal.",
-    "fiatDescription": "Simples e seguro para donativos únicos ou recorrentes.",
-    "btcDescription": "Rápido, sem fronteiras e que preserva a privacidade.",
-    "fiatCardTitle": "Donativo em Fiat (Cartão)",
-    "btcTitle": "Donativo em Bitcoin",
     "amountEur": "Montante (EUR)",
     "other": "Outro",
     "ceilingWarning": "Os donativos anónimos não podem exceder 300€ por ano.",
-    "oneTime": "Donativo único",
-    "recurringYearly": "Recorrente (anual)",
-    "recurringMonthly": "Recorrente (mensal)",
+    "oneTime": "Único",
+    "recurringYearly": "Anual",
+    "recurringMonthly": "Mensal",
     "donorName": "Nome",
     "donorNamePlaceholder": "O seu nome",
     "donorEmail": "E-mail",
     "donorEmailPlaceholder": "O seu e-mail",
     "donateCard": "Doar com Cartão",
     "donateBtc": "Doar com Bitcoin",
-    "memberTitle": "Tornar-se Membro",
-    "memberDescription": "O custo para se tornar membro é de 250€ por ano. Pode pagar de uma só vez ou dividido em 12 mensalidades. O pagamento é feito exclusivamente em fiat (cartão).",
-    "memberBenefitsTitle": "Benefícios de Membro",
-    "benefits": {
-      "earlyAccess": "Acesso antecipado a eventos",
-      "trainingDiscount": "Desconto nas formações",
-      "memberCard": "Cartão de membro oficial do IPB enviado por correio",
-      "exclusiveNetwork": "Rede exclusiva de membros e parceiros nacionais e internacionais"
-    },
     "memberFormTitle": "Formulário de Inscrição",
     "form": {
       "name": "Nome completo",
@@ -180,9 +165,6 @@
       "fiscalNumberPlaceholder": "Ex: 123456789",
       "address": "Morada completa",
       "addressPlaceholder": "Rua, número, código postal, cidade",
-      "paymentPlan": "Plano de pagamento",
-      "annual": "Pagamento único anual (250€)",
-      "monthly": "12 mensalidades (~20,83€/mês)",
       "submit": "Inscrever-me e Pagar"
     },
     "successDonation": "Obrigado pelo seu apoio!",
@@ -190,7 +172,118 @@
     "cancelled": "Pagamento cancelado. Pode tentar novamente.",
     "errorPayment": "Erro ao processar o pagamento. Tente novamente.",
     "errorMember": "Erro ao processar a inscrição. Tente novamente.",
-    "disclaimer": "O IPB garante que os fundos serão utilizados exclusivamente em alinhamento com a sua missão e não apoiarão candidatos políticos nem os seus partidos."
+    "disclaimer": "O IPB garante que os fundos serão utilizados exclusivamente em alinhamento com a sua missão e não apoiarão candidatos políticos nem os seus partidos.",
+    "subtitle": "Três níveis de envolvimento com o Instituto Português de Bitcoin. Escolha o seu.",
+    "tiers": {
+      "heading": "Escolha como quer participar",
+      "popular": "Mais completo",
+      "free": "Grátis",
+      "perYear": "/ano",
+      "perMonth": "/mês",
+      "t0": {
+        "label": "Camada 0",
+        "name": "Seguidor da comunidade",
+        "tagline": "Fique a par de tudo o que se passa no IPB.",
+        "cta": "Entrar na comunidade",
+        "points": [
+          "Comunicados oficiais no WhatsApp",
+          "Sem custos, sem inscrição"
+        ]
+      },
+      "t1": {
+        "label": "Camada 1",
+        "name": "Membro participante",
+        "tagline": "Faça parte da conversa e das comunidades locais.",
+        "equiv": "Apenas €1,75 por mês",
+        "cta": "Tornar-me membro participante",
+        "points": [
+          "Discussão geral no WhatsApp",
+          "Newsletter do IPB",
+          "Participar em grupos temáticos e distritais no WhatsApp",
+          "Participar em encontros e mercados P2P",
+          "Preço de membro na conferência anual, jantar anual, workshops e apoio técnico 101",
+          "Apoio digital às comunidades locais"
+        ]
+      },
+      "t2": {
+        "label": "Camada 2",
+        "name": "Membro embaixador",
+        "tagline": "Lidere, organize e represente o IPB na sua comunidade.",
+        "equiv": "Equivale a €252 por ano",
+        "cta": "Tornar-me membro embaixador",
+        "points": [
+          "Tudo da Camada 1",
+          "Criar grupos temáticos e distritais no WhatsApp",
+          "Organizar encontros e mercados P2P",
+          "Conferência anual e jantar anual incluídos",
+          "50% de desconto em workshops e apoio técnico 101",
+          "Apoio presencial às comunidades locais"
+        ]
+      }
+    },
+    "compare": {
+      "heading": "Compare todas as camadas",
+      "member": "Membros",
+      "fee": "Quota",
+      "feeT0": "Grátis",
+      "feeT1": "€21/ano",
+      "feeT2": "€21/mês",
+      "values": {
+        "participate": "Participar",
+        "create": "Criar",
+        "organize": "Organizar",
+        "memberPrice": "Preço de membro",
+        "includedF": "Incluída",
+        "includedM": "Incluído",
+        "discount": "50% de desconto",
+        "digital": "Digital",
+        "inPerson": "Presencial"
+      },
+      "rows": {
+        "announcements": {
+          "bold": "Comunicados",
+          "text": "WhatsApp"
+        },
+        "discussion": {
+          "bold": "Discussão Geral",
+          "text": "WhatsApp"
+        },
+        "newsletter": {
+          "bold": "Newsletter"
+        },
+        "themedGroups": {
+          "bold": "Grupos de Discussão Temáticos",
+          "text": "WhatsApp"
+        },
+        "districtGroups": {
+          "bold": "Grupos distritais"
+        },
+        "p2p": {
+          "bold": "Mercados P2P"
+        },
+        "conference": {
+          "bold": "Conferência Anual"
+        },
+        "dinner": {
+          "bold": "Jantar Anual"
+        },
+        "workshops": {
+          "bold": "Workshops"
+        },
+        "support101": {
+          "bold": "Apoio técnico 101",
+          "text": "Comprar, guardar e utilizar Bitcoin em segurança"
+        },
+        "localCommunities": {
+          "bold": "Apoio às Comunidades Locais",
+          "text": "Bitcoin Apes Cascais, Aceita Bitcoin, Free Madeira…"
+        }
+      },
+      "included": "Incluído"
+    },
+    "close": "Fechar",
+    "identifyMe": "Quero identificar-me (opcional)",
+    "btcOneTimeNote": "Os donativos em Bitcoin são sempre únicos."
   },
   "input": {
     "email": "E-mail",

@@ -1,9 +1,6 @@
 import { api } from "@ipb/backend/api";
 import type { Id } from "@ipb/backend/dataModel";
 
-const PRICE_EUR = 200;
-const PRICE_CENTS = PRICE_EUR * 100;
-
 interface EnrollmentBody {
   name?: string;
   email?: string;
@@ -16,6 +13,7 @@ interface EnrollmentBody {
   bought_bitcoin?: boolean;
   has_self_custody?: boolean;
   expectations?: string;
+  memberToken?: string;
 }
 
 export default defineEventHandler(async (event) => {
@@ -34,6 +32,7 @@ export default defineEventHandler(async (event) => {
     bought_bitcoin,
     has_self_custody,
     expectations,
+    memberToken,
   } = body ?? {};
 
   if (!name || !email || !birthday || !trainingId) {
@@ -43,7 +42,12 @@ export default defineEventHandler(async (event) => {
   const convex = convexClient();
 
   // ── Create enrollment (validates training active + stock in the mutation) ──
-  let enrollment: { enrollmentId: Id<"enrollments">; orderId: string };
+  let enrollment: {
+    enrollmentId: Id<"enrollments">;
+    memberLayer?: 1 | 2;
+    orderId: string;
+    priceEur: number;
+  };
   try {
     enrollment = await convex.mutation(api.enrollments.create, {
       birthday,
@@ -52,6 +56,7 @@ export default defineEventHandler(async (event) => {
       expectations: expectations ?? undefined,
       hasExposure: has_exposure ?? undefined,
       hasSelfCustody: has_self_custody ?? undefined,
+      memberTokenHash: memberToken ? hashToken(memberToken) : undefined,
       name,
       nif: nif ?? undefined,
       participatedWorkshop: participated_workshop ?? undefined,
@@ -75,7 +80,8 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const { enrollmentId, orderId } = enrollment;
+  // Price is decided server-side (members get their layer's price).
+  const { enrollmentId, memberLayer, orderId, priceEur } = enrollment;
 
   // ── DEV mode: no Stripe key → auto-confirm + decrement stock ─────────
   if (!config.STRIPE_SECRET_KEY) {
@@ -90,12 +96,12 @@ export default defineEventHandler(async (event) => {
       .catch((error: unknown) => {
         console.error("[enrollments] Failed to auto-confirm (dev):", error);
       });
-    return { clientSecret: "", devMode: true, orderId };
+    return { clientSecret: "", devMode: true, memberLayer, orderId, priceEur };
   }
 
   // ── Create Stripe PaymentIntent ──────────────────────────────────────
   const params = new URLSearchParams();
-  params.append("amount", String(PRICE_CENTS));
+  params.append("amount", String(Math.round(priceEur * 100)));
   params.append("currency", "eur");
   params.append("automatic_payment_methods[enabled]", "true");
   params.append("receipt_email", email);
@@ -130,6 +136,8 @@ export default defineEventHandler(async (event) => {
   return {
     clientSecret: intent.client_secret,
     devMode: false,
+    memberLayer,
     orderId,
+    priceEur,
   };
 });

@@ -89,15 +89,21 @@ export default function useTrainingEnrollment() {
   }
 
   // ── Submeter enrollment (passo 1: criar registo + PaymentIntent) ──────────
-  async function submitEnrollment(form: EnrollmentForm) {
+  // Devolve o preço decidido pelo servidor (o que vai ser cobrado).
+  async function submitEnrollment(
+    form: EnrollmentForm,
+    memberToken?: string
+  ): Promise<{ memberLayer?: 1 | 2; priceEur: number } | undefined> {
     paymentState.value = "submitting";
     errorMessage.value = "";
 
     try {
       const response = await $fetch<{
         clientSecret: string;
-        orderId: string;
         devMode: boolean;
+        memberLayer?: 1 | 2;
+        orderId: string;
+        priceEur: number;
       }>("/api/enrollments", {
         body: {
           birthday: form.birthday,
@@ -106,6 +112,7 @@ export default function useTrainingEnrollment() {
           expectations: form.expectations || undefined,
           has_exposure: form.has_exposure,
           has_self_custody: form.has_self_custody,
+          memberToken: memberToken || undefined,
           name: form.name,
           nif: form.nif || undefined,
           participated_workshop: form.participated_workshop,
@@ -115,19 +122,26 @@ export default function useTrainingEnrollment() {
         method: "POST",
       });
 
+      const price = {
+        memberLayer: response.memberLayer,
+        priceEur: response.priceEur,
+      };
+
       // Modo DEV: pagamento auto-confirmado no backend
       if (response.devMode) {
         paymentState.value = "success";
-        return;
+        return price;
       }
 
       clientSecret.value = response.clientSecret;
       paymentState.value = "awaiting_payment";
+      return price;
     } catch (error: unknown) {
       paymentState.value = "error";
       errorMessage.value =
         fetchErrorNestedMessage(error) ??
         "Ocorreu um erro. Por favor tente novamente.";
+      return undefined;
     }
   }
 

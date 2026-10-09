@@ -145,6 +145,7 @@ export default defineSchema({
     hasExposure: v.optional(v.boolean()),
     hasSelfCustody: v.optional(v.boolean()),
     invoice: v.optional(v.string()),
+    memberLayer: v.optional(v.union(v.literal(1), v.literal(2))),
     name: v.string(),
     nif: v.optional(v.string()),
     orderId: v.string(),
@@ -169,8 +170,17 @@ export default defineSchema({
     citizenCardNumber: v.optional(v.string()),
     email: v.string(),
     fiscalNumber: v.optional(v.string()),
+    // Membership layer (1 = participant, 2 = ambassador). Unset on legacy rows:
+    // see layerOfMember() in pricing.ts.
+    layer: v.optional(v.union(v.literal(1), v.literal(2))),
     name: v.string(),
     paymentPlan: v.union(v.literal("yearly"), v.literal("monthly")),
+    // Subscriptions a newer checkout replaced, still to cancel in Stripe; each
+    // is removed once Stripe confirms (see members.activate).
+    cancelSubscriptionIds: v.optional(v.array(v.string())),
+    // Stripe `created` (seconds) of the newest checkout applied, so a
+    // redelivered older checkout event can't undo a newer one.
+    lastCheckoutAt: v.optional(v.number()),
     paymentStatus: v.union(
       v.literal("pending"),
       v.literal("active"),
@@ -184,6 +194,19 @@ export default defineSchema({
     .index("by_email", ["email"])
     .index("by_subscription", ["stripeSubscriptionId"])
     .index("by_fiscal_number", ["fiscalNumber"]),
+
+  // One-time email codes proving someone owns a member's email (course discount).
+  memberVerifications: defineTable({
+    attempts: v.number(),
+    codeExpiresAt: v.number(),
+    codeHash: v.string(),
+    email: v.string(), // lowercased
+    sentAt: v.array(v.number()),
+    tokenExpiresAt: v.optional(v.number()),
+    tokenHash: v.optional(v.string()),
+  })
+    .index("by_email", ["email"])
+    .index("by_token_hash", ["tokenHash"]),
 
   newsletters: defineTable({
     email: v.string(),
