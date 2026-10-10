@@ -39,6 +39,11 @@ export default defineEventHandler(async (event) => {
     throw createError({ message: "Missing required fields", statusCode: 400 });
   }
 
+  if (!config.STRIPE_SECRET_KEY) {
+    // Before anything is saved: without Stripe, enrollments auto-confirm.
+    assertDevFallback("STRIPE_SECRET_KEY");
+  }
+
   const convex = convexClient();
 
   // ── Create enrollment (validates training active + stock in the mutation) ──

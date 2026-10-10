@@ -17,6 +17,7 @@ export default defineEventHandler(async (event) => {
 
   // ── Dev mode: no Stripe key configured → simulate success immediately ──
   if (!config.STRIPE_SECRET_KEY) {
+    assertDevFallback("STRIPE_SECRET_KEY");
     console.warn(
       "[stripe-checkout] STRIPE_SECRET_KEY not set — returning dev success redirect"
     );

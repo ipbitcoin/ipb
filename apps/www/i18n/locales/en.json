@@ -34,7 +34,15 @@
     "error": "Error subscribing. Please try again later.",
     "eyebrow": "Stay informed",
     "submit": "Subscribe to newsletter",
-    "footerLabel": "Newsletter"
+    "footerLabel": "Newsletter",
+    "pending": "Almost there! We sent you an email to confirm your subscription. Check your inbox (and spam).",
+    "confirm": {
+      "title": "Confirm subscription",
+      "loading": "Confirming your subscription…",
+      "success": "Subscription confirmed. Thank you! You will now receive the IPB newsletter.",
+      "error": "This link is invalid or has expired. If you already confirmed, you're all set; otherwise please subscribe again.",
+      "back": "Back to home"
+    }
   },
   "values": {
     "title": "Values",

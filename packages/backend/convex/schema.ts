@@ -208,11 +208,28 @@ export default defineSchema({
     .index("by_email", ["email"])
     .index("by_token_hash", ["tokenHash"]),
 
+  // Newsletter preference per email (public sign-ups, and members who opt out).
+  // `status` unset = legacy subscriber imported from Strapi, treated as confirmed.
   newsletters: defineTable({
+    confirmedAt: v.optional(v.number()),
+    confirmTokenExpiresAt: v.optional(v.number()),
+    confirmTokenHash: v.optional(v.string()),
     email: v.string(),
+    lastConfirmSentAt: v.optional(v.number()),
+    locale: v.optional(v.union(v.literal("pt"), v.literal("en"))),
     name: v.optional(v.string()),
+    status: v.optional(
+      v.union(
+        v.literal("pending"),
+        v.literal("confirmed"),
+        v.literal("unsubscribed")
+      )
+    ),
+    unsubscribedAt: v.optional(v.number()),
     importId: v.optional(v.string()),
-  }).index("by_email", ["email"]),
+  })
+    .index("by_email", ["email"])
+    .index("by_confirm_token", ["confirmTokenHash"]),
 
   ideaCategories: defineTable({
     name: v.string(),

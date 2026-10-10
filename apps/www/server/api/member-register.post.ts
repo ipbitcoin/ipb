@@ -33,6 +33,10 @@ export default defineEventHandler(async (event) => {
     throw createError({ message: "Invalid email address", statusCode: 400 });
   }
 
+  if (!config.STRIPE_SECRET_KEY) {
+    // Before anything is saved: without Stripe, members would be created active.
+    assertDevFallback("STRIPE_SECRET_KEY");
+  }
   const isDev = !config.STRIPE_SECRET_KEY;
   const convex = convexClient();
 

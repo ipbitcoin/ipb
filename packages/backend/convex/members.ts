@@ -1,5 +1,6 @@
 import { v } from "convex/values";
 
+import { internal } from "./_generated/api";
 import { mutation, query } from "./_generated/server";
 import { assertServiceKey } from "./lib";
 import { findMemberByEmail, layerOfMember, planLayer } from "./pricing";
@@ -53,8 +54,19 @@ export const create = mutation({
     const { serviceKey: _serviceKey, ...fields } = args;
     const layer = planLayer(args.paymentPlan);
 
+    // Members receive the newsletter: keep the Resend contact in step with
+    // anything that makes them active (only dev mode activates here).
+    const syncNewsletter = () =>
+      args.paymentStatus === "active"
+        ? ctx.scheduler.runAfter(0, internal.newsletterSync.syncContact, {
+            email: args.email,
+          })
+        : undefined;
+
     if (!existing) {
-      return await ctx.db.insert("members", { ...fields, layer });
+      const id = await ctx.db.insert("members", { ...fields, layer });
+      await syncNewsletter();
+      return id;
     }
 
     if (existing.paymentStatus !== "active") {
@@ -67,6 +79,7 @@ export const create = mutation({
         lastCheckoutAt: existing.lastCheckoutAt,
         layer,
       });
+      await syncNewsletter();
       return existing._id;
     }
 
@@ -80,6 +93,7 @@ export const create = mutation({
         layer,
         paymentPlan: args.paymentPlan,
       });
+      await syncNewsletter();
     }
     return existing._id;
   },
@@ -155,6 +169,9 @@ export const activate = mutation({
       stripeCustomerId: args.stripeCustomerId ?? "",
       stripeSubscriptionId: subscriptionId,
     });
+    await ctx.scheduler.runAfter(0, internal.newsletterSync.syncContact, {
+      email: member.email,
+    });
 
     return { cancelSubscriptionIds };
   },
@@ -194,6 +211,9 @@ export const activateBySubscription = mutation({
       .unique();
     if (member) {
       await ctx.db.patch(member._id, { paymentStatus: "active" });
+      await ctx.scheduler.runAfter(0, internal.newsletterSync.syncContact, {
+        email: member.email,
+      });
     }
   },
 });
@@ -211,6 +231,10 @@ export const cancelBySubscription = mutation({
       .unique();
     if (member) {
       await ctx.db.patch(member._id, { paymentStatus: "cancelled" });
+      // Ex-members stop getting the newsletter unless they also subscribed.
+      await ctx.scheduler.runAfter(0, internal.newsletterSync.syncContact, {
+        email: member.email,
+      });
     }
   },
 });
