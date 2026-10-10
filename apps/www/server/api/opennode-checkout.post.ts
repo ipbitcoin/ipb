@@ -16,6 +16,7 @@ export default defineEventHandler(async (event) => {
 
   // ── Dev mode: no OpenNode key configured → simulate success immediately ──
   if (!config.OPENNODE_API_KEY) {
+    assertDevFallback("OPENNODE_API_KEY");
     console.warn(
       "[opennode-checkout] OPENNODE_API_KEY not set — returning dev success redirect"
     );

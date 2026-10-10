@@ -82,6 +82,10 @@ export default defineNuxtConfig({
         en: "/manifest",
         pt: "/manifesto",
       },
+      "newsletter-confirmar": {
+        en: "/newsletter/confirm",
+        pt: "/newsletter/confirmar",
+      },
       noticias: {
         en: "/news",
         pt: "/noticias",
@@ -115,6 +119,7 @@ export default defineNuxtConfig({
     APP_URL: process.env.APP_URL,
     OPENNODE_API_KEY: process.env.OPENNODE_API_KEY,
     SERVICE_KEY: process.env.SERVICE_KEY,
+    RESEND_WEBHOOK_SECRET: process.env.RESEND_WEBHOOK_SECRET,
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
     STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
     public: {
@@ -122,7 +127,6 @@ export default defineNuxtConfig({
         process.env.COMMUNITY_URL ||
         "https://chat.whatsapp.com/DWpVIfz1zuG0J1fzj4nWE5",
       CONVEX_URL: process.env.CONVEX_URL,
-      SUBSTACK_URL: process.env.SUBSTACK_URL,
       stripePublishableKey: process.env.NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
     },
   },

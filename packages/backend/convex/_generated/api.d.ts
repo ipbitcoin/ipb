@@ -23,6 +23,7 @@ import type * as lib from "../lib.js";
 import type * as memberVerification from "../memberVerification.js";
 import type * as members from "../members.js";
 import type * as migrate from "../migrate.js";
+import type * as newsletterSync from "../newsletterSync.js";
 import type * as newsletters from "../newsletters.js";
 import type * as partners from "../partners.js";
 import type * as pricing from "../pricing.js";
@@ -56,6 +57,7 @@ declare const fullApi: ApiFromModules<{
   memberVerification: typeof memberVerification;
   members: typeof members;
   migrate: typeof migrate;
+  newsletterSync: typeof newsletterSync;
   newsletters: typeof newsletters;
   partners: typeof partners;
   pricing: typeof pricing;

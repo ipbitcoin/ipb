@@ -9,7 +9,7 @@
     ]"
   >
     <IconCheck class="size-4 shrink-0" aria-hidden="true" />
-    {{ $t("newsletter.success") }}
+    {{ $t("newsletter.pending") }}
   </p>
 
   <form

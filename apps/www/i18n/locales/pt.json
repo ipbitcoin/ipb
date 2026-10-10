@@ -34,7 +34,15 @@
     "error": "Erro ao subscrever. Tente novamente mais tarde.",
     "eyebrow": "Fique a par",
     "submit": "Subscrever newsletter",
-    "footerLabel": "Newsletter"
+    "footerLabel": "Newsletter",
+    "pending": "Quase lá! Enviámos-lhe um email para confirmar a subscrição. Verifique a sua caixa de entrada (e o spam).",
+    "confirm": {
+      "title": "Confirmar subscrição",
+      "loading": "A confirmar a sua subscrição…",
+      "success": "Subscrição confirmada. Obrigado! A partir de agora vai receber a newsletter do IPB.",
+      "error": "Este link é inválido ou expirou. Se já confirmou, está tudo certo; caso contrário, volte a subscrever.",
+      "back": "Voltar ao início"
+    }
   },
   "values": {
     "title": "Valores",
