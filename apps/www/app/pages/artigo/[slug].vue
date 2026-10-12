@@ -181,18 +181,22 @@
       </div>
     </article>
 
-    <div class="section">
-      <div class="border-t border-black/10" />
-    </div>
+    <!-- Only when the section has other articles: an empty block would show
+         a heading and a "see all" link with nothing under them. -->
+    <template v-if="relatedPending || related?.length">
+      <div class="section">
+        <div class="border-t border-black/10" />
+      </div>
 
-    <IPBArticleGrid
-      :title="$t('article.related')"
-      :articles="related"
-      :pending="relatedPending"
-      :initial-count="3"
-      :to="section.path"
-      show-category
-    />
+      <IPBArticleGrid
+        :title="$t('article.related')"
+        :articles="related"
+        :pending="relatedPending"
+        :initial-count="3"
+        :to="section.path"
+        show-category
+      />
+    </template>
   </div>
 </template>
 
