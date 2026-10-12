@@ -11,20 +11,12 @@
       @click="copyText"
     >
       <IconCheck
-        class="absolute inset-0 size-5 transition-[opacity,filter,scale] duration-300 ease-[cubic-bezier(0.2,0,0,1)]"
-        :class="
-          wasCopied
-            ? 'scale-100 opacity-100 blur-0'
-            : 'scale-[0.25] opacity-0 blur-[4px]'
-        "
+        class="absolute inset-0 size-5 transition-[opacity,filter,scale] duration-300 ease-swap"
+        :class="wasCopied ? swapIn : swapOut"
       />
       <IconClipboard
-        class="size-5 transition-[opacity,filter,scale] duration-300 ease-[cubic-bezier(0.2,0,0,1)]"
-        :class="
-          wasCopied
-            ? 'scale-[0.25] opacity-0 blur-[4px]'
-            : 'scale-100 opacity-100 blur-0'
-        "
+        class="size-5 transition-[opacity,filter,scale] duration-300 ease-swap"
+        :class="wasCopied ? swapOut : swapIn"
       />
     </button>
   </div>
@@ -41,6 +33,10 @@ const props = withDefaults(defineProps<CopyTextProps>(), {
   copiedLabel: "Copiado",
   copyLabel: "Copiar",
 });
+
+// Scale and blur only run when the user allows motion; opacity always fades.
+const swapIn = "opacity-100 motion-safe:scale-100 motion-safe:blur-[0px]";
+const swapOut = "opacity-0 motion-safe:scale-25 motion-safe:blur-xs";
 
 const wasCopied = ref(false);
 let resetTimer: ReturnType<typeof setTimeout> | undefined;

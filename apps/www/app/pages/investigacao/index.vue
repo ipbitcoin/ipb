@@ -1,70 +1,82 @@
 <template>
-  <main>
-    <div class="section pt-20 sm:pt-28">
-      <p class="eyebrow">{{ $t("research.eyebrow") }}</p>
-      <h1
-        class="mt-4 max-w-3xl text-5xl leading-[1.02] font-light text-balance sm:text-6xl"
+  <div>
+    <IPBPageHeader
+      :eyebrow="$t('research.eyebrow')"
+      :title="$t('nav.research')"
+      :description="$t('research.description')"
+    >
+      <!-- Jump straight to a theme; each one also has its own page. -->
+      <nav
+        v-if="researchCategories?.length"
+        :aria-label="$t('nav.research')"
+        class="flex flex-wrap gap-2"
       >
-        {{ $t("nav.research") }}
-      </h1>
-      <p class="mt-6 max-w-3xl text-lg text-balance text-black/60">
-        {{ $t("research.description") }}
-      </p>
-    </div>
+        <NuxtLink
+          v-for="category in researchCategories"
+          :key="category.slug"
+          :to="categoryPath(category.slug)"
+          class="chip chip-off"
+        >
+          {{ category.name }}
+        </NuxtLink>
+      </nav>
+    </IPBPageHeader>
 
     <IPBSkeleton
       v-if="pending"
       variant="card"
-      :count="6"
-      class="section mt-16"
+      :count="3"
+      class="section pt-12 pb-20 sm:pt-16 sm:pb-28"
     />
 
     <template v-else>
       <IPBArticleGrid
-        v-for="category in researchCategories ?? []"
+        v-for="(category, index) in researchCategories ?? []"
         :key="category.slug"
+        :section-id="category.slug"
         :title="category.name"
         :articles="articlesInCategory(category.slug)"
-        :initial-count="6"
+        :initial-count="3"
+        :to="categoryPath(category.slug)"
         :show-date="false"
+        :priority="index === 0"
       />
     </template>
-  </main>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { api } from "@ipb/backend/api";
 
 const { locale } = useI18n();
-
-useSeoMeta({
-  description:
-    locale.value === "pt"
-      ? "Estudos e papers originais sobre Bitcoin em Portugal: economia, energia, mineração e segurança nacional."
-      : "Original studies and papers on Bitcoin in Portugal: economics, energy, mining and national security.",
-  ogDescription:
-    locale.value === "pt"
-      ? "Estudos e papers originais sobre Bitcoin em Portugal: economia, energia, mineração e segurança nacional."
-      : "Original studies and papers on Bitcoin in Portugal: economics, energy, mining and national security.",
-  ogTitle:
-    locale.value === "pt"
-      ? "Investigação Bitcoin | IPB"
-      : "Bitcoin Research | IPB",
-  title:
-    locale.value === "pt"
-      ? "Investigação Bitcoin Portugal"
-      : "Bitcoin Research Portugal",
-  twitterDescription:
-    locale.value === "pt"
-      ? "Estudos e papers originais sobre Bitcoin em Portugal: economia, energia, mineração e segurança nacional."
-      : "Original studies and papers on Bitcoin in Portugal: economics, energy, mining and national security.",
-  twitterTitle:
-    locale.value === "pt"
-      ? "Investigação Bitcoin | IPB"
-      : "Bitcoin Research | IPB",
-});
+const localePath = useLocalePath();
 const appLocale = useAppLocale();
 const convex = useConvex();
+
+const SEO = {
+  en: {
+    description:
+      "Original studies and papers on Bitcoin in Portugal: economics, energy, mining and national security.",
+    social: "Bitcoin Research",
+    title: "Bitcoin Research Portugal",
+  },
+  pt: {
+    description:
+      "Estudos e papers originais sobre Bitcoin em Portugal: economia, energia, mineração e segurança nacional.",
+    social: "Investigação Bitcoin",
+    title: "Investigação Bitcoin Portugal",
+  },
+} as const;
+const seo = computed(() => SEO[appLocale.value]);
+
+useSeoMeta({
+  description: () => seo.value.description,
+  ogDescription: () => seo.value.description,
+  ogTitle: () => `${seo.value.social} | IPB`,
+  title: () => seo.value.title,
+  twitterDescription: () => seo.value.description,
+  twitterTitle: () => `${seo.value.social} | IPB`,
+});
 
 const { data: researchCategories, status: statusCategories } = useAsyncData(
   `research-categories-${locale.value}`,
@@ -83,13 +95,20 @@ const { data: researchArticles, status: statusArticles } = useAsyncData(
       categoryType: "research",
       locale: appLocale.value,
     }),
-  { lazy: true }
+  { lazy: true, transform: toArticleSummaries }
 );
 
 const pending = computed(
   () =>
     statusCategories.value === "pending" || statusArticles.value === "pending"
 );
+
+function categoryPath(slug: string) {
+  return localePath({
+    name: "investigacao-categoria",
+    params: { categoria: slug },
+  });
+}
 
 function articlesInCategory(slug: string) {
   return (researchArticles.value ?? []).filter(

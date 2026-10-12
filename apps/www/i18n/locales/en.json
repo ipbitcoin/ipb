@@ -1,6 +1,6 @@
 {
   "nav": {
-    "manifest": "Manifest",
+    "manifest": "Manifesto",
     "association": "Articles of Association",
     "regulations": "Internal Regulation",
     "research": "Research",
@@ -8,22 +8,36 @@
     "news": "News",
     "faq": "FAQ",
     "team": "Team",
-    "donations": "Join Us",
+    "donations": "Join us",
     "donate": "Donate",
-    "join": "Join Us",
+    "join": "Join us",
     "information": "Information",
     "contacts": "Contacts",
     "training": "Training",
-    "menu": "Menu"
+    "menu": "Menu",
+    "main": "Main",
+    "skip": "Skip to content",
+    "language": "Language"
   },
   "main": {
     "header": "Building the Future of Bitcoin in Portugal",
     "cta": {
-      "readManifest": "Read manifest",
+      "readManifest": "Read the manifesto",
       "join": "Join"
     },
     "eyebrow": "Portuguese Bitcoin Institute",
-    "subheader": "Independent research, education and public policy to put Portugal at the forefront of Bitcoin."
+    "subheader": "Independent research, education and public policy to put Portugal at the forefront of Bitcoin.",
+    "latest": "New",
+    "timeline": {
+      "label": "Money in Portugal, from gold to Bitcoin",
+      "gold": "Gold",
+      "escudo": "Escudo",
+      "euro": "Euro",
+      "bitcoin": "Bitcoin"
+    },
+    "support": {
+      "eyebrow": "Support the mission"
+    }
   },
   "newsletter": {
     "title": "Newsletter",
@@ -78,7 +92,8 @@
       "economyAndNationalSecurity": "Economy and National Security",
       "humanRights": "Human Rights"
     },
-    "eyebrow": "Research"
+    "eyebrow": "Studies",
+    "empty": "No studies in this theme yet."
   },
   "education": {
     "title": "Education",
@@ -88,10 +103,14 @@
       "filterByPublisher": "Filter by publisher",
       "allPublishers": "All",
       "showMore": "Show more books",
-      "showLess": "Show fewer books"
+      "showLess": "Show fewer books",
+      "buy": "Buy",
+      "description": "The reading we recommend for understanding Bitcoin.",
+      "pages": "{count} pp."
     },
     "articles": {
-      "title": "Articles"
+      "title": "Articles",
+      "description": "Clear explanations of how Bitcoin works and how to use it safely."
     },
     "eyebrow": "Learn"
   },
@@ -114,8 +133,8 @@
   },
   "join": {
     "donate": "Donate",
-    "member": "Become a Member",
-    "contact": "Talk to Us",
+    "member": "Become a member",
+    "contact": "Talk to us",
     "mission": "As a non-profit organization, we rely on our members and on donations to fulfill our mission. Every member strengthens the independent voice of Bitcoin in Portugal.",
     "missionPoints": {
       "promote": {
@@ -154,8 +173,8 @@
     "donateBtc": "Donate with Bitcoin",
     "memberFormTitle": "Registration Form",
     "form": {
-      "name": "Full name",
-      "namePlaceholder": "Your full name",
+      "name": "Name / Nickname",
+      "namePlaceholder": "Your name or nickname",
       "email": "Email",
       "emailPlaceholder": "Your email",
       "dateOfBirth": "Date of birth",
@@ -165,7 +184,12 @@
       "fiscalNumberPlaceholder": "E.g.: 123456789",
       "address": "Full address",
       "addressPlaceholder": "Street, number, postal code, city",
-      "submit": "Register and Pay"
+      "submit": "Register and Pay",
+      "optional": "optional",
+      "day": "Day",
+      "month": "Month",
+      "year": "Year",
+      "yearPlaceholder": "YYYY"
     },
     "successDonation": "Thank you for your support!",
     "successMember": "Thank you! Your membership registration was completed successfully.",
@@ -195,7 +219,7 @@
         "name": "Participating member",
         "tagline": "Join the conversation and your local communities.",
         "equiv": "Just €1.75 a month",
-        "cta": "Become a participating member",
+        "cta": "Become a member",
         "points": [
           "General discussion on WhatsApp",
           "IPB newsletter",
@@ -210,7 +234,7 @@
         "name": "Ambassador member",
         "tagline": "Lead, organize and represent the IPB in your community.",
         "equiv": "Equals €252 a year",
-        "cta": "Become an ambassador member",
+        "cta": "Become an ambassador",
         "points": [
           "Everything in Layer 1",
           "Create themed and district groups on WhatsApp",
@@ -219,7 +243,8 @@
           "50% off workshops and 101 technical support",
           "In-person support for local communities"
         ]
-      }
+      },
+      "eyebrow": "Membership"
     },
     "compare": {
       "heading": "Compare all layers",
@@ -279,11 +304,15 @@
           "text": "Bitcoin Apes Cascais, Aceita Bitcoin, Free Madeira…"
         }
       },
-      "included": "Included"
+      "included": "Included",
+      "notIncluded": "Not included"
     },
     "close": "Close",
     "identifyMe": "I want to be identified (optional)",
-    "btcOneTimeNote": "Bitcoin donations are always one-time."
+    "btcOneTimeNote": "Bitcoin donations are always one-time.",
+    "eyebrow": "Support the mission",
+    "frequency": "Frequency",
+    "donateHeading": "An independent voice for Bitcoin, funded by you."
   },
   "input": {
     "email": "Email",
@@ -298,25 +327,60 @@
     "showMore": "Show more",
     "showLess": "Show less",
     "seeAll": "See all",
-    "loading": "Loading…"
+    "loading": "Loading…",
+    "newTab": "opens in a new tab"
   },
   "article": {
     "readingTime": "Reading time",
     "listenToAudio": "Listen to audio",
-    "generated": "Generated with Google NotebookLM"
+    "playVideo": "Play video: {title}",
+    "generated": "Generated with Google NotebookLM",
+    "minRead": "{count} min read",
+    "related": "Keep reading",
+    "share": "Share",
+    "shareOn": "Share on {network}",
+    "copyLink": "Copy link",
+    "linkCopied": "Link copied"
   },
   "training": {
     "tag": "In-person training",
     "cta": {
-      "info": "Request Information",
-      "schedule": "Schedule a Call"
-    },
-    "seo": {
-      "title": "Bitcoin for Everyone — Training | Instituto Português de Bitcoin",
-      "description": "In-person Bitcoin training. Learn the essentials in a simple and practical way with the Portuguese Bitcoin Institute."
+      "info": "Request information",
+      "schedule": "Schedule a call"
     }
   },
-  "time": {
-    "minute": "Minute | Minutes"
+  "error": {
+    "notFound": {
+      "title": "Page not found",
+      "description": "The page you are looking for does not exist or has moved."
+    },
+    "generic": {
+      "title": "Something went wrong",
+      "description": "An unexpected error occurred. Please try again in a moment."
+    },
+    "code": "Error {code}",
+    "home": "Back to home"
+  },
+  "contacts": {
+    "eyebrow": "Get in touch",
+    "description": "Press, partnerships, research or questions about Bitcoin: write to us.",
+    "email": "Email",
+    "copy": "Copy email",
+    "copied": "Email copied",
+    "social": "Social media"
+  },
+  "manifest": {
+    "eyebrow": "Mission"
+  },
+  "team": {
+    "eyebrow": "Who we are",
+    "description": "The experts behind the mission of making Portugal a Bitcoin reference.",
+    "articles": "Read articles",
+    "articlesBy": "Read articles by {name}"
+  },
+  "author": {
+    "eyebrow": "Author",
+    "articles": "Articles",
+    "empty": "No published articles yet."
   }
 }

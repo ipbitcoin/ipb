@@ -1,6 +1,6 @@
 <template>
   <div>
-    <IPBHero />
+    <IPBHero :latest="latestArticle" />
 
     <IPBArticleGrid
       v-if="pendingArticles || newsArticles.length"
@@ -12,6 +12,7 @@
       :initial-count="6"
       :to="localePath('noticias')"
       :empty-label="$t('news.empty')"
+      featured
     />
 
     <IPBValues :values="values" :pending="pendingValues" />
@@ -33,6 +34,7 @@
       section-id="education"
       :eyebrow="$t('education.eyebrow')"
       :title="$t('education.title')"
+      :description="$t('education.description')"
       :articles="educationArticles"
       :pending="pendingArticles"
       :initial-count="6"
@@ -40,21 +42,59 @@
       :show-date="false"
     />
 
-    <IPBPartnerMarquee :partners="partners" :pending="pendingPartners" />
+    <IPBPartners
+      v-if="pendingPartners || partners?.length"
+      :partners="partners"
+      :pending="pendingPartners"
+    />
 
     <IPBFaq :faqs="faqs" :pending="pendingFaqs" />
 
     <IPBDocumentList :documents="documents" :pending="pendingDocuments" />
 
-    <!-- Newsletter closes the page, right before the footer CTA -->
-    <section id="newsletter" class="border-t border-black/10">
-      <div class="section section-gap flex flex-col gap-5">
-        <p class="eyebrow">{{ $t("newsletter.eyebrow") }}</p>
-        <h2 class="section-title">{{ $t("newsletter.title") }}</h2>
-        <p class="max-w-2xl text-lg text-balance text-black/60">
-          {{ $t("newsletter.description") }}
-        </p>
-        <IPBNewsletterForm class="mt-2" />
+    <!-- Closing call to action. The newsletter already sits in the footer
+         right below, so this band asks for the bigger commitment. -->
+    <section
+      id="join"
+      aria-labelledby="join-title"
+      class="section pb-20 sm:pb-28"
+    >
+      <div
+        class="reveal relative isolate overflow-hidden rounded-3xl bg-brand px-6 py-14 text-neutral-950 sm:px-12 sm:py-16 lg:px-16 lg:py-20"
+      >
+        <div
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_right,oklch(0_0_0/0.07)_1px,transparent_1px),linear-gradient(to_bottom,oklch(0_0_0/0.07)_1px,transparent_1px)] bg-size-[48px_48px] mask-[radial-gradient(ellipse_70%_100%_at_100%_100%,black,transparent_70%)]"
+        />
+        <div
+          class="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between lg:gap-16"
+        >
+          <div class="flex max-w-2xl flex-col gap-4">
+            <p class="eyebrow text-neutral-950/70 before:bg-neutral-950">
+              {{ $t("main.support.eyebrow") }}
+            </p>
+            <h2 id="join-title" class="section-title">
+              {{ $t("nav.join") }}
+            </h2>
+            <p
+              class="mt-1 text-lg leading-relaxed text-pretty text-neutral-950/75"
+            >
+              {{ $t("join.mission") }}
+            </p>
+          </div>
+          <div class="flex shrink-0 flex-wrap gap-3">
+            <UiButton size="lg" arrow :to="localePath('juntar')">
+              {{ $t("join.member") }}
+            </UiButton>
+            <UiButton
+              size="lg"
+              variant="inverse"
+              :to="`${localePath('juntar')}#donate`"
+            >
+              {{ $t("join.donate") }}
+            </UiButton>
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -68,14 +108,16 @@ const { locale, t } = useI18n();
 const convex = useConvex();
 const currentLocale = useAppLocale();
 
+// Getters keep the tags in step with the language switcher. The title runs
+// through the global "%s | Instituto Português de Bitcoin" template, so it
+// must not repeat the name. og:url comes from the i18n/site config.
 useSeoMeta({
-  description: t("seo.description"),
-  ogDescription: t("seo.description"),
-  ogTitle: t("seo.title"),
-  ogUrl: "https://institutobitcoin.pt",
-  title: t("seo.title"),
-  twitterDescription: t("seo.description"),
-  twitterTitle: t("seo.title"),
+  description: () => `${t("main.header")}. ${t("main.subheader")}`,
+  ogDescription: () => t("main.subheader"),
+  ogTitle: () => `${t("seo.title")}: ${t("main.header")}`,
+  title: () => t("main.header"),
+  twitterDescription: () => t("main.subheader"),
+  twitterTitle: () => `${t("seo.title")}: ${t("main.header")}`,
 });
 
 // All lists come server-sorted (order asc / createdAt desc) from Convex.
@@ -92,11 +134,13 @@ const { data: partners, status: statusPartners } = useAsyncData(
   { lazy: true }
 );
 
+// Cards only need a summary: dropping the article bodies keeps the SSR
+// payload small, since it is inlined into every home page response.
 const { data: articles, status: statusArticles } = useAsyncData(
   `articles-${locale.value}`,
   () =>
     convex.query(api.articles.listPublished, { locale: currentLocale.value }),
-  { lazy: true }
+  { lazy: true, transform: toArticleSummaries }
 );
 
 const { data: faqs, status: statusFaqs } = useAsyncData(
@@ -127,32 +171,31 @@ const educationArticles = computed(() =>
   (articles.value ?? []).filter((a) => a.category?.type === "education")
 );
 
-// FAQ structured data, emitted once the questions are in.
-watchEffect(() => {
-  if (!faqs.value?.length) {
-    return;
-  }
-  useHead({
-    script: [
-      {
-        innerHTML: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: faqs.value.map(
-            (faq: { question: string; answer: string }) => ({
-              "@type": "Question",
-              name: faq.question,
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: faq.answer,
-              },
-            })
-          ),
-        }),
-        key: "faq-schema",
-        type: "application/ld+json",
-      },
-    ],
-  });
+// Newest article of any kind, announced above the headline.
+const latestArticle = computed(() => {
+  const newest = articles.value?.[0];
+  return newest ? { slug: newest.slug, title: newest.title } : null;
 });
+
+// FAQ structured data. A getter, so it follows the data and the locale
+// instead of registering a new head entry on every change.
+useHead(() => ({
+  script: faqs.value?.length
+    ? [
+        {
+          innerHTML: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faqs.value.map((faq) => ({
+              "@type": "Question",
+              acceptedAnswer: { "@type": "Answer", text: faq.answer },
+              name: faq.question,
+            })),
+          }),
+          key: "faq-schema",
+          type: "application/ld+json",
+        },
+      ]
+    : [],
+}));
 </script>

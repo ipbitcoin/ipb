@@ -1,53 +1,46 @@
 <template>
-  <main>
-    <div v-if="author" class="section flex flex-col pt-20 sm:pt-28">
-      <div
-        class="flex flex-col items-start gap-8 border-b border-black/10 pb-12 sm:flex-row"
-      >
-        <img
-          :src="author.picture.url"
-          :alt="author.name"
-          loading="lazy"
-          class="h-32 w-32 shrink-0 rounded-full object-cover outline -outline-offset-1 outline-black/10"
+  <div>
+    <IPBPageHeader
+      :eyebrow="$t('author.eyebrow')"
+      :title="profile.name"
+      :description="profile.description ?? undefined"
+    >
+      <template #before>
+        <NuxtImg
+          :src="profile.picture.url"
+          :alt="profile.name"
+          width="96"
+          height="96"
+          fit="cover"
+          loading="eager"
+          class="size-20 rounded-full bg-neutral-100 object-cover outline -outline-offset-1 outline-black/10 sm:size-24"
         />
-        <div class="flex flex-col gap-3">
-          <h1 class="text-5xl font-light">{{ author.name }}</h1>
-          <p
-            v-if="author.description"
-            class="text-lg text-neutral-600 max-w-2xl"
-          >
-            {{ author.description }}
-          </p>
-          <div class="flex gap-3 mt-1">
-            <a
-              v-if="author.linkedin"
-              :href="author.linkedin"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="focus-ring inline-flex items-center gap-1.5 rounded-md border border-black/20 px-2 py-1 text-sm font-medium transition-[background-color,scale] duration-150 ease-out hover:bg-black/5 active:scale-[0.96]"
-            >
-              <IconLinkedIn class="size-4" />
-              LinkedIn
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+      </template>
+
+      <UiButton
+        v-if="profile.linkedin"
+        variant="outline"
+        :href="profile.linkedin"
+        target="_blank"
+        class="pl-3.5"
+      >
+        <IconLinkedIn class="size-4" aria-hidden="true" />
+        LinkedIn
+        <span class="sr-only">({{ $t("common.newTab") }})</span>
+      </UiButton>
+    </IPBPageHeader>
 
     <IPBArticleGrid
-      v-if="author"
-      :title="locale === 'pt' ? 'Artigos' : 'Articles'"
+      :title="$t('author.articles')"
       :articles="articles"
-      :initial-count="6"
+      :pending="pending"
+      :initial-count="9"
+      :empty-label="$t('author.empty')"
       show-category
+      hide-header
+      priority
     />
-
-    <div v-if="!author" class="section mt-20">
-      <p class="text-lg text-neutral-500">
-        {{ locale === "pt" ? "Autor não encontrado." : "Author not found." }}
-      </p>
-    </div>
-  </main>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -57,79 +50,102 @@ const route = useRoute();
 const { locale } = useI18n();
 const appLocale = useAppLocale();
 const convex = useConvex();
+const localePath = useLocalePath();
 
 const slug = String(route.params.slug);
 
-// Author slug is materialized in Convex — direct indexed lookup
-// Non-lazy and locale-keyed: page meta is built from this data.
-const { data: author } = useAsyncData(`author-${slug}-${locale.value}`, () =>
-  convex.query(api.authors.getBySlug, {
-    slug,
-    locale: appLocale.value,
-  })
-);
-
-const { data: articles } = useAsyncData(
-  `author-articles-${slug}-${locale.value}`,
+// Awaited: a missing author is a real 404, and the page's meta and
+// structured data are built from it while it renders on the server.
+const { data: author, error } = await useAsyncData(
+  `author-${slug}-${locale.value}`,
   async () => {
-    if (!author.value) {
-      return [];
+    const [entry, team] = await Promise.all([
+      convex.query(api.authors.getBySlug, { locale: appLocale.value, slug }),
+      // Authors on the team borrow their bio, role and LinkedIn from it where
+      // their author entry has none. The page works without it.
+      convex
+        .query(api.teamMembers.list, { locale: appLocale.value })
+        .catch(() => []),
+    ]);
+    if (!entry) {
+      return null;
     }
-    return await convex.query(api.articles.listPublished, {
-      locale: appLocale.value,
-      authorId: author.value.documentId,
-    });
-  },
-  { watch: [author] }
+    const member = team.find(
+      (person) => nameToSlug(person.name) === nameToSlug(entry.name)
+    );
+    return {
+      ...entry,
+      description: entry.description ?? member?.description ?? null,
+      linkedin: entry.linkedin ?? member?.linkedin ?? null,
+      role: member?.role ?? null,
+    };
+  }
 );
 
-watchEffect(() => {
-  if (!author.value) {
-    return;
-  }
-
-  const baseUrl = "https://institutobitcoin.pt";
-  const path = locale.value === "en" ? `/en/author/${slug}` : `/autor/${slug}`;
-  const imgUrl = author.value.picture?.url ?? `${baseUrl}/og-image.png`;
-
-  useSeoMeta({
-    title: author.value.name,
-    description:
-      author.value.description ??
-      (locale.value === "pt"
-        ? `Artigos e investigação de ${author.value.name} no Instituto Português de Bitcoin.`
-        : `Articles and research by ${author.value.name} at the Portuguese Bitcoin Institute.`),
-    ogTitle: `${author.value.name} | IPB`,
-    ogDescription: author.value.description ?? "",
-    ogImage: imgUrl,
-    ogUrl: `${baseUrl}${path}`,
-    ogType: "profile",
-    twitterTitle: `${author.value.name} | IPB`,
-    twitterDescription: author.value.description ?? "",
-    twitterImage: imgUrl,
-    twitterCard: "summary_large_image",
+if (!author.value) {
+  throw createError({
+    fatal: true,
+    statusCode: error.value ? 500 : 404,
+    statusMessage: error.value ? "Author unavailable" : "Author not found",
   });
+}
 
-  useHead({
-    script: [
-      {
-        type: "application/ld+json",
-        innerHTML: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Person",
-          name: author.value.name,
-          description: author.value.description,
-          image: imgUrl,
-          url: `${baseUrl}${path}`,
-          worksFor: {
-            "@type": "Organization",
-            name: "Instituto Português de Bitcoin",
-            url: baseUrl,
-          },
-          ...(author.value.linkedin ? { sameAs: [author.value.linkedin] } : {}),
-        }),
-      },
-    ],
-  });
+// Same page instance per author and locale, so a snapshot is enough.
+const profile = author.value;
+
+const { data: articles, status } = useAsyncData(
+  `author-articles-${slug}-${locale.value}`,
+  () =>
+    convex.query(api.articles.listPublished, {
+      authorId: profile.documentId,
+      locale: appLocale.value,
+    }),
+  { lazy: true, transform: toArticleSummaries }
+);
+
+const pending = computed(() => status.value === "pending");
+
+const FALLBACK_DESCRIPTION = {
+  en: `Articles and research by ${profile.name} at the Portuguese Bitcoin Institute.`,
+  pt: `Artigos e investigação de ${profile.name} no Instituto Português de Bitcoin.`,
+} as const;
+const description =
+  profile.description ?? FALLBACK_DESCRIPTION[appLocale.value];
+
+// The title runs through the global "%s | Instituto Português de Bitcoin"
+// template; social titles do not, so they carry the short name instead.
+// A portrait is square, so it is shared as a small card, not a wide one.
+useSeoMeta({
+  description,
+  ogDescription: description,
+  ogTitle: `${profile.name} | IPB`,
+  ogType: "profile",
+  title: profile.name,
+  twitterCard: "summary",
+  twitterDescription: description,
+  twitterTitle: `${profile.name} | IPB`,
 });
+useShareImage({ alt: profile.name, url: profile.picture.url });
+
+// A profile page about one Person: the same node as their article bylines
+// and, for team members, the team page.
+const personId = personSchemaId(profile.slug);
+
+useSchemaOrg([
+  defineWebPage({
+    "@type": "ProfilePage",
+    about: { "@id": personId },
+    mainEntity: { "@id": personId },
+  }),
+  definePerson({
+    "@id": personId,
+    description: profile.description ?? undefined,
+    image: profile.picture.url,
+    jobTitle: profile.role ?? undefined,
+    name: profile.name,
+    sameAs: profile.linkedin ? [profile.linkedin] : undefined,
+    url: localePath({ name: "autor-slug", params: { slug: profile.slug } }),
+    worksFor: profile.role ? { "@id": identitySchemaId() } : undefined,
+  }),
+]);
 </script>
