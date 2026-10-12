@@ -4,31 +4,44 @@
     v-if="success"
     role="status"
     :class="[
-      'flex items-center gap-2 py-2 text-sm',
-      inverse ? 'text-white/80' : 'text-black/70',
+      'flex min-h-12 items-center gap-2 text-[15px]',
+      tone === 'dark' ? 'text-white/80' : 'text-neutral-950',
     ]"
   >
-    <IconCheck class="size-4 shrink-0" aria-hidden="true" />
+    <span
+      :class="[
+        'grid size-6 shrink-0 place-items-center rounded-full',
+        tone === 'brand'
+          ? 'bg-neutral-950 text-brand'
+          : 'bg-brand text-neutral-950',
+      ]"
+    >
+      <IconCheck class="size-3.5" />
+    </span>
     {{ $t("newsletter.success") }}
   </p>
 
+  <!-- One pill: the field and its button share an edge, so the radius of the
+       button (inset by 4px) stays concentric with the field around it. -->
   <form
     v-else
-    class="relative w-full max-w-sm"
+    :class="[
+      'group/form relative flex h-12 w-full max-w-md items-center rounded-full border p-1 pl-5 transition-[border-color,background-color] duration-150 ease-out has-focus-visible:outline-2 has-focus-visible:outline-offset-2',
+      TONES[tone].form,
+    ]"
     @submit.prevent="handleSubscribe"
   >
     <input
       v-model="email"
       type="email"
       required
+      autocomplete="email"
       :placeholder="t('input.email')"
       :aria-label="t('input.email')"
       :disabled="loading"
       :class="[
-        'w-full border-b bg-transparent py-3 pr-14 text-base outline-none transition-colors duration-150 ease-out focus-visible:outline-2 focus-visible:outline-offset-4',
-        inverse
-          ? 'border-white/30 text-white placeholder:text-white/40 focus:border-white focus-visible:outline-white'
-          : 'border-black/25 text-black placeholder:text-black/35 focus:border-black focus-visible:outline-brand',
+        'h-full min-w-0 flex-1 bg-transparent pr-3 text-base outline-none disabled:opacity-60',
+        TONES[tone].input,
       ]"
     />
     <button
@@ -36,24 +49,54 @@
       :disabled="loading"
       :aria-label="t('newsletter.submit')"
       :class="[
-        'bg-brand absolute right-0 bottom-2 flex size-10 cursor-pointer items-center justify-center rounded-full text-white transition-[background-color,scale] duration-150 ease-out hover:bg-black focus-visible:outline-2 focus-visible:outline-offset-2 active:scale-[0.96] disabled:cursor-not-allowed disabled:opacity-60',
-        inverse
-          ? 'hover:bg-white hover:text-black focus-visible:outline-white'
-          : 'focus-visible:outline-brand',
+        'relative grid size-10 shrink-0 cursor-pointer place-items-center rounded-full transition-[background-color,color,scale] duration-150 ease-out [-webkit-tap-highlight-color:transparent] focus-visible:outline-none disabled:cursor-not-allowed motion-safe:enabled:active:scale-[0.96]',
+        TONES[tone].button,
       ]"
     >
-      <IconArrow v-if="!loading" class="size-4" aria-hidden="true" />
+      <!-- Both icons stay mounted so the swap cross-fades both ways -->
+      <IconArrow
+        :class="[
+          'col-start-1 row-start-1 size-4 transition-[opacity,scale,filter] duration-300 ease-swap',
+          loading
+            ? 'opacity-0 motion-safe:scale-25 motion-safe:blur-xs'
+            : 'opacity-100',
+        ]"
+      />
       <span
-        v-else
         aria-hidden="true"
-        class="size-4 animate-spin rounded-full border-2 border-white/40 border-t-white"
+        :class="[
+          'col-start-1 row-start-1 size-4 rounded-full border-2 border-current border-r-transparent transition-[opacity,scale,filter] duration-300 ease-swap',
+          loading
+            ? 'animate-spin opacity-100 [animation-duration:600ms]'
+            : 'opacity-0 motion-safe:scale-25 motion-safe:blur-xs',
+        ]"
       />
     </button>
   </form>
 </template>
 
 <script setup lang="ts">
-withDefaults(defineProps<{ inverse?: boolean }>(), { inverse: false });
+type Tone = "light" | "dark" | "brand";
+
+withDefaults(defineProps<{ tone?: Tone }>(), { tone: "light" });
+
+const TONES: Record<Tone, { button: string; form: string; input: string }> = {
+  brand: {
+    button: "bg-neutral-950 text-brand hover:bg-neutral-800",
+    form: "border-transparent bg-white shadow-button-light has-focus-visible:outline-neutral-950",
+    input: "text-neutral-950 placeholder:text-neutral-500",
+  },
+  dark: {
+    button: "bg-brand text-neutral-950 hover:bg-white",
+    form: "border-white/25 bg-white/5 hover:border-white/40 has-focus-visible:outline-white",
+    input: "text-white placeholder:text-white/50",
+  },
+  light: {
+    button: "bg-neutral-950 text-white hover:bg-brand hover:text-neutral-950",
+    form: "border-black/45 bg-white hover:border-black/70 has-focus-visible:outline-brand",
+    input: "text-neutral-950 placeholder:text-neutral-400",
+  },
+};
 
 const { t } = useI18n();
 const { subscribe, loading, success } = useNewsletter();

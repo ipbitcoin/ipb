@@ -1,33 +1,60 @@
 <template>
-  <section id="values" class="section section-gap">
-    <p class="eyebrow">{{ $t("values.eyebrow") }}</p>
-    <h2 class="section-title mt-4">{{ $t("values.title") }}</h2>
+  <!-- The one dark band on the page: it breaks the white rhythm between the
+       article grids and gives the mission its own weight. -->
+  <section
+    id="values"
+    :aria-labelledby="headingId"
+    class="bg-neutral-950 text-white"
+  >
+    <div class="section section-gap">
+      <div class="flex max-w-3xl flex-col gap-4">
+        <p class="eyebrow text-white/50">{{ $t("values.eyebrow") }}</p>
+        <h2 :id="headingId" class="section-title">{{ $t("values.title") }}</h2>
+      </div>
 
-    <IPBSkeleton v-if="pending" variant="row" :count="3" class="mt-14" />
+      <IPBSkeleton
+        v-if="pending"
+        variant="tile"
+        tone="dark"
+        :count="6"
+        class="mt-14"
+      />
 
-    <ul v-else class="mt-14 flex flex-col">
-      <li
-        v-for="(value, index) in values ?? []"
-        :key="value.title"
-        class="reveal grid grid-cols-[auto_1fr] gap-x-6 gap-y-3 border-t border-black/10 py-10 md:grid-cols-[6rem_1fr_1.2fr] md:gap-x-10 md:py-12"
-        :style="{ '--reveal-delay': `${(index % 3) * 60}ms` }"
+      <!-- 1px gaps over a lighter ground draw the hairlines between tiles,
+           so every edge is shared and none is doubled. -->
+      <ol
+        v-else-if="values?.length"
+        class="mt-14 grid gap-px overflow-hidden rounded-3xl bg-white/10 sm:grid-cols-2 lg:grid-cols-3"
       >
-        <span
-          class="text-brand pt-1 font-light tabular-nums md:text-lg"
-          aria-hidden="true"
+        <li
+          v-for="(value, index) in values"
+          :key="value.title"
+          class="bg-neutral-950"
         >
-          {{ String(index + 1).padStart(2, "0") }}
-        </span>
-        <h3 class="text-2xl leading-tight font-light text-balance md:text-3xl">
-          {{ value.title }}
-        </h3>
-        <p
-          class="col-start-2 max-w-2xl text-black/60 md:col-start-3 md:text-lg"
-        >
-          {{ value.description }}
-        </p>
-      </li>
-    </ul>
+          <!-- Reveal the content, not the tile: a fading tile would flash
+               the lighter ground behind it. -->
+          <div
+            class="reveal flex h-full min-h-64 flex-col justify-between gap-10 p-8 sm:p-10"
+            :style="{ '--reveal-delay': `${(index % 3) * 100}ms` }"
+          >
+            <span
+              aria-hidden="true"
+              class="font-mono text-xs leading-4 font-medium text-brand tabular-nums"
+            >
+              {{ String(index + 1).padStart(2, "0") }}
+            </span>
+            <div class="flex flex-col gap-3">
+              <h3 class="text-2xl leading-tight tracking-tight">
+                {{ value.title }}
+              </h3>
+              <p class="leading-relaxed text-pretty text-white/60">
+                {{ value.description }}
+              </p>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </div>
   </section>
 </template>
 
@@ -41,4 +68,6 @@ defineProps<{
   values: ValueItem[] | null | undefined;
   pending?: boolean;
 }>();
+
+const headingId = useId();
 </script>

@@ -5,15 +5,82 @@
 /* Scan the shared UI layer for Tailwind classes (outside default sources) */
 @source "../../../../../packages/ui/components";
 
-@layer components {
-  /* Boxed form control. Keeps the brand's 3px radius and hairline border. */
-  .field-box {
-    @apply w-full rounded-[3px] border border-black/25 bg-white px-4 py-2 text-sm text-black outline-none transition-[border-color,box-shadow] duration-150 ease-out placeholder:text-black/40 focus:border-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand;
+@theme {
+  /* Labels, dates and numbers. A mono voice next to Inter reads precise and
+     technical without turning the site into a terminal. */
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* A book standing on its shelf: contact shadow plus a long, soft cast.
+     The lift adds a deeper one when the book rises under the pointer. */
+  --shadow-book:
+    0 1px 1px oklch(0 0 0 / 0.08), 0 4px 8px -2px oklch(0 0 0 / 0.12),
+    0 16px 28px -12px oklch(0 0 0 / 0.3);
+  --shadow-book-lift:
+    0 2px 4px oklch(0 0 0 / 0.06), 0 12px 20px -6px oklch(0 0 0 / 0.14),
+    0 32px 48px -16px oklch(0 0 0 / 0.32);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Anchor jumps land below the sticky header instead of under it. */
+    scroll-padding-top: 6rem;
   }
 
-  /* Underlined form control, used inside the enrollment form. */
-  .field-line {
-    @apply border-b border-black/25 bg-transparent px-1 py-2 text-black outline-none transition-[border-color] duration-150 ease-out placeholder:text-black/30 focus:border-black focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand;
+  ::selection {
+    background-color: var(--color-brand);
+    color: var(--color-neutral-950);
+  }
+}
+
+@layer components {
+  /* Page gutter + max width shared by every section. */
+  .section {
+    @apply mx-auto w-full max-w-screen-xl px-6 sm:px-8;
+  }
+
+  /*
+    Vertical rhythm between major sections. A jump to a section (#faq,
+    #donate) skips most of its top padding, so the content lands just below
+    the header rather than under a band of empty space.
+  */
+  .section-gap {
+    @apply -scroll-mt-16 py-20 sm:-scroll-mt-20 sm:py-28;
+  }
+
+  /*
+    Mono label above headings. The orange square is a "block": the one spot
+    where brand orange sits next to body copy. Orange on white is only 2.2:1,
+    so it stays decorative and the text itself stays neutral (4.7:1).
+  */
+  .eyebrow {
+    @apply inline-flex items-center gap-2.5 font-mono text-[11px] leading-4 font-medium tracking-[0.12em] text-neutral-500 uppercase;
+  }
+
+  .eyebrow::before {
+    content: "";
+    @apply size-1.5 shrink-0 bg-brand;
+  }
+
+  /* Section heading, shared by every block on the site. */
+  .section-title {
+    @apply text-4xl leading-[1.05] font-normal tracking-[-0.035em] text-balance sm:text-5xl;
+  }
+
+  /* The single h1 of an inner page. */
+  .page-title {
+    @apply text-5xl leading-none font-normal tracking-[-0.04em] text-balance sm:text-6xl lg:text-7xl;
+  }
+
+  /* Introductory paragraph under a page or section title. */
+  .lead {
+    @apply text-lg leading-relaxed text-pretty text-neutral-600 sm:text-xl sm:leading-relaxed;
+  }
+
+  /* Inline text link: the underline is always drawn, so hover never shifts layout. */
+  .link {
+    @apply rounded-sm underline decoration-black/25 decoration-1 underline-offset-4 transition-[text-decoration-color] duration-150 ease-out hover:decoration-current focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand;
   }
 
   /* Keyboard focus ring shared by links and icon buttons. */
@@ -21,89 +88,287 @@
     @apply focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand;
   }
 
-  /* Chip-style toggle used by the donation presets and tabs. */
+  /* Pill toggle used by the donation presets and mode switches. */
   .chip {
-    @apply cursor-pointer rounded-[3px] border px-4 py-2 text-sm font-semibold transition-[background-color,color,border-color,scale] duration-150 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand active:scale-[0.96];
+    @apply inline-flex h-10 cursor-pointer items-center justify-center rounded-full border px-4 text-sm font-medium transition-[background-color,border-color,color,box-shadow,scale] duration-150 ease-out select-none [-webkit-tap-highlight-color:transparent] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand motion-safe:enabled:active:scale-[0.96];
   }
 
   .chip-on {
-    @apply border-black bg-black text-white;
+    @apply border-transparent bg-neutral-950 text-white shadow-button-dark;
   }
 
   .chip-off {
-    @apply border-black/25 bg-white text-black hover:bg-black/5;
+    @apply border-black/15 bg-white text-neutral-950 hover:border-black/30 hover:bg-neutral-50;
   }
 
-  /* Page gutter + max width. Replaces the repeated
-     `max-w-screen-xl mx-auto px-8` on every section. */
-  .section {
-    @apply mx-auto w-full max-w-screen-xl px-6 sm:px-8;
+  /*
+    Boxed form control. The border keeps 3:1 against white so the field stays
+    identifiable without its placeholder, and turns red while the field holds
+    an error. 16px text stops iOS zooming on focus.
+  */
+  .field-box {
+    @apply min-h-10 w-full rounded-lg border border-black/45 bg-white px-3.5 py-2 text-base text-neutral-950 outline-none transition-[border-color] duration-150 ease-out placeholder:text-neutral-400 hover:border-black/70 focus:border-neutral-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand aria-invalid:border-red-700;
   }
 
-  /* Vertical rhythm between major sections. */
-  .section-gap {
-    @apply py-14 sm:py-20;
-  }
-
-  /* Small uppercase category label above section headings. */
-  .eyebrow {
-    @apply text-xs font-medium tracking-[0.18em] text-black/50 uppercase;
-  }
-
-  /* Section heading, shared by every block on the site. */
-  .section-title {
-    @apply text-4xl font-light text-balance sm:text-5xl;
+  /*
+    Book cover drawn over its image: the hinge where the cover folds into the
+    spine (a shadow, a highlight, then a softer crease), plus the 1px outline
+    every content image gets.
+  */
+  .book-cover::after {
+    content: "";
+    @apply pointer-events-none absolute inset-0 rounded-[inherit] outline -outline-offset-1 outline-black/10;
+    background-image: linear-gradient(
+      to right,
+      oklch(0 0 0 / 0.14),
+      oklch(1 0 0 / 0.18) 1.5%,
+      oklch(0 0 0 / 0.1) 3.5%,
+      oklch(0 0 0 / 0) 8%
+    );
   }
 }
 
 /*
-  Scroll/enter reveal, done in CSS rather than JS.
+  Long-form article text, on top of the typography plugin (unlayered, so it
+  wins over it): medium-weight headings with the site's tight tracking, links
+  underlined like `.link`, orange list markers and quote rule, and images
+  outlined like every other content image.
+*/
+.article-body {
+  --tw-prose-bullets: var(--color-brand);
+  --tw-prose-links: var(--color-neutral-950);
+  --tw-prose-quote-borders: var(--color-brand);
+}
 
-  Content must be readable when JavaScript never runs, so the hidden state is
-  only applied once `.js-reveal-ready` lands on <html> (set by a plugin on the
-  client). Without JS the elements simply render in place.
+.article-body :where(h2, h3, h4) {
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.article-body :where(a) {
+  border-radius: 0.125rem;
+  font-weight: inherit;
+  text-decoration-color: rgb(0 0 0 / 0.25);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color 150ms var(--ease-out);
+}
+
+@media (hover: hover) {
+  .article-body :where(a):hover {
+    text-decoration-color: currentColor;
+  }
+}
+
+.article-body :where(a):focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
+
+/* Headings link to themselves; an underline there would read as a link out. */
+.article-body :where(h2, h3, h4) a {
+  text-decoration: none;
+}
+
+.article-body :where(img) {
+  border-radius: var(--radius-2xl);
+  outline: 1px solid rgb(0 0 0 / 0.1);
+  outline-offset: -1px;
+}
+
+/* The CMS left blank <br> lines between paragraphs as spacers. The prose
+   rhythm already spaces every block, so they would only double the gaps. */
+.article-body > br {
+  display: none;
+}
+
+/*
+  Reading progress on article pages, driven by scrolling through the text
+  itself: a scroll-driven animation needs no JavaScript, and where it is not
+  supported the bar is simply not shown. The inset keeps the sticky header
+  out of the measured range.
+*/
+.reading-progress {
+  display: none;
+}
+
+@keyframes reading-progress {
+  from {
+    scale: 0 1;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .article-timeline {
+    view-timeline-name: --article;
+    view-timeline-inset: 4rem 0;
+  }
+
+  @media (width >= 80rem) {
+    .article-timeline {
+      view-timeline-inset: 4.75rem 0;
+    }
+  }
+
+  .reading-progress {
+    display: block;
+    transform-origin: 0 50%;
+    animation: reading-progress linear both;
+    animation-timeline: --article;
+    animation-range: contain 0% contain 100%;
+  }
+}
+
+/*
+  Staged entrance for above-the-fold content.
+
+  Pure CSS, so it starts with the first paint and never waits for JavaScript.
+  The hidden state lives only in the `from` keyframe (with `both` fill), so if
+  animations never run the content simply shows. Chunks are staggered 100ms
+  apart through `--enter-delay`. Reduced motion keeps the fade only.
+*/
+@keyframes enter-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+    filter: blur(4px);
+  }
+}
+
+/* Coins rise from behind the horizon line, like a sunrise. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    translate: 0 55%;
+    filter: blur(4px);
+  }
+}
+
+.enter,
+.rise {
+  animation: enter-fade 300ms var(--ease-out) both;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .enter {
+    animation-name: enter;
+  }
+
+  /* Marketing moment, seen once per visit: allowed to take its time. */
+  .rise {
+    animation: rise 900ms var(--ease-out) both;
+    animation-delay: var(--enter-delay, 0ms);
+  }
+}
+
+/*
+  Scroll reveal for below-the-fold content.
+
+  The hidden state is only applied once `.js-reveal-ready` lands on <html>
+  (set by plugins/reveal.client.ts after it has marked everything already on
+  screen as visible), so first paint never flickers and pages read normally
+  without JavaScript. Transitions, not keyframes: a reveal interrupted by fast
+  scrolling retargets instead of restarting.
 */
 .js-reveal-ready .reveal {
   opacity: 0;
-  translate: 0 16px;
-}
-
-.js-reveal-ready .reveal-coin {
-  opacity: 0;
-  translate: 0 28px;
-}
-
-.reveal,
-.reveal-coin {
-  transition:
-    opacity 600ms var(--ease-out-strong),
-    translate 600ms var(--ease-out-strong);
+  transition: opacity 300ms var(--ease-out);
   transition-delay: var(--reveal-delay, 0ms);
 }
 
-.js-reveal-ready .reveal.is-visible,
-.js-reveal-ready .reveal-coin.is-visible {
-  opacity: 1;
-  translate: 0 0;
+@media (prefers-reduced-motion: no-preference) {
+  .js-reveal-ready .reveal {
+    translate: 0 12px;
+    filter: blur(4px);
+    transition-property: opacity, translate, filter;
+  }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .js-reveal-ready .reveal,
-  .js-reveal-ready .reveal-coin {
-    translate: none;
+.js-reveal-ready .reveal[data-revealed] {
+  opacity: 1;
+  translate: none;
+  filter: none;
+}
+
+/*
+  Modal on the native <dialog>. It fades in with a slight scale from the
+  centre (a modal has no trigger to grow from) while the backdrop dims, and
+  it closes faster than it opens. `display` and `overlay` flip only once the
+  exit has played, so the dialog keeps its place in the top layer until it
+  has faded; browsers that cannot transition them just close it at once.
+  Reduced motion keeps the fades only.
+*/
+.dialog {
+  opacity: 0;
+  overscroll-behavior: contain;
+  transition-property: opacity, scale, display, overlay;
+  transition-duration: 150ms;
+  transition-timing-function: var(--ease-out);
+  transition-behavior: allow-discrete;
+}
+
+.dialog[open] {
+  opacity: 1;
+  transition-duration: 200ms;
+}
+
+.dialog::backdrop {
+  background-color: oklch(0 0 0 / 0);
+  transition-property: background-color, display, overlay;
+  transition-duration: 150ms;
+  transition-timing-function: var(--ease-out);
+  transition-behavior: allow-discrete;
+}
+
+.dialog[open]::backdrop {
+  background-color: oklch(0 0 0 / 0.5);
+  transition-duration: 200ms;
+}
+
+@starting-style {
+  .dialog[open] {
+    opacity: 0;
+  }
+
+  .dialog[open]::backdrop {
+    background-color: oklch(0 0 0 / 0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .dialog {
+    scale: 0.96;
+  }
+
+  .dialog[open] {
+    scale: 1;
+  }
+
+  @starting-style {
+    .dialog[open] {
+      scale: 0.96;
+    }
   }
 }
 
 /* Route transition. Paired with app.pageTransition in nuxt.config.ts. */
 .page-enter-active {
   transition:
-    opacity 200ms var(--ease-out-strong),
-    translate 200ms var(--ease-out-strong);
+    opacity 200ms var(--ease-out),
+    translate 200ms var(--ease-out);
 }
 .page-leave-active {
   transition:
-    opacity 150ms var(--ease-out-strong),
-    translate 150ms var(--ease-out-strong);
+    opacity 150ms var(--ease-out),
+    translate 150ms var(--ease-out);
 }
 .page-enter-from {
   opacity: 0;
@@ -114,6 +379,19 @@
   translate: 0 -4px;
 }
 
+/* Same-document view transitions: quick root cross-fade, and shared article
+   images morph with a strong ease-in-out since they move on screen. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 200ms;
+  animation-timing-function: var(--ease-out);
+}
+
+::view-transition-group(*) {
+  animation-duration: 300ms;
+  animation-timing-function: var(--ease-in-out);
+}
+
 /* Reduced motion: keep opacity cues, drop movement and scale. */
 @media (prefers-reduced-motion: reduce) {
   :root {
@@ -122,7 +400,6 @@
     --animate-fade-up: fadeIn 200ms ease-out both;
     --animate-slide-down: fadeIn 150ms ease-out;
     --animate-slide-up: fadeOut 100ms ease-out;
-    --animate-marquee: none;
   }
 
   .page-enter-from,

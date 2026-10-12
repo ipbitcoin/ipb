@@ -1,79 +1,97 @@
 <template>
-  <section :id="sectionId" class="section section-gap">
-    <div class="flex flex-wrap items-end justify-between gap-6">
-      <div class="flex flex-col gap-4">
+  <section
+    :id="sectionId"
+    :aria-labelledby="hideHeader ? undefined : headingId"
+    :aria-label="hideHeader ? title : undefined"
+    :class="[
+      'section',
+      // Under a page header the h1 already opened the page: start close.
+      hideHeader ? 'pt-12 pb-20 sm:pt-16 sm:pb-28' : 'section-gap',
+    ]"
+  >
+    <div
+      v-if="!hideHeader"
+      class="flex flex-wrap items-end justify-between gap-x-10 gap-y-6"
+    >
+      <div class="flex max-w-3xl flex-col gap-4">
         <p v-if="eyebrow" class="eyebrow">{{ eyebrow }}</p>
-        <h2 :class="headingLevel === 'h1' ? 'sr-only' : 'section-title'">
-          {{ title }}
-        </h2>
+        <h2 :id="headingId" class="section-title">{{ title }}</h2>
+        <p v-if="description" class="lead mt-1 max-w-2xl">
+          {{ description }}
+        </p>
       </div>
       <NuxtLink
         v-if="to"
         :to="to"
-        class="focus-ring group rounded text-sm font-medium tracking-wider uppercase"
+        class="group/all -mx-1 inline-flex h-9 shrink-0 items-center gap-2 rounded-full px-1 text-sm font-medium [-webkit-tap-highlight-color:transparent] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
       >
-        {{ $t("common.seeAll") }}
         <span
-          class="inline-block transition-transform duration-150 ease-out group-hover:translate-x-1"
-          aria-hidden="true"
-          >&rarr;</span
+          class="underline decoration-black/25 decoration-1 underline-offset-4 transition-[text-decoration-color] duration-150 ease-out group-hover/all:decoration-current"
         >
+          {{ $t("common.seeAll") }}
+        </span>
+        <IconArrow
+          class="size-3.5 transition-[translate] duration-150 ease-out motion-safe:group-hover/all:translate-x-0.5"
+        />
       </NuxtLink>
     </div>
-
-    <p
-      v-if="description"
-      class="mt-5 max-w-3xl text-lg text-balance text-black/60"
-    >
-      {{ description }}
-    </p>
 
     <IPBSkeleton
       v-if="pending"
       variant="card"
-      :count="initialCount"
-      class="mt-12"
+      :count="Math.min(initialCount, 6)"
+      :class="hideHeader ? '' : 'mt-12'"
     />
 
     <template v-else-if="articles?.length">
-      <div class="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        <IPBArticleCard
-          v-for="article in visibleArticles"
-          :key="article.documentId"
-          :title="article.title"
-          :slug="article.slug"
-          :category="
-            showCategory ? (article.category?.name ?? undefined) : undefined
-          "
-          :image="article.main_image.url"
-          :created-at="showDate ? article.createdAt : undefined"
-        />
-      </div>
-
-      <div
-        v-if="hasMore || canShowLess"
-        class="mt-10 flex justify-center gap-4"
+      <ul
+        :class="[
+          'grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3',
+          hideHeader ? '' : 'mt-12',
+        ]"
       >
-        <button
-          v-if="hasMore"
-          type="button"
-          class="focus-ring cursor-pointer border border-black px-6 py-2.5 text-sm font-medium tracking-wide uppercase transition-[background-color,color,scale] duration-150 ease-out hover:bg-black hover:text-white active:scale-[0.96]"
-          @click="showMore"
+        <li
+          v-for="(article, index) in visibleArticles"
+          :key="article.documentId"
+          :class="[
+            'reveal flex',
+            isFeatured(index) && 'lg:col-span-2 lg:row-span-2',
+          ]"
+          :style="{ '--reveal-delay': `${(index % 3) * 100}ms` }"
         >
+          <IPBArticleCard
+            class="w-full"
+            :title="article.title"
+            :slug="article.slug"
+            :category="
+              showCategory ? (article.category?.name ?? undefined) : undefined
+            "
+            :image="article.main_image.url"
+            :created-at="showDate ? article.createdAt : undefined"
+            :read-time="article.read_time"
+            :featured="isFeatured(index)"
+            :priority="priority && index === 0"
+          />
+        </li>
+      </ul>
+
+      <!-- A "see all" link already leads to the full list; never offer both -->
+      <div
+        v-if="!to && (hasMore || canShowLess)"
+        class="mt-14 flex flex-wrap justify-center gap-3"
+      >
+        <UiButton v-if="hasMore" variant="outline" @click="showMore">
           {{ $t("common.showMore") }}
-        </button>
-        <button
-          v-if="canShowLess"
-          type="button"
-          class="focus-ring cursor-pointer border border-black/30 px-6 py-2.5 text-sm font-medium tracking-wide uppercase transition-[border-color,scale] duration-150 ease-out hover:border-black active:scale-[0.96]"
-          @click="showLess"
-        >
+        </UiButton>
+        <UiButton v-if="canShowLess" variant="subtle" @click="showLess">
           {{ $t("common.showLess") }}
-        </button>
+        </UiButton>
       </div>
     </template>
 
-    <p v-else-if="emptyLabel" class="mt-10 text-black/50">{{ emptyLabel }}</p>
+    <p v-else-if="emptyLabel" class="mt-10 text-neutral-500">
+      {{ emptyLabel }}
+    </p>
   </section>
 </template>
 
@@ -83,6 +101,7 @@ interface ArticleItem {
   title: string;
   slug: string;
   createdAt?: string;
+  read_time?: number | null;
   main_image: { url: string };
   category?: { name: string } | null;
 }
@@ -102,15 +121,21 @@ const props = withDefaults(
     emptyLabel?: string;
     showCategory?: boolean;
     showDate?: boolean;
-    headingLevel?: "h1" | "h2";
+    /** The page above already titles this list (its h1). */
+    hideHeader?: boolean;
+    /** Give the first article the lead-story treatment on wide screens. */
+    featured?: boolean;
+    /** The list opens the page, so its first image is likely the largest paint. */
+    priority?: boolean;
   }>(),
   {
-    headingLevel: "h2",
     initialCount: 6,
     showCategory: false,
     showDate: true,
   }
 );
+
+const headingId = useId();
 
 // Same progressive-reveal pattern already used for books on the education page.
 const visibleCount = ref(props.initialCount);
@@ -129,6 +154,11 @@ const hasMore = computed(
   () => visibleCount.value < (props.articles?.length ?? 0)
 );
 const canShowLess = computed(() => visibleCount.value > props.initialCount);
+
+/** The lead story needs company: alone it would just be a wide card. */
+function isFeatured(index: number) {
+  return props.featured && index === 0 && visibleArticles.value.length >= 3;
+}
 
 function showMore() {
   visibleCount.value += props.initialCount;

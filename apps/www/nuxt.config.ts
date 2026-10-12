@@ -21,10 +21,13 @@ export default defineNuxtConfig({
   extends: ["@ipb/ui"],
   googleFonts: {
     families: {
+      "Geist Mono": [400, 500],
       Inter: [300, 400, 500, 600, 700],
     },
   },
   i18n: {
+    // Absolute hreflang/canonical/og:url links need the production origin.
+    baseUrl: "https://institutobitcoin.pt",
     customRoutes: "config",
     defaultLocale: "pt",
     locales: [
@@ -89,6 +92,16 @@ export default defineNuxtConfig({
     },
     strategy: "prefix_except_default",
   },
+  image: {
+    // Article covers live on the CMS bucket; only listed hosts get optimised.
+    domains: ["cdn.institutobitcoin.pt"],
+    format: ["webp"],
+    quality: 80,
+    // Phones get a screen of their own, added to the default sm–2xl ones, so
+    // their `sizes` entry can be keyed to it ("xs:100vw sm:50vw"). An unkeyed
+    // entry is sized for a 1px screen and adds broken 0w–2w srcset candidates.
+    screens: { xs: 320 },
+  },
   modules: [
     "reka-ui/nuxt",
     "@nuxtjs/google-fonts",
@@ -106,7 +119,9 @@ export default defineNuxtConfig({
   },
   robots: {
     blockNonSeoBots: true,
-    disallow: ["/api/", "/_nuxt/", "/_ipx/", "/__nuxt_error"],
+    // /_nuxt/ stays open: search engines load its scripts and styles to
+    // render each page the way visitors see it.
+    disallow: ["/api/", "/_ipx/", "/__nuxt_error"],
     sitemap: "https://institutobitcoin.pt/sitemap.xml",
   },
   // Scroll behaviour lives in app/router.options.ts: hash targets on another
@@ -143,6 +158,12 @@ export default defineNuxtConfig({
       foundingDate: "2024",
       logo: "https://institutobitcoin.pt/ipb_color_dark.svg",
       name: "Instituto Português de Bitcoin",
+      // The profiles in app/utils/contact.ts (SOCIALS); the config cannot
+      // import app code.
+      sameAs: [
+        "https://x.com/ipbitcoin",
+        "https://www.linkedin.com/company/instituto-portugues-de-bitcoin/",
+      ],
       type: "Organization",
       url: "https://institutobitcoin.pt",
     },

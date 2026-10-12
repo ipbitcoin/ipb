@@ -1,15 +1,17 @@
 /**
  * useTrainingEnrollment
- * Composable que gere o fluxo completo de inscrição numa formação:
- *   1. Buscar trainings disponíveis do Convex
- *   2. Submeter enrollment e receber o clientSecret do Stripe
- *   3. Montar o Payment Element do Stripe (suporta MBWay, Multibanco, Apple Pay, card)
- *   4. Gerir estados de UI: idle → submitting → awaiting_payment → success | error
+ * Runs the whole enrollment flow for a training:
+ *   1. Submit the enrollment and receive the Stripe clientSecret
+ *   2. Mount the Stripe Payment Element (MB WAY, Multibanco, Apple Pay, card)
+ *   3. Track the UI state: idle → submitting → awaiting_payment → success | error
+ * The available dates come from the page, which loads them on the server.
  */
 
-import { api } from "@ipb/backend/api";
-import { loadStripe } from "@stripe/stripe-js";
 import type { Stripe, StripeElements } from "@stripe/stripe-js";
+// The pure entry loads Stripe.js only when loadStripe() runs. The default one
+// injects it on import, and the site-wide links that prefetch the training
+// page would then pull it, fraud-detection frames included, into every page.
+import { loadStripe } from "@stripe/stripe-js/pure";
 
 export type PaymentState =
   | "idle"
@@ -47,49 +49,50 @@ export interface EnrollmentForm {
 export default function useTrainingEnrollment() {
   const config = useRuntimeConfig();
   const stripePublishableKey = String(config.public.stripePublishableKey ?? "");
-  const convex = useConvex();
   const appLocale = useAppLocale();
 
-  // ── Estado ────────────────────────────────────────────────────────────────
+  // Error messages in the page's language
+  const message = (pt: string, en: string) =>
+    appLocale.value === "pt" ? pt : en;
+
+  // ── State ─────────────────────────────────────────────────────────────────
   const paymentState = ref<PaymentState>("idle");
   const clientSecret = ref<string>("");
   const errorMessage = ref<string>("");
-  const trainings = ref<TrainingData[]>([]);
-  const trainingsLoading = ref(false);
-  const trainingsError = ref(false);
 
   // Stripe instances
+  let stripePromise: Promise<Stripe | null> | null = null;
   let stripeInstance: Stripe | null = null;
   let elementsInstance: StripeElements | null = null;
 
-  // ── Buscar trainings disponíveis ──────────────────────────────────────────
-  async function fetchTrainings() {
-    trainingsLoading.value = true;
-    trainingsError.value = false;
+  // ── Initialise Stripe ─────────────────────────────────────────────────────
+  async function loadStripeInstance(): Promise<Stripe | null> {
     try {
-      trainings.value = await convex.query(api.trainings.listActive, {
-        locale: appLocale.value,
-      });
-    } catch (error) {
-      console.error("[useTrainingEnrollment] Erro ao buscar trainings:", error);
-      trainingsError.value = true;
-      trainings.value = [];
-    } finally {
-      trainingsLoading.value = false;
-    }
-  }
-
-  // ── Inicializar Stripe ────────────────────────────────────────────────────
-  async function initStripe(): Promise<Stripe | null> {
-    if (stripeInstance) {
+      stripeInstance = await loadStripe(stripePublishableKey);
       return stripeInstance;
+    } catch (error) {
+      stripePromise = null;
+      throw error;
     }
-    stripeInstance = await loadStripe(stripePublishableKey);
-    return stripeInstance;
   }
 
-  // ── Submeter enrollment (passo 1: criar registo + PaymentIntent) ──────────
-  // Devolve o preço decidido pelo servidor (o que vai ser cobrado).
+  // One load, shared by the preload and the payment step. A failed load is
+  // forgotten, so the next call tries again.
+  function initStripe(): Promise<Stripe | null> {
+    stripePromise ??= loadStripeInstance();
+    return stripePromise;
+  }
+
+  // Called once the visitor starts filling in the form, so Stripe.js is ready
+  // by the payment step without weighing on visitors who only read the page.
+  function preloadStripe() {
+    initStripe().catch(() => {
+      // The payment step loads it again and reports the failure there.
+    });
+  }
+
+  // ── Submit the enrollment (step 1: create the record + PaymentIntent) ─────
+  // Returns the price the server settled on (the amount that will be charged).
   async function submitEnrollment(
     form: EnrollmentForm,
     memberToken?: string
@@ -127,7 +130,7 @@ export default function useTrainingEnrollment() {
         priceEur: response.priceEur,
       };
 
-      // Modo DEV: pagamento auto-confirmado no backend
+      // Dev mode: the backend confirms the payment on its own
       if (response.devMode) {
         paymentState.value = "success";
         return price;
@@ -140,28 +143,39 @@ export default function useTrainingEnrollment() {
       paymentState.value = "error";
       errorMessage.value =
         fetchErrorNestedMessage(error) ??
-        "Ocorreu um erro. Por favor tente novamente.";
+        message(
+          "Ocorreu um erro. Por favor tente novamente.",
+          "Something went wrong. Please try again."
+        );
       return undefined;
     }
   }
 
-  // ── Montar o Payment Element do Stripe num container DOM ──────────────────
+  // ── Mount the Stripe Payment Element into a DOM container ─────────────────
   async function mountPaymentElement(containerId: string, stripeLocale = "pt") {
-    const stripe = await initStripe();
+    // A blocked or failed script load ends in the error state, not a payment
+    // step that never appears.
+    const stripe = await initStripe().catch(() => null);
     if (!stripe || !clientSecret.value) {
-      errorMessage.value = "Erro ao inicializar o sistema de pagamento.";
+      errorMessage.value = message(
+        "Erro ao inicializar o sistema de pagamento.",
+        "Could not start the payment system."
+      );
       paymentState.value = "error";
       return;
     }
 
+    // The site's field colours and corners (.field-box), so the payment step
+    // reads as part of the same form.
     elementsInstance = stripe.elements({
       appearance: {
         theme: "stripe",
         variables: {
-          borderRadius: "3px",
+          borderRadius: "8px",
           colorBackground: "#ffffff",
-          colorPrimary: "#000000",
-          colorText: "#111111",
+          colorDanger: "#b91c1c",
+          colorPrimary: "#0a0a0a",
+          colorText: "#0a0a0a",
           fontFamily: "Inter, system-ui, sans-serif",
         },
       },
@@ -176,10 +190,13 @@ export default function useTrainingEnrollment() {
     paymentElement.mount(`#${containerId}`);
   }
 
-  // ── Confirmar pagamento (passo 2: o utilizador clica "Pagar") ─────────────
+  // ── Confirm the payment (step 2: the user presses "Pay") ──────────────────
   async function confirmPayment(returnUrl: string) {
     if (!stripeInstance || !elementsInstance) {
-      errorMessage.value = "Sistema de pagamento não inicializado.";
+      errorMessage.value = message(
+        "Sistema de pagamento não inicializado.",
+        "The payment system is not ready."
+      );
       paymentState.value = "error";
       return;
     }
@@ -191,24 +208,28 @@ export default function useTrainingEnrollment() {
       confirmParams: {
         return_url: returnUrl,
       },
-      // Não redirecionar automaticamente para métodos que completam inline
+      // Only redirect for the methods that cannot complete inline
       redirect: "if_required",
     });
 
     if (error) {
       paymentState.value = "error";
       errorMessage.value =
-        error.message ?? "O pagamento falhou. Por favor tente novamente.";
+        error.message ??
+        message(
+          "O pagamento falhou. Por favor tente novamente.",
+          "The payment failed. Please try again."
+        );
     } else {
-      // O pagamento foi confirmado inline (ex: Apple Pay, card 3DS sem redirect)
-      // Para MBWay e Multibanco, o Stripe redireciona — o estado final vem via webhook.
+      // Confirmed inline (e.g. Apple Pay, card 3DS without a redirect).
+      // MB WAY and Multibanco redirect instead; their outcome arrives by webhook.
       paymentState.value = "success";
     }
   }
 
   /**
-   * Verifica se o utilizador foi redirecionado de volta pelo Stripe após um pagamento.
-   * Chamado no onMounted do componente para detetar redirects de MBWay/Multibanco.
+   * Checks whether Stripe sent the user back here after a payment.
+   * Called from the component's onMounted to catch MB WAY/Multibanco redirects.
    */
   function checkRedirectResult() {
     if (!import.meta.client) {
@@ -223,20 +244,30 @@ export default function useTrainingEnrollment() {
       return;
     }
 
-    // Limpar os query params do URL sem recarregar a página
+    // Drop Stripe's query params without a reload. Vue Router keeps the
+    // current path in the history state and writes it back on the next
+    // navigation, so the state gets the clean path as well.
     url.searchParams.delete("redirect_status");
     url.searchParams.delete("payment_intent");
     url.searchParams.delete("payment_intent_client_secret");
-    window.history.replaceState({}, "", url.toString());
+    const cleanPath = `${url.pathname}${url.search}${url.hash}`;
+    window.history.replaceState(
+      { ...window.history.state, current: cleanPath },
+      "",
+      cleanPath
+    );
 
     if (redirectStatus === "succeeded") {
       paymentState.value = "success";
     } else if (redirectStatus === "processing") {
-      // MBWay/Multibanco ainda em processamento — o webhook confirmará mais tarde
+      // MB WAY/Multibanco still processing — the webhook confirms it later
       paymentState.value = "success";
     } else {
       paymentState.value = "error";
-      errorMessage.value = "O pagamento falhou. Por favor tente novamente.";
+      errorMessage.value = message(
+        "O pagamento falhou. Por favor tente novamente.",
+        "The payment failed. Please try again."
+      );
     }
   }
 
@@ -252,13 +283,10 @@ export default function useTrainingEnrollment() {
     clientSecret,
     confirmPayment,
     errorMessage,
-    fetchTrainings,
     mountPaymentElement,
     paymentState,
+    preloadStripe,
     reset,
     submitEnrollment,
-    trainings,
-    trainingsError,
-    trainingsLoading,
   };
 }

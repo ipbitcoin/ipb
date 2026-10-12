@@ -11,19 +11,33 @@
     "team": "Equipa",
     "donations": "Juntar-me",
     "donate": "Doar",
-    "join": "Junte-se a Nós",
+    "join": "Junte-se a nós",
     "information": "Informação",
     "contacts": "Contactos",
-    "menu": "Menu"
+    "menu": "Menu",
+    "main": "Principal",
+    "skip": "Saltar para o conteúdo",
+    "language": "Idioma"
   },
   "main": {
     "header": "A construir o Futuro de Bitcoin em Portugal",
     "cta": {
-      "readManifest": "Ler Manifesto",
+      "readManifest": "Ler manifesto",
       "join": "Juntar-me"
     },
     "eyebrow": "Instituto Português de Bitcoin",
-    "subheader": "Investigação independente, educação e política pública para colocar Portugal na vanguarda do Bitcoin."
+    "subheader": "Investigação independente, educação e política pública para colocar Portugal na vanguarda do Bitcoin.",
+    "latest": "Novo",
+    "timeline": {
+      "label": "A moeda em Portugal, do ouro ao Bitcoin",
+      "gold": "Ouro",
+      "escudo": "Escudo",
+      "euro": "Euro",
+      "bitcoin": "Bitcoin"
+    },
+    "support": {
+      "eyebrow": "Apoie a missão"
+    }
   },
   "newsletter": {
     "title": "Newsletter",
@@ -78,7 +92,8 @@
       "economyAndNationalSecurity": "Economia e Segurança Nacional",
       "humanRights": "Direitos Humanos"
     },
-    "eyebrow": "Investigação"
+    "eyebrow": "Estudos",
+    "empty": "Ainda não há estudos neste tema."
   },
   "education": {
     "title": "Educação",
@@ -88,10 +103,14 @@
       "filterByPublisher": "Filtrar por editora",
       "allPublishers": "Todas",
       "showMore": "Ver mais livros",
-      "showLess": "Ver menos livros"
+      "showLess": "Ver menos livros",
+      "buy": "Comprar",
+      "description": "As leituras que recomendamos para compreender o Bitcoin.",
+      "pages": "{count} págs."
     },
     "articles": {
-      "title": "Artigos"
+      "title": "Artigos",
+      "description": "Explicações claras sobre como o Bitcoin funciona e como usá-lo com segurança."
     },
     "eyebrow": "Aprender"
   },
@@ -114,7 +133,7 @@
   },
   "join": {
     "donate": "Doar",
-    "member": "Torne-se Membro",
+    "member": "Torne-se membro",
     "contact": "Fale connosco",
     "mission": "Como organização sem fins lucrativos, dependemos dos nossos membros e dos donativos para cumprir a nossa missão. Cada membro fortalece a voz independente do Bitcoin em Portugal.",
     "missionPoints": {
@@ -154,8 +173,8 @@
     "donateBtc": "Doar com Bitcoin",
     "memberFormTitle": "Formulário de Inscrição",
     "form": {
-      "name": "Nome completo",
-      "namePlaceholder": "O seu nome completo",
+      "name": "Nome / Nickname",
+      "namePlaceholder": "O seu nome ou nickname",
       "email": "E-mail",
       "emailPlaceholder": "O seu e-mail",
       "dateOfBirth": "Data de nascimento",
@@ -165,7 +184,12 @@
       "fiscalNumberPlaceholder": "Ex: 123456789",
       "address": "Morada completa",
       "addressPlaceholder": "Rua, número, código postal, cidade",
-      "submit": "Inscrever-me e Pagar"
+      "submit": "Inscrever-me e Pagar",
+      "optional": "opcional",
+      "day": "Dia",
+      "month": "Mês",
+      "year": "Ano",
+      "yearPlaceholder": "AAAA"
     },
     "successDonation": "Obrigado pelo seu apoio!",
     "successMember": "Obrigado! A sua inscrição como membro foi concluída com sucesso.",
@@ -195,7 +219,7 @@
         "name": "Membro participante",
         "tagline": "Faça parte da conversa e das comunidades locais.",
         "equiv": "Apenas €1,75 por mês",
-        "cta": "Tornar-me membro participante",
+        "cta": "Tornar-me membro",
         "points": [
           "Discussão geral no WhatsApp",
           "Newsletter do IPB",
@@ -210,7 +234,7 @@
         "name": "Membro embaixador",
         "tagline": "Lidere, organize e represente o IPB na sua comunidade.",
         "equiv": "Equivale a €252 por ano",
-        "cta": "Tornar-me membro embaixador",
+        "cta": "Tornar-me embaixador",
         "points": [
           "Tudo da Camada 1",
           "Criar grupos temáticos e distritais no WhatsApp",
@@ -219,7 +243,8 @@
           "50% de desconto em workshops e apoio técnico 101",
           "Apoio presencial às comunidades locais"
         ]
-      }
+      },
+      "eyebrow": "Membros"
     },
     "compare": {
       "heading": "Compare todas as camadas",
@@ -279,11 +304,15 @@
           "text": "Bitcoin Apes Cascais, Aceita Bitcoin, Free Madeira…"
         }
       },
-      "included": "Incluído"
+      "included": "Incluído",
+      "notIncluded": "Não incluído"
     },
     "close": "Fechar",
     "identifyMe": "Quero identificar-me (opcional)",
-    "btcOneTimeNote": "Os donativos em Bitcoin são sempre únicos."
+    "btcOneTimeNote": "Os donativos em Bitcoin são sempre únicos.",
+    "eyebrow": "Apoie a missão",
+    "frequency": "Frequência",
+    "donateHeading": "Uma voz independente para o Bitcoin, financiada por si."
   },
   "input": {
     "email": "E-mail",
@@ -298,25 +327,60 @@
     "showMore": "Ver mais",
     "showLess": "Ver menos",
     "seeAll": "Ver tudo",
-    "loading": "A carregar…"
+    "loading": "A carregar…",
+    "newTab": "abre num novo separador"
   },
   "article": {
     "readingTime": "Tempo de leitura",
     "listenToAudio": "Ouvir áudio",
-    "generated": "Gerado com Google NotebookLM"
+    "playVideo": "Reproduzir vídeo: {title}",
+    "generated": "Gerado com Google NotebookLM",
+    "minRead": "{count} min de leitura",
+    "related": "Continuar a ler",
+    "share": "Partilhar",
+    "shareOn": "Partilhar no {network}",
+    "copyLink": "Copiar link",
+    "linkCopied": "Link copiado"
   },
   "training": {
     "tag": "Formação presencial",
     "cta": {
-      "info": "Pedir Informações",
-      "schedule": "Agendar Chamada"
-    },
-    "seo": {
-      "title": "Bitcoin para Todos — Formação | Instituto Português de Bitcoin",
-      "description": "Formação presencial sobre Bitcoin. Aprenda o essencial de forma simples e prática com o Instituto Português de Bitcoin."
+      "info": "Pedir informações",
+      "schedule": "Agendar chamada"
     }
   },
-  "time": {
-    "minute": "Minuto | Minutos"
+  "error": {
+    "notFound": {
+      "title": "Página não encontrada",
+      "description": "A página que procura não existe ou foi movida."
+    },
+    "generic": {
+      "title": "Algo correu mal",
+      "description": "Ocorreu um erro inesperado. Tente novamente dentro de momentos."
+    },
+    "code": "Erro {code}",
+    "home": "Voltar ao início"
+  },
+  "contacts": {
+    "eyebrow": "Fale connosco",
+    "description": "Imprensa, parcerias, investigação ou dúvidas sobre Bitcoin: escreva-nos.",
+    "email": "Email",
+    "copy": "Copiar email",
+    "copied": "Email copiado",
+    "social": "Redes sociais"
+  },
+  "manifest": {
+    "eyebrow": "Missão"
+  },
+  "team": {
+    "eyebrow": "Quem somos",
+    "description": "Os especialistas por trás da missão de tornar Portugal uma referência Bitcoin.",
+    "articles": "Ler artigos",
+    "articlesBy": "Ler artigos de {name}"
+  },
+  "author": {
+    "eyebrow": "Autor",
+    "articles": "Artigos",
+    "empty": "Ainda sem artigos publicados."
   }
 }

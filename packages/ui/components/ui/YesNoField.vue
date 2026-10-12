@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col gap-2">
-    <span class="text-sm font-medium">{{ label }}</span>
+  <div class="flex flex-col gap-2" role="group" :aria-labelledby="labelId">
+    <span :id="labelId" class="text-sm font-medium">{{ label }}</span>
     <div class="flex gap-2">
       <button
         type="button"
@@ -40,10 +40,14 @@ const emit = defineEmits<{
   (e: "update:modelValue", value: boolean | null): void;
 }>();
 
+const labelId = useId();
+
+// Same pill + press language as UiButton, sized for a compact toggle pair.
 const baseClass =
-  "cursor-pointer rounded-[3px] border px-4 py-1.5 text-sm font-semibold uppercase transition-[background-color,color,border-color,scale] duration-150 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand active:scale-[0.96]";
-const selectedClass = "border-black bg-black text-white";
-const idleClass = "border-black/25 bg-white text-black hover:border-black/60";
+  "min-h-9 min-w-16 cursor-pointer rounded-full border px-4 text-sm font-medium tracking-[-0.006em] transition-[background-color,color,border-color,scale] duration-150 ease-out select-none [-webkit-tap-highlight-color:transparent] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand motion-safe:enabled:active:scale-[0.96]";
+const selectedClass = "border-neutral-950 bg-neutral-950 text-white";
+const idleClass =
+  "border-black/15 bg-white text-neutral-950 hover:border-black/30 hover:bg-neutral-50";
 
 // Clicking the already-selected button clears the selection (back to null)
 function toggle(value: boolean) {
