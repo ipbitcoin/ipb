@@ -18,7 +18,7 @@ import type * as docs from "../docs.js";
 import type * as email from "../email.js";
 import type * as enrollments from "../enrollments.js";
 import type * as faqs from "../faqs.js";
-import type * as ideaCategories from "../ideaCategories.js";
+import type * as ideaLabels from "../ideaLabels.js";
 import type * as lib from "../lib.js";
 import type * as memberVerification from "../memberVerification.js";
 import type * as members from "../members.js";
@@ -51,7 +51,7 @@ declare const fullApi: ApiFromModules<{
   email: typeof email;
   enrollments: typeof enrollments;
   faqs: typeof faqs;
-  ideaCategories: typeof ideaCategories;
+  ideaLabels: typeof ideaLabels;
   lib: typeof lib;
   memberVerification: typeof memberVerification;
   members: typeof members;

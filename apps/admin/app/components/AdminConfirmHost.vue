@@ -19,21 +19,19 @@
             {{ confirmState.options.description }}
           </AlertDialogDescription>
         </div>
+        <!-- Plain buttons: Reka's Action/Cancel close the dialog before their
+             child's click runs, which settled every confirm as a cancel. -->
         <div class="flex items-center justify-end gap-3">
-          <AlertDialogCancel as-child>
-            <UiButton type="button" variant="outline" @click="cancel">
-              {{ confirmState.options.cancelLabel ?? "Cancelar" }}
-            </UiButton>
-          </AlertDialogCancel>
-          <AlertDialogAction as-child>
-            <UiButton
-              type="button"
-              :variant="confirmState.options.danger ? 'danger' : 'primary'"
-              @click="accept"
-            >
-              {{ confirmState.options.confirmLabel ?? "Confirmar" }}
-            </UiButton>
-          </AlertDialogAction>
+          <UiButton type="button" variant="outline" @click="cancel">
+            {{ confirmState.options.cancelLabel ?? "Cancelar" }}
+          </UiButton>
+          <UiButton
+            type="button"
+            :variant="confirmState.options.danger ? 'danger' : 'primary'"
+            @click="accept"
+          >
+            {{ confirmState.options.confirmLabel ?? "Confirmar" }}
+          </UiButton>
         </div>
       </AlertDialogContent>
     </AlertDialogPortal>

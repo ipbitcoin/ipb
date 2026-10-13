@@ -1,5 +1,7 @@
 /** Config-driven admin: field definitions per collection. */
 
+import type { TableColumn } from "./table";
+
 export type FieldType =
   | "text" // plain string
   | "textarea"
@@ -32,7 +34,7 @@ export interface CollectionDef {
   label: string;
   readOnly?: boolean;
   /** fields shown in the list table (dot access into the raw doc; `.pt` for localized) */
-  listFields: { key: string; label: string }[];
+  listFields: TableColumn[];
   fields: FieldDef[];
 }
 
@@ -84,9 +86,10 @@ export const COLLECTIONS: Record<string, CollectionDef> = {
     ],
     label: "Artigos",
     listFields: [
+      { key: "mainImageKey", kind: "media", label: "Imagem" },
       { key: "title.pt", label: "Título" },
       { key: "slug.pt", label: "Slug" },
-      { key: "published", label: "Publicado" },
+      { key: "published", kind: "boolean", label: "Publicado" },
     ],
     table: "articles",
   },
@@ -113,9 +116,10 @@ export const COLLECTIONS: Record<string, CollectionDef> = {
     ],
     label: "Autores",
     listFields: [
+      { key: "pictureKey", kind: "media", label: "Fotografia" },
       { key: "name", label: "Nome" },
       { key: "slug", label: "Slug" },
-      { key: "published", label: "Publicado" },
+      { key: "published", kind: "boolean", label: "Publicado" },
     ],
     table: "authors",
   },
@@ -140,10 +144,11 @@ export const COLLECTIONS: Record<string, CollectionDef> = {
     ],
     label: "Livros",
     listFields: [
+      { key: "coverKey", kind: "media", label: "Capa" },
       { key: "title.pt", label: "Título" },
       { key: "author.pt", label: "Autor" },
-      { key: "active", label: "Ativo" },
-      { key: "published", label: "Publicado" },
+      { key: "active", kind: "boolean", label: "Ativo" },
+      { key: "published", kind: "boolean", label: "Publicado" },
     ],
     table: "books",
   },
@@ -183,8 +188,8 @@ export const COLLECTIONS: Record<string, CollectionDef> = {
     label: "Documentos",
     listFields: [
       { key: "title.pt", label: "Título" },
-      { key: "order", label: "Ordem" },
-      { key: "published", label: "Publicado" },
+      { key: "order", kind: "number", label: "Ordem" },
+      { key: "published", kind: "boolean", label: "Publicado" },
     ],
     table: "docs",
   },
@@ -194,18 +199,12 @@ export const COLLECTIONS: Record<string, CollectionDef> = {
     listFields: [
       { key: "name", label: "Nome" },
       { key: "email", label: "Email" },
-      { key: "paymentStatus", label: "Pagamento" },
+      { key: "paymentStatus", kind: "badge", label: "Pagamento" },
       { key: "orderId", label: "Encomenda" },
-      { key: "value", label: "Valor (€)" },
+      { key: "value", kind: "money", label: "Valor" },
     ],
     readOnly: true,
     table: "enrollments",
-  },
-  ideaCategories: {
-    fields: [{ key: "name", label: "Nome", type: "text", required: true }],
-    label: "Categorias de Ideias",
-    listFields: [{ key: "name", label: "Nome" }],
-    table: "ideaCategories",
   },
   faqs: {
     fields: [
@@ -217,8 +216,8 @@ export const COLLECTIONS: Record<string, CollectionDef> = {
     label: "FAQs",
     listFields: [
       { key: "question.pt", label: "Pergunta" },
-      { key: "order", label: "Ordem" },
-      { key: "published", label: "Publicado" },
+      { key: "order", kind: "number", label: "Ordem" },
+      { key: "published", kind: "boolean", label: "Publicado" },
     ],
     table: "faqs",
   },
@@ -228,8 +227,8 @@ export const COLLECTIONS: Record<string, CollectionDef> = {
     listFields: [
       { key: "name", label: "Nome" },
       { key: "email", label: "Email" },
-      { key: "paymentPlan", label: "Plano" },
-      { key: "paymentStatus", label: "Estado" },
+      { key: "paymentPlan", kind: "badge", label: "Plano" },
+      { key: "paymentStatus", kind: "badge", label: "Estado" },
     ],
     readOnly: true,
     table: "members",
@@ -260,9 +259,10 @@ export const COLLECTIONS: Record<string, CollectionDef> = {
     ],
     label: "Parceiros",
     listFields: [
+      { key: "logoKey", kind: "media", label: "Logo" },
       { key: "name", label: "Nome" },
-      { key: "order", label: "Ordem" },
-      { key: "published", label: "Publicado" },
+      { key: "order", kind: "number", label: "Ordem" },
+      { key: "published", kind: "boolean", label: "Publicado" },
     ],
     table: "partners",
   },
@@ -304,10 +304,11 @@ export const COLLECTIONS: Record<string, CollectionDef> = {
     ],
     label: "Equipa",
     listFields: [
+      { key: "pictureKey", kind: "media", label: "Fotografia" },
       { key: "name", label: "Nome" },
       { key: "role.pt", label: "Função" },
-      { key: "order", label: "Ordem" },
-      { key: "published", label: "Publicado" },
+      { key: "order", kind: "number", label: "Ordem" },
+      { key: "published", kind: "boolean", label: "Publicado" },
     ],
     table: "teamMembers",
   },
@@ -334,10 +335,10 @@ export const COLLECTIONS: Record<string, CollectionDef> = {
     ],
     label: "Formações",
     listFields: [
-      { key: "startDate", label: "Início" },
+      { key: "startDate", kind: "date", label: "Início" },
       { key: "location.pt", label: "Local" },
-      { key: "stockLeft", label: "Vagas" },
-      { key: "active", label: "Ativa" },
+      { key: "stockLeft", kind: "number", label: "Vagas" },
+      { key: "active", kind: "boolean", label: "Ativa" },
     ],
     table: "trainings",
   },
@@ -356,8 +357,8 @@ export const COLLECTIONS: Record<string, CollectionDef> = {
     label: "Valores",
     listFields: [
       { key: "title.pt", label: "Título" },
-      { key: "order", label: "Ordem" },
-      { key: "published", label: "Publicado" },
+      { key: "order", kind: "number", label: "Ordem" },
+      { key: "published", kind: "boolean", label: "Publicado" },
     ],
     table: "values",
   },

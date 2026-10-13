@@ -55,7 +55,14 @@ export const adminUpdate = mutation({
   handler: async (ctx, args) => {
     assertServiceKey(args.serviceKey);
     const { serviceKey: _serviceKey, id, ...fields } = args;
-    await ctx.db.patch(id, { ...fields, updatedAt: Date.now() });
+    await ctx.db.patch(id, {
+      // The task arrives whole: an optional field left out was cleared.
+      assigneeId: undefined,
+      description: undefined,
+      dueDate: undefined,
+      ...fields,
+      updatedAt: Date.now(),
+    });
   },
 });
 

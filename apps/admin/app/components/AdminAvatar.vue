@@ -20,7 +20,7 @@ const props = withDefaults(
   defineProps<{
     avatarKey?: string | null;
     name: string;
-    size?: "sm" | "md";
+    size?: "xs" | "sm" | "md";
   }>(),
   { avatarKey: undefined, size: "md" }
 );
@@ -30,9 +30,13 @@ const config = useRuntimeConfig();
 const url = computed(() =>
   props.avatarKey ? `https://${config.public.CDN_HOST}/${props.avatarKey}` : ""
 );
-const sizeClass = computed(() =>
-  props.size === "sm" ? "size-6 text-[10px]" : "size-9 text-xs"
-);
+const SIZES = {
+  md: "size-9 text-xs",
+  sm: "size-6 text-[10px]",
+  xs: "size-5 text-[9px]",
+};
+
+const sizeClass = computed(() => SIZES[props.size]);
 const initials = computed(() => {
   const parts = props.name.split(/[\s@._-]+/).filter(Boolean);
   const letters = parts

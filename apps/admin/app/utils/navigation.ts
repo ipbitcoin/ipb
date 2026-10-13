@@ -14,16 +14,14 @@ export interface NavSection {
 export const NAV_SECTIONS: NavSection[] = [
   {
     defaultCollapsed: true,
-    items: Object.entries(COLLECTIONS)
-      .filter(([key]) => key !== "ideaCategories")
-      .map(([key, def]) => ({ label: def.label, to: `/c/${key}` })),
+    items: Object.entries(COLLECTIONS).map(([key, def]) => ({
+      label: def.label,
+      to: `/c/${key}`,
+    })),
     label: "Coleções",
   },
   {
-    items: [
-      { label: "Ideias", to: "/social" },
-      { label: "Categorias", to: "/c/ideaCategories" },
-    ],
+    items: [{ label: "Ideias", to: "/social" }],
     label: "Redes Sociais",
   },
   {

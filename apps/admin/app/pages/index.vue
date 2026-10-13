@@ -7,10 +7,10 @@
         <div
           v-for="(count, key) in stats.counts"
           :key="key"
-          class="flex flex-col gap-1 rounded-lg bg-white p-4 shadow-border"
+          class="flex flex-col gap-1 rounded-2xl bg-white p-4 shadow-border"
         >
           <div class="text-3xl font-light tabular-nums">{{ count }}</div>
-          <div class="text-xs tracking-wider text-neutral-500 uppercase">
+          <div class="text-sm text-neutral-500">
             {{ labels[key] ?? key }}
           </div>
         </div>
@@ -19,7 +19,7 @@
         <div
           v-for="n in 5"
           :key="n"
-          class="flex flex-col gap-2 rounded-lg bg-white p-4 shadow-border"
+          class="flex flex-col gap-2 rounded-2xl bg-white p-4 shadow-border"
         >
           <div class="h-8 w-16 animate-pulse rounded bg-neutral-100" />
           <div class="h-3 w-24 animate-pulse rounded bg-neutral-100" />
@@ -34,12 +34,7 @@
         :rows="stats?.recentEnrollments"
         :pending="status === 'pending'"
         empty-label="Sem inscrições recentes."
-      >
-        <template #cell="{ column, value }">
-          <template v-if="column.key === 'value'">{{ value }}€</template>
-          <template v-else>{{ value }}</template>
-        </template>
-      </AdminTable>
+      />
     </section>
 
     <section class="flex flex-col gap-3">
@@ -80,15 +75,15 @@ const labels: Record<string, string> = {
 const enrollmentColumns: TableColumn[] = [
   { key: "name", label: "Nome" },
   { key: "email", label: "Email" },
-  { key: "paymentStatus", label: "Pagamento" },
-  { key: "value", label: "Valor", numeric: true },
+  { key: "paymentStatus", kind: "badge", label: "Pagamento" },
+  { key: "value", kind: "money", label: "Valor" },
 ];
 
 const memberColumns: TableColumn[] = [
   { key: "name", label: "Nome" },
   { key: "email", label: "Email" },
-  { key: "paymentPlan", label: "Plano" },
-  { key: "paymentStatus", label: "Estado" },
+  { key: "paymentPlan", kind: "badge", label: "Plano" },
+  { key: "paymentStatus", kind: "badge", label: "Estado" },
 ];
 
 interface RecentEnrollment {

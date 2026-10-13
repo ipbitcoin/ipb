@@ -268,11 +268,6 @@
                   </NuxtLink>
                 </li>
                 <li>
-                  <NuxtLink :class="footerLinkClass" :to="localePath('equipa')">
-                    {{ $t("nav.team") }}
-                  </NuxtLink>
-                </li>
-                <li>
                   <NuxtLink :class="footerLinkClass" :to="localePath('juntar')">
                     {{ $t("nav.donations") }}
                   </NuxtLink>
@@ -359,7 +354,6 @@ const NAV_ITEMS: NavItem[] = [
   { key: "education", label: "nav.education", route: "educacao" },
   { key: "training", label: "nav.training", route: "formacoes" },
   { key: "faq", label: "nav.faq", hash: "#faq" },
-  { key: "team", label: "nav.team", route: "equipa" },
 ];
 
 // File names with spaces and accents must be percent-encoded in an href.

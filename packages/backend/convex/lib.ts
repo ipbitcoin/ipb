@@ -4,6 +4,19 @@ import { v } from "convex/values";
 declare const process: { env: Record<string, string | undefined> };
 
 export const localeArg = v.union(v.literal("pt"), v.literal("en"));
+
+/** Swatches a board label can wear; the admin maps each to its classes. */
+export const labelColor = v.union(
+  v.literal("gray"),
+  v.literal("blue"),
+  v.literal("green"),
+  v.literal("yellow"),
+  v.literal("orange"),
+  v.literal("red"),
+  v.literal("pink"),
+  v.literal("purple"),
+  v.literal("teal")
+);
 export type Locale = "pt" | "en";
 
 export interface LocalizedString {

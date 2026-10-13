@@ -25,6 +25,15 @@ export default defineNuxtConfig({
       Inter: [300, 400, 500, 600, 700],
     },
   },
+  hooks: {
+    // Team page hidden for now: drop its route so it 404s and stays out of
+    // the sitemap. Remove this hook (and restore the nav links) to bring it back.
+    "pages:extend"(pages) {
+      for (let i = pages.length - 1; i >= 0; i--) {
+        if (pages[i]?.file?.endsWith("pages/equipa.vue")) pages.splice(i, 1);
+      }
+    },
+  },
   i18n: {
     // Absolute hreflang/canonical/og:url links need the production origin.
     baseUrl: "https://institutobitcoin.pt",

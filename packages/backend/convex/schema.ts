@@ -2,6 +2,8 @@ import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 import type { Validator } from "convex/values";
 
+import { labelColor } from "./lib";
+
 // Localized string pair: one Convex document holds both locales.
 const localized = <T extends Validator<unknown, "required", string>>(t: T) =>
   v.object({ en: t, pt: t });
@@ -214,14 +216,24 @@ export default defineSchema({
     importId: v.optional(v.string()),
   }).index("by_email", ["email"]),
 
+  // Retired: categories became colored labels (ideaLabels). Kept only until
+  // ideaLabels:migrateFromCategories has run on every deployment.
   ideaCategories: defineTable({
+    name: v.string(),
+  }),
+
+  ideaLabels: defineTable({
+    color: labelColor,
     name: v.string(),
   }).index("by_name", ["name"]),
 
   socialMediaIdeas: defineTable({
+    // Retired with ideaCategories; see ideaLabels:migrateFromCategories.
     categoryId: v.optional(v.id("ideaCategories")),
     createdAt: v.number(),
     description: v.string(),
+    // Optional only until the migration has given every idea a list.
+    labelIds: v.optional(v.array(v.id("ideaLabels"))),
     order: v.number(), // position within the status column
     platforms: v.array(
       v.union(
@@ -241,9 +253,7 @@ export default defineSchema({
     ),
     title: v.string(),
     updatedAt: v.number(),
-  })
-    .index("by_status_order", ["status", "order"])
-    .index("by_category", ["categoryId"]),
+  }).index("by_status_order", ["status", "order"]),
 
   tasks: defineTable({
     assigneeId: v.optional(v.id("adminUsers")),

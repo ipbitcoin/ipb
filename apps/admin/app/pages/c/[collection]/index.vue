@@ -1,18 +1,36 @@
 <template>
   <div v-if="def" class="flex flex-col gap-6">
-    <div class="flex items-center justify-between">
-      <h1 class="text-3xl font-light">{{ def.label }}</h1>
-      <div class="flex gap-2">
-        <UiButton v-if="def.readOnly" variant="outline" @click="exportCsv"
-          >Exportar CSV</UiButton
+    <header class="flex flex-wrap items-center gap-x-4 gap-y-3">
+      <h1 class="flex items-baseline gap-3 text-3xl font-light">
+        {{ def.label }}
+        <span v-if="records" class="text-base text-neutral-400 tabular-nums">
+          {{ records.length }}
+        </span>
+      </h1>
+      <div class="ml-auto flex flex-wrap items-center gap-2">
+        <AdminSearch
+          v-model="search"
+          :placeholder="`Procurar em ${def.label}…`"
+        />
+        <UiButton
+          v-if="def.readOnly"
+          size="sm"
+          variant="outline"
+          @click="exportCsv"
         >
-        <UiButton v-else :to="`/c/${collection}/new`">Novo</UiButton>
+          Exportar CSV
+        </UiButton>
+        <UiButton v-else size="sm" :to="`/c/${collection}/new`">
+          <IconPlus class="size-4" />
+          Novo
+        </UiButton>
       </div>
-    </div>
+    </header>
 
     <AdminTable
       :columns="def.listFields"
       :rows="records"
+      :search="search"
       :pending="status === 'pending'"
       :clickable="!def.readOnly"
       @row-click="(record) => navigateTo(`/c/${collection}/${record._id}`)"
@@ -26,7 +44,7 @@
               : `Ainda não existe nenhum registo em ${def.label}.`
           "
         >
-          <UiButton v-if="!def.readOnly" :to="`/c/${collection}/new`">
+          <UiButton v-if="!def.readOnly" size="sm" :to="`/c/${collection}/new`">
             Criar o primeiro
           </UiButton>
         </AdminEmptyState>
@@ -47,6 +65,8 @@ if (!def) {
 const { data: records, status } = useFetch<{ _id: string }[]>(
   `/api/data/${collection}`
 );
+
+const search = ref("");
 
 function exportCsv() {
   if (!records.value?.length) {

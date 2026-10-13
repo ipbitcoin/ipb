@@ -5,6 +5,34 @@
 /* Scan the shared UI layer for Tailwind classes (outside default sources) */
 @source "../../../../../packages/ui/components";
 
+@theme {
+  /* Lifted off the page: hovered and dragged cards. */
+  --shadow-raised:
+    0 0 0 1px oklch(0 0 0 / 0.06), 0 6px 12px -4px oklch(0 0 0 / 0.08),
+    0 16px 32px -8px oklch(0 0 0 / 0.14);
+
+  @keyframes collapseDown {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--reka-collapsible-content-height);
+    }
+  }
+
+  @keyframes collapseUp {
+    from {
+      height: var(--reka-collapsible-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+
+  --animate-collapse-down: collapseDown 200ms var(--ease-out-strong);
+  --animate-collapse-up: collapseUp 150ms var(--ease-out-strong);
+}
+
 @layer components {
   /* One control style for every input / textarea / select in the admin. */
   .field-input {
@@ -29,5 +57,7 @@
     --animate-fade-up: fadeIn 200ms ease-out both;
     --animate-slide-down: fadeIn 150ms ease-out;
     --animate-slide-up: fadeOut 100ms ease-out;
+    --animate-collapse-down: fadeIn 150ms ease-out;
+    --animate-collapse-up: fadeOut 100ms ease-out;
   }
 }

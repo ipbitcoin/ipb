@@ -1,98 +1,114 @@
 <template>
-  <AdminModal
+  <BoardCardDialog
+    ref="dialog"
     v-model:open="open"
-    :title="task ? 'Editar tarefa' : 'Nova tarefa'"
+    v-model:title="form.title"
+    v-model:description="form.description"
+    v-model:create-more="createMore"
+    board="Tarefas"
+    :heading="task ? 'Editar tarefa' : 'Nova tarefa'"
+    title-placeholder="Título da tarefa"
+    submit-label="Criar tarefa"
+    :editing="Boolean(task)"
+    :saving="saving"
+    :error="error"
+    @submit="save"
+    @remove="remove"
   >
-    <form class="flex flex-col gap-4" @submit.prevent="save">
-      <AdminField label="Título" required html-for="task-title">
-        <input
-          id="task-title"
-          v-model="form.title"
-          type="text"
-          required
-          class="field-input"
-        />
-      </AdminField>
-
-      <AdminField label="Descrição" html-for="task-description">
-        <textarea
-          id="task-description"
-          v-model="form.description"
-          rows="5"
-          class="field-input"
-        />
-      </AdminField>
-
-      <div class="grid gap-4 sm:grid-cols-2">
-        <AdminField label="Estado" html-for="task-status">
-          <select id="task-status" v-model="form.status" class="field-input">
-            <option
-              v-for="column in TASK_COLUMNS"
-              :key="column.key"
-              :value="column.key"
-            >
-              {{ column.label }}
-            </option>
-          </select>
-        </AdminField>
-
-        <AdminField label="Responsável" html-for="task-assignee">
-          <select
-            id="task-assignee"
-            v-model="form.assigneeId"
-            class="field-input"
-          >
-            <option value="">Sem responsável</option>
-            <option v-for="admin in admins" :key="admin._id" :value="admin._id">
-              {{ adminLabel(admin) }}
-            </option>
-          </select>
-        </AdminField>
-
-        <AdminField label="Data limite" html-for="task-due">
-          <input
-            id="task-due"
-            v-model="form.dueDate"
-            type="date"
-            class="field-input"
-          />
-        </AdminField>
-      </div>
-
-      <p
-        v-if="error"
-        class="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700"
+    <template #properties>
+      <BoardMenuSelect
+        v-model="status"
+        label="Estado"
+        :options="statusOptions"
+        :trigger-class="PILL"
       >
-        {{ error }}
-      </p>
+        <template #trigger>
+          <BoardStatusIcon
+            v-if="column"
+            :icon="column.icon"
+            class="size-3.5!"
+          />
+          {{ column?.label ?? "Estado" }}
+        </template>
+        <template #option="{ value }">
+          <BoardStatusIcon
+            v-if="value"
+            :icon="statusIcon(TASK_COLUMNS, value)"
+          />
+        </template>
+      </BoardMenuSelect>
 
-      <div class="flex items-center gap-3 pt-1">
-        <UiButton type="submit" :loading="saving">Guardar</UiButton>
-        <UiButton v-if="task" type="button" variant="danger" @click="remove">
-          Apagar
-        </UiButton>
-        <button
-          type="button"
-          class="focus-ring ml-auto cursor-pointer rounded text-sm text-neutral-500 transition-colors duration-100 hover:text-neutral-900"
-          @click="open = false"
-        >
-          Cancelar
-        </button>
-      </div>
-    </form>
-  </AdminModal>
+      <BoardMenuSelect
+        v-model="assigneeId"
+        label="Responsável"
+        :options="adminOptions"
+        none-label="Sem responsável"
+        :trigger-class="PILL"
+      >
+        <template #trigger>
+          <template v-if="assignee">
+            <AdminAvatar
+              :avatar-key="assignee.avatarKey"
+              :name="adminLabel(assignee)"
+              size="xs"
+              class="-ml-1"
+            />
+            <span class="truncate">{{ adminLabel(assignee) }}</span>
+          </template>
+          <span v-else class="flex items-center gap-1.5 text-neutral-500">
+            <IconUser class="size-3.5" />
+            Responsável
+          </span>
+        </template>
+        <template #option="{ value }">
+          <AdminAvatar
+            v-if="adminById(value)"
+            :avatar-key="adminById(value)?.avatarKey"
+            :name="adminName(value)"
+            size="xs"
+          />
+          <IconUser v-else class="size-4 text-neutral-400" />
+        </template>
+      </BoardMenuSelect>
+
+      <BoardDatePopover
+        v-model="form.dueDate"
+        label="Data limite"
+        :trigger-class="PILL"
+      >
+        <template #trigger>
+          <span
+            class="flex items-center gap-1.5"
+            :class="form.dueDate ? '' : 'text-neutral-500'"
+          >
+            <IconCalendar class="size-3.5" />
+            {{ form.dueDate ? formatDueDate(form.dueDate) : "Data limite" }}
+          </span>
+        </template>
+      </BoardDatePopover>
+    </template>
+  </BoardCardDialog>
 </template>
 
 <script setup lang="ts">
 import { toast } from "vue-sonner";
 
 import type { AdminUser, TaskDoc } from "~/utils/boards";
-import { adminLabel, TASK_COLUMNS } from "~/utils/boards";
+import {
+  adminLabel,
+  formatDueDate,
+  statusIcon,
+  TASK_COLUMNS,
+} from "~/utils/boards";
+import { PILL } from "~/utils/ui";
 
 const props = defineProps<{
   admins: AdminUser[];
-  defaultOrder: number;
   defaultStatus: string;
+  /** Who a new task goes to, when the board is filtered to someone. */
+  defaultAssigneeId?: string;
+  /** The order that puts a card at the end of a column. */
+  orderFor: (status: string) => number;
   task?: TaskDoc | null;
 }>();
 
@@ -101,21 +117,63 @@ const emit = defineEmits<{ saved: [] }>();
 
 const { confirm } = useConfirm();
 
+const dialog = useTemplateRef("dialog");
 const saving = ref(false);
 const error = ref("");
+const createMore = ref(false);
 
-const form = reactive({
+interface TaskForm {
+  assigneeId: string;
+  description: string;
+  dueDate?: string;
+  status: string;
+  title: string;
+}
+
+const form = reactive<TaskForm>({
   assigneeId: "",
   description: "",
-  dueDate: "",
   status: props.defaultStatus,
   title: "",
 });
 
+// The menus speak in `null` for "nothing"; the form keeps empty strings.
+const status = computed({
+  get: () => form.status,
+  set: (value: string | null) => {
+    form.status = value ?? form.status;
+  },
+});
+const assigneeId = computed({
+  get: () => form.assigneeId || null,
+  set: (value: string | null) => {
+    form.assigneeId = value ?? "";
+  },
+});
+
+const statusOptions = TASK_COLUMNS.map((c) => ({
+  label: c.label,
+  value: c.key,
+}));
+function adminById(id: string | null): AdminUser | undefined {
+  return id ? props.admins.find((a) => a._id === id) : undefined;
+}
+
+function adminName(id: string | null): string {
+  const admin = adminById(id);
+  return admin ? adminLabel(admin) : "?";
+}
+
+const adminOptions = computed(() =>
+  props.admins.map((a) => ({ label: adminLabel(a), value: a._id }))
+);
+const column = computed(() => TASK_COLUMNS.find((c) => c.key === form.status));
+const assignee = computed(() => adminById(form.assigneeId));
+
 function resetForm() {
-  form.assigneeId = props.task?.assigneeId ?? "";
+  form.assigneeId = props.task?.assigneeId ?? props.defaultAssigneeId ?? "";
   form.description = props.task?.description ?? "";
-  form.dueDate = props.task?.dueDate ?? "";
+  form.dueDate = props.task?.dueDate;
   form.status = props.task?.status ?? props.defaultStatus;
   form.title = props.task?.title ?? "";
   error.value = "";
@@ -124,16 +182,24 @@ function resetForm() {
 // Stays mounted so the close animation can play; re-seed on every open.
 watch(open, (isOpen) => isOpen && resetForm(), { immediate: true });
 
+function orderOnSave(): number {
+  const { task } = props;
+  // Moved to another column from here: it joins the end of that one.
+  return task && task.status === form.status
+    ? task.order
+    : props.orderFor(form.status);
+}
+
 async function save() {
   saving.value = true;
   error.value = "";
   const payload = {
     assigneeId: form.assigneeId || undefined,
-    description: form.description || undefined,
+    description: form.description.trim() || undefined,
     dueDate: form.dueDate || undefined,
-    order: props.task?.order ?? props.defaultOrder,
+    order: orderOnSave(),
     status: form.status,
-    title: form.title,
+    title: form.title.trim(),
   };
   try {
     if (props.task) {
@@ -144,8 +210,16 @@ async function save() {
     } else {
       await $fetch("/api/data/tasks", { body: payload, method: "POST" });
     }
-    toast.success("Guardado.");
     emit("saved");
+    if (!props.task && createMore.value) {
+      // Properties carry over, so a run of similar tasks is quick to enter.
+      toast.success("Tarefa criada.");
+      form.title = "";
+      form.description = "";
+      dialog.value?.focusTitle();
+    } else {
+      open.value = false;
+    }
   } catch (saveError: unknown) {
     error.value = fetchErrorMessage(saveError) ?? "Erro ao guardar.";
   } finally {
@@ -167,7 +241,8 @@ async function remove() {
     return;
   }
   await $fetch(`/api/data/tasks/${props.task._id}`, { method: "DELETE" });
-  toast.success("Apagado.");
+  toast.success("Tarefa apagada.");
+  open.value = false;
   emit("saved");
 }
 </script>

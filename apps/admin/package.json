@@ -10,6 +10,10 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@dnd-kit/abstract": "0.5.0",
+    "@dnd-kit/helpers": "0.5.0",
+    "@dnd-kit/vue": "0.5.0",
+    "@internationalized/date": "3.12.2",
     "@ipb/backend": "workspace:*",
     "@ipb/ui": "workspace:*",
     "@nuxtjs/google-fonts": "3.2.0",

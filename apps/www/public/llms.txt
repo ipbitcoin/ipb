@@ -40,10 +40,6 @@ Formação presencial "Bitcoin para Todos" — programa prático para aprender B
 https://institutobitcoin.pt/noticias
 Novidades do ecossistema Bitcoin, atualizações da comunidade portuguesa e desenvolvimentos institucionais.
 
-### Equipa
-https://institutobitcoin.pt/equipa
-Os membros da equipa do IPB.
-
 ### Juntar-me / Donativos
 https://institutobitcoin.pt/juntar
 Tornar-se membro do IPB (250€/ano) ou fazer um donativo em fiat (Stripe) ou Bitcoin (Lightning via OpenNode). O IPB aceita donativos anónimos até 300€ e donativos identificados sem limite.

@@ -20,8 +20,8 @@ const statusValidator = v.union(
 );
 
 const ideaFields = {
-  categoryId: v.optional(v.id("ideaCategories")),
   description: v.string(),
+  labelIds: v.array(v.id("ideaLabels")),
   order: v.number(),
   platforms: v.array(platformValidator),
   status: statusValidator,
@@ -67,7 +67,12 @@ export const adminUpdate = mutation({
   handler: async (ctx, args) => {
     assertServiceKey(args.serviceKey);
     const { serviceKey: _serviceKey, id, ...fields } = args;
-    await ctx.db.patch(id, { ...fields, updatedAt: Date.now() });
+    await ctx.db.patch(id, {
+      ...fields,
+      // Saved with labels, so the retired category goes.
+      categoryId: undefined,
+      updatedAt: Date.now(),
+    });
   },
 });
 
