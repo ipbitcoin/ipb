@@ -33,6 +33,8 @@ export interface CollectionDef {
   table: string;
   label: string;
   readOnly?: boolean;
+  /** Records come from elsewhere: `fields` can be edited, but none created or deleted. */
+  editOnly?: boolean;
   /** fields shown in the list table (dot access into the raw doc; `.pt` for localized) */
   listFields: TableColumn[];
   fields: FieldDef[];
@@ -222,15 +224,28 @@ export const COLLECTIONS: Record<string, CollectionDef> = {
     table: "faqs",
   },
   members: {
-    fields: [],
+    editOnly: true,
+    fields: [
+      {
+        key: "whatsapp",
+        label: "WhatsApp",
+        type: "text",
+        hint: "Número ou nome do perfil",
+      },
+      { key: "telegram", label: "Telegram", type: "text", hint: "@utilizador" },
+      { key: "notes", label: "Notas internas", type: "textarea" },
+    ],
     label: "Membros",
     listFields: [
       { key: "name", label: "Nome" },
       { key: "email", label: "Email" },
-      { key: "paymentPlan", kind: "badge", label: "Plano" },
+      { key: "layer", label: "Camada" },
+      { key: "feeEur", kind: "money", label: "Quota" },
+      { key: "paymentPlan", kind: "badge", label: "Período" },
       { key: "paymentStatus", kind: "badge", label: "Estado" },
+      { key: "whatsapp", label: "WhatsApp" },
+      { key: "telegram", label: "Telegram" },
     ],
-    readOnly: true,
     table: "members",
   },
   newsletters: {

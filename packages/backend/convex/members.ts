@@ -1,8 +1,14 @@
 import { v } from "convex/values";
 
+import type { Doc } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
 import { assertServiceKey } from "./lib";
-import { findMemberByEmail, layerOfMember, planLayer } from "./pricing";
+import {
+  findMemberByEmail,
+  layerOfMember,
+  membershipFeeEur,
+  planLayer,
+} from "./pricing";
 
 const nonEmpty = (ids: string[]) => (ids.length > 0 ? ids : undefined);
 
@@ -59,13 +65,17 @@ export const create = mutation({
 
     if (existing.paymentStatus !== "active") {
       // Replace the old record (a stale `pending` sign-up, or a lapsed member).
-      // Keep queued cancels and checkout ordering across the replacement.
+      // Keep queued cancels, checkout ordering and the admin's contact notes
+      // across the replacement.
       await ctx.db.replace(existing._id, {
         ...fields,
         cancelSubscriptionIds: existing.cancelSubscriptionIds,
         importId: existing.importId,
         lastCheckoutAt: existing.lastCheckoutAt,
         layer,
+        notes: existing.notes,
+        telegram: existing.telegram,
+        whatsapp: existing.whatsapp,
       });
       return existing._id;
     }
@@ -215,7 +225,16 @@ export const cancelBySubscription = mutation({
   },
 });
 
-// ── Admin (read-only) ──────────────────────────────────────────────────────
+// ── Admin ──────────────────────────────────────────────────────────────────
+
+/** A member with the layer and fee of their plan, older rows included. */
+function adminView(member: Doc<"members">) {
+  return {
+    ...member,
+    feeEur: membershipFeeEur(member),
+    layer: layerOfMember(member),
+  };
+}
 
 export const adminList = query({
   args: {
@@ -232,9 +251,38 @@ export const adminList = query({
   handler: async (ctx, args) => {
     assertServiceKey(args.serviceKey);
     const members = await ctx.db.query("members").order("desc").collect();
-    if (args.paymentStatus) {
-      return members.filter((m) => m.paymentStatus === args.paymentStatus);
-    }
-    return members;
+    const shown = args.paymentStatus
+      ? members.filter((m) => m.paymentStatus === args.paymentStatus)
+      : members;
+    return shown.map(adminView);
+  },
+});
+
+export const adminGet = query({
+  args: { id: v.id("members"), serviceKey: v.string() },
+  handler: async (ctx, args) => {
+    assertServiceKey(args.serviceKey);
+    const member = await ctx.db.get(args.id);
+    return member && adminView(member);
+  },
+});
+
+/**
+ * Internal contacts only: sign-up and payment fields belong to the www
+ * sign-up and the Stripe webhook.
+ */
+export const adminUpdate = mutation({
+  args: {
+    id: v.id("members"),
+    notes: v.optional(v.string()),
+    serviceKey: v.string(),
+    telegram: v.optional(v.string()),
+    whatsapp: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    assertServiceKey(args.serviceKey);
+    // Every key is patched, so a field left empty is cleared.
+    const { notes, telegram, whatsapp } = args;
+    await ctx.db.patch(args.id, { notes, telegram, whatsapp });
   },
 });

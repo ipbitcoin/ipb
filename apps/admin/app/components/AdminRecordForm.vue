@@ -177,7 +177,12 @@
 
     <div class="flex items-center gap-3 border-t border-neutral-100 pt-5">
       <UiButton type="submit" :loading="saving">Guardar</UiButton>
-      <UiButton v-if="recordId" type="button" variant="danger" @click="remove">
+      <UiButton
+        v-if="recordId && !def.editOnly"
+        type="button"
+        variant="danger"
+        @click="remove"
+      >
         Apagar
       </UiButton>
     </div>

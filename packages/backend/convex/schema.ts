@@ -192,6 +192,10 @@ export default defineSchema({
     importId: v.optional(v.string()),
     stripeCustomerId: v.optional(v.string()),
     stripeSubscriptionId: v.optional(v.string()),
+    // Set in the admin, to know who each member is internally.
+    notes: v.optional(v.string()),
+    telegram: v.optional(v.string()),
+    whatsapp: v.optional(v.string()),
   })
     .index("by_email", ["email"])
     .index("by_subscription", ["stripeSubscriptionId"])

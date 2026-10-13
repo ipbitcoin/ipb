@@ -55,6 +55,9 @@ const writableTables = new Set<string>([
   "trainings",
 ]);
 
+/** Tables whose docs are created elsewhere: editable, never created or deleted. */
+const editOnlyTables = new Set<string>(["members"]);
+
 /** Tables whose docs move between status columns via /api/data/[table]/move. */
 export const kanbanTables = new Set<string>(["socialMediaIdeas", "tasks"]);
 
@@ -69,13 +72,20 @@ export function tableApi(table: string) {
 
 export function resolveTable(
   event: H3Event,
-  opts: { writable?: boolean } = {}
+  opts: { writable?: boolean; editable?: boolean } = {}
 ): string {
   const table = getRouterParam(event, "table");
   if (!table || !allTables.has(table)) {
     throw createError({ message: "Unknown collection", statusCode: 404 });
   }
   if (opts.writable && !writableTables.has(table)) {
+    throw createError({ message: "Collection is read-only", statusCode: 405 });
+  }
+  if (
+    opts.editable &&
+    !writableTables.has(table) &&
+    !editOnlyTables.has(table)
+  ) {
     throw createError({ message: "Collection is read-only", statusCode: 405 });
   }
   return table;

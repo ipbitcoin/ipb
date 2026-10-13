@@ -35,6 +35,25 @@ export function layerOfMember(member: Doc<"members">): MemberLayer {
   return member.layer ?? 2;
 }
 
+/** Fee per plan period: €21/year (Layer 1) or €21/month (Layer 2). */
+const MEMBERSHIP_FEE_EUR: Record<PaymentPlan, number> = {
+  monthly: 21,
+  yearly: 21,
+};
+
+/** Fee of the pre-layer plans, which rows without `layer` still pay. */
+const LEGACY_MEMBERSHIP_FEE_EUR: Record<PaymentPlan, number> = {
+  monthly: 20.83,
+  yearly: 250,
+};
+
+/** What a member pays per period of their plan. */
+export function membershipFeeEur(member: Doc<"members">): number {
+  const fees =
+    member.layer === undefined ? LEGACY_MEMBERSHIP_FEE_EUR : MEMBERSHIP_FEE_EUR;
+  return fees[member.paymentPlan];
+}
+
 const normalizeEmail = (email: string) => email.trim().toLowerCase();
 
 /**

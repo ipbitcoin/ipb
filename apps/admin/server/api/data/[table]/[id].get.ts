@@ -1,6 +1,6 @@
 export default defineEventHandler(async (event) => {
   await requireAdmin(event);
-  const table = resolveTable(event, { writable: true });
+  const table = resolveTable(event, { editable: true });
   const id = getRouterParam(event, "id");
   const config = useRuntimeConfig();
   const convex = convexClient();

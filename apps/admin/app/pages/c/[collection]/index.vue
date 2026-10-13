@@ -13,7 +13,7 @@
           :placeholder="`Procurar em ${def.label}…`"
         />
         <UiButton
-          v-if="def.readOnly"
+          v-if="!creatable"
           size="sm"
           variant="outline"
           @click="exportCsv"
@@ -39,12 +39,12 @@
         <AdminEmptyState
           title="Sem registos."
           :description="
-            def.readOnly
-              ? undefined
-              : `Ainda não existe nenhum registo em ${def.label}.`
+            creatable
+              ? `Ainda não existe nenhum registo em ${def.label}.`
+              : undefined
           "
         >
-          <UiButton v-if="!def.readOnly" size="sm" :to="`/c/${collection}/new`">
+          <UiButton v-if="creatable" size="sm" :to="`/c/${collection}/new`">
             Criar o primeiro
           </UiButton>
         </AdminEmptyState>
@@ -62,6 +62,8 @@ if (!def) {
   throw createError({ message: "Coleção desconhecida", statusCode: 404 });
 }
 
+const creatable = !def.readOnly && !def.editOnly;
+
 const { data: records, status } = useFetch<{ _id: string }[]>(
   `/api/data/${collection}`
 );
@@ -72,7 +74,8 @@ function exportCsv() {
   if (!records.value?.length) {
     return;
   }
-  const keys = Object.keys(records.value[0] ?? {});
+  // Every key any record has: optional fields are missing from some.
+  const keys = [...new Set(records.value.flatMap((r) => Object.keys(r)))];
   const escape = (value: unknown) =>
     `"${String(value ?? "").replaceAll(/"/g, '""')}"`;
   const rows = [
