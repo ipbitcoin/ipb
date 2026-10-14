@@ -382,5 +382,13 @@
     "eyebrow": "Author",
     "articles": "Articles",
     "empty": "No published articles yet."
+  },
+  "brand": {
+    "title": "Brand assets",
+    "copyLogo": "Copy logo",
+    "copySymbol": "Copy symbol",
+    "copied": "SVG copied",
+    "copyFailed": "Couldn't copy. Please try again.",
+    "download": "Download brand assets"
   }
 }

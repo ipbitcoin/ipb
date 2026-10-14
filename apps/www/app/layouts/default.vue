@@ -18,13 +18,15 @@
         ]"
       />
       <div class="section flex h-16 items-center justify-between gap-6 xl:h-19">
-        <NuxtLink
-          :to="localePath('index')"
-          aria-label="Instituto Português de Bitcoin"
-          class="focus-ring -m-1 shrink-0 rounded-md p-1"
-        >
-          <IPBLogo class="h-10 w-auto xl:h-12" />
-        </NuxtLink>
+        <IPBBrandMenu>
+          <NuxtLink
+            :to="localePath('index')"
+            aria-label="Instituto Português de Bitcoin"
+            class="focus-ring -m-1 rounded-md p-1"
+          >
+            <IPBLogo class="h-10 w-auto xl:h-12" />
+          </NuxtLink>
+        </IPBBrandMenu>
 
         <nav :aria-label="$t('nav.main')" class="hidden xl:block">
           <ul class="flex items-center gap-1">

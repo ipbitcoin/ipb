@@ -382,5 +382,13 @@
     "eyebrow": "Autor",
     "articles": "Artigos",
     "empty": "Ainda sem artigos publicados."
+  },
+  "brand": {
+    "title": "Recursos da marca",
+    "copyLogo": "Copiar logótipo",
+    "copySymbol": "Copiar símbolo",
+    "copied": "SVG copiado",
+    "copyFailed": "Não foi possível copiar. Tente novamente.",
+    "download": "Descarregar recursos da marca"
   }
 }

@@ -165,7 +165,7 @@ export default defineNuxtConfig({
       description:
         "Instituto de referência sobre Bitcoin em Portugal. Investigação, educação, formação e política pública.",
       foundingDate: "2024",
-      logo: "https://institutobitcoin.pt/ipb_color_dark.svg",
+      logo: "https://institutobitcoin.pt/brand/ipb-logo.svg",
       name: "Instituto Português de Bitcoin",
       // The profiles in app/utils/contact.ts (SOCIALS); the config cannot
       // import app code.

@@ -85,7 +85,7 @@ export default defineEventHandler(async (event) => {
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <atom:link href="${escapeXml(`${baseUrl}/${isEn ? "rss-en.xml" : "rss.xml"}`)}" rel="self" type="application/rss+xml" />
     <image>
-      <url>${baseUrl}/ipb_color_dark.svg</url>
+      <url>${baseUrl}/brand/ipb-logo.svg</url>
       <title>${escapeXml(channelTitle)}</title>
       <link>${escapeXml(channelLink)}</link>
     </image>
