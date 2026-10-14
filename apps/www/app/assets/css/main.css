@@ -270,6 +270,69 @@
 }
 
 /*
+  Once the coins are up, the horizon lights from gold to Bitcoin, and the
+  Bitcoin marker sends out a single ping where the line ends. Played once,
+  after the rise; reduced motion only fades the line in.
+*/
+@keyframes horizon-draw {
+  from {
+    scale: 0 1;
+  }
+}
+
+@keyframes beacon {
+  from {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-brand) 60%, transparent);
+  }
+  to {
+    box-shadow: 0 0 0 7px
+      color-mix(in oklab, var(--color-brand) 0%, transparent);
+  }
+}
+
+.horizon-line {
+  transform-origin: left;
+  animation: enter-fade 600ms var(--ease-out) 1200ms both;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .horizon-line {
+    animation: horizon-draw 1100ms var(--ease-in-out) 900ms both;
+  }
+
+  .beacon {
+    animation: beacon 900ms var(--ease-out) 1900ms both;
+  }
+}
+
+/*
+  Sunset: as the hero scrolls away, the coins sink back below the horizon
+  they rose from, oldest first. Scroll-driven and linear, so the coins track
+  the scroll exactly; without support they simply stay up.
+*/
+@keyframes sunset {
+  to {
+    translate: 0 55%;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .horizon {
+      view-timeline-name: --horizon;
+    }
+
+    /* The last coin is down before the row slides under the sticky header. */
+    .sunset {
+      animation: sunset linear both;
+      animation-timeline: --horizon;
+      animation-range: cover calc(40% + var(--coin-index, 0) * 5%) cover
+        calc(66% + var(--coin-index, 0) * 5%);
+    }
+  }
+}
+
+/*
   Scroll reveal for below-the-fold content.
 
   The hidden state is only applied once `.js-reveal-ready` lands on <html>

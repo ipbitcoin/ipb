@@ -1,5 +1,8 @@
 <template>
-  <section class="relative isolate overflow-hidden">
+  <section class="relative isolate overflow-clip">
+    <!-- `overflow-clip`, not `-hidden`: a hidden overflow makes the section a
+         scroll container, and the coins' sunset would follow its (still)
+         scroll instead of the page's. -->
     <!-- A hairline ledger grid, fading out from the top right. -->
     <div
       aria-hidden="true"
@@ -64,33 +67,25 @@
     <figure class="mt-14 sm:mt-20" :aria-label="$t('main.timeline.label')">
       <div
         aria-hidden="true"
-        class="section grid grid-cols-4 gap-x-4 sm:gap-x-8"
+        class="horizon section relative grid grid-cols-4 gap-x-4 sm:gap-x-8"
       >
-        <div
+        <IPBCoin
           v-for="(coin, index) in COINS"
           :key="coin.year"
-          class="relative aspect-2/1 w-full max-w-44 overflow-hidden"
-        >
-          <img
-            v-if="coin.vector"
-            :src="coin.src"
-            alt=""
-            width="176"
-            height="176"
-            class="rise absolute inset-x-0 top-0 aspect-square w-full"
-            :style="{ '--enter-delay': `${300 + index * 100}ms` }"
-          />
-          <NuxtImg
-            v-else
-            :src="coin.src"
-            alt=""
-            width="320"
-            height="320"
-            densities="x1"
-            class="rise absolute inset-x-0 top-0 aspect-square w-full"
-            :style="{ '--enter-delay': `${300 + index * 100}ms` }"
-          />
-        </div>
+          :active="activeCoin === index"
+          :delay="`${300 + index * 100}ms`"
+          :index="index"
+          :src="coin.src"
+          :vector="coin.vector"
+          @pointerenter="activate(index, $event)"
+          @pointerleave="deactivate(index)"
+        />
+        <!-- Once the coins are up, the horizon lights from gold to the foot of
+             the Bitcoin coin: across the first three columns and the gap
+             after them, drawn over the border below. -->
+        <div
+          class="horizon-line absolute bottom-0 left-0 col-start-1 col-end-4 row-start-1 -right-4 h-px translate-y-full bg-linear-to-r from-brand/0 via-brand/50 to-brand sm:-right-8"
+        />
       </div>
 
       <div class="border-t border-black/10">
@@ -98,11 +93,14 @@
           <li
             v-for="(coin, index) in COINS"
             :key="coin.year"
-            class="enter flex flex-col gap-1"
+            :data-active="activeCoin === index || undefined"
+            class="enter group/coin flex flex-col gap-1"
             :style="{ '--enter-delay': `${300 + index * 100}ms` }"
+            @pointerenter="activate(index, $event)"
+            @pointerleave="deactivate(index)"
           >
             <span
-              class="font-mono text-[11px] leading-4 text-neutral-500 tabular-nums"
+              class="font-mono text-[11px] leading-4 text-neutral-500 tabular-nums transition-colors duration-150 ease-out group-data-active/coin:text-neutral-950"
             >
               {{ coin.year }}
             </span>
@@ -113,7 +111,7 @@
               <span
                 v-if="coin.vector"
                 aria-hidden="true"
-                class="size-1.5 shrink-0 bg-brand"
+                class="beacon size-1.5 shrink-0 bg-brand"
               />
             </span>
           </li>
@@ -143,4 +141,20 @@ const COINS = [
     year: 2009,
   },
 ];
+
+// The coin and its label raise together. Mouse only: a tap would leave the
+// coin raised with nothing to lower it again.
+const activeCoin = ref<number | null>(null);
+
+function activate(index: number, event: PointerEvent) {
+  if (event.pointerType === "mouse") {
+    activeCoin.value = index;
+  }
+}
+
+function deactivate(index: number) {
+  if (activeCoin.value === index) {
+    activeCoin.value = null;
+  }
+}
 </script>
