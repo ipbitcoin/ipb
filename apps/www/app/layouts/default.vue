@@ -175,8 +175,9 @@
 
       <div class="section relative z-10 pt-20 pb-10 sm:pt-24">
         <div class="grid gap-14 lg:grid-cols-12 lg:gap-8">
-          <!-- Newsletter leads: it is the one action we want here -->
-          <div class="flex flex-col gap-6 lg:col-span-5">
+          <!-- Newsletter leads: it is the one action we want here. The id makes
+               /#newsletter a shareable link that scrolls straight to it. -->
+          <div id="newsletter" class="flex flex-col gap-6 lg:col-span-5">
             <p class="eyebrow text-white/50">
               {{ $t("newsletter.footerLabel") }}
             </p>
