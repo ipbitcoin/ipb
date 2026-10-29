@@ -393,7 +393,8 @@ onBeforeUnmount(() => clearTimeout(copiedTimer));
 
 // More from the same section. The server still waits for it, so the links are
 // in the HTML for search engines; `lazy` only lets client-side navigation show
-// the article before these arrive.
+// the article before these arrive. Every article of a section asks with the
+// same args, so Convex answers from its query cache; this one is left out here.
 const { data: related, status: relatedStatus } = useAsyncData(
   `related-${slug}-${locale.value}`,
   async () => {
@@ -401,14 +402,16 @@ const { data: related, status: relatedStatus } = useAsyncData(
     if (!categoryType) {
       return [];
     }
-    return await convex.query(api.articles.listPublished, {
+    const latest = await convex.query(api.articles.listPublished, {
       categoryType,
-      excludeSlug: slug,
-      limit: 3,
+      limit: 4,
       locale: appLocale.value,
     });
+    return latest
+      .filter((item) => item.documentId !== article.documentId)
+      .slice(0, 3);
   },
-  { lazy: true, transform: toArticleSummaries }
+  { lazy: true }
 );
 
 const relatedPending = computed(() => relatedStatus.value === "pending");

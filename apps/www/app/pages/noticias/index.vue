@@ -58,7 +58,7 @@ const { data: newsArticles, status } = useAsyncData(
       categoryType: "news",
       locale: appLocale.value,
     }),
-  { lazy: true, transform: toArticleSummaries }
+  { lazy: true }
 );
 
 const pending = computed(() => status.value === "pending");

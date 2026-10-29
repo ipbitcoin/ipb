@@ -134,13 +134,13 @@ const { data: partners, status: statusPartners } = useAsyncData(
   { lazy: true }
 );
 
-// Cards only need a summary: dropping the article bodies keeps the SSR
-// payload small, since it is inlined into every home page response.
+// Card summaries only, no bodies: the SSR payload is inlined into every home
+// page response.
 const { data: articles, status: statusArticles } = useAsyncData(
   `articles-${locale.value}`,
   () =>
     convex.query(api.articles.listPublished, { locale: currentLocale.value }),
-  { lazy: true, transform: toArticleSummaries }
+  { lazy: true }
 );
 
 const { data: faqs, status: statusFaqs } = useAsyncData(

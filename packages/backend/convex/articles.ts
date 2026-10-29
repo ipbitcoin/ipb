@@ -1,8 +1,8 @@
 import { v } from "convex/values";
 
 import type { Doc, Id } from "./_generated/dataModel";
-import { mutation, query } from "./_generated/server";
-import type { QueryCtx } from "./_generated/server";
+import { internalMutation, mutation, query } from "./_generated/server";
+import type { MutationCtx, QueryCtx } from "./_generated/server";
 import { assertServiceKey, localeArg, mediaUrl, pick, pickOpt } from "./lib";
 import type { Locale } from "./lib";
 
@@ -12,37 +12,44 @@ const categoryTypeArg = v.union(
   v.literal("news")
 );
 
-/** Shape matching the old frontend `Article` type (locale-resolved, absolute media URLs). */
-async function toPublicArticle(
+/** Pending reads by id, so articles sharing a category read it only once. */
+type CategoryCache = Map<Id<"categories">, Promise<Doc<"categories"> | null>>;
+
+function categoryOf(
+  ctx: QueryCtx,
+  categoryId: Id<"categories"> | undefined,
+  cache: CategoryCache
+): Promise<Doc<"categories"> | null> {
+  if (!categoryId) {
+    return Promise.resolve(null);
+  }
+  const cached = cache.get(categoryId);
+  if (cached) {
+    return cached;
+  }
+  const pending = ctx.db.get(categoryId);
+  cache.set(categoryId, pending);
+  return pending;
+}
+
+/** Body of an article, still read from the retired field until migrated. */
+async function contentOf(ctx: QueryCtx, article: Doc<"articles">) {
+  const row = await ctx.db
+    .query("articleContents")
+    .withIndex("by_article", (q) => q.eq("articleId", article._id))
+    .unique();
+  return row?.content ?? article.content ?? { en: "", pt: "" };
+}
+
+/** What an article card renders: lists never show the body or the authors. */
+async function toArticleSummary(
   ctx: QueryCtx,
   article: Doc<"articles">,
   locale: Locale,
-  categoryCache?: Map<string, Doc<"categories"> | null>
+  categoryCache: CategoryCache
 ) {
-  let category: Doc<"categories"> | null = null;
-  if (article.categoryId) {
-    const cached = categoryCache?.get(article.categoryId);
-    category =
-      cached === undefined ? await ctx.db.get(article.categoryId) : cached;
-    categoryCache?.set(article.categoryId, category);
-  }
-
-  const authors = (
-    await Promise.all(article.authorIds.map((id) => ctx.db.get(id)))
-  ).filter((a): a is Doc<"authors"> => a !== null);
-
-  // Strict per-locale: a pt page must not fall back to the en narration
-  const audioKey = article.audioKey?.[locale];
-
+  const category = await categoryOf(ctx, article.categoryId, categoryCache);
   return {
-    audio: audioKey ? { url: mediaUrl(audioKey) } : null,
-    authors: authors.map((a) => ({
-      name: a.name,
-      slug: a.slug,
-      description: pickOpt(a.description, locale) ?? null,
-      linkedin: a.linkedin ?? null,
-      picture: { url: mediaUrl(a.pictureKey) },
-    })),
     category: category
       ? {
           name: pick(category.name, locale),
@@ -50,81 +57,101 @@ async function toPublicArticle(
           type: category.type,
         }
       : null,
-    content: pick(article.content, locale),
     createdAt: new Date(article.createdAt).toISOString(),
     documentId: article._id,
     main_image: { url: mediaUrl(article.mainImageKey) },
     read_time: article.readTime,
     slug: pick(article.slug, locale),
     title: pick(article.title, locale),
+  };
+}
+
+/** Shape matching the old frontend `Article` type (locale-resolved, absolute media URLs). */
+async function toPublicArticle(
+  ctx: QueryCtx,
+  article: Doc<"articles">,
+  locale: Locale,
+  categoryCache: CategoryCache = new Map()
+) {
+  const [summary, authors, content] = await Promise.all([
+    toArticleSummary(ctx, article, locale, categoryCache),
+    Promise.all(article.authorIds.map((id) => ctx.db.get(id))),
+    contentOf(ctx, article),
+  ]);
+
+  // Strict per-locale: a pt page must not fall back to the en narration
+  const audioKey = article.audioKey?.[locale];
+
+  return {
+    ...summary,
+    audio: audioKey ? { url: mediaUrl(audioKey) } : null,
+    authors: authors
+      .filter((a): a is Doc<"authors"> => a !== null)
+      .map((a) => ({
+        name: a.name,
+        slug: a.slug,
+        description: pickOpt(a.description, locale) ?? null,
+        linkedin: a.linkedin ?? null,
+        picture: { url: mediaUrl(a.pictureKey) },
+      })),
+    content: pick(content, locale),
     updatedAt: new Date(article.updatedAt).toISOString(),
   };
 }
 
+/**
+ * Article cards, newest first. Reads only the light `articles` docs (bodies
+ * live in articleContents) and stops once `limit` matches are found.
+ */
 export const listPublished = query({
   args: {
     authorId: v.optional(v.id("authors")),
     categorySlug: v.optional(v.string()),
     categoryType: v.optional(categoryTypeArg),
+    // Retired: sent only by www builds from before related articles shared
+    // one cached query per section. Drop it along with `articles.content`.
     excludeSlug: v.optional(v.string()),
     limit: v.optional(v.number()),
     locale: localeArg,
   },
   handler: async (ctx, args) => {
-    let articles = await ctx.db
+    const { authorId, categorySlug, categoryType, excludeSlug, limit, locale } =
+      args;
+    const categoryCache: CategoryCache = new Map();
+    const matches: Doc<"articles">[] = [];
+
+    for await (const article of ctx.db
       .query("articles")
       .withIndex("by_published_created", (q) => q.eq("published", true))
-      .order("desc")
-      .collect();
-
-    const categoryCache = new Map<string, Doc<"categories"> | null>();
-
-    if (args.categoryType || args.categorySlug) {
-      const filtered: Doc<"articles">[] = [];
-      for (const article of articles) {
-        if (!article.categoryId) {
-          continue;
-        }
-        let category = categoryCache.get(article.categoryId);
-        if (category === undefined) {
-          category = await ctx.db.get(article.categoryId);
-          categoryCache.set(article.categoryId, category);
-        }
-        if (!category) {
-          continue;
-        }
-        if (args.categoryType && category.type !== args.categoryType) {
-          continue;
-        }
+      .order("desc")) {
+      if (authorId && !article.authorIds.includes(authorId)) {
+        continue;
+      }
+      if (excludeSlug && article.slug[locale] === excludeSlug) {
+        continue;
+      }
+      if (categoryType || categorySlug) {
+        const category = await categoryOf(
+          ctx,
+          article.categoryId,
+          categoryCache
+        );
         if (
-          args.categorySlug &&
-          category.slug[args.locale] !== args.categorySlug
+          !category ||
+          (categoryType && category.type !== categoryType) ||
+          (categorySlug && category.slug[locale] !== categorySlug)
         ) {
           continue;
         }
-        filtered.push(article);
       }
-      articles = filtered;
-    }
-
-    if (args.authorId) {
-      articles = articles.filter(
-        (a) => args.authorId && a.authorIds.includes(args.authorId)
-      );
-    }
-
-    if (args.excludeSlug) {
-      articles = articles.filter(
-        (a) => a.slug[args.locale] !== args.excludeSlug
-      );
-    }
-
-    if (args.limit) {
-      articles = articles.slice(0, args.limit);
+      matches.push(article);
+      if (limit && matches.length >= limit) {
+        break;
+      }
     }
 
     return await Promise.all(
-      articles.map((a) => toPublicArticle(ctx, a, args.locale, categoryCache))
+      matches.map((a) => toArticleSummary(ctx, a, locale, categoryCache))
     );
   },
 });
@@ -177,7 +204,7 @@ export const rssFeed = query({
       .withIndex("by_published_created", (q) => q.eq("published", true))
       .order("desc")
       .take(args.limit ?? 50);
-    const cache = new Map<string, Doc<"categories"> | null>();
+    const cache: CategoryCache = new Map();
     return await Promise.all(
       articles.map((a) => toPublicArticle(ctx, a, args.locale, cache))
     );
@@ -214,7 +241,11 @@ export const adminGet = query({
   args: { id: v.id("articles"), serviceKey: v.string() },
   handler: async (ctx, args) => {
     assertServiceKey(args.serviceKey);
-    return await ctx.db.get(args.id);
+    const article = await ctx.db.get(args.id);
+    if (!article) {
+      return null;
+    }
+    return { ...article, content: await contentOf(ctx, article) };
   },
 });
 
@@ -256,19 +287,37 @@ async function assertSlugUnique(
   }
 }
 
+async function saveContent(
+  ctx: MutationCtx,
+  articleId: Id<"articles">,
+  content: { pt: string; en: string }
+) {
+  const row = await ctx.db
+    .query("articleContents")
+    .withIndex("by_article", (q) => q.eq("articleId", articleId))
+    .unique();
+  if (row) {
+    await ctx.db.patch(row._id, { content });
+  } else {
+    await ctx.db.insert("articleContents", { articleId, content });
+  }
+}
+
 export const adminCreate = mutation({
   args: { serviceKey: v.string(), ...articleFields },
   handler: async (ctx, args) => {
     assertServiceKey(args.serviceKey);
-    const { serviceKey: _serviceKey, ...fields } = args;
+    const { serviceKey: _serviceKey, content, ...fields } = args;
     await assertSlugUnique(ctx, fields.slug);
     const now = Date.now();
-    return await ctx.db.insert("articles", {
+    const id = await ctx.db.insert("articles", {
       ...fields,
       createdAt: now,
       publishedAt: fields.published ? now : undefined,
       updatedAt: now,
     });
+    await saveContent(ctx, id, content);
+    return id;
   },
 });
 
@@ -280,7 +329,7 @@ export const adminUpdate = mutation({
   },
   handler: async (ctx, args) => {
     assertServiceKey(args.serviceKey);
-    const { serviceKey: _serviceKey, id, ...fields } = args;
+    const { serviceKey: _serviceKey, id, content, ...fields } = args;
     await assertSlugUnique(ctx, fields.slug, id);
     const existing = await ctx.db.get(id);
     if (!existing) {
@@ -288,12 +337,15 @@ export const adminUpdate = mutation({
     }
     await ctx.db.patch(id, {
       ...fields,
+      // Clears the retired copy, so list queries stop reading it
+      content: undefined,
       publishedAt:
         fields.published && !existing.published
           ? Date.now()
           : existing.publishedAt,
       updatedAt: Date.now(),
     });
+    await saveContent(ctx, id, content);
   },
 });
 
@@ -301,6 +353,45 @@ export const adminRemove = mutation({
   args: { id: v.id("articles"), serviceKey: v.string() },
   handler: async (ctx, args) => {
     assertServiceKey(args.serviceKey);
+    const row = await ctx.db
+      .query("articleContents")
+      .withIndex("by_article", (q) => q.eq("articleId", args.id))
+      .unique();
+    if (row) {
+      await ctx.db.delete(row._id);
+    }
     await ctx.db.delete(args.id);
+  },
+});
+
+/**
+ * One-time move of article bodies from `articles.content` to articleContents.
+ * Idempotent. Run with `npx convex run articles:migrateContent` on each
+ * deployment, then drop `content` from the articles schema and this function.
+ */
+export const migrateContent = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    let moved = 0;
+    const articles = await ctx.db.query("articles").collect();
+    for (const article of articles) {
+      if (!article.content) {
+        continue;
+      }
+      const row = await ctx.db
+        .query("articleContents")
+        .withIndex("by_article", (q) => q.eq("articleId", article._id))
+        .unique();
+      // A row already there was saved by the admin since, so it is newer
+      if (!row) {
+        await ctx.db.insert("articleContents", {
+          articleId: article._id,
+          content: article.content,
+        });
+      }
+      await ctx.db.patch(article._id, { content: undefined });
+      moved += 1;
+    }
+    return { articles: articles.length, moved };
   },
 });

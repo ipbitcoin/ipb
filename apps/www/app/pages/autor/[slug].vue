@@ -100,7 +100,7 @@ const { data: articles, status } = useAsyncData(
       authorId: profile.documentId,
       locale: appLocale.value,
     }),
-  { lazy: true, transform: toArticleSummaries }
+  { lazy: true }
 );
 
 const pending = computed(() => status.value === "pending");

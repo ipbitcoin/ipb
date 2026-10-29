@@ -19,7 +19,9 @@ export default defineSchema({
     audioKey: v.optional(locOpt), // R2 keys (audio/mp4) — narration differs per locale
     authorIds: v.array(v.id("authors")),
     categoryId: v.optional(v.id("categories")),
-    content: loc, // markdown
+    // Retired: bodies moved to articleContents. Kept only until
+    // articles:migrateContent has run on every deployment.
+    content: v.optional(loc),
     createdAt: v.number(), // preserved from Strapi for sorting/RSS
     mainImageKey: v.string(), // R2 key
     published: v.boolean(),
@@ -34,6 +36,13 @@ export default defineSchema({
     .index("by_slug_en", ["slug.en"])
     .index("by_published_created", ["published", "createdAt"])
     .index("by_category", ["categoryId"]),
+
+  // Article bodies (markdown), apart from `articles` so list queries, which
+  // read every published article, don't pay for the bodies they never show.
+  articleContents: defineTable({
+    articleId: v.id("articles"),
+    content: loc,
+  }).index("by_article", ["articleId"]),
 
   authors: defineTable({
     description: locOpt,

@@ -1,39 +1,3 @@
-import type { api } from "@ipb/backend/api";
-import type { FunctionReturnType } from "convex/server";
-
-type PublicArticle = FunctionReturnType<
-  typeof api.articles.listPublished
->[number];
-
-export type ArticleSummary = Pick<
-  PublicArticle,
-  | "category"
-  | "createdAt"
-  | "documentId"
-  | "main_image"
-  | "read_time"
-  | "slug"
-  | "title"
->;
-
-/**
- * Only what an article card renders. Lists never show the body, so the full
- * Markdown of every article stays out of the SSR payload.
- */
-export function toArticleSummaries(
-  articles: PublicArticle[]
-): ArticleSummary[] {
-  return articles.map((article) => ({
-    category: article.category,
-    createdAt: article.createdAt,
-    documentId: article.documentId,
-    main_image: article.main_image,
-    read_time: article.read_time,
-    slug: article.slug,
-    title: article.title,
-  }));
-}
-
 /**
  * The opening of an article's Markdown as plain text, for meta descriptions.
  * Markup is dropped (links keep their text) and long text is cut at a word
