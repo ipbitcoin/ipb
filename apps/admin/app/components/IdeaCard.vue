@@ -65,25 +65,36 @@
 
       <span
         v-if="idea.platforms.length > 0"
-        class="truncate text-xs text-neutral-500"
-        :class="layout === 'tile' ? 'ml-auto' : 'shrink-0'"
+        class="flex shrink-0 items-center gap-1.5 text-neutral-900"
+        :class="layout === 'tile' ? 'ml-auto' : ''"
       >
-        {{ idea.platforms.map(platformLabel).join(" · ") }}
+        <BoardPlatformIcon
+          v-for="key in idea.platforms"
+          :key="key"
+          :platform="key"
+          :label="platformLabel(key)"
+          class="size-3.5"
+        />
       </span>
     </span>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { IdeaDoc, IdeaLabel } from "~/utils/boards";
-import { IDEA_COLUMNS, platformLabel, statusIcon } from "~/utils/boards";
+import type { IdeaDoc, BoardLabel } from "~/utils/boards";
+import {
+  IDEA_COLUMNS,
+  labelsWorn,
+  platformLabel,
+  statusIcon,
+} from "~/utils/boards";
 import { INLINE_TRIGGER } from "~/utils/ui";
 
 const ROW_LABELS = 2;
 
 const props = defineProps<{
   idea: IdeaDoc;
-  labels: IdeaLabel[];
+  labels: BoardLabel[];
   layout: "tile" | "row";
 }>();
 
@@ -99,9 +110,5 @@ const column = computed(() =>
   IDEA_COLUMNS.find((c) => c.key === props.idea.status)
 );
 
-/** The labels the idea wears, in the labels' order; deleted ones drop out. */
-const worn = computed(() => {
-  const ids = new Set(props.idea.labelIds);
-  return props.labels.filter((item) => ids.has(item._id));
-});
+const worn = computed(() => labelsWorn(props.labels, props.idea.labelIds));
 </script>

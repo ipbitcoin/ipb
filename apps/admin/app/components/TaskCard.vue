@@ -18,6 +18,9 @@
       >
         {{ task.description }}
       </p>
+      <span v-if="worn.length > 0" class="flex min-w-0 flex-wrap gap-1">
+        <BoardLabelChip v-for="item in worn" :key="item._id" :label="item" />
+      </span>
     </template>
 
     <span
@@ -43,12 +46,34 @@
         </template>
       </BoardMenuSelect>
 
-      <span
-        v-if="layout === 'row'"
-        class="min-w-0 flex-1 truncate text-neutral-900"
-      >
-        {{ task.title }}
-      </span>
+      <template v-if="layout === 'row'">
+        <span class="min-w-0 flex-1 truncate text-neutral-900">
+          {{ task.title }}
+        </span>
+        <!-- Rows show a few categories by name, then how many more. -->
+        <span
+          v-if="worn.length > 0"
+          class="flex shrink-0 items-center gap-1 max-sm:hidden"
+        >
+          <BoardLabelChip
+            v-for="item in worn.slice(0, ROW_LABELS)"
+            :key="item._id"
+            :label="item"
+          />
+          <span
+            v-if="worn.length > ROW_LABELS"
+            class="text-xs text-neutral-500 tabular-nums"
+            :title="
+              worn
+                .slice(ROW_LABELS)
+                .map((item) => item.name)
+                .join(', ')
+            "
+          >
+            +{{ worn.length - ROW_LABELS }}
+          </span>
+        </span>
+      </template>
 
       <BoardDatePopover
         label="Data limite"
@@ -110,19 +135,23 @@
 </template>
 
 <script setup lang="ts">
-import type { AdminUser, TaskDoc } from "~/utils/boards";
+import type { AdminUser, BoardLabel, TaskDoc } from "~/utils/boards";
 import {
   adminLabel,
   formatDueDate,
   isOverdue,
+  labelsWorn,
   statusIcon,
   TASK_COLUMNS,
 } from "~/utils/boards";
 import { INLINE_TRIGGER } from "~/utils/ui";
 
+const ROW_LABELS = 2;
+
 const props = defineProps<{
   task: TaskDoc;
   admins: AdminUser[];
+  categories: BoardLabel[];
   layout: "tile" | "row";
 }>();
 
@@ -152,6 +181,9 @@ const column = computed(() =>
   TASK_COLUMNS.find((c) => c.key === props.task.status)
 );
 const assignee = computed(() => adminById(props.task.assigneeId ?? null));
+const worn = computed(() =>
+  labelsWorn(props.categories, props.task.categoryIds)
+);
 const overdue = computed(() =>
   isOverdue(props.task.dueDate, column.value?.closed)
 );

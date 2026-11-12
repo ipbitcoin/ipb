@@ -5,17 +5,37 @@ declare const process: { env: Record<string, string | undefined> };
 
 export const localeArg = v.union(v.literal("pt"), v.literal("en"));
 
-/** Swatches a board label can wear; the admin maps each to its classes. */
+/**
+ * Swatches a board label can wear, in palette order; the admin maps each to
+ * its classes. Also read by the admin's MCP tools (via `@ipb/backend/lib`).
+ */
+export const LABEL_COLORS = [
+  "gray",
+  "blue",
+  "green",
+  "yellow",
+  "orange",
+  "red",
+  "pink",
+  "purple",
+  "teal",
+] as const;
+
 export const labelColor = v.union(
-  v.literal("gray"),
-  v.literal("blue"),
-  v.literal("green"),
-  v.literal("yellow"),
-  v.literal("orange"),
-  v.literal("red"),
-  v.literal("pink"),
-  v.literal("purple"),
-  v.literal("teal")
+  ...LABEL_COLORS.map((color) => v.literal(color))
+);
+
+/** The tasks board's columns, in order. */
+export const TASK_STATUSES = [
+  "backlog",
+  "todo",
+  "in_progress",
+  "in_review",
+  "done",
+] as const;
+
+export const taskStatus = v.union(
+  ...TASK_STATUSES.map((status) => v.literal(status))
 );
 export type Locale = "pt" | "en";
 

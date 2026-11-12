@@ -1,22 +1,15 @@
 import { v } from "convex/values";
 
 import { mutation, query } from "./_generated/server";
-import { assertServiceKey } from "./lib";
-
-const statusValidator = v.union(
-  v.literal("backlog"),
-  v.literal("todo"),
-  v.literal("in_progress"),
-  v.literal("in_review"),
-  v.literal("done")
-);
+import { assertServiceKey, taskStatus } from "./lib";
 
 const taskFields = {
   assigneeId: v.optional(v.id("adminUsers")),
+  categoryIds: v.optional(v.array(v.id("taskCategories"))),
   description: v.optional(v.string()),
   dueDate: v.optional(v.string()), // ISO date "YYYY-MM-DD"
   order: v.number(),
-  status: statusValidator,
+  status: taskStatus,
   title: v.string(),
 };
 
@@ -58,6 +51,7 @@ export const adminUpdate = mutation({
     await ctx.db.patch(id, {
       // The task arrives whole: an optional field left out was cleared.
       assigneeId: undefined,
+      categoryIds: undefined,
       description: undefined,
       dueDate: undefined,
       ...fields,
@@ -71,7 +65,7 @@ export const adminMove = mutation({
     id: v.id("tasks"),
     order: v.number(),
     serviceKey: v.string(),
-    status: statusValidator,
+    status: taskStatus,
   },
   handler: async (ctx, args) => {
     assertServiceKey(args.serviceKey);

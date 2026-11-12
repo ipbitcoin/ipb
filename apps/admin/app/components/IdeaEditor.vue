@@ -42,6 +42,7 @@
         v-model="form.labelIds"
         label="Etiquetas"
         :labels="labels"
+        :words="IDEA_LABEL_WORDS"
         :create-label="createLabel"
         :trigger-class="PILL"
       >
@@ -68,24 +69,36 @@
 
       <BoardMenuMulti
         v-model="form.platforms"
-        label="Plataformas"
+        :label="
+          form.platforms.length > 0
+            ? `Plataformas: ${form.platforms.map(platformLabel).join(', ')}`
+            : 'Plataformas'
+        "
         :groups="[{ options: platformOptions }]"
         :trigger-class="PILL"
       >
         <template #trigger>
-          <span
-            class="flex items-center gap-1.5"
-            :class="form.platforms.length > 0 ? '' : 'text-neutral-500'"
-          >
-            <IconShare class="size-3.5" />
-            <span class="truncate">
-              {{
-                form.platforms.length > 0
-                  ? form.platforms.map(platformLabel).join(", ")
-                  : "Plataformas"
-              }}
+          <template v-if="form.platforms.length > 0">
+            <span class="flex items-center gap-1">
+              <BoardPlatformIcon
+                v-for="key in form.platforms"
+                :key="key"
+                :platform="key"
+                class="size-3.5"
+              />
             </span>
+            <!-- Several read as their marks alone; one is named too. -->
+            <span v-if="form.platforms.length === 1" class="truncate">
+              {{ platformLabel(form.platforms[0] ?? "") }}
+            </span>
+          </template>
+          <span v-else class="flex items-center gap-1.5 text-neutral-500">
+            <IconShare class="size-3.5" />
+            Plataformas
           </span>
+        </template>
+        <template #option="{ value }">
+          <BoardPlatformIcon :platform="value" class="size-4" />
         </template>
       </BoardMenuMulti>
     </template>
@@ -95,9 +108,10 @@
 <script setup lang="ts">
 import { toast } from "vue-sonner";
 
-import type { IdeaDoc, IdeaLabel } from "~/utils/boards";
+import type { IdeaDoc, BoardLabel } from "~/utils/boards";
 import {
   IDEA_COLUMNS,
+  IDEA_LABEL_WORDS,
   PLATFORMS,
   platformLabel,
   statusIcon,
@@ -105,7 +119,7 @@ import {
 import { PILL } from "~/utils/ui";
 
 const props = defineProps<{
-  labels: IdeaLabel[];
+  labels: BoardLabel[];
   createLabel: (name: string) => Promise<string | undefined>;
   defaultStatus: string;
   /** The order that puts a card at the end of a column. */

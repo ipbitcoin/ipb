@@ -29,10 +29,16 @@
               v-if="labelOf(value)"
               :color="labelOf(value)?.color ?? 'gray'"
             />
+            <BoardPlatformIcon
+              v-else-if="value.startsWith('platform:')"
+              :platform="value.slice('platform:'.length)"
+              class="size-4"
+            />
           </template>
         </BoardMenuMulti>
         <BoardLabelsManager
           :labels="labels ?? []"
+          :words="IDEA_LABEL_WORDS"
           :usage="labelUsage"
           @update="updateLabel"
           @remove="removeLabel"
@@ -116,10 +122,17 @@
 <script setup lang="ts">
 import { toast } from "vue-sonner";
 
-import type { BoardLayout, CardMove, IdeaDoc, IdeaLabel } from "~/utils/boards";
+import type {
+  BoardLayout,
+  CardMove,
+  IdeaDoc,
+  BoardLabel,
+} from "~/utils/boards";
 import {
   appendOrder,
+  countOf,
   IDEA_COLUMNS,
+  IDEA_LABEL_WORDS,
   isBoardLayout,
   PLATFORMS,
   platformLabel,
@@ -132,7 +145,7 @@ import { PILL, PILL_ACTIVE } from "~/utils/ui";
 const { data: ideas, refresh } = useFetch<IdeaDoc[]>(
   "/api/data/socialMediaIdeas"
 );
-const { data: labels, refresh: refreshLabels } = useFetch<IdeaLabel[]>(
+const { data: labels, refresh: refreshLabels } = useFetch<BoardLabel[]>(
   "/api/data/ideaLabels"
 );
 
@@ -170,7 +183,7 @@ function picked(prefix: string): string[] {
     .map((value) => value.slice(prefix.length));
 }
 
-function labelOf(value: string | null): IdeaLabel | undefined {
+function labelOf(value: string | null): BoardLabel | undefined {
   return value?.startsWith("label:")
     ? labels.value?.find((item) => `label:${item._id}` === value)
     : undefined;
@@ -322,7 +335,7 @@ async function createLabel(name: string): Promise<string | undefined> {
 }
 
 async function updateLabel(
-  label: IdeaLabel,
+  label: BoardLabel,
   changes: { name?: string; color?: LabelColor }
 ) {
   const next = { ...label, ...changes };
@@ -340,14 +353,14 @@ async function updateLabel(
   await refreshLabels();
 }
 
-async function removeLabel(label: IdeaLabel) {
+async function removeLabel(label: BoardLabel) {
   const uses = labelUsage.value.get(label._id) ?? 0;
   const confirmed = await confirm({
     confirmLabel: "Apagar",
     danger: true,
     description:
       uses > 0
-        ? `Sai de ${uses === 1 ? "1 ideia" : `${uses} ideias`}. Esta ação é irreversível.`
+        ? `Vai ser retirada de ${countOf(uses, IDEA_LABEL_WORDS.card)}. Esta ação é irreversível.`
         : "Esta ação é irreversível.",
     title: `Apagar a etiqueta “${label.name}”?`,
   });

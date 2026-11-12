@@ -10,6 +10,39 @@
       <div class="ml-auto flex flex-wrap items-center gap-2">
         <AdminSearch v-model="query" placeholder="Procurar tarefas…" />
         <BoardAssigneeFilter v-model="assigneeFilter" :admins="admins ?? []" />
+        <BoardMenuMulti
+          v-model="categoryFilter"
+          :label="
+            categoryFilter.length > 0
+              ? `Categorias (${categoryFilter.length} no filtro)`
+              : 'Categorias'
+          "
+          align="end"
+          :groups="filterGroups"
+          empty-label="Ainda sem categorias. Crie-as numa tarefa."
+          :trigger-class="categoryFilter.length > 0 ? PILL_ACTIVE : PILL"
+        >
+          <template #trigger>
+            <IconFilter class="size-3.5" />
+            Categorias
+            <span v-if="categoryFilter.length > 0" class="tabular-nums">
+              {{ categoryFilter.length }}
+            </span>
+          </template>
+          <template #option="{ value }">
+            <BoardLabelDot
+              v-if="categoryById(value)"
+              :color="categoryById(value)?.color ?? 'gray'"
+            />
+          </template>
+        </BoardMenuMulti>
+        <BoardLabelsManager
+          :labels="categories ?? []"
+          :words="TASK_CATEGORY_WORDS"
+          :usage="categoryUsage"
+          @update="updateCategory"
+          @remove="removeCategory"
+        />
         <BoardLayoutSwitch v-model="layout" />
         <UiButton size="sm" @click="openNew(TASK_COLUMNS[1]?.key ?? 'todo')">
           <IconPlus class="size-4" />
@@ -33,6 +66,7 @@
         <TaskCard
           :task="card"
           :admins="admins ?? []"
+          :categories="categories ?? []"
           layout="tile"
           @update="(changes) => updateTask(card, changes)"
         />
@@ -52,6 +86,7 @@
         <TaskCard
           :task="card"
           :admins="admins ?? []"
+          :categories="categories ?? []"
           layout="row"
           @update="(changes) => updateTask(card, changes)"
         />
@@ -78,10 +113,13 @@
       v-model:open="editorOpen"
       :task="editingTask"
       :admins="admins ?? []"
+      :categories="categories ?? []"
+      :create-category="createCategory"
       :default-status="editorStatus"
       :default-assignee-id="assigneeFilter"
+      :default-category-ids="newTaskCategoryIds"
       :order-for="(status) => appendOrder(tasks ?? [], status)"
-      @saved="refresh"
+      @saved="refreshBoard"
     />
   </div>
 </template>
@@ -89,12 +127,39 @@
 <script setup lang="ts">
 import { toast } from "vue-sonner";
 
-import type { AdminUser, BoardLayout, CardMove, TaskDoc } from "~/utils/boards";
-import { appendOrder, isBoardLayout, TASK_COLUMNS } from "~/utils/boards";
+import type {
+  AdminUser,
+  BoardLabel,
+  BoardLayout,
+  CardMove,
+  TaskDoc,
+} from "~/utils/boards";
+import {
+  appendOrder,
+  countOf,
+  isBoardLayout,
+  TASK_CATEGORY_WORDS,
+  TASK_COLUMNS,
+} from "~/utils/boards";
+import type { LabelColor } from "~/utils/palette";
+import { nextLabelColor } from "~/utils/palette";
 import { matchesQuery } from "~/utils/search";
+import { PILL, PILL_ACTIVE } from "~/utils/ui";
 
 const { data: tasks, refresh } = useFetch<TaskDoc[]>("/api/data/tasks");
 const { data: admins } = useFetch<AdminUser[]>("/api/admins");
+const { data: categories, refresh: refreshCategories } = useFetch<BoardLabel[]>(
+  "/api/data/taskCategories"
+);
+
+const { confirm } = useConfirm();
+
+/** Tasks and categories both: an AI app may have changed either. */
+async function refreshBoard() {
+  await Promise.all([refresh(), refreshCategories()]);
+}
+
+useRefreshOnReturn(refreshBoard);
 
 const layout = useStoredRef<BoardLayout>(
   "board:tasks:layout",
@@ -103,18 +168,73 @@ const layout = useStoredRef<BoardLayout>(
 );
 const query = ref("");
 const assigneeFilter = ref<string>();
+/** Ids of the categories picked to filter by. */
+const categoryFilter = ref<string[]>([]);
+
+// A category deleted elsewhere leaves the filter, rather than holding the
+// board empty with nothing ticked to clear.
+watch(categories, (list) => {
+  const known = new Set((list ?? []).map((item) => item._id));
+  if (categoryFilter.value.some((id) => !known.has(id))) {
+    categoryFilter.value = categoryFilter.value.filter((id) => known.has(id));
+  }
+});
+
+/**
+ * The categories a new task starts in: the one the board is filtered to. With
+ * several picked the filter shows any of them, so none is assumed.
+ */
+const newTaskCategoryIds = computed(() =>
+  categoryFilter.value.length === 1 ? [...categoryFilter.value] : []
+);
+
+const filterGroups = computed(() => [
+  {
+    options: (categories.value ?? []).map((item) => ({
+      label: item.name,
+      value: item._id,
+    })),
+  },
+]);
+
+function categoryById(id: string | null): BoardLabel | undefined {
+  return id ? categories.value?.find((item) => item._id === id) : undefined;
+}
 
 const filtered = computed(
-  () => query.value.trim() !== "" || Boolean(assigneeFilter.value)
+  () =>
+    query.value.trim() !== "" ||
+    Boolean(assigneeFilter.value) ||
+    categoryFilter.value.length > 0
 );
 
-const visible = computed(() =>
-  (tasks.value ?? []).filter(
+// Any of the picked categories.
+const visible = computed(() => {
+  const names = new Map(
+    (categories.value ?? []).map((item) => [item._id, item.name])
+  );
+  return (tasks.value ?? []).filter(
     (task) =>
       (!assigneeFilter.value || task.assigneeId === assigneeFilter.value) &&
-      matchesQuery(query.value, [task.title, task.description])
-  )
-);
+      (categoryFilter.value.length === 0 ||
+        categoryFilter.value.some((id) => task.categoryIds?.includes(id))) &&
+      matchesQuery(query.value, [
+        task.title,
+        task.description,
+        ...(task.categoryIds ?? []).map((id) => names.get(id)),
+      ])
+  );
+});
+
+const categoryUsage = computed(() => {
+  const counts = new Map<string, number>();
+  for (const task of tasks.value ?? []) {
+    for (const id of task.categoryIds ?? []) {
+      counts.set(id, (counts.get(id) ?? 0) + 1);
+    }
+  }
+  return counts;
+});
 
 const editorOpen = ref(false);
 const editingTask = ref<TaskDoc | null>(null);
@@ -135,6 +255,7 @@ function openEdit(task: TaskDoc) {
 function payloadOf(task: TaskDoc) {
   return {
     assigneeId: task.assigneeId,
+    categoryIds: task.categoryIds ?? [],
     description: task.description,
     dueDate: task.dueDate,
     order: task.order,
@@ -148,6 +269,7 @@ async function quickAdd(status: string, title: string) {
     await $fetch("/api/data/tasks", {
       body: {
         assigneeId: assigneeFilter.value,
+        categoryIds: newTaskCategoryIds.value,
         order: appendOrder(tasks.value ?? [], status),
         status,
         title,
@@ -172,14 +294,21 @@ async function updateTask(
   }
   Object.assign(task, next);
   try {
+    // Written over the task as stored now, not as this board loaded it, so
+    // what changed meanwhile (another admin, an AI app) isn't undone.
+    const stored = await $fetch<TaskDoc>(`/api/data/tasks/${task._id}`);
     await $fetch(`/api/data/tasks/${task._id}`, {
-      body: payloadOf(next),
+      body: payloadOf({
+        ...stored,
+        ...changes,
+        order: stored.status === next.status ? stored.order : next.order,
+      }),
       method: "PUT",
     });
   } catch {
     toast.error("Não foi possível atualizar a tarefa.");
-    await refresh();
   }
+  await refresh();
 }
 
 async function onMove(moves: CardMove[]) {
@@ -200,6 +329,70 @@ async function onMove(moves: CardMove[]) {
   } catch {
     toast.error("Não foi possível mover a tarefa.");
     await refresh();
+  }
+}
+
+async function createCategory(name: string): Promise<string | undefined> {
+  try {
+    const { id } = await $fetch<{ id: string }>("/api/data/taskCategories", {
+      body: { color: nextLabelColor(categories.value ?? []), name },
+      method: "POST",
+    });
+    await refreshCategories();
+    return id;
+  } catch (error: unknown) {
+    toast.error(
+      fetchErrorMessage(error) ?? "Não foi possível criar a categoria."
+    );
+    return undefined;
+  }
+}
+
+async function updateCategory(
+  category: BoardLabel,
+  changes: { name?: string; color?: LabelColor }
+) {
+  const next = { ...category, ...changes };
+  Object.assign(category, next);
+  try {
+    await $fetch(`/api/data/taskCategories/${category._id}`, {
+      body: { color: next.color, name: next.name },
+      method: "PUT",
+    });
+  } catch (error: unknown) {
+    toast.error(
+      fetchErrorMessage(error) ?? "Não foi possível guardar a categoria."
+    );
+  }
+  await refreshCategories();
+}
+
+async function removeCategory(category: BoardLabel) {
+  const uses = categoryUsage.value.get(category._id) ?? 0;
+  const confirmed = await confirm({
+    confirmLabel: "Apagar",
+    danger: true,
+    description:
+      uses > 0
+        ? `Vai ser retirada de ${countOf(uses, TASK_CATEGORY_WORDS.card)}. Esta ação é irreversível.`
+        : "Esta ação é irreversível.",
+    title: `Apagar a categoria “${category.name}”?`,
+  });
+  if (!confirmed) {
+    return;
+  }
+  try {
+    await $fetch(`/api/data/taskCategories/${category._id}`, {
+      method: "DELETE",
+    });
+    categoryFilter.value = categoryFilter.value.filter(
+      (id) => id !== category._id
+    );
+    await Promise.all([refreshCategories(), refresh()]);
+  } catch (error: unknown) {
+    toast.error(
+      fetchErrorMessage(error) ?? "Não foi possível apagar a categoria."
+    );
   }
 }
 </script>

@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import type { IdeaLabel } from "~/utils/boards";
+import type { BoardLabel } from "~/utils/boards";
 
-defineProps<{ label: IdeaLabel }>();
+defineProps<{ label: BoardLabel }>();
 </script>

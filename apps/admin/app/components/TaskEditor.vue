@@ -71,6 +71,39 @@
         </template>
       </BoardMenuSelect>
 
+      <BoardLabelPicker
+        v-model="form.categoryIds"
+        :label="
+          picked.length > 0
+            ? `Categorias: ${picked.map((item) => item.name).join(', ')}`
+            : 'Categorias'
+        "
+        :labels="categories"
+        :words="TASK_CATEGORY_WORDS"
+        :create-label="createCategory"
+        :trigger-class="PILL"
+      >
+        <template #trigger>
+          <template v-if="picked.length > 0">
+            <span class="flex -space-x-0.5">
+              <BoardLabelDot
+                v-for="item in picked"
+                :key="item._id"
+                :color="item.color"
+                class="ring-2 ring-[color-mix(in_oklab,var(--color-neutral-950)_5%,white)]"
+              />
+            </span>
+            <span class="truncate">
+              {{ picked.map((item) => item.name).join(", ") }}
+            </span>
+          </template>
+          <span v-else class="flex items-center gap-1.5 text-neutral-500">
+            <IconTag class="size-3.5" />
+            Categorias
+          </span>
+        </template>
+      </BoardLabelPicker>
+
       <BoardDatePopover
         v-model="form.dueDate"
         label="Data limite"
@@ -93,20 +126,27 @@
 <script setup lang="ts">
 import { toast } from "vue-sonner";
 
-import type { AdminUser, TaskDoc } from "~/utils/boards";
+import type { AdminUser, BoardLabel, TaskDoc } from "~/utils/boards";
 import {
   adminLabel,
   formatDueDate,
+  labelsWorn,
   statusIcon,
+  TASK_CATEGORY_WORDS,
   TASK_COLUMNS,
 } from "~/utils/boards";
 import { PILL } from "~/utils/ui";
 
 const props = defineProps<{
   admins: AdminUser[];
+  categories: BoardLabel[];
+  /** Makes a category by name; resolves to its id, or nothing when it fails. */
+  createCategory: (name: string) => Promise<string | undefined>;
   defaultStatus: string;
   /** Who a new task goes to, when the board is filtered to someone. */
   defaultAssigneeId?: string;
+  /** The categories a new task starts in, when the board is filtered to some. */
+  defaultCategoryIds?: string[];
   /** The order that puts a card at the end of a column. */
   orderFor: (status: string) => number;
   task?: TaskDoc | null;
@@ -124,6 +164,7 @@ const createMore = ref(false);
 
 interface TaskForm {
   assigneeId: string;
+  categoryIds: string[];
   description: string;
   dueDate?: string;
   status: string;
@@ -132,6 +173,7 @@ interface TaskForm {
 
 const form = reactive<TaskForm>({
   assigneeId: "",
+  categoryIds: [],
   description: "",
   status: props.defaultStatus,
   title: "",
@@ -169,9 +211,13 @@ const adminOptions = computed(() =>
 );
 const column = computed(() => TASK_COLUMNS.find((c) => c.key === form.status));
 const assignee = computed(() => adminById(form.assigneeId));
+const picked = computed(() => labelsWorn(props.categories, form.categoryIds));
 
 function resetForm() {
   form.assigneeId = props.task?.assigneeId ?? props.defaultAssigneeId ?? "";
+  form.categoryIds = [
+    ...((props.task ? props.task.categoryIds : props.defaultCategoryIds) ?? []),
+  ];
   form.description = props.task?.description ?? "";
   form.dueDate = props.task?.dueDate;
   form.status = props.task?.status ?? props.defaultStatus;
@@ -195,6 +241,9 @@ async function save() {
   error.value = "";
   const payload = {
     assigneeId: form.assigneeId || undefined,
+    // As picked, even ones this page hasn't loaded yet, like a category an
+    // AI app just made. Deleting a category takes it off tasks by itself.
+    categoryIds: form.categoryIds,
     description: form.description.trim() || undefined,
     dueDate: form.dueDate || undefined,
     order: orderOnSave(),

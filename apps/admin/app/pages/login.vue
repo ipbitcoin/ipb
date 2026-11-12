@@ -60,6 +60,9 @@
               <template v-if="needsSetup">
                 Primeira entrada — define a tua password para ativar a conta.
               </template>
+              <template v-else-if="nextPath().startsWith('/connect')">
+                Entre para continuar a ligar a app.
+              </template>
               <template v-else>
                 Acesso reservado à equipa do Instituto.
               </template>
@@ -175,6 +178,18 @@ const loading = ref(false);
 const error = ref("");
 
 const { fetch: refreshSession } = useUserSession();
+const route = useRoute();
+
+/** Where to go once signed in: the page asked for, when it's one of ours. */
+function nextPath(): string {
+  const asked = route.query.redirect;
+  return typeof asked === "string" &&
+    asked.startsWith("/") &&
+    !asked.startsWith("//") &&
+    !asked.startsWith("/\\")
+    ? asked
+    : "/";
+}
 
 const submitLabel = computed(() => {
   if (loading.value) {
@@ -210,7 +225,7 @@ async function handleSubmit() {
       });
     }
     await refreshSession();
-    await navigateTo("/");
+    await navigateTo(nextPath());
   } catch (submitError: unknown) {
     const statusCode = fetchErrorStatus(submitError);
     if (statusCode === 409) {
