@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Escassez digital | Curso 1 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 3.3 do curso Bitcoin para Todos: o problema do gasto duplo e como a Bitcoin criou escassez no mundo digital.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#">← Curso 1 · A Génese</a>
+    <span class="where">Lição 14 de 20</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="20" aria-valuenow="14"><span style="width:70%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+    <p class="eyebrow">Módulo 3 · A solução · Lição 3.3</p>
+    <h1>Escassez digital</h1>
+    <p class="lead">No fim desta lição vais saber explicar o problema do gasto duplo e como é que a Bitcoin consegue que um ficheiro digital seja escasso.</p>
+    <p class="meta"><span>10 min de leitura</span><span>3 perguntas · 1 simulação</span></p>
+
+    <div class="reflect">
+      <label for="r-3-3-1">Antes de continuar</label>
+      <small>Se enviares uma fotografia por email a dois amigos, ficas sem ela? O que isso diz sobre usar ficheiros digitais como dinheiro?</small>
+      <textarea id="r-3-3-1" rows="3" placeholder="Escreve aqui. Fica guardado só neste dispositivo."></textarea>
+    </div>
+
+    <h2>O problema: o digital copia-se</h2>
+    <p>Um ficheiro digital é um conjunto de zeros e uns, e os zeros e uns copiam-se sem custo e sem perda. Quando envias uma fotografia a um amigo, não ficas sem ela: <strong>ficas com a original e ele fica com uma cópia perfeita</strong>.</p>
+    <p>Isto é ótimo para fotografias e péssimo para dinheiro. Se um «euro digital» fosse só um ficheiro, qualquer pessoa o copiava e gastava duas vezes, três, mil. A isto chama-se o <strong>problema do gasto duplo</strong>. Dinheiro só funciona se for escasso: se eu gasto, deixo de ter.</p>
+
+    <h2>A solução tradicional: um árbitro</h2>
+    <p>Até 2008, a única forma de resolver o gasto duplo era ter um <strong>intermediário de confiança</strong>: um banco, uma empresa de pagamentos. O banco mantém o registo de quem tem quanto. Se tentares gastar o mesmo dinheiro duas vezes, o banco vê e recusa a segunda. Funciona, mas tem custos: depende do banco, que pode errar, falhar, congelar a conta, recusar o pagamento ou ser alvo de ataque.</p>
+
+    <h2>A solução da Bitcoin: um registo que todos mantêm</h2>
+    <p>Em vez de um árbitro central, a Bitcoin usa <strong>um registo público partilhado por milhares de computadores</strong>, a que se chama <strong>cadeia de blocos</strong> (<em>blockchain</em>). Cada transação é anunciada a toda a rede e, quando é aceite num bloco, todos os computadores atualizam a sua cópia do registo. Quando tentas gastar o mesmo bitcoin duas vezes, a rede aceita a primeira e rejeita a segunda.</p>
+    <p>Experimenta tu:</p>
+
+    <div class="card" id="sim">
+      <h3>Simulador de gasto duplo</h3>
+      <p style="margin:0;font-size:16px;color:var(--muted)">A Ana tem 1 bitcoin e tenta enviá-lo a duas pessoas.</p>
+      <div class="sim-row">
+        <button type="button" class="btn" id="sim-bob">Enviar ao Bruno</button>
+        <button type="button" class="btn" id="sim-carla">Enviar à Carla</button>
+        <button type="button" class="btn secondary" id="sim-reset">Recomeçar</button>
+      </div>
+      <pre class="ledger" id="sim-ledger" role="status" aria-live="polite"></pre>
+    </div>
+
+    <p>Duas perguntas ficam por responder, e vamos tratá-las no Curso 2:</p>
+    <ul>
+      <li><strong>Quem decide qual transação veio primeiro?</strong> Os computadores da rede concordam numa ordem única de blocos. Para um bloco ser aceite, alguém tem de gastar energia real (a <em>prova de trabalho</em>), o que torna caro fazer batota.</li>
+      <li><strong>Como sei que o bitcoin é meu?</strong> Com criptografia: só quem tem a chave privada consegue assinar uma transação que gasta esse bitcoin. Sem a chave, ninguém o mexe.</li>
+    </ul>
+
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      A Bitcoin não impede a cópia de ficheiros. Resolve outra coisa: quem é dono de quê, sem precisar de um árbitro central. É isso a escassez digital.
+    </div>
+
+    <h2>Porque é que isto era tão difícil</h2>
+    <p>Durante décadas, os melhores criptógrafos tentaram criar dinheiro digital sem intermediário e não conseguiram (vê a lição 3.2). O problema não é de criptografia pura: é de <strong>consenso</strong>. Como é que milhares de computadores que não se conhecem nem confiam uns nos outros chegam a acordo sobre uma lista de transações, sem ninguém no comando? A resposta de Satoshi combinou três ideias: um registo partilhado, prova de trabalho e incentivos económicos para quem o mantém. É por isso que a invenção é tão celebrada pelos seus defensores e tão debatida pelos seus críticos.</p>
+
+    <div class="callout tip">
+      <span class="tag">Um cuidado</span>
+      <p>Chamar «escassez digital» à Bitcoin não significa que o ficheiro seja escasso, mas que a <strong>propriedade</strong> do bitcoin é única e verificável por todos. A palavra é uma simplificação útil, não uma definição técnica.</p>
+    </div>
+
+    <h2>Verifica o que aprendeste</h2>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>O que é o «gasto duplo»?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>Pagar duas vezes pelo mesmo produto</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Gastar o mesmo dinheiro digital mais do que uma vez, copiando-o</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Receber o dobro do que se gasta</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Como os ficheiros digitais se copiam sem custo, é preciso um mecanismo que impeça de gastar o mesmo dinheiro duas vezes.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>Como resolvia o sistema tradicional o gasto duplo?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>Com um intermediário de confiança (um banco, por exemplo) que mantém o registo</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Com criptografia, sem ninguém</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Não resolvia</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>O banco mantém o registo de quem tem quanto e recusa a segunda tentativa de gastar o mesmo dinheiro.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="2">
+      <legend>O que a Bitcoin faz em vez de ter um árbitro central?</legend>
+      <label class="opt"><input type="radio" name="q3"><span>Impede que se copiem ficheiros</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Usa um supercomputador único</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Usa um registo público partilhado por milhares de computadores, que todos verificam</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>A cadeia de blocos é um registo público, mantido e verificado por muitos computadores independentes.</p>
+    </fieldset>
+
+    <h2>Para ir mais fundo</h2>
+    <ul>
+      <li><a href="https://bitcoin.org/bitcoin.pdf" target="_blank" rel="noopener">Documento original</a>: a introdução (secção 1) descreve o problema e a proposta de Satoshi em menos de uma página.</li>
+    </ul>
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>Satoshi Nakamoto, «Bitcoin: A Peer-to-Peer Electronic Cash System» (2008), secções 1 e 2.</li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="3.3">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="3.2-antes-de-satoshi.html" rel="prev"><small>← Anterior</small><span>3.2 Antes de Satoshi</span></a>
+      <a class="next" href="3.4-o-que-da-valor-ao-bitcoin.html" rel="next"><small>Seguinte →</small><span>3.4 O que dá valor ao Bitcoin</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>
