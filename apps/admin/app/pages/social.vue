@@ -29,6 +29,11 @@
               v-if="labelOf(value)"
               :color="labelOf(value)?.color ?? 'gray'"
             />
+            <BoardPlatformIcon
+              v-else-if="value.startsWith('platform:')"
+              :platform="value.slice('platform:'.length)"
+              class="size-4"
+            />
           </template>
         </BoardMenuMulti>
         <BoardLabelsManager

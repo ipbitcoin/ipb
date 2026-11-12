@@ -74,19 +74,26 @@
         :trigger-class="PILL"
       >
         <template #trigger>
-          <span
-            class="flex items-center gap-1.5"
-            :class="form.platforms.length > 0 ? '' : 'text-neutral-500'"
-          >
-            <IconShare class="size-3.5" />
-            <span class="truncate">
-              {{
-                form.platforms.length > 0
-                  ? form.platforms.map(platformLabel).join(", ")
-                  : "Plataformas"
-              }}
+          <template v-if="form.platforms.length > 0">
+            <span class="flex items-center gap-1">
+              <BoardPlatformIcon
+                v-for="key in form.platforms"
+                :key="key"
+                :platform="key"
+                class="size-3.5"
+              />
             </span>
+            <span class="truncate">
+              {{ form.platforms.map(platformLabel).join(", ") }}
+            </span>
+          </template>
+          <span v-else class="flex items-center gap-1.5 text-neutral-500">
+            <IconShare class="size-3.5" />
+            Plataformas
           </span>
+        </template>
+        <template #option="{ value }">
+          <BoardPlatformIcon :platform="value" class="size-4" />
         </template>
       </BoardMenuMulti>
     </template>
