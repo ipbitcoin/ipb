@@ -63,6 +63,12 @@
           <span
             v-if="worn.length > ROW_LABELS"
             class="text-xs text-neutral-500 tabular-nums"
+            :title="
+              worn
+                .slice(ROW_LABELS)
+                .map((item) => item.name)
+                .join(', ')
+            "
           >
             +{{ worn.length - ROW_LABELS }}
           </span>

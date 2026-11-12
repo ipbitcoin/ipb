@@ -11,11 +11,10 @@
 
       <section
         class="flex flex-col gap-6 rounded-2xl bg-white p-6 shadow-border sm:p-8"
-        aria-live="polite"
       >
         <!-- Loading: the shape of the card, quietly. -->
         <div
-          v-if="status === 'pending'"
+          v-if="view === 'loading'"
           class="flex flex-col gap-4"
           aria-busy="true"
         >
@@ -25,42 +24,39 @@
           <span class="sr-only">A carregar…</span>
         </div>
 
-        <div v-else-if="leaving" class="flex flex-col gap-2">
-          <h1 class="text-2xl font-light tracking-tight">
-            {{
-              leaving === "allow"
-                ? `${app?.name} está ligada`
-                : "Pedido recusado"
-            }}
-          </h1>
-          <p class="text-sm text-pretty text-neutral-500">
-            {{
-              leaving === "allow"
-                ? "Se a app não abrir sozinha, volte a ela. Pode fechar este separador."
-                : "Pode fechar este separador."
-            }}
-          </p>
-        </div>
-
-        <div v-else-if="!app" class="flex flex-col gap-4">
+        <!-- Answered, expired, refused or failed: a heading, a line, maybe an action. -->
+        <div v-else-if="notice" class="flex flex-col gap-4">
           <div class="flex flex-col gap-2">
-            <h1 class="text-2xl font-light tracking-tight">
-              Este pedido expirou
+            <h1
+              ref="heading"
+              tabindex="-1"
+              class="text-2xl font-light tracking-tight outline-none"
+            >
+              {{ notice.title }}
             </h1>
             <p class="text-sm text-pretty text-neutral-500">
-              Os pedidos de ligação duram 10 minutos e só se usam uma vez. Volte
-              a ligar a partir da app.
+              {{ notice.body }}
             </p>
           </div>
+          <UiButton
+            v-if="view === 'failed'"
+            variant="outline"
+            size="sm"
+            class="self-start"
+            @click="refresh()"
+          >
+            Tentar de novo
+          </UiButton>
           <NuxtLink
-            to="/profile"
+            v-else-if="view === 'expired'"
+            to="/profile#connections"
             class="focus-ring self-start rounded text-sm font-medium text-neutral-900 underline underline-offset-4"
           >
             Ver apps ligadas
           </NuxtLink>
         </div>
 
-        <template v-else>
+        <template v-else-if="app">
           <div class="flex flex-col gap-5">
             <!-- The app and the admin, side by side. -->
             <div aria-hidden="true" class="flex items-center gap-3">
@@ -99,14 +95,20 @@
             </div>
           </div>
 
+          <!-- Where the code goes is what's checked; the name is the app's
+               own claim, so it never shows alone. -->
           <div
             class="flex flex-col gap-0.5 rounded-xl bg-neutral-950/3 px-4 py-3"
           >
-            <p class="text-xs text-neutral-500">
-              Depois de responder, volta para
+            <p class="text-xs text-neutral-700">
+              Depois de responder, segue para
             </p>
-            <p class="truncate text-base font-medium text-neutral-900">
-              {{ app.site }}
+            <p class="text-base font-medium break-all text-neutral-900">
+              {{ siteLabel }}
+            </p>
+            <p class="mt-1 text-xs text-pretty text-neutral-500">
+              O nome “{{ app.name }}” é indicado pela própria app. Confirme que
+              este destino é o dela.
             </p>
           </div>
 
@@ -173,7 +175,8 @@ useHead({ title: "Ligar uma app · IPB Admin" });
 
 const ACCESS = [
   {
-    description: "Ver o quadro, as tarefas e as categorias.",
+    description:
+      "Ver o quadro, as tarefas, as categorias e os nomes da equipa.",
     label: "Ler tarefas",
     write: false,
   },
@@ -184,26 +187,136 @@ const ACCESS = [
   },
 ];
 
-const route = useRoute();
-const { user } = useUserSession();
+/** Requests the server turned away before showing them (server/utils/oauth.ts). */
+const REFUSED: Record<string, { title: string; body: string }> = {
+  bad_redirect: {
+    body: "Esta app pediu para voltar a um endereço que não registou, por isso o pedido foi recusado.",
+    title: "Endereço de regresso inválido",
+  },
+  bad_request: {
+    body: "A app enviou um pedido de ligação incompleto ou inválido. Volte a tentar a partir da app.",
+    title: "Pedido inválido",
+  },
+  unknown_app: {
+    body: "Esta app não está registada no IPB Admin. Volte a ligar a partir da app.",
+    title: "App desconhecida",
+  },
+};
 
+const route = useRoute();
+const { user, clear } = useUserSession();
+
+const refused = computed(() =>
+  typeof route.query.error === "string" ? REFUSED[route.query.error] : undefined
+);
 const requestId = computed(() =>
   typeof route.query.request === "string" ? route.query.request : ""
 );
 
-const { data: app, status } = useFetch<{ name: string; site: string }>(
-  "/api/oauth/consent",
-  { query: { request: requestId } }
-);
+const {
+  data: app,
+  error: loadError,
+  refresh,
+  status,
+} = useFetch<{ name: string; site: string }>("/api/oauth/consent", {
+  immediate: !refused.value && requestId.value !== "",
+  query: { request: requestId },
+});
+
+const write = ref(false);
+const answering = ref<"allow" | "deny">();
+const leaving = ref<"allow" | "deny">();
+/** The request went while the page was open: answered elsewhere or expired. */
+const gone = ref(false);
+const error = ref("");
+
+type View = "loading" | "ask" | "leaving" | "expired" | "failed" | "refused";
+
+const view = computed((): View => {
+  if (refused.value) {
+    return "refused";
+  }
+  if (leaving.value) {
+    return "leaving";
+  }
+  if (gone.value || requestId.value === "") {
+    return "expired";
+  }
+  if (status.value === "pending") {
+    return "loading";
+  }
+  if (loadError.value) {
+    return fetchErrorStatus(loadError.value) === 404 ? "expired" : "failed";
+  }
+  return app.value ? "ask" : "loading";
+});
+
+const notice = computed(() => {
+  switch (view.value) {
+    case "refused": {
+      return refused.value;
+    }
+    case "leaving": {
+      return leaving.value === "allow"
+        ? {
+            body: `${app.value?.name ?? "A app"} já tem acesso. Se a app não abrir sozinha, volte a ela. Pode fechar este separador.`,
+            title: "Ligação concluída",
+          }
+        : {
+            body: "A app não ficou com acesso. Pode fechar este separador.",
+            title: "Pedido recusado",
+          };
+    }
+    case "expired": {
+      return {
+        body: "Os pedidos de ligação duram 10 minutos e só se usam uma vez. Volte a ligar a partir da app.",
+        title: "Este pedido expirou",
+      };
+    }
+    case "failed": {
+      return {
+        body: "Verifique a ligação à internet e tente de novo.",
+        title: "Não foi possível carregar o pedido",
+      };
+    }
+    default: {
+      return null;
+    }
+  }
+});
 
 const initial = computed(
   () => app.value?.name.trim().charAt(0).toUpperCase() || "?"
 );
 
-const write = ref(false);
-const answering = ref<"allow" | "deny">();
-const leaving = ref<"allow" | "deny">();
-const error = ref("");
+// An app on the admin's own computer goes back over loopback.
+const siteLabel = computed(() =>
+  app.value?.site === "localhost"
+    ? "uma app neste dispositivo"
+    : app.value?.site
+);
+
+// When the card turns into a notice, the button that was focused is gone:
+// focus moves to the notice's heading, which screen readers then read.
+const heading = useTemplateRef<HTMLElement>("heading");
+watch(view, async (next, previous) => {
+  if (previous && notice.value) {
+    await nextTick();
+    heading.value?.focus();
+  }
+});
+
+/** The session ended meanwhile: sign in again, then come back here. */
+async function signInAgain() {
+  await clear();
+  await navigateTo({ path: "/login", query: { redirect: route.fullPath } });
+}
+
+watch(loadError, (failure) => {
+  if (failure && fetchErrorStatus(failure) === 401) {
+    signInAgain();
+  }
+});
 
 async function answer(choice: "allow" | "deny") {
   answering.value = choice;
@@ -217,13 +330,16 @@ async function answer(choice: "allow" | "deny") {
       }
     );
     if (!redirect) {
-      // Already answered or expired: show it as gone.
-      app.value = undefined;
+      gone.value = true;
       return;
     }
     leaving.value = choice;
     globalThis.location.assign(redirect);
   } catch (answerError: unknown) {
+    if (fetchErrorStatus(answerError) === 401) {
+      await signInAgain();
+      return;
+    }
     error.value =
       fetchErrorMessage(answerError) ?? "Não foi possível responder à app.";
   } finally {

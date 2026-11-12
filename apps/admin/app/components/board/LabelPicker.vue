@@ -113,8 +113,13 @@ watch(open, (isOpen) => {
   }
 });
 
+/** For matching names: no case, accents or surrounding space, as the MCP tools match them. */
 function key(name: string): string {
-  return name.trim().toLocaleLowerCase("pt-PT");
+  return name
+    .normalize("NFD")
+    .replaceAll(/\p{M}/gu, "")
+    .trim()
+    .toLocaleLowerCase("pt-PT");
 }
 
 /**

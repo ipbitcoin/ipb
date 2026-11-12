@@ -11,7 +11,10 @@
         @click.stop
       >
         <template v-for="group in groups" :key="group.label ?? 'options'">
-          <DropdownMenuLabel v-if="group.label" :class="MENU_LABEL">
+          <DropdownMenuLabel
+            v-if="group.label && group.options.length > 0"
+            :class="MENU_LABEL"
+          >
             {{ group.label }}
           </DropdownMenuLabel>
           <DropdownMenuCheckboxItem

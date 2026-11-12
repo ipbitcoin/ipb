@@ -60,6 +60,9 @@
               <template v-if="needsSetup">
                 Primeira entrada — define a tua password para ativar a conta.
               </template>
+              <template v-else-if="nextPath().startsWith('/connect')">
+                Entre para continuar a ligar a app.
+              </template>
               <template v-else>
                 Acesso reservado à equipa do Instituto.
               </template>

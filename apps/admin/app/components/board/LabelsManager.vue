@@ -3,7 +3,7 @@
     <PopoverTrigger
       :class="ICON_BUTTON"
       :aria-label="`Gerir ${words.label.many}`"
-      :title="heading"
+      :title="`Gerir ${words.label.many}`"
     >
       <IconTag class="size-4" />
     </PopoverTrigger>
@@ -32,7 +32,7 @@
             class="group flex h-9 shrink-0 items-center gap-1 rounded-lg pr-1 transition-colors duration-100 hover:bg-neutral-50"
           >
             <BoardMenuSelect
-              label="Cor"
+              :label="`Cor de ${item.name}`"
               :model-value="item.color"
               :options="colorOptions"
               :trigger-class="ICON_BUTTON"
@@ -66,7 +66,7 @@
             <button
               type="button"
               :class="ICON_BUTTON"
-              class="opacity-0 group-hover:opacity-100 focus-visible:opacity-100"
+              class="opacity-0 group-hover:opacity-100 focus-visible:opacity-100 pointer-coarse:opacity-100"
               :aria-label="`Apagar ${item.name}`"
               @click="emit('remove', item)"
             >

@@ -360,7 +360,7 @@ async function removeLabel(label: BoardLabel) {
     danger: true,
     description:
       uses > 0
-        ? `Sai de ${countOf(uses, IDEA_LABEL_WORDS.card)}. Esta ação é irreversível.`
+        ? `Vai ser retirada de ${countOf(uses, IDEA_LABEL_WORDS.card)}. Esta ação é irreversível.`
         : "Esta ação é irreversível.",
     title: `Apagar a etiqueta “${label.name}”?`,
   });

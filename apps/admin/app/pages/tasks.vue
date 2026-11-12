@@ -12,10 +12,14 @@
         <BoardAssigneeFilter v-model="assigneeFilter" :admins="admins ?? []" />
         <BoardMenuMulti
           v-model="categoryFilter"
-          label="Filtrar por categoria"
+          :label="
+            categoryFilter.length > 0
+              ? `Categorias (${categoryFilter.length} no filtro)`
+              : 'Categorias'
+          "
           align="end"
           :groups="filterGroups"
-          empty-label="Ainda sem categorias."
+          empty-label="Ainda sem categorias. Crie-as numa tarefa."
           :trigger-class="categoryFilter.length > 0 ? PILL_ACTIVE : PILL"
         >
           <template #trigger>
@@ -113,9 +117,9 @@
       :create-category="createCategory"
       :default-status="editorStatus"
       :default-assignee-id="assigneeFilter"
-      :default-category-ids="categoryFilter"
+      :default-category-ids="newTaskCategoryIds"
       :order-for="(status) => appendOrder(tasks ?? [], status)"
-      @saved="refresh"
+      @saved="refreshBoard"
     />
   </div>
 </template>
@@ -150,6 +154,13 @@ const { data: categories, refresh: refreshCategories } = useFetch<BoardLabel[]>(
 
 const { confirm } = useConfirm();
 
+/** Tasks and categories both: an AI app may have changed either. */
+async function refreshBoard() {
+  await Promise.all([refresh(), refreshCategories()]);
+}
+
+useRefreshOnReturn(refreshBoard);
+
 const layout = useStoredRef<BoardLayout>(
   "board:tasks:layout",
   "kanban",
@@ -159,6 +170,23 @@ const query = ref("");
 const assigneeFilter = ref<string>();
 /** Ids of the categories picked to filter by. */
 const categoryFilter = ref<string[]>([]);
+
+// A category deleted elsewhere leaves the filter, rather than holding the
+// board empty with nothing ticked to clear.
+watch(categories, (list) => {
+  const known = new Set((list ?? []).map((item) => item._id));
+  if (categoryFilter.value.some((id) => !known.has(id))) {
+    categoryFilter.value = categoryFilter.value.filter((id) => known.has(id));
+  }
+});
+
+/**
+ * The categories a new task starts in: the one the board is filtered to. With
+ * several picked the filter shows any of them, so none is assumed.
+ */
+const newTaskCategoryIds = computed(() =>
+  categoryFilter.value.length === 1 ? [...categoryFilter.value] : []
+);
 
 const filterGroups = computed(() => [
   {
@@ -241,8 +269,7 @@ async function quickAdd(status: string, title: string) {
     await $fetch("/api/data/tasks", {
       body: {
         assigneeId: assigneeFilter.value,
-        // Filtered to categories: the new task is in them.
-        categoryIds: categoryFilter.value,
+        categoryIds: newTaskCategoryIds.value,
         order: appendOrder(tasks.value ?? [], status),
         status,
         title,
@@ -267,14 +294,21 @@ async function updateTask(
   }
   Object.assign(task, next);
   try {
+    // Written over the task as stored now, not as this board loaded it, so
+    // what changed meanwhile (another admin, an AI app) isn't undone.
+    const stored = await $fetch<TaskDoc>(`/api/data/tasks/${task._id}`);
     await $fetch(`/api/data/tasks/${task._id}`, {
-      body: payloadOf(next),
+      body: payloadOf({
+        ...stored,
+        ...changes,
+        order: stored.status === next.status ? stored.order : next.order,
+      }),
       method: "PUT",
     });
   } catch {
     toast.error("Não foi possível atualizar a tarefa.");
-    await refresh();
   }
+  await refresh();
 }
 
 async function onMove(moves: CardMove[]) {
@@ -340,7 +374,7 @@ async function removeCategory(category: BoardLabel) {
     danger: true,
     description:
       uses > 0
-        ? `Sai de ${countOf(uses, TASK_CATEGORY_WORDS.card)}. Esta ação é irreversível.`
+        ? `Vai ser retirada de ${countOf(uses, TASK_CATEGORY_WORDS.card)}. Esta ação é irreversível.`
         : "Esta ação é irreversível.",
     title: `Apagar a categoria “${category.name}”?`,
   });

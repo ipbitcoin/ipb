@@ -73,7 +73,11 @@
 
       <BoardLabelPicker
         v-model="form.categoryIds"
-        label="Categorias"
+        :label="
+          picked.length > 0
+            ? `Categorias: ${picked.map((item) => item.name).join(', ')}`
+            : 'Categorias'
+        "
         :labels="categories"
         :words="TASK_CATEGORY_WORDS"
         :create-label="createCategory"
@@ -235,11 +239,11 @@ function orderOnSave(): number {
 async function save() {
   saving.value = true;
   error.value = "";
-  const known = new Set(props.categories.map((item) => item._id));
   const payload = {
     assigneeId: form.assigneeId || undefined,
-    // A category deleted meanwhile drops out rather than failing the save.
-    categoryIds: form.categoryIds.filter((id) => known.has(id)),
+    // As picked, even ones this page hasn't loaded yet, like a category an
+    // AI app just made. Deleting a category takes it off tasks by itself.
+    categoryIds: form.categoryIds,
     description: form.description.trim() || undefined,
     dueDate: form.dueDate || undefined,
     order: orderOnSave(),

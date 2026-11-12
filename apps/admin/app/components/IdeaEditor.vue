@@ -69,7 +69,11 @@
 
       <BoardMenuMulti
         v-model="form.platforms"
-        label="Plataformas"
+        :label="
+          form.platforms.length > 0
+            ? `Plataformas: ${form.platforms.map(platformLabel).join(', ')}`
+            : 'Plataformas'
+        "
         :groups="[{ options: platformOptions }]"
         :trigger-class="PILL"
       >
@@ -83,8 +87,9 @@
                 class="size-3.5"
               />
             </span>
-            <span class="truncate">
-              {{ form.platforms.map(platformLabel).join(", ") }}
+            <!-- Several read as their marks alone; one is named too. -->
+            <span v-if="form.platforms.length === 1" class="truncate">
+              {{ platformLabel(form.platforms[0] ?? "") }}
             </span>
           </template>
           <span v-else class="flex items-center gap-1.5 text-neutral-500">
