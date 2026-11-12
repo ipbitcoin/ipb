@@ -5,9 +5,9 @@ import { internal } from "./_generated/api";
 const crons = cronJobs();
 
 crons.interval("delete old emails", { hours: 1 }, internal.email.cleanup);
-crons.daily(
+crons.interval(
   "drop expired OAuth requests and tokens",
-  { hourUTC: 4, minuteUTC: 0 },
+  { hours: 1 },
   internal.oauth.cleanup
 );
 

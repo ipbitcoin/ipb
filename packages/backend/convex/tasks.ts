@@ -1,15 +1,7 @@
 import { v } from "convex/values";
 
 import { mutation, query } from "./_generated/server";
-import { assertServiceKey } from "./lib";
-
-export const statusValidator = v.union(
-  v.literal("backlog"),
-  v.literal("todo"),
-  v.literal("in_progress"),
-  v.literal("in_review"),
-  v.literal("done")
-);
+import { assertServiceKey, taskStatus } from "./lib";
 
 const taskFields = {
   assigneeId: v.optional(v.id("adminUsers")),
@@ -17,7 +9,7 @@ const taskFields = {
   description: v.optional(v.string()),
   dueDate: v.optional(v.string()), // ISO date "YYYY-MM-DD"
   order: v.number(),
-  status: statusValidator,
+  status: taskStatus,
   title: v.string(),
 };
 
@@ -73,7 +65,7 @@ export const adminMove = mutation({
     id: v.id("tasks"),
     order: v.number(),
     serviceKey: v.string(),
-    status: statusValidator,
+    status: taskStatus,
   },
   handler: async (ctx, args) => {
     assertServiceKey(args.serviceKey);

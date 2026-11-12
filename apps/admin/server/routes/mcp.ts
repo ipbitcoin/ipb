@@ -10,7 +10,7 @@ import { ConvexError } from "convex/values";
 import type { H3Event } from "h3";
 
 /** Protocol versions spoken, newest first. */
-const PROTOCOLS = ["2025-11-25", "2025-06-18", "2025-03-26"];
+const PROTOCOLS = ["2025-11-25", "2025-06-18"];
 
 const INSTRUCTIONS = `This is the admin of Instituto Português de Bitcoin (IPB), where its team keeps a board of tasks.
 Start with get_board: it lists the statuses, the categories and the people tasks can go to. Tasks are named by id, as list_tasks shows them; people by username, name or email.
@@ -19,25 +19,36 @@ You act as the admin who connected you. The team writes in Portuguese (pt-PT). T
 type Session = NonNullable<FunctionReturnType<typeof api.oauth.session>>;
 
 interface Message {
-  id?: string | number | null;
+  /** Missing on notifications, which get no answer. */
+  id?: string | number;
   method?: string;
   params: Record<string, unknown>;
 }
 
-/** The request as one JSON-RPC message, or null when it isn't one. */
-async function readMessage(event: H3Event): Promise<Message | null> {
-  const body = await readJsonObject(event);
-  if (!body) {
-    return null;
+/** The request as one JSON-RPC message, or the error code and reason it isn't one. */
+async function readMessage(
+  event: H3Event
+): Promise<{ message: Message } | { code: number; reason: string }> {
+  const text = await readBodyText(event);
+  let body: unknown;
+  try {
+    body = JSON.parse(text);
+  } catch {
+    return { code: -32_700, reason: "The body isn't JSON." };
+  }
+  if (!isRecord(body)) {
+    return { code: -32_600, reason: "Send one JSON-RPC message, not a batch." };
   }
   const { id, method, params } = body;
+  if (id === null) {
+    return { code: -32_600, reason: "A request's id is a string or number." };
+  }
   return {
-    id:
-      typeof id === "string" || typeof id === "number" || id === null
-        ? id
-        : undefined,
-    method: typeof method === "string" ? method : undefined,
-    params: isRecord(params) ? params : {},
+    message: {
+      id: typeof id === "string" || typeof id === "number" ? id : undefined,
+      method: typeof method === "string" ? method : undefined,
+      params: isRecord(params) ? params : {},
+    },
   };
 }
 
@@ -45,7 +56,7 @@ function rpcResult(id: Message["id"], result: unknown) {
   return { id, jsonrpc: "2.0", result };
 }
 
-function rpcError(id: Message["id"], code: number, message: string) {
+function rpcError(id: Message["id"] | null, code: number, message: string) {
   return { error: { code, message }, id: id ?? null, jsonrpc: "2.0" };
 }
 
@@ -148,8 +159,7 @@ async function answer(
 export default oauthRoute("POST", async (event) => {
   const { SERVICE_KEY: serviceKey } = useRuntimeConfig(event);
   const convex = convexClient();
-  const header = getHeader(event, "authorization") ?? "";
-  const token = header.startsWith("Bearer ") ? header.slice(7).trim() : "";
+  const token = bearerToken(event);
   const found = token
     ? await convex.query(api.oauth.session, {
         hash: hashSecret(token),
@@ -159,11 +169,12 @@ export default oauthRoute("POST", async (event) => {
   if (!found) {
     return unauthorized(event, token !== "");
   }
-  const message = await readMessage(event);
-  if (!message) {
+  const read = await readMessage(event);
+  if (!("message" in read)) {
     setResponseStatus(event, 400);
-    return rpcError(null, -32_600, "Send one JSON-RPC message as JSON.");
+    return rpcError(null, read.code, read.reason);
   }
+  const { message } = read;
   if (found.stale) {
     await convex.mutation(api.oauth.touch, {
       grantId: found.grantId,

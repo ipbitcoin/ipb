@@ -13,8 +13,8 @@ function redirectFor(
 
 /**
  * Checks the app and where it sends people back to, keeps the request, and
- * sends the browser to the consent page. Until the redirect is known good,
- * errors show here rather than going back to it.
+ * sends the browser to the consent page. Nothing goes back to the app before
+ * an admin agrees: what's wrong shows on the consent page instead.
  */
 export default oauthRoute("GET", async (event) => {
   const params = getRequestURL(event).searchParams;
@@ -26,41 +26,27 @@ export default oauthRoute("GET", async (event) => {
     ? await convex.query(api.oauth.client, { clientId, serviceKey })
     : null;
   if (!found) {
-    return oauthErrorPage(event, "This app isn't registered with IPB Admin.");
+    return connectErrorPage(event, "unknown_app");
   }
   const redirectUri = redirectFor(
     found.redirectUris,
     params.get("redirect_uri")
   );
   if (!redirectUri) {
-    return oauthErrorPage(
-      event,
-      "This app asked to go back somewhere it didn't register."
-    );
-  }
-
-  const origin = oauthOrigin(event);
-  const state = params.get("state") ?? undefined;
-  const fail = (error: string, description: string) =>
-    sendRedirect(
-      event,
-      redirectWith(redirectUri, {
-        error,
-        error_description: description,
-        iss: origin,
-        state,
-      })
-    );
-  if (params.get("response_type") !== "code") {
-    return fail("unsupported_response_type", "Only code is supported.");
+    return connectErrorPage(event, "bad_redirect");
   }
   const challenge = params.get("code_challenge");
-  if (!challenge || params.get("code_challenge_method") !== "S256") {
-    return fail("invalid_request", "PKCE with S256 is required.");
-  }
   const resource = params.get("resource");
-  if (resource && !isThisServer(event, resource)) {
-    return fail("invalid_target", `The resource must be ${mcpUrl(event)}.`);
+  const state = params.get("state") ?? undefined;
+  if (
+    params.get("response_type") !== "code" ||
+    !challenge ||
+    challenge.length > MAX_PARAM ||
+    params.get("code_challenge_method") !== "S256" ||
+    (resource && !isThisServer(event, resource)) ||
+    (state && state.length > MAX_PARAM)
+  ) {
+    return connectErrorPage(event, "bad_request");
   }
 
   const requestId = await convex.mutation(api.oauth.startRequest, {
@@ -70,5 +56,8 @@ export default oauthRoute("GET", async (event) => {
     serviceKey,
     state,
   });
-  return sendRedirect(event, `${origin}${CONNECT_PATH}?request=${requestId}`);
+  return sendRedirect(
+    event,
+    `${oauthOrigin(event)}${CONNECT_PATH}?request=${requestId}`
+  );
 });

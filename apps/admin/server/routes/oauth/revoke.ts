@@ -5,12 +5,7 @@ export default oauthRoute("POST", async (event) => {
   const form = await readOAuthForm(event);
   const found = await authenticateClient(event, form);
   if (!found) {
-    return oauthError(
-      event,
-      "invalid_client",
-      "The app couldn't be identified.",
-      401
-    );
+    return invalidClient(event);
   }
   const token = form.get("token");
   if (token) {

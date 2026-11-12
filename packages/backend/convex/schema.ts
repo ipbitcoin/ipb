@@ -2,7 +2,7 @@ import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 import type { Validator } from "convex/values";
 
-import { labelColor } from "./lib";
+import { labelColor, taskStatus } from "./lib";
 
 // Localized string pair: one Convex document holds both locales.
 const localized = <T extends Validator<unknown, "required", string>>(t: T) =>
@@ -281,13 +281,7 @@ export default defineSchema({
     description: v.optional(v.string()),
     dueDate: v.optional(v.string()), // ISO date "YYYY-MM-DD"
     order: v.number(), // position within the status column
-    status: v.union(
-      v.literal("backlog"),
-      v.literal("todo"),
-      v.literal("in_progress"),
-      v.literal("in_review"),
-      v.literal("done")
-    ),
+    status: taskStatus,
     title: v.string(),
     updatedAt: v.number(),
   }).index("by_status_order", ["status", "order"]),
@@ -314,10 +308,14 @@ export default defineSchema({
       v.literal("client_secret_basic")
     ),
     clientId: v.string(),
+    // When an admin first connected it; never-connected apps are cleaned up.
+    connectedAt: v.optional(v.number()),
     name: v.string(),
     redirectUris: v.array(v.string()),
     secretHash: v.optional(v.string()),
-  }).index("by_client_id", ["clientId"]),
+  })
+    .index("by_client_id", ["clientId"])
+    .index("by_connected", ["connectedAt"]),
 
   // An app asking to connect: waits for an admin to agree, then for the app
   // to trade the one-time code for tokens. Only the code's hash is kept.

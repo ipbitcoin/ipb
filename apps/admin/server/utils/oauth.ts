@@ -32,12 +32,27 @@ export function isClientAuth(value: unknown): value is ClientAuth {
   return CLIENT_AUTHS.some((auth) => auth === value);
 }
 
-/** Where an app on the admin's own computer sends them back to, as shown. */
-const DEVICE_SITE = "uma app neste dispositivo";
+/** The site of a redirect back to the admin's own computer (loopback). */
+export const LOOPBACK_SITE = "localhost";
 
-/** The admin's public address: SITE_URL, or the one the request came to. */
+/** Longest redirect URI or `state` taken from an app. */
+export const MAX_PARAM = 2048;
+/** Largest request body read from an app. */
+const MAX_BODY = 64 * 1024;
+
+/**
+ * The admin's public address, which tokens are issued for: SITE_URL. Only in
+ * development does it fall back to the address the request came to, since
+ * outside it that would follow whatever Host header was sent.
+ */
 export function oauthOrigin(event: H3Event): string {
   const configured = String(useRuntimeConfig(event).SITE_URL ?? "");
+  if (!(configured || import.meta.dev)) {
+    throw createError({
+      message: "SITE_URL isn't set, so AI apps can't connect.",
+      statusCode: 500,
+    });
+  }
   const origin =
     configured ||
     getRequestURL(event, { xForwardedHost: true, xForwardedProto: true })
@@ -100,6 +115,9 @@ function isLoopback(url: URL): boolean {
  * the same device, or an app's own scheme like `cursor://`.
  */
 export function allowedRedirect(uri: string): boolean {
+  if (uri.length > MAX_PARAM) {
+    return false;
+  }
   const url = parseUrl(uri);
   if (!url || url.hash || BLOCKED_SCHEMES.has(url.protocol)) {
     return false;
@@ -132,7 +150,7 @@ export function redirectSite(uri: string): string {
     return uri;
   }
   if (isLoopback(url)) {
-    return DEVICE_SITE;
+    return LOOPBACK_SITE;
   }
   return url.protocol === "https:" ? url.hostname : `${url.protocol}//`;
 }
@@ -195,24 +213,68 @@ export function oauthError(
   return { error, error_description: description };
 }
 
-/** A page for errors that can't go back to the app, say for an unknown redirect. */
-export function oauthErrorPage(event: H3Event, message: string, status = 400) {
-  setResponseStatus(event, status);
-  setResponseHeader(event, "Content-Type", "text/plain; charset=utf-8");
-  return message;
+/** Why an app's request to connect was turned away before an admin saw it. */
+export type ConnectError = "unknown_app" | "bad_redirect" | "bad_request";
+
+/**
+ * Shows the admin, on the consent page, a request that can't go ahead. It
+ * never goes back to the app's redirect: before an admin agrees, that could be
+ * any site an app registered, and the admin's domain would send people there.
+ */
+export function connectErrorPage(event: H3Event, error: ConnectError) {
+  return sendRedirect(
+    event,
+    `${oauthOrigin(event)}${CONNECT_PATH}?error=${error}`
+  );
+}
+
+/** The app couldn't be identified at the token or revocation endpoint (RFC 6749 section 5.2). */
+export function invalidClient(event: H3Event) {
+  if (/^basic /iu.test(getHeader(event, "authorization") ?? "")) {
+    setResponseHeader(event, "WWW-Authenticate", 'Basic realm="IPB Admin"');
+  }
+  return oauthError(
+    event,
+    "invalid_client",
+    "The app couldn't be identified.",
+    401
+  );
+}
+
+/** The bearer token the request carries, or "" for none. */
+export function bearerToken(event: H3Event): string {
+  const header = getHeader(event, "authorization") ?? "";
+  return /^bearer /iu.test(header) ? header.slice(7).trim() : "";
 }
 
 export function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
+/** The request's body as text, refusing ones too large to be an app's. */
+export async function readBodyText(event: H3Event): Promise<string> {
+  const declared = Number(getHeader(event, "content-length") ?? 0);
+  const tooLarge = createError({
+    message: "The request is too large.",
+    statusCode: 413,
+  });
+  if (declared > MAX_BODY) {
+    throw tooLarge;
+  }
+  const text = (await readRawBody(event, "utf-8")) ?? "";
+  if (text.length > MAX_BODY) {
+    throw tooLarge;
+  }
+  return text;
+}
+
 /** The request's JSON body as an object, or null when it isn't one. */
 export async function readJsonObject(
   event: H3Event
 ): Promise<Record<string, unknown> | null> {
-  const text = await readRawBody(event, "utf-8");
+  const text = await readBodyText(event);
   try {
-    const value: unknown = JSON.parse(text ?? "");
+    const value: unknown = JSON.parse(text);
     return isRecord(value) ? value : null;
   } catch {
     return null;
@@ -232,9 +294,7 @@ export async function readOAuthForm(
       )
     );
   }
-  return new Map(
-    new URLSearchParams((await readRawBody(event, "utf-8")) ?? "")
-  );
+  return new Map(new URLSearchParams(await readBodyText(event)));
 }
 
 /** The app at the token or revocation endpoint, checked against its secret when it has one. */
@@ -245,7 +305,7 @@ export async function authenticateClient(
   let clientId = form.get("client_id");
   let secret = form.get("client_secret");
   const header = getHeader(event, "authorization") ?? "";
-  if (header.startsWith("Basic ")) {
+  if (/^basic /iu.test(header)) {
     const pair = Buffer.from(header.slice(6), "base64").toString("utf-8");
     const colon = pair.indexOf(":");
     try {

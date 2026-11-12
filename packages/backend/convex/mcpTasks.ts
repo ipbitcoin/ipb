@@ -3,8 +3,7 @@ import { ConvexError, v } from "convex/values";
 import type { Doc, Id } from "./_generated/dataModel";
 import type { QueryCtx } from "./_generated/server";
 import { mutation, query } from "./_generated/server";
-import { assertServiceKey, labelColor } from "./lib";
-import { statusValidator } from "./tasks";
+import { assertServiceKey, LABEL_COLORS, labelColor, taskStatus } from "./lib";
 
 /**
  * What the admin's MCP tools read and change on the tasks board. The admin
@@ -24,18 +23,6 @@ const STATUSES: { key: Status; label: string }[] = [
   { key: "in_progress", label: "Em Progresso" },
   { key: "in_review", label: "Em Revisão" },
   { key: "done", label: "Concluída" },
-];
-
-const COLORS: Color[] = [
-  "gray",
-  "blue",
-  "green",
-  "yellow",
-  "orange",
-  "red",
-  "pink",
-  "purple",
-  "teal",
 ];
 
 /** The admin board spaces cards this far apart in a column. */
@@ -82,7 +69,11 @@ function personName(admin: Doc<"adminUsers">): string {
   return admin.username ?? admin.name ?? admin.email;
 }
 
-/** The one item a name stands for, or a refusal naming the choices. */
+/**
+ * The one item a name stands for, or a refusal naming the choices. A name as
+ * written (any case) wins over one that only matches without accents, so
+ * "Revisão" and "Revisao" can both be named.
+ */
 function pickOne<T>(
   ref: string,
   items: T[],
@@ -91,10 +82,14 @@ function pickOne<T>(
   what: string,
   hint: string
 ): T {
-  const needle = fold(ref);
-  const found = items.filter((item) =>
-    keys(item).some((key) => key !== undefined && fold(key) === needle)
-  );
+  const matching = (same: (key: string) => boolean) =>
+    items.filter((item) =>
+      keys(item).some((key) => key !== undefined && same(key))
+    );
+  const lower = (text: string) => text.trim().toLocaleLowerCase("pt-PT");
+  const exact = matching((key) => lower(key) === lower(ref));
+  const found =
+    exact.length > 0 ? exact : matching((key) => fold(key) === fold(ref));
   const [only, other] = found;
   if (only && !other) {
     return only;
@@ -249,9 +244,9 @@ async function shown(ctx: QueryCtx, taskId: Id<"tasks">) {
 function nextColor(categories: Doc<"taskCategories">[]): Color {
   const uses = (color: Color) =>
     categories.filter((category) => category.color === color).length;
-  const [color = "blue"] = COLORS.filter((item) => item !== "gray").toSorted(
-    (a, b) => uses(a) - uses(b)
-  );
+  const [color = "blue"] = LABEL_COLORS.filter(
+    (item) => item !== "gray"
+  ).toSorted((a, b) => uses(a) - uses(b));
   return color;
 }
 
@@ -277,7 +272,8 @@ export const board = query({
       })),
       people: [...lookup.people.values()]
         .filter((admin) => admin.active)
-        .map((admin) => ({ email: admin.email, name: personName(admin) })),
+        // Names only: emails stay out of what's sent to the app's provider.
+        .map((admin) => personName(admin)),
       statuses: STATUSES.map((status) => ({
         ...status,
         tasks: count((task) => task.status === status.key),
@@ -294,7 +290,7 @@ export const listTasks = query({
     category: v.optional(v.string()),
     includeDone: v.optional(v.boolean()),
     search: v.optional(v.string()),
-    statuses: v.optional(v.array(statusValidator)),
+    statuses: v.optional(v.array(taskStatus)),
   },
   handler: async (ctx, args) => {
     const me = await actorOf(ctx, args.serviceKey, args.grantId, false);
@@ -378,7 +374,7 @@ export const createTask = mutation({
     categories: v.optional(v.array(v.string())),
     description: v.optional(v.string()),
     dueDate: v.optional(v.string()),
-    status: v.optional(statusValidator),
+    status: v.optional(taskStatus),
     title: v.string(),
   },
   handler: async (ctx, args) => {
@@ -409,7 +405,7 @@ export const updateTask = mutation({
     categories: v.optional(v.array(v.string())),
     description: v.optional(v.union(v.string(), v.null())),
     dueDate: v.optional(v.union(v.string(), v.null())),
-    status: v.optional(statusValidator),
+    status: v.optional(taskStatus),
     taskId: v.string(),
     title: v.optional(v.string()),
   },

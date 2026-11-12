@@ -21,8 +21,14 @@ const ACCESS_MS = 60 * MINUTE;
 const REFRESH_MS = 30 * DAY;
 /** How long an admin has to agree, and the app to trade the code it got. */
 const REQUEST_MS = 10 * MINUTE;
-/** A registered app nobody connected is dropped after this long. */
+/** A registered app nobody ever connected is dropped after this long. */
 const UNUSED_CLIENT_MS = 30 * DAY;
+/**
+ * A refresh token shown again this soon after its trade is taken for a retry
+ * (a lost response, two of the app's windows at once) and only refused; later
+ * it's taken for a copy, and the whole grant goes.
+ */
+const REUSE_GRACE_MS = 30 * 1000;
 /** Last use is written at most this often. */
 const TOUCH_MS = MINUTE;
 /** Rows a cleanup run deletes before it schedules another. */
@@ -182,9 +188,8 @@ export const approve = mutation({
     }
     const request = await pendingRequest(ctx, args.requestId);
     if (!request) {
-      throw new ConvexError(
-        "Este pedido expirou. Volte a ligar a partir da app."
-      );
+      // Answered already or expired: the consent page shows it as gone.
+      return null;
     }
     await ctx.db.patch(request._id, {
       approval: { adminId: admin._id, write: args.write },
@@ -277,6 +282,19 @@ export const redeem = mutation({
       .query("oauthClients")
       .withIndex("by_client_id", (q) => q.eq("clientId", request.clientId))
       .unique();
+    // Connecting the same app again replaces what it had.
+    const earlier = await ctx.db
+      .query("mcpGrants")
+      .withIndex("by_client", (q) => q.eq("clientId", request.clientId))
+      .collect();
+    for (const grant of earlier) {
+      if (grant.adminId === admin._id) {
+        await dropGrant(ctx, grant._id);
+      }
+    }
+    if (app && app.connectedAt === undefined) {
+      await ctx.db.patch(app._id, { connectedAt: Date.now() });
+    }
     const grantId = await ctx.db.insert("mcpGrants", {
       adminId: admin._id,
       clientId: request.clientId,
@@ -325,7 +343,9 @@ export const refresh = mutation({
       return invalid;
     }
     if (token.usedAt !== undefined) {
-      await dropGrant(ctx, grant._id);
+      if (Date.now() - token.usedAt > REUSE_GRACE_MS) {
+        await dropGrant(ctx, grant._id);
+      }
       return invalid;
     }
     const admin = await ctx.db.get(grant.adminId);
@@ -439,7 +459,7 @@ export const disconnect = mutation({
 
 /**
  * Drops what's no longer any good: old requests and tokens, grants left
- * without tokens, and registered apps nobody connected. Runs nightly, and
+ * without tokens, and registered apps nobody ever connected. Runs hourly, and
  * again while there's more.
  */
 export const cleanup = internalMutation({
@@ -466,23 +486,20 @@ export const cleanup = internalMutation({
         await dropGrant(ctx, grantId);
       }
     }
+    // Apps that were connected once stay registered, so they can come back.
     const clients = await ctx.db
       .query("oauthClients")
-      .withIndex("by_creation_time", (q) =>
-        q.lt("_creationTime", now - UNUSED_CLIENT_MS)
+      .withIndex("by_connected", (q) =>
+        q
+          // oxlint-disable-next-line no-useless-undefined -- an index matches a missing field by `undefined`.
+          .eq("connectedAt", undefined)
+          .lt("_creationTime", now - UNUSED_CLIENT_MS)
       )
       .take(BATCH);
     for (const old of clients) {
-      const used = await ctx.db
-        .query("mcpGrants")
-        .withIndex("by_client", (q) => q.eq("clientId", old.clientId))
-        .first();
-      if (!used) {
-        await ctx.db.delete(old._id);
-      }
+      await ctx.db.delete(old._id);
     }
-    // Old apps still in use stay, so they don't count toward going again.
-    if (requests.length === BATCH || tokens.length === BATCH) {
+    if ([requests, tokens, clients].some((rows) => rows.length === BATCH)) {
       await ctx.scheduler.runAfter(0, internal.oauth.cleanup, {});
     }
   },

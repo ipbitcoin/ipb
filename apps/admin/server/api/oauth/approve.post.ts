@@ -1,7 +1,10 @@
 import { api } from "@ipb/backend/api";
 import { ConvexError } from "convex/values";
 
-/** The admin lets the app in: it gets a one-time code back at its redirect. */
+/**
+ * The admin lets the app in: it gets a one-time code back at its redirect.
+ * The redirect is null when the request is gone (answered or expired).
+ */
 export default defineEventHandler(async (event) => {
   const admin = await requireAdmin(event);
   const { request, write } = await readBody<{
@@ -16,22 +19,22 @@ export default defineEventHandler(async (event) => {
   }
   const code = newSecret("ipbac");
   try {
-    const { redirectUri, state } = await convexClient().mutation(
-      api.oauth.approve,
-      {
-        codeHash: hashSecret(code),
-        email: admin.email,
-        requestId: request,
-        serviceKey: useRuntimeConfig(event).SERVICE_KEY,
-        write,
-      }
-    );
+    const approved = await convexClient().mutation(api.oauth.approve, {
+      codeHash: hashSecret(code),
+      email: admin.email,
+      requestId: request,
+      serviceKey: useRuntimeConfig(event).SERVICE_KEY,
+      write,
+    });
+    // Null once the request was answered or expired: the page shows it gone.
     return {
-      redirect: redirectWith(redirectUri, {
-        code,
-        iss: oauthOrigin(event),
-        state,
-      }),
+      redirect: approved
+        ? redirectWith(approved.redirectUri, {
+            code,
+            iss: oauthOrigin(event),
+            state: approved.state,
+          })
+        : null,
     };
   } catch (error: unknown) {
     throw createError({

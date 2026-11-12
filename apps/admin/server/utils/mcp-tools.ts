@@ -6,6 +6,7 @@
  */
 import { api } from "@ipb/backend/api";
 import type { Id } from "@ipb/backend/dataModel";
+import { LABEL_COLORS, TASK_STATUSES } from "@ipb/backend/lib";
 import type { ConvexHttpClient } from "convex/browser";
 import { z } from "zod";
 
@@ -72,31 +73,9 @@ function defineTool<Input extends z.ZodObject>({
   };
 }
 
-const STATUSES = [
-  "backlog",
-  "todo",
-  "in_progress",
-  "in_review",
-  "done",
-] as const;
-
-const COLORS = [
-  "gray",
-  "blue",
-  "green",
-  "yellow",
-  "orange",
-  "red",
-  "pink",
-  "purple",
-  "teal",
-] as const;
-
 const status = z
-  .enum(STATUSES)
-  .describe(
-    "A column of the board: backlog, todo, in_progress, in_review or done."
-  );
+  .enum(TASK_STATUSES)
+  .describe(`A column of the board: ${TASK_STATUSES.join(", ")}.`);
 const taskId = z.string().describe("The task's id, as list_tasks shows it.");
 const person = z
   .string()
@@ -207,6 +186,8 @@ export const MCP_TOOLS: readonly McpTool[] = [
   defineTool({
     description:
       "Changes a task: only the fields given. Pass null to clear the description, assignee or due date. categories replaces the task's categories (an empty list takes them all off). Moving it to another status puts it last in that column. Returns the task.",
+    // It can clear fields and replace categories, so apps should ask first.
+    destructive: true,
     idempotent: true,
     input: z.object({
       assignee: person.nullable().optional(),
@@ -259,7 +240,7 @@ export const MCP_TOOLS: readonly McpTool[] = [
     idempotent: true,
     input: z.object({
       color: z
-        .enum(COLORS)
+        .enum(LABEL_COLORS)
         .optional()
         .describe("Its color; the least used one when left out."),
       name: z.string().min(1).max(40),
