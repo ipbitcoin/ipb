@@ -3,7 +3,7 @@ import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { assertServiceKey } from "./lib";
 
-const statusValidator = v.union(
+export const statusValidator = v.union(
   v.literal("backlog"),
   v.literal("todo"),
   v.literal("in_progress"),

@@ -40,6 +40,8 @@
         <UiButton type="submit" :loading="saving">Guardar</UiButton>
       </div>
     </form>
+
+    <AdminConnections />
   </div>
 </template>
 

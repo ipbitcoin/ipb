@@ -32,8 +32,20 @@ export default defineNuxtConfig({
   // door open for client-side Convex live queries later.
   ssr: false,
   spaLoadingTemplate: true,
+  routeRules: {
+    // Where admins let AI apps in: never inside another site's frame.
+    "/connect": {
+      headers: {
+        "Content-Security-Policy": "frame-ancestors 'none'",
+        "X-Frame-Options": "DENY",
+      },
+    },
+  },
   runtimeConfig: {
     SERVICE_KEY: process.env.SERVICE_KEY,
+    // The admin's public address, e.g. https://admin.institutobitcoin.pt. AI
+    // apps connect to <SITE_URL>/mcp; unset, the request's own address is used.
+    SITE_URL: process.env.SITE_URL ?? "",
     public: {
       CDN_HOST: process.env.NUXT_PUBLIC_CDN_HOST ?? "cdn.institutobitcoin.pt",
       CONVEX_URL: process.env.CONVEX_URL,

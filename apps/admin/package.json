@@ -27,7 +27,8 @@
     "tailwindcss": "catalog:",
     "vue": "catalog:",
     "vue-router": "catalog:",
-    "vue-sonner": "catalog:"
+    "vue-sonner": "catalog:",
+    "zod": "4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/typography": "0.5.20",

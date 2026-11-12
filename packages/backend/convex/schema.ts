@@ -304,4 +304,58 @@ export default defineSchema({
   })
     .index("by_email", ["email"])
     .index("by_username", ["username"]),
+
+  // AI apps (MCP clients) registered with the admin's OAuth server. See
+  // oauth.ts.
+  oauthClients: defineTable({
+    auth: v.union(
+      v.literal("none"),
+      v.literal("client_secret_post"),
+      v.literal("client_secret_basic")
+    ),
+    clientId: v.string(),
+    name: v.string(),
+    redirectUris: v.array(v.string()),
+    secretHash: v.optional(v.string()),
+  }).index("by_client_id", ["clientId"]),
+
+  // An app asking to connect: waits for an admin to agree, then for the app
+  // to trade the one-time code for tokens. Only the code's hash is kept.
+  oauthRequests: defineTable({
+    approval: v.optional(
+      v.object({ adminId: v.id("adminUsers"), write: v.boolean() })
+    ),
+    clientId: v.string(),
+    codeChallenge: v.string(), // PKCE, S256
+    codeHash: v.optional(v.string()),
+    expiresAt: v.number(),
+    redirectUri: v.string(),
+    state: v.optional(v.string()),
+  })
+    .index("by_code", ["codeHash"])
+    .index("by_expires", ["expiresAt"]),
+
+  // An app an admin connected; it acts as them over MCP.
+  mcpGrants: defineTable({
+    adminId: v.id("adminUsers"),
+    clientId: v.string(),
+    clientName: v.string(),
+    clientSite: v.string(), // where it sent the admin back to, as shown
+    lastUsedAt: v.optional(v.number()),
+    write: v.boolean(),
+  })
+    .index("by_admin", ["adminId"])
+    .index("by_client", ["clientId"]),
+
+  // A grant's tokens, by the SHA-256 of each; the tokens themselves aren't kept.
+  mcpTokens: defineTable({
+    expiresAt: v.number(),
+    grantId: v.id("mcpGrants"),
+    hash: v.string(),
+    kind: v.union(v.literal("access"), v.literal("refresh")),
+    usedAt: v.optional(v.number()), // a refresh token, once traded
+  })
+    .index("by_hash", ["hash"])
+    .index("by_grant", ["grantId"])
+    .index("by_expires", ["expiresAt"]),
 });
