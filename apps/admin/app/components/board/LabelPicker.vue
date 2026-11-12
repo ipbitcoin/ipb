@@ -23,8 +23,8 @@
             <ListboxFilter
               v-model="query"
               auto-focus
-              aria-label="Procurar ou criar etiquetas"
-              placeholder="Adicionar etiquetas…"
+              :aria-label="`Procurar ou criar ${words.label.many}`"
+              :placeholder="`Adicionar ${words.label.many}…`"
               autocapitalize="off"
               autocorrect="off"
               spellcheck="false"
@@ -55,7 +55,9 @@
               >
                 <IconPlus class="size-4 shrink-0 text-neutral-500" />
                 <span class="truncate">
-                  <span class="text-neutral-500">Criar etiqueta: </span>
+                  <span class="text-neutral-500"
+                    >Criar {{ words.label.one }}:
+                  </span>
                   “{{ query.trim() }}”
                 </span>
               </ListboxItem>
@@ -66,8 +68,8 @@
             >
               {{
                 query.trim()
-                  ? `Nenhuma etiqueta corresponde a “${query.trim()}”.`
-                  : "Ainda sem etiquetas. Escreva um nome para criar uma."
+                  ? `Nenhuma ${words.label.one} corresponde a “${query.trim()}”.`
+                  : `Ainda sem ${words.label.many}. Escreva um nome para criar uma.`
               }}
             </p>
           </ListboxRoot>
@@ -78,7 +80,7 @@
 </template>
 
 <script setup lang="ts">
-import type { IdeaLabel } from "~/utils/boards";
+import type { BoardLabel, LabelWords } from "~/utils/boards";
 import { MENU_CHECK, MENU_ITEM, POPOVER_CONTENT } from "~/utils/ui";
 
 const MAX_NAME = 40;
@@ -86,7 +88,8 @@ const MAX_NAME = 40;
 const props = withDefaults(
   defineProps<{
     label: string;
-    labels: IdeaLabel[];
+    labels: BoardLabel[];
+    words: LabelWords;
     /** Ids of the labels picked. */
     modelValue: string[];
     /** Makes a label by name; resolves to its id, or nothing when it fails. */

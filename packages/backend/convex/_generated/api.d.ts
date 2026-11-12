@@ -29,6 +29,7 @@ import type * as pricing from "../pricing.js";
 import type * as publishers from "../publishers.js";
 import type * as r2 from "../r2.js";
 import type * as socialMediaIdeas from "../socialMediaIdeas.js";
+import type * as taskCategories from "../taskCategories.js";
 import type * as tasks from "../tasks.js";
 import type * as teamMembers from "../teamMembers.js";
 import type * as trainings from "../trainings.js";
@@ -62,6 +63,7 @@ declare const fullApi: ApiFromModules<{
   publishers: typeof publishers;
   r2: typeof r2;
   socialMediaIdeas: typeof socialMediaIdeas;
+  taskCategories: typeof taskCategories;
   tasks: typeof tasks;
   teamMembers: typeof teamMembers;
   trainings: typeof trainings;

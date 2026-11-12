@@ -13,6 +13,7 @@ const statusValidator = v.union(
 
 const taskFields = {
   assigneeId: v.optional(v.id("adminUsers")),
+  categoryIds: v.optional(v.array(v.id("taskCategories"))),
   description: v.optional(v.string()),
   dueDate: v.optional(v.string()), // ISO date "YYYY-MM-DD"
   order: v.number(),
@@ -58,6 +59,7 @@ export const adminUpdate = mutation({
     await ctx.db.patch(id, {
       // The task arrives whole: an optional field left out was cleared.
       assigneeId: undefined,
+      categoryIds: undefined,
       description: undefined,
       dueDate: undefined,
       ...fields,

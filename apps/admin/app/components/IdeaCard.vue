@@ -75,15 +75,20 @@
 </template>
 
 <script setup lang="ts">
-import type { IdeaDoc, IdeaLabel } from "~/utils/boards";
-import { IDEA_COLUMNS, platformLabel, statusIcon } from "~/utils/boards";
+import type { IdeaDoc, BoardLabel } from "~/utils/boards";
+import {
+  IDEA_COLUMNS,
+  labelsWorn,
+  platformLabel,
+  statusIcon,
+} from "~/utils/boards";
 import { INLINE_TRIGGER } from "~/utils/ui";
 
 const ROW_LABELS = 2;
 
 const props = defineProps<{
   idea: IdeaDoc;
-  labels: IdeaLabel[];
+  labels: BoardLabel[];
   layout: "tile" | "row";
 }>();
 
@@ -99,9 +104,5 @@ const column = computed(() =>
   IDEA_COLUMNS.find((c) => c.key === props.idea.status)
 );
 
-/** The labels the idea wears, in the labels' order; deleted ones drop out. */
-const worn = computed(() => {
-  const ids = new Set(props.idea.labelIds);
-  return props.labels.filter((item) => ids.has(item._id));
-});
+const worn = computed(() => labelsWorn(props.labels, props.idea.labelIds));
 </script>

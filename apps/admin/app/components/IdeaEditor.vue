@@ -42,6 +42,7 @@
         v-model="form.labelIds"
         label="Etiquetas"
         :labels="labels"
+        :words="IDEA_LABEL_WORDS"
         :create-label="createLabel"
         :trigger-class="PILL"
       >
@@ -95,9 +96,10 @@
 <script setup lang="ts">
 import { toast } from "vue-sonner";
 
-import type { IdeaDoc, IdeaLabel } from "~/utils/boards";
+import type { IdeaDoc, BoardLabel } from "~/utils/boards";
 import {
   IDEA_COLUMNS,
+  IDEA_LABEL_WORDS,
   PLATFORMS,
   platformLabel,
   statusIcon,
@@ -105,7 +107,7 @@ import {
 import { PILL } from "~/utils/ui";
 
 const props = defineProps<{
-  labels: IdeaLabel[];
+  labels: BoardLabel[];
   createLabel: (name: string) => Promise<string | undefined>;
   defaultStatus: string;
   /** The order that puts a card at the end of a column. */

@@ -2,8 +2,8 @@
   <PopoverRoot :modal="false">
     <PopoverTrigger
       :class="ICON_BUTTON"
-      aria-label="Gerir etiquetas"
-      title="Etiquetas"
+      :aria-label="`Gerir ${words.label.many}`"
+      :title="heading"
     >
       <IconTag class="size-4" />
     </PopoverTrigger>
@@ -17,7 +17,7 @@
         <header
           class="flex h-10 shrink-0 items-center border-b border-neutral-200 px-3"
         >
-          <h2 class="text-sm font-medium">Etiquetas</h2>
+          <h2 class="text-sm font-medium">{{ heading }}</h2>
           <span class="ml-2 text-sm text-neutral-500 tabular-nums">
             {{ labels.length }}
           </span>
@@ -59,7 +59,7 @@
             />
             <span
               class="w-6 shrink-0 text-right text-xs text-neutral-400 tabular-nums"
-              :title="`${uses(item._id)} ideias`"
+              :title="countOf(uses(item._id), words.card)"
             >
               {{ uses(item._id) }}
             </span>
@@ -78,7 +78,8 @@
           v-else
           class="px-4 py-6 text-center text-sm text-balance text-neutral-500"
         >
-          Ainda sem etiquetas. Crie-as ao escrever o nome numa ideia.
+          Ainda sem {{ words.label.many }}. Crie-as ao escrever o nome numa
+          {{ words.card.one }}.
         </p>
       </PopoverContent>
     </PopoverPortal>
@@ -86,21 +87,28 @@
 </template>
 
 <script setup lang="ts">
-import type { IdeaLabel } from "~/utils/boards";
+import type { BoardLabel, LabelWords } from "~/utils/boards";
+import { countOf } from "~/utils/boards";
 import type { LabelColor } from "~/utils/palette";
 import { LABEL_COLOR_NAMES, LABEL_COLORS } from "~/utils/palette";
 import { ICON_BUTTON, POPOVER_CONTENT } from "~/utils/ui";
 
 const props = defineProps<{
-  labels: IdeaLabel[];
-  /** How many ideas wear each label, by id. */
+  labels: BoardLabel[];
+  words: LabelWords;
+  /** How many cards wear each label, by id. */
   usage: Map<string, number>;
 }>();
 
 const emit = defineEmits<{
-  update: [label: IdeaLabel, changes: { name?: string; color?: LabelColor }];
-  remove: [label: IdeaLabel];
+  update: [label: BoardLabel, changes: { name?: string; color?: LabelColor }];
+  remove: [label: BoardLabel];
 }>();
+
+const heading = computed(
+  () =>
+    `${props.words.label.many.charAt(0).toUpperCase()}${props.words.label.many.slice(1)}`
+);
 
 const colorOptions = LABEL_COLORS.map((color) => ({
   label: LABEL_COLOR_NAMES[color],
@@ -115,7 +123,7 @@ function uses(id: string): number {
   return props.usage.get(id) ?? 0;
 }
 
-function recolor(item: IdeaLabel, color: string | null) {
+function recolor(item: BoardLabel, color: string | null) {
   if (color && isLabelColor(color)) {
     emit("update", item, { color });
   }
@@ -128,7 +136,7 @@ function blurField(event: KeyboardEvent) {
   }
 }
 
-function rename(item: IdeaLabel, event: Event) {
+function rename(item: BoardLabel, event: Event) {
   if (!(event.target instanceof HTMLInputElement)) {
     return;
   }

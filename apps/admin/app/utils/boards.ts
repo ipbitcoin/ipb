@@ -118,16 +118,56 @@ export interface IdeaDoc extends BoardCard {
 
 export interface TaskDoc extends BoardCard {
   assigneeId?: string;
+  categoryIds?: string[];
   createdAt: number;
   description?: string;
   dueDate?: string;
   updatedAt: number;
 }
 
-export interface IdeaLabel {
+/** A colored tag cards wear: an idea's label or a task's category. */
+export interface BoardLabel {
   _id: string;
   color: LabelColor;
   name: string;
+}
+
+interface Noun {
+  one: string;
+  many: string;
+}
+
+/**
+ * What a board calls its labels and its cards, for the label menus. Both are
+ * feminine nouns: the sentences around them agree with that.
+ */
+export interface LabelWords {
+  label: Noun;
+  card: Noun;
+}
+
+export const IDEA_LABEL_WORDS: LabelWords = {
+  card: { many: "ideias", one: "ideia" },
+  label: { many: "etiquetas", one: "etiqueta" },
+};
+
+export const TASK_CATEGORY_WORDS: LabelWords = {
+  card: { many: "tarefas", one: "tarefa" },
+  label: { many: "categorias", one: "categoria" },
+};
+
+/** "1 tarefa", "3 tarefas". */
+export function countOf(count: number, noun: Noun): string {
+  return `${count} ${count === 1 ? noun.one : noun.many}`;
+}
+
+/** The labels a card wears, in the labels' order; deleted ones drop out. */
+export function labelsWorn(
+  labels: BoardLabel[],
+  ids: string[] | undefined
+): BoardLabel[] {
+  const worn = new Set(ids);
+  return labels.filter((item) => worn.has(item._id));
 }
 
 export interface AdminUser {

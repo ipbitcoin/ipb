@@ -268,8 +268,15 @@ export default defineSchema({
     updatedAt: v.number(),
   }).index("by_status_order", ["status", "order"]),
 
+  taskCategories: defineTable({
+    color: labelColor,
+    name: v.string(),
+  }).index("by_name", ["name"]),
+
   tasks: defineTable({
     assigneeId: v.optional(v.id("adminUsers")),
+    // Unset on tasks from before categories, read as none.
+    categoryIds: v.optional(v.array(v.id("taskCategories"))),
     createdAt: v.number(),
     description: v.optional(v.string()),
     dueDate: v.optional(v.string()), // ISO date "YYYY-MM-DD"
