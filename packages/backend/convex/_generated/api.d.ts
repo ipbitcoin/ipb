@@ -20,6 +20,7 @@ import type * as enrollments from "../enrollments.js";
 import type * as faqs from "../faqs.js";
 import type * as ideaLabels from "../ideaLabels.js";
 import type * as lib from "../lib.js";
+import type * as mcpIdeas from "../mcpIdeas.js";
 import type * as mcpTasks from "../mcpTasks.js";
 import type * as memberVerification from "../memberVerification.js";
 import type * as members from "../members.js";
@@ -56,6 +57,7 @@ declare const fullApi: ApiFromModules<{
   faqs: typeof faqs;
   ideaLabels: typeof ideaLabels;
   lib: typeof lib;
+  mcpIdeas: typeof mcpIdeas;
   mcpTasks: typeof mcpTasks;
   memberVerification: typeof memberVerification;
   members: typeof members;

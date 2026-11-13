@@ -10,7 +10,8 @@ import { assertServiceKey, LABEL_COLORS, labelColor, taskStatus } from "./lib";
  * app's MCP server (apps/admin/server/routes/mcp.ts) checks an app's token and
  * calls these with the grant it stands for; each checks that grant again, in
  * the same transaction as its work. Refusals are ConvexErrors written for the
- * model, so it can put its call right.
+ * model, so it can put its call right. The social media board's tools
+ * (mcpIdeas.ts) share the helpers exported here.
  */
 
 type Status = Doc<"tasks">["status"];
@@ -26,19 +27,19 @@ const STATUSES: { key: Status; label: string }[] = [
 ];
 
 /** The admin board spaces cards this far apart in a column. */
-const ORDER_STEP = 1000;
+export const ORDER_STEP = 1000;
 /** Most tasks list_tasks returns at once. */
 const MAX_TASKS = 200;
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/u;
 
-const grantArgs = { grantId: v.id("mcpGrants"), serviceKey: v.string() };
+export const grantArgs = { grantId: v.id("mcpGrants"), serviceKey: v.string() };
 
-function refuse(message: string): ConvexError<string> {
+export function refuse(message: string): ConvexError<string> {
   return new ConvexError(message);
 }
 
 /** The admin the app acts as, once the grant is known good for the call. */
-async function actorOf(
+export async function actorOf(
   ctx: QueryCtx,
   serviceKey: string,
   grantId: Id<"mcpGrants">,
@@ -57,7 +58,7 @@ async function actorOf(
 }
 
 /** For matching names: no case, accents or surrounding space. */
-function fold(text: string): string {
+export function fold(text: string): string {
   return text
     .normalize("NFD")
     .replaceAll(/\p{M}/gu, "")
@@ -65,7 +66,7 @@ function fold(text: string): string {
     .toLocaleLowerCase("pt-PT");
 }
 
-function personName(admin: Doc<"adminUsers">): string {
+export function personName(admin: Doc<"adminUsers">): string {
   return admin.username ?? admin.name ?? admin.email;
 }
 
@@ -74,7 +75,7 @@ function personName(admin: Doc<"adminUsers">): string {
  * written (any case) wins over one that only matches without accents, so
  * "Revisão" and "Revisao" can both be named.
  */
-function pickOne<T>(
+export function pickOne<T>(
   ref: string,
   items: T[],
   keys: (item: T) => (string | undefined)[],
@@ -240,10 +241,10 @@ async function shown(ctx: QueryCtx, taskId: Id<"tasks">) {
   return task ? viewOf(task, await lookupOf(ctx)) : null;
 }
 
-/** A new category's color: whichever the fewest wear, so they stay told apart. */
-function nextColor(categories: Doc<"taskCategories">[]): Color {
+/** A new label's color: whichever the fewest wear, so they stay told apart. */
+export function nextColor(labels: { color: Color }[]): Color {
   const uses = (color: Color) =>
-    categories.filter((category) => category.color === color).length;
+    labels.filter((label) => label.color === color).length;
   const [color = "blue"] = LABEL_COLORS.filter(
     (item) => item !== "gray"
   ).toSorted((a, b) => uses(a) - uses(b));

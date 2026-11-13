@@ -176,13 +176,14 @@ useHead({ title: "Ligar uma app · IPB Admin" });
 const ACCESS = [
   {
     description:
-      "Ver o quadro, as tarefas, as categorias e os nomes da equipa.",
-    label: "Ler tarefas",
+      "Ver as tarefas e as ideias das redes sociais, com as suas categorias e etiquetas, e os nomes da equipa.",
+    label: "Ler tarefas e ideias",
     write: false,
   },
   {
-    description: "Também criar, editar e apagar tarefas, e criar categorias.",
-    label: "Ler e alterar tarefas",
+    description:
+      "Também criar, editar e apagar tarefas, criar e editar ideias, e criar categorias e etiquetas.",
+    label: "Ler e alterar tarefas e ideias",
     write: true,
   },
 ];

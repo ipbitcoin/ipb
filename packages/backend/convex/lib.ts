@@ -37,6 +37,27 @@ export const TASK_STATUSES = [
 export const taskStatus = v.union(
   ...TASK_STATUSES.map((status) => v.literal(status))
 );
+
+/** The social media board's columns, in order. */
+export const IDEA_STATUSES = [
+  "draft",
+  "pending",
+  "approved",
+  "recorded",
+  "edited",
+  "posted",
+] as const;
+
+export const ideaStatus = v.union(
+  ...IDEA_STATUSES.map((status) => v.literal(status))
+);
+
+/** Where a social media idea can be posted. */
+export const IDEA_PLATFORMS = ["youtube", "tiktok", "instagram", "x"] as const;
+
+export const ideaPlatform = v.union(
+  ...IDEA_PLATFORMS.map((platform) => v.literal(platform))
+);
 export type Locale = "pt" | "en";
 
 export interface LocalizedString {

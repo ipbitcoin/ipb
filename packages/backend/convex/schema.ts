@@ -2,7 +2,7 @@ import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 import type { Validator } from "convex/values";
 
-import { labelColor, taskStatus } from "./lib";
+import { ideaPlatform, ideaStatus, labelColor, taskStatus } from "./lib";
 
 // Localized string pair: one Convex document holds both locales.
 const localized = <T extends Validator<unknown, "required", string>>(t: T) =>
@@ -248,22 +248,8 @@ export default defineSchema({
     // Optional only until the migration has given every idea a list.
     labelIds: v.optional(v.array(v.id("ideaLabels"))),
     order: v.number(), // position within the status column
-    platforms: v.array(
-      v.union(
-        v.literal("youtube"),
-        v.literal("tiktok"),
-        v.literal("instagram"),
-        v.literal("x")
-      )
-    ),
-    status: v.union(
-      v.literal("draft"),
-      v.literal("pending"),
-      v.literal("approved"),
-      v.literal("recorded"),
-      v.literal("edited"),
-      v.literal("posted")
-    ),
+    platforms: v.array(ideaPlatform),
+    status: ideaStatus,
     title: v.string(),
     updatedAt: v.number(),
   }).index("by_status_order", ["status", "order"]),

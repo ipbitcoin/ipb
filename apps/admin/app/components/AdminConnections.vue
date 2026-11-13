@@ -8,7 +8,8 @@
       <h2 id="connections-heading" class="text-lg font-medium">Apps de IA</h2>
       <p class="text-sm text-pretty text-neutral-500">
         Ligue o Claude, o ChatGPT ou outra app com MCP para ler e gerir as
-        tarefas. Cada app age em seu nome, com o acesso que lhe der.
+        tarefas e as ideias das redes sociais. Cada app age em seu nome, com o
+        acesso que lhe der.
       </p>
     </div>
 

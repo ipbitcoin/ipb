@@ -1,30 +1,14 @@
 import { v } from "convex/values";
 
 import { mutation, query } from "./_generated/server";
-import { assertServiceKey } from "./lib";
-
-const platformValidator = v.union(
-  v.literal("youtube"),
-  v.literal("tiktok"),
-  v.literal("instagram"),
-  v.literal("x")
-);
-
-const statusValidator = v.union(
-  v.literal("draft"),
-  v.literal("pending"),
-  v.literal("approved"),
-  v.literal("recorded"),
-  v.literal("edited"),
-  v.literal("posted")
-);
+import { assertServiceKey, ideaPlatform, ideaStatus } from "./lib";
 
 const ideaFields = {
   description: v.string(),
   labelIds: v.array(v.id("ideaLabels")),
   order: v.number(),
-  platforms: v.array(platformValidator),
-  status: statusValidator,
+  platforms: v.array(ideaPlatform),
+  status: ideaStatus,
   title: v.string(),
 };
 
@@ -81,7 +65,7 @@ export const adminMove = mutation({
     id: v.id("socialMediaIdeas"),
     order: v.number(),
     serviceKey: v.string(),
-    status: statusValidator,
+    status: ideaStatus,
   },
   handler: async (ctx, args) => {
     assertServiceKey(args.serviceKey);

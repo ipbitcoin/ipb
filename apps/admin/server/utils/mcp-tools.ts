@@ -1,12 +1,18 @@
 /**
- * The tools AI apps can call over MCP (server/routes/mcp.ts): the tasks board,
- * read and changed as the admin who connected the app. Each checks its input
- * here and runs as one Convex function (packages/backend/convex/mcpTasks.ts),
- * which checks the app's grant again before doing anything.
+ * The tools AI apps can call over MCP (server/routes/mcp.ts): the tasks board
+ * and the social media board, read and changed as the admin who connected the
+ * app. Each checks its input here and runs as one Convex function
+ * (packages/backend/convex/mcpTasks.ts and mcpIdeas.ts), which checks the
+ * app's grant again before doing anything.
  */
 import { api } from "@ipb/backend/api";
 import type { Id } from "@ipb/backend/dataModel";
-import { LABEL_COLORS, TASK_STATUSES } from "@ipb/backend/lib";
+import {
+  IDEA_PLATFORMS,
+  IDEA_STATUSES,
+  LABEL_COLORS,
+  TASK_STATUSES,
+} from "@ipb/backend/lib";
 import type { ConvexHttpClient } from "convex/browser";
 import { z } from "zod";
 
@@ -83,6 +89,13 @@ const person = z
     'Someone on the team, by username, name or email; "me" for whoever connected you.'
   );
 const dueDate = z.iso.date().describe("A date, as YYYY-MM-DD.");
+const ideaStatus = z
+  .enum(IDEA_STATUSES)
+  .describe(`A column of the social board: ${IDEA_STATUSES.join(", ")}.`);
+const ideaId = z.string().describe("The idea's id, as list_ideas shows it.");
+const platform = z
+  .enum(IDEA_PLATFORMS)
+  .describe(`Where it's posted: ${IDEA_PLATFORMS.join(", ")}.`);
 
 const grantOf = (tool: ToolCall) => ({
   grantId: tool.grantId,
@@ -254,6 +267,153 @@ export const MCP_TOOLS: readonly McpTool[] = [
         name: input.name,
       }),
     title: "Create a category",
+  }),
+  defineTool({
+    description:
+      "The social media board (ideas for videos and posts) at a glance: its statuses in order (key, the name people see, and how many ideas each holds), its labels and platforms (with how many ideas are in each), and who you are. Start here for ideas.",
+    input: z.object({}),
+    kind: "read",
+    name: "get_social_board",
+    run: (tool) => tool.convex.query(api.mcpIdeas.board, grantOf(tool)),
+    title: "Read the social board",
+  }),
+  defineTool({
+    description:
+      "Ideas on the social board, in board order: by status, then by their place in the column. Shows each idea without its description (get_idea has it). Leaves out posted ideas unless include_posted or status asks for them. Filters combine. Returns at most 200, with the total that matched.",
+    input: z.object({
+      include_posted: z
+        .boolean()
+        .optional()
+        .describe("Also list posted ideas."),
+      label: z
+        .string()
+        .optional()
+        .describe("Only ideas with this label, by name."),
+      platform: platform.optional().describe("Only ideas for this platform."),
+      search: z
+        .string()
+        .optional()
+        .describe(
+          "Words every idea listed has in its title, description or labels."
+        ),
+      status: z
+        .array(ideaStatus)
+        .optional()
+        .describe("Only ideas in these statuses."),
+    }),
+    kind: "read",
+    name: "list_ideas",
+    run: (tool, input) =>
+      tool.convex.query(api.mcpIdeas.listIdeas, {
+        ...grantOf(tool),
+        includePosted: input.include_posted,
+        label: input.label,
+        platform: input.platform,
+        search: input.search,
+        statuses: input.status,
+      }),
+    title: "List ideas",
+  }),
+  defineTool({
+    description:
+      "One idea in full: title, description, status, labels, platforms, and when it was made and last changed.",
+    input: z.object({ idea_id: ideaId }),
+    kind: "read",
+    name: "get_idea",
+    run: (tool, input) =>
+      tool.convex.query(api.mcpIdeas.getIdea, {
+        ...grantOf(tool),
+        ideaId: input.idea_id,
+      }),
+    title: "Read an idea",
+  }),
+  defineTool({
+    description:
+      "Adds an idea to the social board, last in its status column. The team writes in Portuguese (pt-PT): write the title and description in it unless told otherwise. Returns the idea.",
+    input: z.object({
+      description: z.string().optional().describe("Plain text."),
+      labels: z
+        .array(z.string())
+        .optional()
+        .describe(
+          "Label names the board has (get_social_board lists them; create_idea_label adds one)."
+        ),
+      platforms: z
+        .array(platform)
+        .optional()
+        .describe("Where it will be posted."),
+      status: ideaStatus
+        .optional()
+        .describe("Where it starts; draft when left out."),
+      title: z.string().min(1),
+    }),
+    kind: "write",
+    name: "create_idea",
+    run: (tool, input) =>
+      tool.convex.mutation(api.mcpIdeas.createIdea, {
+        ...grantOf(tool),
+        description: input.description,
+        labels: input.labels,
+        platforms: input.platforms,
+        status: input.status,
+        title: input.title,
+      }),
+    title: "Create an idea",
+  }),
+  defineTool({
+    description:
+      "Changes an idea: only the fields given. labels and platforms replace the idea's own (an empty list takes them all off). Moving it to another status puts it last in that column. Returns the idea.",
+    // It can replace descriptions, labels and platforms, so apps should ask first.
+    destructive: true,
+    idempotent: true,
+    input: z.object({
+      description: z.string().optional().describe("Plain text; replaces it."),
+      idea_id: ideaId,
+      labels: z
+        .array(z.string())
+        .optional()
+        .describe("Every label the idea has, by name."),
+      platforms: z
+        .array(platform)
+        .optional()
+        .describe("Every platform it will be posted on."),
+      status: ideaStatus.optional(),
+      title: z.string().min(1).optional(),
+    }),
+    kind: "write",
+    name: "update_idea",
+    run: (tool, input) =>
+      tool.convex.mutation(api.mcpIdeas.updateIdea, {
+        ...grantOf(tool),
+        description: input.description,
+        ideaId: input.idea_id,
+        labels: input.labels,
+        platforms: input.platforms,
+        status: input.status,
+        title: input.title,
+      }),
+    title: "Update an idea",
+  }),
+  defineTool({
+    description:
+      "Adds a label ideas can wear. A name the board already has (ignoring case and accents) is that label, not a new one. Returns its name and color, and whether it was created.",
+    idempotent: true,
+    input: z.object({
+      color: z
+        .enum(LABEL_COLORS)
+        .optional()
+        .describe("Its color; the least used one when left out."),
+      name: z.string().min(1).max(40),
+    }),
+    kind: "write",
+    name: "create_idea_label",
+    run: (tool, input) =>
+      tool.convex.mutation(api.mcpIdeas.createLabel, {
+        ...grantOf(tool),
+        color: input.color,
+        name: input.name,
+      }),
+    title: "Create an idea label",
   }),
 ];
 
