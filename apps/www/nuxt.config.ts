@@ -1,5 +1,20 @@
 import tailwindcss from "@tailwindcss/vite";
 
+const IMAGE_QUALITY = 80;
+
+// Vercel bills an image transformation on every cache miss and on every stale
+// revalidation. @nuxt/image caps the cache at 5 minutes and R2 sends no
+// Cache-Control, so each cover was transformed again 5 minutes after it was
+// last cached. R2 objects are never overwritten (every upload gets a new key),
+// so a cached result stays valid: keep it for 31 days, as Vercel recommends for
+// images that do not change. `qualities` refuses requests with any other `q`,
+// so made-up values cannot each cost a transformation. Nitro's type does not
+// list `qualities` yet, hence a plain object rather than an inline literal.
+const vercelImages = {
+  minimumCacheTTL: 60 * 60 * 24 * 31,
+  qualities: [IMAGE_QUALITY],
+};
+
 export default defineNuxtConfig({
   app: {
     head: {
@@ -105,7 +120,7 @@ export default defineNuxtConfig({
     // Article covers live on the CMS bucket; only listed hosts get optimised.
     domains: ["cdn.institutobitcoin.pt"],
     format: ["webp"],
-    quality: 80,
+    quality: IMAGE_QUALITY,
     // Phones get a screen of their own, added to the default sm–2xl ones, so
     // their `sizes` entry can be keyed to it ("xs:100vw sm:50vw"). An unkeyed
     // entry is sized for a 1px screen and adds broken 0w–2w srcset candidates.
@@ -123,6 +138,9 @@ export default defineNuxtConfig({
     "@vercel/analytics",
     "@nuxt/image",
   ],
+  nitro: {
+    vercel: { config: { images: vercelImages } },
+  },
   ogImage: {
     enabled: false,
   },
