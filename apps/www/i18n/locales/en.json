@@ -13,11 +13,12 @@
     "join": "Join us",
     "information": "Information",
     "contacts": "Contacts",
-    "training": "Training",
+    "training": "In-person training",
     "menu": "Menu",
     "main": "Main",
     "skip": "Skip to content",
-    "language": "Language"
+    "language": "Language",
+    "onlineCourse": "Online course"
   },
   "main": {
     "header": "Building the Future of Bitcoin in Portugal",
@@ -226,7 +227,8 @@
           "Take part in themed and district groups on WhatsApp",
           "Participate in Meetups and P2P markets",
           "Member price on the annual conference, annual dinner, workshops and 101 technical support",
-          "Online support for local communities"
+          "Online support for local communities",
+          "10% off the online courses"
         ]
       },
       "t2": {
@@ -241,7 +243,8 @@
           "Organize Meetups and P2P markets",
           "Annual conference and annual dinner included",
           "50% off workshops and 101 technical support",
-          "In-person support for local communities"
+          "In-person support for local communities",
+          "25% off the online courses"
         ]
       },
       "eyebrow": "Membership"

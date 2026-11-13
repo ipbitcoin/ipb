@@ -13,6 +13,8 @@ import type * as articles from "../articles.js";
 import type * as authors from "../authors.js";
 import type * as books from "../books.js";
 import type * as categories from "../categories.js";
+import type * as courseCatalog from "../courseCatalog.js";
+import type * as courses from "../courses.js";
 import type * as crons from "../crons.js";
 import type * as docs from "../docs.js";
 import type * as email from "../email.js";
@@ -46,6 +48,8 @@ declare const fullApi: ApiFromModules<{
   authors: typeof authors;
   books: typeof books;
   categories: typeof categories;
+  courseCatalog: typeof courseCatalog;
+  courses: typeof courses;
   crons: typeof crons;
   docs: typeof docs;
   email: typeof email;

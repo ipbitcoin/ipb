@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Escassez digital | Curso 1 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 5.3 do Curso 1: No fim desta lição, será possível explicar o problema do gasto duplo e como o Bitcoin consegue que um ficheiro digital seja escasso, sem árbitro central.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#curso">← Curso 1 · A Génese</a>
+    <span class="where">Lição 19 de 26</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="26" aria-valuenow="19"><span style="width:73.1%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+
+    <p class="eyebrow">Módulo 5 · O Bitcoin como resposta · Lição 5.3</p>
+    <h1>Escassez digital</h1>
+    <p class="lead">No fim desta lição, será possível explicar o problema do gasto duplo e como o Bitcoin consegue que um ficheiro digital seja escasso, sem árbitro central.</p>
+    <p class="meta"><span>10 min de leitura</span><span>2 perguntas</span></p>
+    <h2>O problema: o digital copia-se</h2>
+    <p>Um ficheiro digital é um conjunto de zeros e uns, que se copiam sem custo e sem perda. Quando se envia uma fotografia a alguém, não se fica sem ela. Isto é ótimo para fotografias e péssimo para dinheiro: se um «euro digital» fosse só um ficheiro, qualquer pessoa o copiava e gastava duas, três, mil vezes. A isto chama-se o <strong>problema do gasto duplo</strong>. O dinheiro só funciona se for escasso.</p>
+    <h2>A solução tradicional: um árbitro</h2>
+    <p>Até 2008, a única forma de resolver o gasto duplo era um intermediário de confiança: um banco, uma empresa de pagamentos. O banco mantém o registo de quem tem quanto e recusa a segunda tentativa de gastar o mesmo dinheiro. Funciona, mas depende do banco: pode errar, falhar, congelar a conta ou ser alvo de ataque.</p>
+    <h2>A solução do Bitcoin: um registo que todos mantêm</h2>
+    <p>Em vez de um árbitro central, o Bitcoin usa um registo público partilhado por milhares de computadores, a <strong>cadeia de blocos</strong> (<em>blockchain</em>). Cada transação é anunciada a toda a rede e, quando é aceite num bloco, todos atualizam a sua cópia. Quem tenta gastar o mesmo bitcoin duas vezes vê a rede aceitar a primeira e rejeitar a segunda.</p>
+    <div class="card" id="sim">
+      <h3>Simulador de gasto duplo</h3>
+      <p style="margin:0;font-size:16px;color:var(--muted)">A Ana tem 1 bitcoin e tenta enviá-lo a duas pessoas.</p>
+      <div class="sim-row">
+        <button type="button" class="btn" id="sim-bob">Enviar ao Bruno</button>
+        <button type="button" class="btn" id="sim-carla">Enviar à Carla</button>
+        <button type="button" class="btn secondary" id="sim-reset">Recomeçar</button>
+      </div>
+      <pre class="ledger" id="sim-ledger" role="status" aria-live="polite"></pre>
+    </div>
+    <h2>Duas perguntas e duas respostas</h2>
+    <div class="cards two">
+      <div class="card"><span class="n">PERGUNTA 1</span><h3>Quem decide qual transação veio primeiro?</h3><p>Os computadores concordam numa ordem única de blocos. Para um bloco ser aceite, tem de provar trabalho: caro de produzir e barato de verificar. É assim que se obtém consenso sem autoridade central.</p></div>
+      <div class="card"><span class="n">PERGUNTA 2</span><h3>Como se sabe que o bitcoin é de quem o gasta?</h3><p>Com criptografia: só quem tem a chave privada consegue assinar uma transação que gasta esse bitcoin. Sem a chave, ninguém o mexe.</p></div>
+    </div>
+    <h2>Uma oferta que não se acelera com dinheiro</h2>
+    <p>A dificuldade da prova de trabalho ajusta-se para manter um bloco a cada dez minutos, mais ou menos, qualquer que seja a quantidade de mineradores. Por isso a emissão é insensível ao esforço: aplicar mais capital não acelera a criação de bitcoins. Costuma dizer-se que o Bitcoin está «preso no tempo», e não «no chão» como o ouro, cuja produção sobe se for descoberto mais ouro ou se houver mais capital.</p>
+    <p>A recompensa de bloco equivale, aproximadamente, ao custo do trabalho, e só compensa a quem tem eletricidade barata. A mineração é, no essencial, adivinhar: não há vantagem por talento, só quem aplica mais dinheiro ou tem energia mais barata. O Curso 2 explica como isto funciona por dentro.</p>
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      O Bitcoin não impede a cópia de ficheiros. Resolve outra coisa: quem é dono de quê, sem precisar de um árbitro central. É isso a escassez digital.
+    </div>
+    <div class="callout warning">
+      <span class="tag">Um cuidado</span>
+      <p>Chamar «escassez digital» ao Bitcoin não significa que o ficheiro seja escasso, mas que a propriedade do bitcoin é única e verificável por todos. A palavra é uma simplificação útil, não uma definição técnica.</p>
+    </div>
+    <h2>Verificação</h2>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>O que é o problema do gasto duplo?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>Pagar duas vezes pelo mesmo produto</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Poder copiar dinheiro digital e gastá-lo mais do que uma vez</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Ter duas contas no mesmo banco</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>É a razão pela qual o dinheiro digital precisava de um árbitro. O Bitcoin resolve-o com um registo partilhado.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>O que significa dizer que o Bitcoin está «preso no tempo»?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>Que a emissão não se acelera só com mais capital</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Que a rede pára de vez em quando</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Que as transações demoram anos</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>O ajuste de dificuldade mantém o ritmo de emissão, qualquer que seja o esforço aplicado.</p>
+    </fieldset>
+
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>Satoshi Nakamoto, «Bitcoin: A Peer-to-Peer Electronic Cash System», 2008, secções 1 e 2.</li>
+      <li>Resumo do IPB das ideias da estrutura temática (tema 14.1 e 14.2).</li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="5.3">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="5.2-antes-de-satoshi.html" rel="prev"><small>← Anterior</small><span>5.2 Antes de Satoshi</span></a>
+      <a class="next" href="5.4-o-que-da-valor-ao-bitcoin.html" rel="next"><small>Seguinte →</small><span>5.4 O que dá valor ao Bitcoin</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>

@@ -6,6 +6,32 @@
       :description="$t('education.description')"
     />
 
+    <section aria-labelledby="courses-heading" class="section section-gap">
+      <div class="flex flex-wrap items-end justify-between gap-x-10 gap-y-6">
+        <div class="flex max-w-3xl flex-col gap-4">
+          <h2 id="courses-heading" class="section-title">
+            {{ courses.title }}
+          </h2>
+          <p class="lead mt-1 max-w-2xl">{{ courses.description }}</p>
+        </div>
+        <UiButton variant="outline" arrow :to="localePath('curso-online')">
+          {{ courses.all }}
+        </UiButton>
+      </div>
+
+      <ul class="mt-12 grid gap-6 lg:grid-cols-3">
+        <li
+          v-for="(course, index) in ONLINE_COURSES"
+          :key="course.slug"
+          class="reveal"
+          :style="{ '--reveal-delay': `${index * 100}ms` }"
+        >
+          <IPBCourseCard :course="course" />
+        </li>
+      </ul>
+      <p class="mt-6 text-sm text-neutral-500">{{ courses.note }}</p>
+    </section>
+
     <section
       v-if="books.length"
       aria-labelledby="books-heading"
@@ -118,6 +144,24 @@ const SEO = {
   },
 } as const;
 const seo = computed(() => SEO[appLocale.value]);
+
+const COURSES_COPY = {
+  en: {
+    all: "About the online courses",
+    description:
+      "Three self-paced courses, 100% online, with a diploma at the end. Members get a discount.",
+    note: "Each course costs €39 (members: 10% or 25% off). The lessons are written in Portuguese.",
+    title: "Online courses",
+  },
+  pt: {
+    all: "Sobre os cursos online",
+    description:
+      "Três cursos de autoestudo, 100% online, com diploma no fim. Os membros têm desconto.",
+    note: "Cada curso custa 39 € (membros: 10% ou 25% de desconto). As lições estão escritas em português.",
+    title: "Cursos online",
+  },
+} as const;
+const courses = computed(() => COURSES_COPY[appLocale.value]);
 
 // The title runs through the global "%s | Instituto Português de Bitcoin"
 // template; social titles do not, so they carry the short name instead.

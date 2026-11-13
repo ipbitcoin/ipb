@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chaves, endereços e frase de recuperação | Curso 2 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 5.2 do Curso 2: No fim desta lição, será possível dizer o que é uma chave privada, uma chave pública, um endereço e uma frase de recuperação, como se relacionam e o que é,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#curso">← Curso 2 · A Tecnologia</a>
+    <span class="where">Lição 16 de 21</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="21" aria-valuenow="16"><span style="width:76.2%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+
+    <p class="eyebrow">Módulo 5 · Chaves e carteiras · Lição 5.2</p>
+    <h1>Chaves, endereços e frase de recuperação</h1>
+    <p class="lead">No fim desta lição, será possível dizer o que é uma chave privada, uma chave pública, um endereço e uma frase de recuperação, como se relacionam e o que é, de facto, «enviar» bitcoin.</p>
+    <p class="meta"><span>12 min de leitura</span><span>2 perguntas</span></p>
+    <h2>Uma carteira não guarda moedas</h2>
+    <p>Uma carteira Bitcoin não guarda moedas. As moedas existem como entradas no registo público (a blockchain). O que a carteira guarda são as chaves que permitem gastá-las. É por isso que perder o telemóvel não faz perder o Bitcoin, se houver a frase de recuperação.</p>
+    <h2>Três peças ligadas por matemática</h2>
+    <div class="cards">
+      <div class="card"><span class="n">1 · CHAVE PRIVADA</span><h3>O segredo</h3><p>Um número aleatório enorme (256 bits). Quem a tem, controla os fundos. Nunca se partilha.</p></div>
+      <div class="card"><span class="n">2 · CHAVE PÚBLICA</span><h3>Derivada da privada</h3><p>Calcula-se por curvas elípticas a partir da privada, mas não se consegue voltar atrás. Serve para verificar assinaturas.</p></div>
+      <div class="card"><span class="n">3 · ENDEREÇO</span><h3>O IBAN</h3><p>Derivado da chave pública por funções de hash. Pode partilhar-se à vontade: serve para receber bitcoin.</p></div>
+    </div>
+    <p>O sentido direto (da privada à pública, e desta ao endereço) é instantâneo. O sentido inverso é «efetivamente impossível».</p>
+    <h2>«Enviar» é assinar e publicar</h2>
+    <p>Para gastar, a carteira usa a chave privada para <strong>assinar</strong> a transação, e publica-a. A rede verifica a assinatura com a chave pública, e confirma que é o titular, sem nunca ver a chave privada. A rede só valida a assinatura: não sabe o que é uma exchange, uma empresa ou uma pessoa. A assinatura é o ponto crítico: forjá-la seria o maior risco, e é o tema da lição 6.1.</p>
+    <ol class="flow">
+      <li><strong>Carteira</strong>Prepara a transação e assina com a chave privada.</li>
+      <li><strong>Rede</strong>Propaga a transação e cada nó verifica a assinatura com a chave pública.</li>
+      <li><strong>Mineradores</strong>Incluem a transação num bloco.</li>
+      <li><strong>Confirmação</strong>Os nós aceitam o bloco e a transação fica registada.</li>
+    </ol>
+    <h2>Um endereço, por fora</h2>
+    <ul>
+      <li><code>bc1q…</code> é o SegWit nativo, o mais comum.</li>
+      <li><code>bc1p…</code> é o Taproot, mais recente.</li>
+      <li><code>1…</code> ou <code>3…</code> são formatos antigos, que ainda funcionam.</li>
+    </ul>
+    <h2>A frase de recuperação</h2>
+    <p>Uma chave privada com 64 caracteres é impossível de decorar e fácil de copiar mal. Por isso, as carteiras geram uma <strong>frase de recuperação</strong> (<em>seed phrase</em>), com 12 ou 24 palavras escolhidas de uma lista fixa de 2.048 (padrão BIP-39). A frase é a carteira: com ela, restaura-se tudo em qualquer dispositivo.</p>
+    <p>Uma frase de 12 palavras tem 128 bits de aleatoriedade, ou seja, cerca de 3,4 × 10<sup>38</sup> combinações. Adivinhá-la é, na prática, impossível. O risco nunca é a matemática: é a forma como se guarda. Como as carteiras modernas são determinísticas hierárquicas (padrão BIP-32), uma só frase gera uma árvore inteira de chaves e endereços. Por isso a carteira mostra um endereço novo a cada receção, o que melhora a privacidade e exige um só backup.</p>
+    <div class="callout risk">
+      <span class="tag">Regra de ouro</span>
+      <p>Quem tem a frase tem o Bitcoin. Nunca se deve digitá-la num site, enviá-la por mensagem ou fotografá-la. Nenhuma pessoa, empresa ou «suporte» legítimo pede a frase. Isto inclui o IPB.</p>
+    </div>
+    <h2>A frase de segurança extra</h2>
+    <p>Muitas carteiras permitem acrescentar uma <em>passphrase</em>, por vezes chamada «a 25.ª palavra». Dá origem a uma carteira completamente diferente. Aumenta a segurança, mas se for esquecida, o acesso perde-se para sempre. Não é para o primeiro dia.</p>
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      A frase de recuperação é a carteira. O telemóvel é só uma janela para ela, e «enviar» é assinar com a chave privada.
+    </div>
+    <h2>Verificação</h2>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>O que se vê da chave privada, quando se envia uma transação?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>Nada: a rede só valida a assinatura</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>A chave inteira, para confirmar</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Os últimos 4 dígitos</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>A rede verifica a assinatura com a chave pública, sem nunca ver a chave privada.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>O que acontece se se perder o telemóvel mas houver a frase de recuperação?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>O Bitcoin perde-se</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Restaura-se tudo noutro dispositivo</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>O IPB repõe a frase</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>A frase é a carteira.</p>
+    </fieldset>
+
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>BIP-39, «Mnemonic code for generating deterministic keys»: <a href="https://github.com/bitcoin/bips" target="_blank" rel="noopener">github.com/bitcoin/bips</a>.</li>
+      <li>BIP-32, «Hierarchical Deterministic Wallets».</li>
+      <li>Andreas Antonopoulos e David Harding, «Mastering Bitcoin», 3.ª edição, 2023, caps. 4 e 5.</li>
+      <li>Resumo do IPB das ideias da estrutura temática (tema 14.3).</li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="5.2">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="5.1-quem-guarda-as-chaves.html" rel="prev"><small>← Anterior</small><span>5.1 Quem guarda as chaves</span></a>
+      <a class="next" href="5.3-tipos-de-carteira.html" rel="next"><small>Seguinte →</small><span>5.3 Tipos de carteira</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>

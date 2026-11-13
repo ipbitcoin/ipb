@@ -1,3 +1,5 @@
+import { fileURLToPath } from "node:url";
+
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
@@ -66,6 +68,30 @@ export default defineNuxtConfig({
         en: "/contacts",
         pt: "/contactos",
       },
+      "curso-online": {
+        en: "/online-course",
+        pt: "/curso-online",
+      },
+      "curso-online-compra": {
+        en: "/online-course/purchase",
+        pt: "/curso-online/compra",
+      },
+      "curso-online-curso": {
+        en: "/online-course/[curso]",
+        pt: "/curso-online/[curso]",
+      },
+      "curso-online-diploma-curso": {
+        en: "/online-course/diploma/[curso]",
+        pt: "/curso-online/diploma/[curso]",
+      },
+      "curso-online-entrar": {
+        en: "/online-course/sign-in",
+        pt: "/curso-online/entrar",
+      },
+      "curso-online-verificar-codigo": {
+        en: "/online-course/verify/[codigo]",
+        pt: "/curso-online/verificar/[codigo]",
+      },
       educacao: {
         en: "/education",
         pt: "/educacao",
@@ -123,6 +149,18 @@ export default defineNuxtConfig({
     "@vercel/analytics",
     "@nuxt/image",
   ],
+  nitro: {
+    // The lesson files of the online courses (courses/curso-N/html) are read
+    // by the server and only handed to learners who bought them.
+    serverAssets: [
+      {
+        baseName: "courses",
+        dir: fileURLToPath(new URL("../../courses", import.meta.url)),
+        // Only the lessons and their shared style and script, not the plans.
+        pattern: "**/html/*.{html,css,js}",
+      },
+    ],
+  },
   ogImage: {
     enabled: false,
   },
@@ -130,7 +168,7 @@ export default defineNuxtConfig({
     blockNonSeoBots: true,
     // /_nuxt/ stays open: search engines load its scripts and styles to
     // render each page the way visitors see it.
-    disallow: ["/api/", "/_ipx/", "/__nuxt_error"],
+    disallow: ["/api/", "/aula/", "/_ipx/", "/__nuxt_error"],
     sitemap: "https://institutobitcoin.pt/sitemap.xml",
   },
   // Scroll behaviour lives in app/router.options.ts: hash targets on another

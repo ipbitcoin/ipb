@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mineração e prova de trabalho | Curso 2 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 1.3 do Curso 2: No fim desta lição, será possível explicar como se produz um bloco, o que é a prova de trabalho, porque ninguém ganha em fazer batota e porque o Bitcoin nã">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#curso">← Curso 2 · A Tecnologia</a>
+    <span class="where">Lição 4 de 21</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="21" aria-valuenow="4"><span style="width:19.0%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+
+    <p class="eyebrow">Módulo 1 · Como funciona a rede · Lição 1.3</p>
+    <h1>Mineração e prova de trabalho</h1>
+    <p class="lead">No fim desta lição, será possível explicar como se produz um bloco, o que é a prova de trabalho, porque ninguém ganha em fazer batota e porque o Bitcoin não se copia.</p>
+    <p class="meta"><span>11 min de leitura</span><span>2 perguntas · 1 simulação</span></p>
+    <h2>O puzzle</h2>
+    <p>Para propor um bloco, o minerador tem de encontrar um número, a <strong>nonce</strong>, que faça o hash do cabeçalho do bloco começar por um certo número de zeros. Não há atalho: só se descobre tentando. O minerador altera a nonce, calcula o hash, vê se serve e repete, milhares de milhões de vezes por segundo. A mineração é, no essencial, <strong>adivinhar</strong>: não há vantagem por talento, só quem aplica mais dinheiro ou tem energia mais barata. É isso que dá neutralidade e credibilidade.</p>
+    <p>Numa versão de brinquedo, quantos mais zeros se pedirem, mais tentativas são precisas:</p>
+    <div class="card" id="pow">
+      <h3>Minerar um bloco de brinquedo</h3>
+      <div class="tool">
+        <div><label for="pow-data">Dados do bloco</label><input type="text" id="pow-data" value="Ana paga 1 a Bruno" autocomplete="off"></div>
+        <div><label for="pow-diff">Zeros no início do hash</label><select id="pow-diff"><option>1</option><option>2</option><option selected>3</option><option>4</option></select></div>
+      </div>
+      <div class="sim-row"><button type="button" class="btn" id="pow-run">Minerar</button></div>
+      <pre class="ledger" id="pow-out" role="status" aria-live="polite" style="overflow-wrap:anywhere;white-space:pre-wrap"></pre>
+    </div>
+    <p>Com um zero esperam-se cerca de 16 tentativas; com três, cerca de 4.000; com quatro, cerca de 65.000. A cada zero a mais, o trabalho multiplica-se por 16. A rede real exige muito mais.</p>
+    <h2>Difícil de fazer, fácil de verificar</h2>
+    <p>Encontrar a nonce custa muito trabalho. Verificar que está certa custa um só cálculo. É por isso que todos os nós conferem um bloco em milissegundos, ainda que o minerador tenha gasto uma enorme quantidade de energia a produzi-lo. É como um sudoku: difícil de resolver, instantâneo de conferir. Foi assim que o Bitcoin resolveu o problema dos generais bizantinos: chegar a consenso sem autoridade central.</p>
+    <h2>A dificuldade ajusta-se sozinha</h2>
+    <p>Se entrarem mais mineradores e os blocos aparecerem mais depressa, a rede aumenta a dificuldade. Se saírem, diminui. Isto acontece a cada <strong>2.016 blocos</strong> (cerca de duas semanas), para manter a média de <strong>um bloco a cada dez minutos</strong>. O alvo de dez minutos é um «batimento cardíaco» saudável: um intervalo demasiado curto impede os nós de se espalharem pelo mundo (a informação não viaja mais depressa do que a luz e o hardware é modesto) e gera blocos órfãos. Os pagamentos instantâneos fazem-se em camadas (lição 3.2).</p>
+    <h2>Recompensa e halving</h2>
+    <p>Quem encontra o bloco recebe duas coisas: o <strong>subsídio de bloco</strong>, bitcoin novo, e as <strong>comissões</strong> das transações incluídas. O subsídio é cortado para metade a cada <strong>210.000 blocos</strong> (cerca de quatro anos). A isto chama-se <em>halving</em>.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Ano</th><th class="num">Subsídio por bloco</th></tr></thead>
+        <tbody>
+          <tr><td>2009</td><td class="num">50 BTC</td></tr>
+          <tr><td>2012</td><td class="num">25 BTC</td></tr>
+          <tr><td>2016</td><td class="num">12,5 BTC</td></tr>
+          <tr><td>2020</td><td class="num">6,25 BTC</td></tr>
+          <tr><td>2024 (abril)</td><td class="num">3,125 BTC</td></tr>
+          <tr><td>2028 (previsto)</td><td class="num">1,5625 BTC</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>É daqui que vem o limite de <strong>21 milhões</strong>. O último bitcoin deve ser minerado por volta de 2140. Depois, os mineradores viverão só das comissões. A recompensa de bloco equivale, aproximadamente, ao custo do trabalho, e só compensa a quem tem eletricidade barata. E como o custo de minerar se aproxima do preço, ninguém obtém moedas de graça.</p>
+    <h2>Porque ninguém ganha em fazer batota</h2>
+    <div class="cards two">
+      <div class="card"><span class="n">MINERADOR HONESTO</span><h3>Segue as regras</h3><p>Gasta energia, o bloco é aceite e recebe a recompensa.</p></div>
+      <div class="card"><span class="n">MINERADOR DESONESTO</span><h3>Quebra as regras</h3><p>Gasta a mesma energia, o bloco é rejeitado por todos os nós e não recebe nada.</p></div>
+    </div>
+    <h2>Porque o Bitcoin não se copia</h2>
+    <p>Copia-se o código, mas não os mineradores, os nós, os programadores nem a liquidez do Lightning. Uma rede copiada, com pouca energia a protegê-la, é vulnerável a ataques de 51% (lição 1.4). O efeito de rede e a segurança pela energia explicam a singularidade do Bitcoin.</p>
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      A prova de trabalho transforma energia em segurança: é caro escrever no registo e barato verificá-lo. Por isso mentir custa mais do que cumprir.
+    </div>
+    <h2>Verificação</h2>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>Para que serve a nonce?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>Para encriptar a transação</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Para o minerador variar o hash até encontrar um que cumpra o alvo</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Para identificar o dono da carteira</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Muda-se a nonce até o hash do bloco começar pelo número de zeros exigido.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>De quanto em quanto tempo se ajusta a dificuldade?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>A cada 2.016 blocos (cerca de 2 semanas)</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Todos os dias</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>A cada halving</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>O ajuste mantém o ritmo de um bloco a cada dez minutos, em média.</p>
+    </fieldset>
+
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>Satoshi Nakamoto, «Bitcoin: A Peer-to-Peer Electronic Cash System», 2008, secções 4 e 6.</li>
+      <li>Halving de abril de 2024 (bloco 840.000): <a href="https://mempool.space/graphs/mining/reward-stats" target="_blank" rel="noopener">mempool.space</a>.</li>
+      <li>Resumo do IPB das ideias da estrutura temática (temas 14.1 e 14.2).</li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="1.3">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="1.2-hash-sha-256.html" rel="prev"><small>← Anterior</small><span>1.2 Funções de hash e SHA-256</span></a>
+      <a class="next" href="1.4-finalidade-e-ataque-de-51.html" rel="next"><small>Seguinte →</small><span>1.4 Finalidade, reorganizações e ataque de 51%</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>

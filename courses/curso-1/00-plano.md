@@ -1,54 +1,49 @@
-# Curso 1 · A Génese (versão online, sem PowerPoint)
+# Curso 1 · A Génese: plano
 
-**Estado:** as 20 lições estão escritas em HTML, em `html/`. O Markdown antigo ficou em `rascunhos-md/` (já não é a versão de referência).
+Reescrito em novembro de 2026 a partir da estrutura temática (escola austríaca e Bitcoin). 26 lições, cerca de 4 h 25 min.
 
-**Promessa do curso:** no fim, a pessoa percebe porque é que o dinheiro perde valor, o que a Bitcoin propõe como alternativa, e sabe o que lhe podem pedir quando decidir comprar. O curso **não guia a compra**.
+Método de cada módulo: como funciona hoje → o que defendem os bancos centrais e os planeadores → o problema à luz da escola austríaca → como o Bitcoin responde → limites e objeções → verificação.
 
-**Formato:** autoestudo, ~3 h, 20 lições em páginas web (5–12 min cada), com reflexão, ideia-chave, quizzes e fontes.
+Regras: linguagem neutra (sem «tu»), «a Bitcoin» (rede) e «o Bitcoin» (ativo), «mineradores», «energia desperdiçada». Pontos por validar ficam em comentários `[VERIFICAR]` (ver `rastreabilidade.md`).
 
-**Convenção de escrita:** tratamento por «tu»; «a Bitcoin» para a rede e o protocolo, «o Bitcoin» para o ativo.
+## Módulo 0 · Início
+- 0.1 Antes de começar (6 min)
 
-## Lições
+## Módulo 1 · O dinheiro
+- 1.1 Porque precisamos de dinheiro (9 min)
+- 1.2 Como nasce o dinheiro (10 min)
+- 1.3 Dureza: o que torna bom o dinheiro (11 min)
+- 1.4 Preços e conhecimento (10 min)
 
-| # | Ficheiro | Min |
-|---|---|---|
-| 0.1 | `0.1-antes-de-comecar.html` | 5 |
-| 0.2 | `0.2-ponto-de-partida.html` | 5 |
-| 1.1 | `1.1-porque-precisamos-de-dinheiro.html` | 8 |
-| 1.2 | `1.2-evolucao-do-dinheiro.html` | 10 |
-| 1.3 | `1.3-quem-controla-a-moeda.html` | 10 |
-| 1.4 | `1.4-dinheiro-e-tempo.html` | 7 |
-| 2.1 | `2.1-o-euro-fisicamente.html` | 8 |
-| 2.2 | `2.2-inflacao.html` (calculadora) | 12 |
-| 2.3 | `2.3-o-que-mudou-em-1971.html` (gráficos com dados FRED) | 10 |
-| 2.4 | `2.4-de-onde-vem-o-dinheiro-novo.html` | 10 |
-| 2.5 | `2.5-quem-recebe-primeiro.html` | 10 |
-| 3.1 | `3.1-o-que-e-a-bitcoin.html` (conversor de sats) | 10 |
-| 3.2 | `3.2-antes-de-satoshi.html` | 10 |
-| 3.3 | `3.3-escassez-digital.html` (simulador de gasto duplo) | 10 |
-| 3.4 | `3.4-o-que-da-valor-ao-bitcoin.html` | 12 |
-| 3.5 | `3.5-riscos-e-criticas.html` | 12 |
-| 4.1 | `4.1-onde-se-compra.html` | 10 |
-| 4.2 | `4.2-o-que-te-podem-pedir.html` | 10 |
-| 4.3 | `4.3-golpes-e-seguranca.html` | 10 |
-| 5.1 | `5.1-revisao-e-proximos-passos.html` (revê as respostas da 0.2) | 10 |
+## Módulo 2 · O dinheiro de hoje
+- 2.1 O que é, fisicamente, o euro? (8 min)
+- 2.2 De onde vem o dinheiro novo (11 min)
+- 2.3 O que defendem os bancos centrais (12 min)
+- 2.4 1914 e 1971: como se chegou ao dinheiro atual (11 min)
 
-## Ficheiros partilhados
+## Módulo 3 · Inflação
+- 3.1 Os sentidos de «inflação» e como se mede (10 min)
+- 3.2 Quanto vale a erosão (10 min)
+- 3.3 O que causa a inflação (12 min)
+- 3.4 Quem recebe primeiro (10 min)
+- 3.5 Poupar, habitação e tempo (11 min)
 
-- `html/lesson.css`: estilo, na identidade do site do IPB.
-- `html/lesson.js`: reflexões, quizzes, listas de verificação, conversor de sats, calculadora, simulador, lição concluída. O estado fica só no browser (localStorage).
+## Módulo 4 · Deflação, ciclos e crises
+- 4.1 A deflação faz mal? (11 min)
+- 4.2 Ciclos e crises: quem tem razão? (12 min)
 
-## Para rever à mão
+## Módulo 5 · O Bitcoin como resposta
+- 5.1 O que é a Bitcoin (11 min)
+- 5.2 Antes de Satoshi (8 min)
+- 5.3 Escassez digital (10 min)
+- 5.4 O que dá valor ao Bitcoin (10 min)
+- 5.5 O Bitcoin é dinheiro? (10 min)
+- 5.6 Riscos e críticas (12 min)
 
-- Procurar `CONFIRMAR` nos ficheiros: factos a validar numa fonte antes de publicar (`grep -rn CONFIRMAR html/`).
-- Procurar `LIGAÇÃO` e `DECIDIR`: ligações em falta (Curso 2, Curso 3, recursos, feedback) e a decisão de onde fica guardado o progresso.
-- Números que mudam com o tempo (BCE, FRED, preço do Bitcoin, registo da ESMA) têm a data da consulta na secção de fontes.
+## Módulo 6 · Primeiros passos
+- 6.1 Onde se compra (10 min)
+- 6.2 O que pode ser pedido (10 min)
+- 6.3 Golpes e segurança (10 min)
 
-## Decisões em aberto
-
-1. **Acesso:** pago, gratuito ou misto? Há login de alunos?
-2. **Progresso:** guardar no browser (como agora) ou na conta da pessoa?
-3. **Onde vive o conteúdo:** ficheiros no repositório ou base de dados (Convex)?
-4. **Idiomas:** só português, ou também inglês?
-5. **Certificado:** automático ao completar o quiz final, ou à parte?
-6. **Página do curso e ligações:** o índice das lições, e as ligações para os cursos 2 e 3.
+## Módulo 7 · Fecho
+- 7.1 Revisão e próximos passos (10 min)

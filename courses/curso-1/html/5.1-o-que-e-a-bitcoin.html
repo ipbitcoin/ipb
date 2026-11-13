@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>O que é a Bitcoin | Curso 1 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 5.1 do Curso 1: No fim desta lição, será possível explicar o Bitcoin em três frases, perceber de onde vem o limite de 21 milhões e ver o que o seu desenho responde ao prob">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#curso">← Curso 1 · A Génese</a>
+    <span class="where">Lição 17 de 26</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="26" aria-valuenow="17"><span style="width:65.4%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+
+    <p class="eyebrow">Módulo 5 · O Bitcoin como resposta · Lição 5.1</p>
+    <h1>O que é a Bitcoin</h1>
+    <p class="lead">No fim desta lição, será possível explicar o Bitcoin em três frases, perceber de onde vem o limite de 21 milhões e ver o que o seu desenho responde ao problema da emissão de moeda, e o que não resolve.</p>
+    <p class="meta"><span>11 min de leitura</span><span>2 perguntas</span></p>
+    <h2>Uma definição simples</h2>
+    <p>A Bitcoin é um sistema para guardar e enviar valor pela internet, sem banco, empresa ou governo pelo meio. Foi descrito num documento de nove páginas publicado por alguém que assina Satoshi Nakamoto (um pseudónimo) a 31 de outubro de 2008, e a rede começou a funcionar a 3 de janeiro de 2009. O software é aberto: qualquer pessoa pode ler o código, correr um computador da rede e verificar tudo por si.</p>
+    <div class="cards">
+      <div class="card"><span class="n">01 · PROTOCOLO</span><h3>As regras</h3><p>O que é uma transação válida, quantos bitcoins existem, como se cria um bloco.</p></div>
+      <div class="card"><span class="n">02 · REDE</span><h3>Os computadores</h3><p>Os computadores espalhados pelo mundo que aplicam as regras e verificam cada transação, sem autoridade central.</p></div>
+      <div class="card"><span class="n">03 · ATIVO</span><h3>O ativo</h3><p>O Bitcoin (BTC), a unidade de valor que circula nessa rede.</p></div>
+    </div>
+    <p>Neste curso, usa-se <em>a</em> Bitcoin para o protocolo e a rede, e <em>o</em> Bitcoin para o ativo. As unidades escrevem-se «bitcoins», com minúscula.</p>
+    <h2>O desenho que responde à emissão arbitrária</h2>
+    <p>O problema dos módulos anteriores é que quem emite moeda decide a quantidade. O desenho do Bitcoin retira essa decisão a qualquer pessoa ou instituição, com quatro peças:</p>
+    <div class="cards">
+      <div class="card"><span class="n">1</span><h3>Oferta fixa e pública</h3><p>21 milhões, divisíveis em satoshis. A emissão desce ao longo do tempo e o calendário é conhecido de todos.</p></div>
+      <div class="card"><span class="n">2</span><h3>Verificação por qualquer pessoa</h3><p>Um nó completo audita a oferta total. Cada detentor tem uma fração garantida dos 21 milhões.</p></div>
+      <div class="card"><span class="n">3</span><h3>Mineração aberta</h3><p>Qualquer pessoa pode minerar. O custo de minerar aproxima-se do preço, pelo que ninguém obtém moedas de graça.</p></div>
+      <div class="card"><span class="n">4</span><h3>Regras difíceis de mudar</h3><p>Os nós são soberanos, e o software de 2009 ainda sincroniza com a rede.</p></div>
+    </div>
+    <p>Para Mises, o dinheiro honesto devia estar ao lado das constituições e das cartas de direitos, porque as três põem limites a quem governa. No Bitcoin, o travão está no protocolo: nenhum governo, banco central ou empresa pode autorizar um aumento de emergência. Ninguém sabe o que um bitcoin comprará, mas sabe-se quantos existirão.</p>
+    <h2>Hayek e Satoshi</h2>
+    <p>Em 1976, Hayek propôs a desnacionalização do dinheiro: concorrência entre moedas, incluindo privadas, com emissores a manter estável o poder de compra e a perder clientes se corrompessem a moeda. Satoshi escolheu de outra forma: estabilizar o valor exigiria uma entidade central de confiança, por isso o calendário de emissão é fixo e é o preço que se ajusta. Hayek queria que a concorrência disciplinasse o emissor, e o Bitcoin tirou o emissor da equação.</p>
+    <h2>Quantos bitcoins existem e como se dividem</h2>
+    <p>O limite é de <strong>21 milhões de bitcoins</strong>. Cada bitcoin divide-se em 100 milhões de partes. A menor chama-se <strong>satoshi</strong>, ou <strong>sat</strong>.</p>
+    <div class="card">
+      <h3>Experimentar: sats e bitcoin</h3>
+      <p style="margin:0;font-size:16px;color:var(--muted)">1 bitcoin = 100 000 000 sats. Escrever num dos campos.</p>
+      <div class="tool">
+        <div><label for="sats">Satoshis (sats)</label><input id="sats" type="text" inputmode="decimal" value="1000" autocomplete="off"></div>
+        <div><label for="btc">Bitcoin (BTC)</label><input id="btc" type="text" inputmode="decimal" value="0,00001" autocomplete="off"></div>
+      </div>
+    </div>
+    <h2>De onde vem o limite de 21 milhões</h2>
+    <p>É a consequência de duas escolhas iniciais: cada bloco novo criava 50 bitcoins, e essa recompensa é cortada para metade a cada 210 000 blocos (cerca de quatro anos). Essa operação chama-se <em>halving</em>. Como as metades vão diminuindo, a soma aproxima-se de 21 milhões sem nunca o ultrapassar.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Período</th><th class="num">Recompensa por bloco</th><th class="num">Total criado no fim</th></tr></thead>
+        <tbody>
+          <tr><td>2009 a 2012</td><td class="num">50 BTC</td><td class="num">10,5 M (50%)</td></tr>
+          <tr><td>2012 a 2016</td><td class="num">25 BTC</td><td class="num">15,75 M (75%)</td></tr>
+          <tr><td>2016 a 2020</td><td class="num">12,5 BTC</td><td class="num">18,375 M (87,5%)</td></tr>
+          <tr><td>2020 a 2024</td><td class="num">6,25 BTC</td><td class="num">19,6875 M (93,75%)</td></tr>
+          <tr><td>2024 a 2028</td><td class="num">3,125 BTC</td><td class="num">20,34 M (96,9%)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>O último satoshi só será criado por volta de 2140. O bitcoin número 20 milhões foi minerado por volta de 9 de março de 2026 (segundo a imprensa especializada, com uma ou outra fonte a apontar o dia 10), o que corresponde a mais de 95% do total. O número de 21 milhões é, aliás, arbitrário: qualquer valor serviria, desde que fosse divisível. O que importa é o limite fixo e conhecido.</p>
+    <h2>O que resolve, e o que não resolve</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Problema</th><th>O Bitcoin resolve?</th><th>Porquê</th></tr></thead>
+        <tbody>
+          <tr><td>Emissão arbitrária</td><td>Sim</td><td>A oferta é fixa, pública e verificável por qualquer pessoa</td></tr>
+          <tr><td>Dependência de intermediários</td><td>Em grande parte</td><td>Quem guarda as suas chaves não precisa de banco, mas assume a responsabilidade de as guardar</td></tr>
+          <tr><td>Censura</td><td>Em grande parte</td><td>Uma transação válida não pode ser bloqueada por uma entidade central</td></tr>
+          <tr><td>Ciclos de crédito</td><td>Não</td><td>Num padrão Bitcoin continuaria a haver crédito, e a instabilidade vem de créditos que falham (lição 5.5)</td></tr>
+          <tr><td>Choques de energia e de oferta</td><td>Não</td><td>Um choque petrolífero afeta os preços em qualquer sistema monetário</td></tr>
+          <tr><td>Os males sociais</td><td>Não</td><td>É um ponto disputado entre escolas (lição 5.6)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      A Bitcoin responde à emissão arbitrária de moeda: a oferta é fixa, pública e verificável. Não promete resolver tudo, e o curso diz o que fica de fora.
+    </div>
+    <h2>Verificação</h2>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>De onde vem o limite de 21 milhões?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>De uma lei votada pelo Parlamento</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Da recompensa de 50 bitcoins por bloco, cortada para metade a cada 210 000 blocos</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Da decisão do banco central</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>É uma consequência das regras iniciais. Qualquer limite serviria, desde que fosse divisível.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>Qual destes problemas o Bitcoin NÃO resolve, segundo a lição?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>A emissão arbitrária de moeda</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Os choques de energia</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>A dependência de intermediários</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Um choque de energia afeta os preços em qualquer sistema monetário.</p>
+    </fieldset>
+
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>Satoshi Nakamoto, «Bitcoin: A Peer-to-Peer Electronic Cash System», 31 de outubro de 2008.</li>
+      <li>Friedrich Hayek, «Denationalisation of Money», 1976.</li>
+      <li>Código do Bitcoin Core: intervalo de halving de 210 000 blocos e recompensa inicial de 50 BTC.</li>
+      <li>Resumo do IPB das ideias da estrutura temática (temas 10.6, 14.1 e 14.4).</li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="5.1">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="4.2-ciclos-e-crises.html" rel="prev"><small>← Anterior</small><span>4.2 Ciclos e crises: quem tem razão?</span></a>
+      <a class="next" href="5.2-antes-de-satoshi.html" rel="next"><small>Seguinte →</small><span>5.2 Antes de Satoshi</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>

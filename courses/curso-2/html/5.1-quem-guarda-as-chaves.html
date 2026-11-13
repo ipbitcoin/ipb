@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quem guarda as chaves | Curso 2 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 5.1 do Curso 2: No fim desta lição, será possível dizer o que significa ter as chaves do Bitcoin, o que se arrisca ao deixá-lo numa plataforma e o que se arrisca ao guardá">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#curso">← Curso 2 · A Tecnologia</a>
+    <span class="where">Lição 15 de 21</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="21" aria-valuenow="15"><span style="width:71.4%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+
+    <p class="eyebrow">Módulo 5 · Chaves e carteiras · Lição 5.1</p>
+    <h1>Quem guarda as chaves</h1>
+    <p class="lead">No fim desta lição, será possível dizer o que significa ter as chaves do Bitcoin, o que se arrisca ao deixá-lo numa plataforma e o que se arrisca ao guardá-lo sozinho.</p>
+    <p class="meta"><span>10 min de leitura</span><span>2 perguntas</span></p>
+    <h2>Quem tem as chaves, tem o Bitcoin</h2>
+    <p>Nesta lição, ter bitcoin quer dizer ter as chaves privadas que permitem gastá-lo (lição 5.2). Quando se compra bitcoin numa plataforma, a plataforma costuma ficar com as chaves, e o cliente fica com um saldo na conta dela: uma promessa de que é possível levantar. Ter «Bitcoin» numa plataforma é, na prática, um <strong>IOU</strong> (uma promessa de pagamento). A rede só valida assinaturas: não sabe o que são as exchanges, as empresas ou as pessoas.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th></th><th>Custódia (plataforma)</th><th>Autocustódia (pessoal)</th></tr></thead>
+        <tbody>
+          <tr><td>Quem tem as chaves</td><td>A plataforma</td><td>O titular</td></tr>
+          <tr><td>Se a palavra-passe for esquecida</td><td>A conta recupera-se</td><td>O acesso perde-se, se a frase se perder</td></tr>
+          <tr><td>Se a plataforma falir ou for atacada</td><td>É possível perder tudo ou esperar anos</td><td>Não é afetado</td></tr>
+          <tr><td>Se a conta for congelada</td><td>Não é possível aceder</td><td>Ninguém pode impedir o acesso</td></tr>
+          <tr><td>Se houver engano ao enviar</td><td>Pode haver suporte</td><td>Não há reversão</td></tr>
+          <tr><td>Esforço</td><td>Baixo</td><td>Médio: aprender e fazer cópias de segurança</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h2>A propriedade mais difícil de confiscar</h2>
+    <p>O Bitcoin é um livro-razão público com chaves, e as chaves podem guardar-se offline e memorizar-se. Por isso é dos ativos mais portáteis e mais difíceis de confiscar: seria preciso extrair uma frase da mente de quem a sabe, embora sob coação isso pudesse acontecer. Mesmo quando as camadas superiores se corrompem, a opção de levantar os ativos e mudar de custodiante é um dissuasor que nenhum outro ativo oferece. Esta é a «opção de saída» de que falam os defensores do Bitcoin.</p>
+    <h2>Casos reais de plataformas</h2>
+    <ol class="timeline">
+      <li><span class="when">2014</span><strong>Mt. Gox</strong><p>A maior plataforma do mundo à época anunciou a perda de cerca de 850.000 bitcoin, entre clientes e seus. Os reembolsos só começaram, em parte, anos depois. <!-- [VERIFICAR] Confirmar números e calendário de reembolsos. --></p></li>
+      <li><span class="when">2022</span><strong>Celsius, Voyager, FTX, BlockFi</strong><p>Quatro empresas pediram falência entre julho e novembro de 2022. Clientes ficaram anos sem acesso, e muitos recuperaram só parte do valor.</p></li>
+    </ol>
+    <p>Nenhuma destas empresas era uma pequena aventura: eram nomes conhecidos. O que falhou foi a confiança. Daí a frase da comunidade: «not your keys, not your coins».</p>
+    <h2>O que mudou na Europa</h2>
+    <p>Desde o fim de 2024, o regulamento MiCA obriga as plataformas autorizadas na UE a guardar os ativos dos clientes separados dos seus e a responder pelas perdas que lhes sejam imputáveis. É uma proteção real, que antes não existia. Mas não é um seguro de depósito como o dos bancos (que cobre até 100.000 euros por depositante): se uma plataforma falir, a recuperação depende dos processos de insolvência. O registo da ESMA diz se uma plataforma está autorizada.</p>
+    <h2>A autocustódia também tem riscos</h2>
+    <ul>
+      <li>Perder a frase de recuperação e o dispositivo é perder o Bitcoin, para sempre.</li>
+      <li>Se alguém vê a frase, pode esvaziar a carteira.</li>
+      <li>Um engano no endereço não tem reversão.</li>
+      <li>Em caso de falecimento sem instruções, a família pode nunca aceder.</li>
+    </ul>
+    <p>Estes riscos gerem-se com boas práticas, que se aprendem nas lições seguintes. A autocustódia não é para todos desde o primeiro dia, e não é preciso fazer tudo de uma vez.</p>
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      Com a custódia, confia-se numa empresa. Com a autocustódia, confia-se em si próprio. Nenhuma é de risco zero, e convém saber qual foi escolhida.
+    </div>
+    <h2>Verificação</h2>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>O que quer dizer ter Bitcoin numa plataforma, em termos de chaves?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>Ter uma promessa de pagamento, porque a plataforma guarda as chaves</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Ter as chaves privadas</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Ter um seguro de depósito</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>A rede só valida assinaturas: quem tem as chaves tem o Bitcoin.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>O MiCA funciona como um seguro de depósito como o dos bancos?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>Sim, até 100.000 euros</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Não: obriga a segregar ativos, mas a recuperação depende da insolvência</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Sim, para qualquer valor</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>A proteção é real mas diferente.</p>
+    </fieldset>
+
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>Regulamento (UE) 2023/1114 (MiCA): <a href="https://eur-lex.europa.eu/eli/reg/2023/1114/oj" target="_blank" rel="noopener">EUR-Lex</a>.</li>
+      <li>Registo de prestadores de serviços de criptoativos da ESMA: <a href="https://www.esma.europa.eu" target="_blank" rel="noopener">esma.europa.eu</a>.</li>
+      <li>Resumo do IPB das ideias da estrutura temática (temas 14.3 e 16.2).</li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="5.1">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="4.4-altcoins-defi-e-protocolo.html" rel="prev"><small>← Anterior</small><span>4.4 Altcoins, DeFi e protocolo contra sistema operativo</span></a>
+      <a class="next" href="5.2-chaves-enderecos-e-frase.html" rel="next"><small>Seguinte →</small><span>5.2 Chaves, endereços e frase de recuperação</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>

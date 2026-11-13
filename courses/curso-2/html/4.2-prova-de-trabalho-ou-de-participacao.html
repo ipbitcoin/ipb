@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prova de trabalho ou prova de participação | Curso 2 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 4.2 do Curso 2: No fim desta lição, será possível enunciar o argumento crítico à prova de participação, a defesa dos seus defensores e a posição conciliadora, sabendo onde">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#curso">← Curso 2 · A Tecnologia</a>
+    <span class="where">Lição 12 de 21</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="21" aria-valuenow="12"><span style="width:57.1%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+
+    <p class="eyebrow">Módulo 4 · Bitcoin e outras criptomoedas · Lição 4.2</p>
+    <h1>Prova de trabalho ou prova de participação</h1>
+    <p class="lead">No fim desta lição, será possível enunciar o argumento crítico à prova de participação, a defesa dos seus defensores e a posição conciliadora, sabendo onde o material do curso é desequilibrado.</p>
+    <p class="meta"><span>12 min de leitura</span><span>2 perguntas</span></p>
+    <h2>O que é cada coisa</h2>
+    <p>Na <strong>prova de trabalho</strong>, quem valida gasta energia, e perde esse gasto se validar o ramo errado. Na <strong>prova de participação</strong> (<em>proof of stake</em>), quem valida bloqueia moedas como garantia e perde-as se fizer batota (esta penalização chama-se <em>slashing</em>). A prova de participação gasta muito menos energia e processa mais depressa.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th></th><th>Prova de trabalho</th><th>Prova de participação</th></tr></thead>
+        <tbody>
+          <tr><td>O que se arrisca</td><td>Energia gasta, no mundo físico</td><td>Moedas bloqueadas, dentro do sistema</td></tr>
+          <tr><td>Quem decide</td><td>Os nós, pela cadeia com mais trabalho</td><td>Os detentores das moedas, na proporção do que têm</td></tr>
+          <tr><td>Castigo</td><td>Ter gasto eletricidade</td><td>Perder as moedas (slashing)</td></tr>
+          <tr><td>Crítica principal</td><td>Gasta muita energia</td><td>A riqueza inicial tende a perpetuar o poder</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h2>O argumento crítico</h2>
+    <ul>
+      <li><strong>Simplicidade e ligação ao mundo real.</strong> Na prova de trabalho, o castigo de quem valida o ramo errado é ter gasto eletricidade, com uma ligação tangível a recursos reais. Na prova de participação, é preciso punir quem vota em cadeias erradas ou em várias.</li>
+      <li><strong>Lógica circular.</strong> Na prova de participação falta um custo que não se possa forjar: o estado do livro-razão determina quem decide o livro-razão, e qualquer pessoa pode fabricar histórias alternativas quase de graça. Se a rede para, só validadores de confiança ou pontos de controlo centralizados restauram a história. Na prova de trabalho, os nós reconstituem o estado pela cadeia de maior trabalho.</li>
+      <li><strong>Tendência para a centralização.</strong> Quem tem mais moedas tem mais votos e mais recompensas sem gastar recursos, e a influência cresce exponencialmente. Dinheiro sem custo acaba por ser político, e quem está perto dele é favorecido. Na prova de trabalho, os mineradores novos têm vantagem técnica, e ninguém acumula vantagem entrincheirada.</li>
+      <li><strong>Quem fica com o poder.</strong> A prova de trabalho dá poder aos nós, e a de participação dá-o aos detentores de moedas.</li>
+    </ul>
+    <p>Uma versão mais dura desta crítica compara a prova de participação a um sistema em que quem já tem a moeda governa as regras, tal como uma instituição detida pelos seus membros. É uma leitura defendida pela escola austríaca, que a considera uma tentativa de tornar o dinheiro mais barato de produzir sem mudar quem decide.</p>
+    <h2>A defesa da prova de participação</h2>
+    <div class="callout view">
+      <span class="tag">Um programador de Ethereum</span>
+      <p>Admite que a prova de participação é muito mais complicada (cerca de cem linhas de código contra cem mil na prova de trabalho) e que há ataques inexistentes na prova de trabalho: a equivocação (votar em duas cadeias), resolvida com slashing, e os ataques de longo alcance, mitigados por «subjetividade fraca», isto é, pontos de controlo que os nós têm de aceitar de fontes confiáveis. Reconhece que isto choca com a ideologia Bitcoin de sincronizar do zero sem confiar em ninguém, mas acredita que é viável na prática.</p>
+    </div>
+    <p>Outra voz defende a abertura a ideias novas: nem tudo é burla, e há zonas cinzentas. Mas a resposta crítica é que rotular não substitui os argumentos, e que há custo de oportunidade em considerar todo o ruído.</p>
+    <h2>A posição conciliadora</h2>
+    <p>A prova de participação não é má para outras criptomoedas se estas forem como empresas: nesse caso, a centralização é aceitável e aumenta o custo de ataque, e há serviços voluntários e concorrentes. Mas é inadequada para dinheiro global, descentralizado e resistente à censura. A prova de participação é «equity-like» (tipo capital próprio) e a prova de trabalho «money-like» (tipo dinheiro).</p>
+    <h2>A evidência técnica citada</h2>
+    <p>Uma das fontes do curso cita como evidência o caso de uma plataforma que parou durante 17 horas e exigiu um reinício coordenado, requer hardware de centro de dados, depende de arquivistas e usa slashing manual, o que torna o consenso «manual, humano, político». Plataformas de contratos inteligentes tendem à centralização porque os utilizadores querem eficiência, e outra grande plataforma também teve divisões não intencionais. <!-- [VERIFICAR] Dados de T7:18-20 (2021 a 2023); confirmar com fontes atuais, incluindo o estado de cada rede. --></p>
+    <div class="callout limit">
+      <span class="tag">Debate desequilibrado</span>
+      <p>O curso reconhece que este debate está desequilibrado: o lado crítico tem muito mais material (o IPB incluído) do que o lado defensor, que se resume essencialmente a um programador e a um enquadramento geral. Não se deve ler o quadro acima como um empate. É uma posição forte e bem desenvolvida contra outra pouco representada.</p>
+    </div>
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      Na prova de trabalho, o custo é externo e verificável, e o poder está nos nós. Na prova de participação, a segurança vem de dentro do sistema. O Bitcoin é prova de trabalho porque esta dá poder aos nós e não aos detentores de moedas.
+    </div>
+    <h2>Verificação</h2>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>Qual é o castigo de quem valida o ramo errado na prova de trabalho?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>Perder as moedas bloqueadas</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Ter gasto a eletricidade</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Ser expulso da rede</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>O custo é externo: a energia gasta não se recupera.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>O que significa «lógica circular», na crítica à prova de participação?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>O estado do livro-razão determina quem decide o livro-razão</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>As máquinas giram</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>O preço sobe em círculos</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Sem um custo que não se possa forjar, é fácil fabricar histórias alternativas, e a recuperação exige pontos de controlo.</p>
+    </fieldset>
+
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>Resumo do IPB das posições em debate (estrutura temática, tema 15.4).</li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="4.2">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="4.1-propriedade-ou-valor-mobiliario.html" rel="prev"><small>← Anterior</small><span>4.1 Propriedade ou valor mobiliário</span></a>
+      <a class="next" href="4.3-stablecoins.html" rel="next"><small>Seguinte →</small><span>4.3 Stablecoins</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>

@@ -223,6 +223,52 @@ export default defineSchema({
     .index("by_email", ["email"])
     .index("by_token_hash", ["tokenHash"]),
 
+  // Online course purchases. One row per (email, course); the email is the
+  // learner's only credential (see courseLogins / courseSessions).
+  courseOrders: defineTable({
+    completedAt: v.optional(v.number()),
+    completedLessons: v.array(v.string()),
+    courseSlug: v.string(),
+    createdAt: v.number(),
+    diplomaCode: v.optional(v.string()),
+    diplomaIssuedAt: v.optional(v.number()),
+    diplomaName: v.optional(v.string()),
+    email: v.string(), // lowercased
+    listPriceCents: v.number(),
+    locale: v.union(v.literal("pt"), v.literal("en")),
+    memberLayer: v.optional(v.union(v.literal(1), v.literal(2))),
+    orderId: v.string(),
+    paidAt: v.optional(v.number()),
+    paymentStatus: v.union(
+      v.literal("pending"),
+      v.literal("paid"),
+      v.literal("failed")
+    ),
+    priceCents: v.number(),
+    stripeSessionId: v.optional(v.string()),
+  })
+    .index("by_email", ["email"])
+    .index("by_order_id", ["orderId"])
+    .index("by_diploma_code", ["diplomaCode"]),
+
+  // One-time email codes proving someone owns the email of a purchase.
+  courseLogins: defineTable({
+    attempts: v.number(),
+    codeExpiresAt: v.number(),
+    codeHash: v.string(),
+    email: v.string(), // lowercased
+    sentAt: v.array(v.number()),
+  }).index("by_email", ["email"]),
+
+  // Browser sessions for learners (the cookie holds the token, we the hash).
+  courseSessions: defineTable({
+    email: v.string(), // lowercased
+    expiresAt: v.number(),
+    tokenHash: v.string(),
+  })
+    .index("by_token_hash", ["tokenHash"])
+    .index("by_email", ["email"]),
+
   newsletters: defineTable({
     email: v.string(),
     name: v.optional(v.string()),

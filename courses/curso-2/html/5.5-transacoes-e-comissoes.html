@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Transações, mempool e comissões | Curso 2 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 5.5 do Curso 2: No fim desta lição, fica-se a saber como se envia uma transação, o que é a mempool, como se calcula a comissão e quando é que é possível considerá-la defin">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#curso">← Curso 2 · A Tecnologia</a>
+    <span class="where">Lição 19 de 21</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="21" aria-valuenow="19"><span style="width:90.5%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+
+    <p class="eyebrow">Módulo 5 · Chaves e carteiras · Lição 5.5</p>
+    <h1>Transações, mempool e comissões</h1>
+    <p class="lead">No fim desta lição, fica-se a saber como se envia uma transação, o que é a mempool, como se calcula a comissão e quando é que é possível considerá-la definitiva.</p>
+    <p class="meta"><span>12 min de leitura</span><span>3 perguntas · 1 lista de verificação · 1 calculadora</span></p>
+
+
+    <h2>O ciclo de uma transação</h2>
+    <ol class="timeline">
+      <li><span class="when">1 · Criar</span><strong>Escolher o valor e o endereço</strong><p>A carteira junta as moedas a gastar e prepara a transação.</p></li>
+      <li><span class="when">2 · Assinar</span><strong>Com a chave privada</strong><p>A assinatura prova que é o titular. A chave não sai da carteira.</p></li>
+      <li><span class="when">3 · Transmitir</span><strong>Para a rede</strong><p>A carteira envia a transação a um nó, que a passa aos outros.</p></li>
+      <li><span class="when">4 · Mempool</span><strong>A fila de espera</strong><p>A transação espera, em cada nó, até um minerador a escolher.</p></li>
+      <li><span class="when">5 · Bloco</span><strong>Primeira confirmação</strong><p>Um minerador incluiu-a num bloco. Passou, em média, cerca de 10 minutos.</p></li>
+      <li><span class="when">6 · Mais blocos</span><strong>Confirmações seguintes</strong><p>Cada novo bloco por cima torna a reversão mais difícil. Seis confirmações (~ 1 hora) é a referência habitual para valores grandes.</p></li>
+    </ol>
+    <h2>Entradas e saídas</h2>
+    <p>A Bitcoin não funciona com contas e saldos, funciona com <strong>moedas inteiras</strong>, chamadas UTXO (<em>unspent transaction outputs</em>). Com duas moedas, de 0,3 e 0,5, para enviar 0,4, a transação gasta a de 0,5 e cria duas saídas: 0,4 para o destinatário e 0,1 de <strong>troco</strong> de volta para o remetente. A carteira faz isto automaticamente. O que importa saber é que as transações têm entradas e saídas, e que o troco volta para um endereço seu.</p>
+    <h2>As comissões</h2>
+    <p>Quem quiser que a transação entre num bloco paga uma <strong>comissão</strong> ao minerador. A comissão não depende do valor enviado, depende do <strong>tamanho da transação em bytes virtuais (vB)</strong> e do preço oferecido por vB, em satoshis (sat/vB). Enviar 10 euros ou 10.000 euros custa o mesmo, se as transações tiverem o mesmo tamanho.</p>
+    <div class="card" id="fee">
+      <h3>Calculadora de comissão</h3>
+      <div class="tool">
+        <div><label for="fee-rate">Preço (sat/vB)</label><input type="number" id="fee-rate" value="5" min="1" step="1"></div>
+        <div><label for="fee-size">Tamanho (vB)</label><input type="number" id="fee-size" value="140" min="1" step="1"></div>
+        <div><label for="fee-price">Preço de 1 bitcoin (€, exemplo)</label><input type="number" id="fee-price" value="80000" min="1" step="1000"></div>
+        <div class="tool-out" id="fee-out" role="status" aria-live="polite"></div>
+      </div>
+    </div>
+    <p>Uma transação simples típica anda perto dos 140 vB. Os mineradores preferem as que pagam mais por vB, por isso a fila organiza-se por preço. Em dias calmos, uns poucos sat/vB chegam; em momentos de congestionamento (houve picos em 2017, 2021 e abril de 2024), as comissões subiram muito. <!-- [VERIFICAR] valores históricos. --> Havendo pressa, paga-se mais. Não havendo, paga-se o mínimo e espera-se.</p>
+    <div class="card">
+      <h3>Ver na prática</h3>
+      <p style="margin:0;font-size:16px;color:var(--muted)">O site <a href="https://mempool.space" target="_blank" rel="noopener">mempool.space</a> mostra, em tempo real, os blocos por minerar, as comissões recomendadas e as transações a confirmar. Vale a pena abri-lo e acompanhar uma transação, mesmo de valor mínimo.</p>
+    </div>
+    <h2>Cuidados antes de enviar</h2>
+    <ul class="checklist">
+      <li><label><input type="checkbox" id="c-3-5-1-1"><span>Confirmei o endereço completo, e não só os primeiros e os últimos caracteres.</span></label></li>
+      <li><label><input type="checkbox" id="c-3-5-1-2"><span>Fiz um envio de teste com um valor pequeno, se o valor for grande.</span></label></li>
+      <li><label><input type="checkbox" id="c-3-5-1-3"><span>Escolhi uma comissão adequada ao tempo que posso esperar.</span></label></li>
+      <li><label><input type="checkbox" id="c-3-5-1-4"><span>Sei que não há botão de desfazer: uma transação confirmada é definitiva.</span></label></li>
+    </ul>
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      Uma transação Bitcoin é pública, assinada pelo titular e definitiva depois de confirmada. A comissão depende do tamanho e da procura, não do valor.
+    </div>
+    <h2>Verificar o que se aprendeu</h2>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>De que depende a comissão?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>Do valor enviado</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Do tamanho da transação e da procura por espaço no bloco</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Da distância entre remetente e destinatário</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>A comissão paga-se por vB, não pelo valor.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>O que é a mempool?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>A fila de transações à espera de entrar num bloco</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>A carteira do minerador</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>O nome do primeiro bloco</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Cada nó tem a sua; é onde as transações esperam um minerador.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>É possível reverter uma transação já confirmada?</legend>
+      <label class="opt"><input type="radio" name="q3"><span>Sim, no prazo de 24 horas</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Não: só o destinatário a pode devolver, se quiser</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Sim, pedindo ao IPB</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Não há entidade que reverta transações. Daí a importância de conferir o endereço.</p>
+    </fieldset>
+
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>Bitcoin Developer Guide, «Transactions»: <a href="https://developer.bitcoin.org/devguide/transactions.html" target="_blank" rel="noopener">developer.bitcoin.org</a>.</li>
+      <li>Estado da mempool e comissões: <a href="https://mempool.space" target="_blank" rel="noopener">mempool.space</a>.</li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="5.5">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="5.4-guardar-a-frase.html" rel="prev"><small>← Anterior</small><span>5.4 Como guardar a frase de recuperação</span></a>
+      <a class="next" href="6.1-ameaca-quantica-e-migracao.html" rel="next"><small>Seguinte →</small><span>6.1 Ameaça quântica e migração</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>

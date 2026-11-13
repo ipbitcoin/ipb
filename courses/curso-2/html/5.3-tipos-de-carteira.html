@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tipos de carteira | Curso 2 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 5.3 do Curso 2: No fim desta lição, será possível distinguir os tipos de carteira e escolher o que serve a cada situação.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#curso">← Curso 2 · A Tecnologia</a>
+    <span class="where">Lição 17 de 21</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="21" aria-valuenow="17"><span style="width:81.0%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+
+    <p class="eyebrow">Módulo 5 · Chaves e carteiras · Lição 5.3</p>
+    <h1>Tipos de carteira</h1>
+    <p class="lead">No fim desta lição, será possível distinguir os tipos de carteira e escolher o que serve a cada situação.</p>
+    <p class="meta"><span>10 min de leitura</span><span>3 perguntas</span></p>
+
+
+    <h2>Uma questão de equilíbrio</h2>
+    <p>Há carteiras mais cómodas e outras mais seguras. Não há uma melhor para tudo, como não há para o dinheiro: levam-se uns euros no bolso, o resto no banco ou em casa. A escolha depende de <strong>quanto se tem</strong> e de <strong>quantas vezes</strong> é preciso mexer nele.</p>
+    <h2>Os tipos</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Tipo</th><th>Quem tem as chaves</th><th>Para quê</th><th>Risco principal</th></tr></thead>
+        <tbody>
+          <tr><td>Conta numa plataforma</td><td>A plataforma</td><td>Comprar, vender, começar</td><td>Falência, ataque, congelamento</td></tr>
+          <tr><td>Carteira de telemóvel ou computador (<em>hot wallet</em>)</td><td>O titular</td><td>Valores pequenos, uso diário</td><td>Malware, telemóvel roubado, phishing</td></tr>
+          <tr><td>Carteira de hardware (<em>cold wallet</em>)</td><td>O titular</td><td>Poupança a médio e longo prazo</td><td>Compra a vendedor errado, perda da frase</td></tr>
+          <tr><td>Carteira «air-gapped»</td><td>O titular</td><td>Valores grandes, máxima segurança</td><td>Complexidade, erro humano</td></tr>
+          <tr><td>Multiassinatura (<em>multisig</em>)</td><td>O titular, com várias chaves</td><td>Valores grandes, empresas, famílias</td><td>Complexidade e perda de uma das chaves</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h2>O que são</h2>
+    <ul>
+      <li><strong>Carteira de telemóvel ou computador:</strong> uma aplicação que guarda as chaves num dispositivo ligado à internet. É cómoda e, para pequenos valores, razoável. Convém escolher software de código aberto e descarregá-lo só do site oficial.</li>
+      <li><strong>Carteira de hardware:</strong> um pequeno aparelho que guarda as chaves e assina as transações sem as expor ao computador. Mesmo que o computador esteja infetado, as chaves não saem. Convém comprar sempre ao fabricante, nunca em segunda mão.</li>
+      <li><strong>Air-gapped:</strong> um dispositivo que nunca se liga à internet. Assina transações por código QR ou cartão SD. Exige mais prática.</li>
+      <li><strong>Multiassinatura:</strong> a transação só é válida com, por exemplo, 2 de 3 chaves. Nenhuma pessoa nem dispositivo, sozinhos, consegue gastar. Boa para valores grandes, mas mais complexa de montar.</li>
+    </ul>
+    <p>Há muitas marcas e aplicações, e vão mudando. Não recomendamos uma específica; recomendamos critérios: <strong>código aberto, reputação de anos, suporte à frase BIP-39 padrão</strong>, e que seja possível <strong>restaurar noutra marca</strong> se esta desaparecer.</p>
+    <div class="callout tip">
+      <span class="tag">Regra prática</span>
+      <p>Uma regra simples: numa carteira de telemóvel não deve ficar mais do que se levaria na carteira de bolso. Para o resto, convém pensar num dispositivo de hardware.</p>
+    </div>
+    <div class="callout warning">
+      <span class="tag">Atenção</span>
+      <p>Cuidado com carteiras «fáceis» em que nunca se vê a frase de recuperação: provavelmente são custodiais. E cuidado com aplicações falsas nas lojas: convém confirmar o nome do fabricante e o site oficial.</p>
+    </div>
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      Escolher a carteira pela função: uma para o dia a dia (pouco) e outra para guardar (muito). E que a frase de recuperação permita sair de qualquer uma.
+    </div>
+    <h2>Verificar o que se aprendeu</h2>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>Qual a principal vantagem de uma carteira de hardware?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>É mais rápida</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>As chaves não saem do dispositivo, mesmo que o computador esteja infetado</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Não precisa de frase de recuperação</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>O dispositivo assina por dentro. O computador só vê a transação assinada.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>Uma carteira de telemóvel é mais adequada para…</legend>
+      <label class="opt"><input type="radio" name="q2"><span>Todas as poupanças</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Valores pequenos, de uso diário</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Guardar a herança dos filhos</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Está ligada à internet, por isso o risco é maior. Usa-se como carteira de bolso.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>O que pode correr mal ao comprar uma carteira de hardware em segunda mão?</legend>
+      <label class="opt"><input type="radio" name="q3"><span>Nada</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Pode ter sido adulterada</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Não funciona com bitcoin</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Convém comprar sempre ao fabricante ou a revendedores oficiais.</p>
+    </fieldset>
+
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>Bitcoin.org, «Choose your wallet»: <a href="https://bitcoin.org/en/choose-your-wallet" target="_blank" rel="noopener">bitcoin.org/en/choose-your-wallet</a>.</li>
+      <li>«Mastering Bitcoin», Antonopoulos e Harding, 3.ª edição, 2023, cap. 5.</li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="5.3">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="5.2-chaves-enderecos-e-frase.html" rel="prev"><small>← Anterior</small><span>5.2 Chaves, endereços e frase de recuperação</span></a>
+      <a class="next" href="5.4-guardar-a-frase.html" rel="next"><small>Seguinte →</small><span>5.4 Como guardar a frase de recuperação</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>

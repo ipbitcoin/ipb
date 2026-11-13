@@ -230,8 +230,8 @@ const communityUrl = useRuntimeConfig().public.COMMUNITY_URL;
 // Free, yearly, monthly. `points` is how many bullets each card lists.
 const TIERS = [
   { key: "t0", points: 2 },
-  { key: "t1", period: "perYear", plan: "annual", points: 6 },
-  { key: "t2", period: "perMonth", plan: "monthly", points: 6 },
+  { key: "t1", period: "perYear", plan: "annual", points: 7 },
+  { key: "t2", period: "perMonth", plan: "monthly", points: 7 },
 ] as const;
 
 type TierKey = (typeof TIERS)[number]["key"];

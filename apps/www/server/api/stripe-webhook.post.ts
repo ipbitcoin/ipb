@@ -107,6 +107,27 @@ export default defineEventHandler(async (event) => {
     const session = stripeEvent.data.object;
     const { type, memberId, paymentPlan } = session.metadata ?? {};
 
+    // Online course purchase: the buyer gets access once the order is paid.
+    if (type === "course" && session.metadata?.orderId) {
+      try {
+        await convex.mutation(api.courses.markPaid, {
+          orderId: session.metadata.orderId,
+          serviceKey,
+          stripeSessionId: session.id,
+        });
+      } catch (error: unknown) {
+        console.error(
+          "[stripe-webhook] Failed to mark course order paid:",
+          error
+        );
+        // markPaid is safe to repeat: answer 500 so Stripe retries the event.
+        throw createError({
+          message: "Failed to mark course order paid",
+          statusCode: 500,
+        });
+      }
+    }
+
     if (type === "membership" && memberId) {
       let cancelSubscriptionIds: string[] = [];
       try {

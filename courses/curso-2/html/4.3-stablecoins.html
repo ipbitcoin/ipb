@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stablecoins | Curso 2 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 4.3 do Curso 2: No fim desta lição, será possível explicar o que é uma stablecoin, o que a distingue do Bitcoin e porque os custodiantes de stablecoins podem pesar mais do">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#curso">← Curso 2 · A Tecnologia</a>
+    <span class="where">Lição 13 de 21</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="21" aria-valuenow="13"><span style="width:61.9%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+
+    <p class="eyebrow">Módulo 4 · Bitcoin e outras criptomoedas · Lição 4.3</p>
+    <h1>Stablecoins</h1>
+    <p class="lead">No fim desta lição, será possível explicar o que é uma stablecoin, o que a distingue do Bitcoin e porque os custodiantes de stablecoins podem pesar mais do que os programadores em certas blockchains.</p>
+    <p class="meta"><span>10 min de leitura</span><span>2 perguntas</span></p>
+    <h2>O que são</h2>
+    <p>Uma <strong>stablecoin</strong> é um token que acompanha o valor de uma moeda (geralmente o dólar) e é emitido por uma entidade que guarda a reserva. É um salto face à banca para pagamentos internacionais e de grandes quantias, e tem utilidade clara em pagamentos automáticos e entre pessoas. O preço dessa utilidade é a <strong>centralização</strong>.</p>
+    <p>Há enorme procura por dólares em formato cripto, porque quem vive em países com moeda fraca quer converter moeda fraca em forte, propriedade física em digital e ativos em banco em autocustódia. As stablecoins otimizam taxas e mudam de plataforma (já passaram por várias redes), porque os utilizadores querem eficiência com supervisão, e não descentralização.</p>
+    <h2>Bitcoin e stablecoin</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th></th><th>Bitcoin</th><th>Stablecoin</th></tr></thead>
+        <tbody>
+          <tr><td>Quem emite</td><td>Ninguém: emissão por mineração aberta</td><td>Uma entidade identificável</td></tr>
+          <tr><td>Pode ser congelada?</td><td>Não, em autocustódia</td><td>Sim: o emitente pode bloquear endereços</td></tr>
+          <tr><td>O que representa</td><td>Propriedade digital (a «conta poupança»)</td><td>Moeda digital (a «conta corrente»)</td></tr>
+          <tr><td>Confiança necessária</td><td>No protocolo e nas regras</td><td>No emitente e na sua reserva</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h2>Quando o custodiante decide</h2>
+    <p>Em blockchains de contratos inteligentes que dependem de finanças descentralizadas (DeFi), o desfecho de um hard fork pode ser decidido pelos custodiantes de stablecoins. Estes podem anular o valor das stablecoins do lado da cadeia que não reconhecem, tornando insolvente o DeFi desse lado. Logo, todas as variáveis dessa blockchain são potencialmente mutáveis, mesmo contra a vontade dos nós.</p>
+    <p>Os custodiantes podem pôr endereços em lista negra (uma grande emissora bloqueou mais de 500 endereços), são entidades conhecidas e estão sujeitos a ação legal. Por isso, os governos podem apreender fundos, tornar insolvente grande parte do DeFi ou impor um hard fork com requisitos de vigilância. <!-- [VERIFICAR] Número de endereços bloqueados de T7:24 e T7:30 (2022 a 2023); confirmar. --></p>
+    <p>O Bitcoin está protegido porque nenhum emissor de stablecoins nem programador de carteiras pode dirigi-lo. Daí a conclusão desta leitura: o Bitcoin é dinheiro, e a maioria das outras criptomoedas são serviços financeiros «equity», com pré-mineração, mutáveis e políticos.</p>
+    <h2>Para onde caminham</h2>
+    <p>As stablecoins reguladas tenderão a ser integradas nos sistemas financeiros, seja como moedas digitais de bancos centrais, seja como emissores privados muito regulados, mantendo vigilância e censura (KYC e AML). É o tema da lição sobre o euro digital, no Curso 3.</p>
+    <div class="callout limit">
+      <span class="tag">Limites</span>
+      <p>O curso não tem argumentos de defensores das stablecoins para além da sua utilidade prática. A análise acima é a da corrente que as considera um serviço financeiro, e não uma alternativa ao dinheiro neutro.</p>
+    </div>
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      A stablecoin é útil e centralizada: quem a emite pode congelá-la e, em certos casos, decidir o desfecho de uma disputa. O Bitcoin protege-se porque ninguém emite nem controla.
+    </div>
+    <h2>Verificação</h2>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>Qual é o preço da utilidade de uma stablecoin, segundo a lição?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>A centralização: quem emite pode congelar</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>A volatilidade extrema</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>A falta de transações</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>A entidade emitente pode pôr endereços em lista negra.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>Porque pode um custodiante de stablecoins decidir um hard fork de uma blockchain de DeFi?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>Porque pode anular o valor das stablecoins do lado que não reconhece</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Porque minera mais</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Porque escreve o código</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>O DeFi desse lado ficaria insolvente.</p>
+    </fieldset>
+
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>Resumo do IPB das posições em debate (estrutura temática, temas 15.5 e 17.4).</li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="4.3">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="4.2-prova-de-trabalho-ou-de-participacao.html" rel="prev"><small>← Anterior</small><span>4.2 Prova de trabalho ou prova de participação</span></a>
+      <a class="next" href="4.4-altcoins-defi-e-protocolo.html" rel="next"><small>Seguinte →</small><span>4.4 Altcoins, DeFi e protocolo contra sistema operativo</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>

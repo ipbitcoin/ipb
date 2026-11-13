@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pagar e receber com Bitcoin | Curso 3 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 1.1 do Curso 3: No fim desta lição, será possível dizer como se paga e como se recebe com Bitcoin, on-chain e na Lightning, onde isso hoje faz sentido e porque a dificulda">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#curso">← Curso 3 · A Revolução</a>
+    <span class="where">Lição 2 de 14</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="14" aria-valuenow="2"><span style="width:14.3%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+
+    <p class="eyebrow">Módulo 1 · Usos e adoção · Lição 1.1</p>
+    <h1>Pagar e receber com Bitcoin</h1>
+    <p class="lead">No fim desta lição, será possível dizer como se paga e como se recebe com Bitcoin, on-chain e na Lightning, onde isso hoje faz sentido e porque a dificuldade é de liquidez e não de interface.</p>
+    <p class="meta"><span>10 min de leitura</span><span>2 perguntas · 1 lista de verificação · 1 lista de verificação</span></p>
+    <h2>Duas formas de pagar</h2>
+    <div class="cards two">
+      <div class="card"><span class="n">ON-CHAIN</span><h3>Na blockchain</h3><p>Mais lento (cerca de 10 minutos para a primeira confirmação), comissão variável. Indicado para valores maiores ou pagamentos sem pressa.</p></div>
+      <div class="card"><span class="n">LIGHTNING</span><h3>Fora da blockchain</h3><p>Segundos, comissões muito baixas. Indicado para pagamentos pequenos e do dia a dia (lição 3.2 do Curso 2).</p></div>
+    </div>
+    <h2>Receber</h2>
+    <ol>
+      <li>Na carteira, escolher <strong>Receber</strong>.</li>
+      <li>Mostrar o código QR ou enviar o endereço (ou a fatura Lightning) por um canal de confiança.</li>
+      <li>Aguardar. Na Lightning, o pagamento chega em segundos. On-chain, fica visível logo na mempool e confirma-se em cerca de dez minutos.</li>
+    </ol>
+    <p>Para um negócio, o mais prático é usar um serviço que gere as faturas e converta (ou não) para euros. Há soluções de código aberto, como o BTCPay Server, que o comerciante pode alojar. <!-- [VERIFICAR] Confirmar se o IPB quer referir soluções de comerciante específicas. --></p>
+    <h2>Pagar</h2>
+    <ol>
+      <li>Ler o QR ou colar o endereço ou a fatura.</li>
+      <li>Confirmar valor, destinatário e comissão no ecrã.</li>
+      <li>Enviar. Na Lightning, o pagamento termina com uma confirmação imediata.</li>
+    </ol>
+    <h2>Onde se aceita, e porque é difícil</h2>
+    <p>O Bitcoin é aceite em alguns comerciantes, em plataformas online e em serviços de pagamento. Mas é ainda uma minoria e, em Portugal, não é de aceitação obrigatória em lado nenhum. Há também caixas automáticas em algumas cidades, mas costumam ter comissões e margens elevadas. O mapa muda depressa: convém consultar fontes atualizadas, como o BTC Map. <!-- [VERIFICAR] Estado atual da aceitação em Portugal. --></p>
+    <p>A dificuldade em usar o Bitcoin em compras é <strong>de liquidez e não de interface</strong>: não faltam ecrãs bonitos, falta haver onde gastar. Por isso, nesta leitura, uma rede de pagamentos como a Visa poderia acrescentá-lo como mais uma moeda, e os protocolos abertos permitem que um pequeno grupo de empresários crie uma economia Lightning sem pedir licença a ninguém. Está num estágio embrionário: os primeiros usos comerciais da Lightning têm poucos anos. <!-- [VERIFICAR] Estágio de adoção de T3:41 (2022); atualizar. --></p>
+    <h2>Usos novos: dinheiro nativo da internet</h2>
+    <p>A internet carece de «conservação de energia»: enviar mensagens não tem custo nem consequência, e daí vêm o spam, os bots e as burlas. Uma proposta é introduzir consequência através de ativos digitais de alta velocidade: um depósito de segurança em Lightning permitiria filtrar mensagens e seria confiscado se a conta fosse um bot. Com cartões, isto falha: custos de cerca de 2,5%, liquidação lenta e exclusão de quem não tem cartão ou quer anonimato. Quando é preciso uma moeda nativa da internet, esta tem de ser uma propriedade movível milhões de vezes por segundo, e o Bitcoin e a Lightning permitem entidades de software autossuficientes.</p>
+    <h2>Remessas</h2>
+    <p>Em países como El Salvador, as remessas são um dos usos citados, quase gratuitas via Lightning. <!-- [VERIFICAR] Confirmar custo atual das remessas via Lightning (T5:45; T6:12). --> As pontes entre Bitcoin e dinheiro local continuam a ter custos e riscos.</p>
+    <div class="callout warning">
+      <span class="tag">Gastar é vender</span>
+      <p>Em Portugal, pagar uma compra com Bitcoin é, do ponto de vista fiscal, vender esse Bitcoin pelo valor do que foi comprado. Pode haver mais-valia, e a lição 2.2 explica como. Convém pensar nisto antes de usar o Bitcoin para pagar o café.</p>
+    </div>
+    <h2>Antes de enviar</h2>
+    <ul class="checklist">
+      <li><label><input type="checkbox" id="c-1-1-1-1"><span>Confirmou-se o endereço no ecrã, e não só a parte inicial e final.</span></label></li>
+      <li><label><input type="checkbox" id="c-1-1-1-2"><span>Verificaram-se o valor e a comissão.</span></label></li>
+      <li><label><input type="checkbox" id="c-1-1-1-3"><span>Se o valor é grande, fez-se primeiro um envio de teste.</span></label></li>
+      <li><label><input type="checkbox" id="c-1-1-1-4"><span>Sabe-se que não há como reverter.</span></label></li>
+    </ul>
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      A Lightning serve para pagar, a camada 1 para liquidar. A dificuldade de pagar com Bitcoin é, sobretudo, a de haver onde gastar. E cada pagamento com Bitcoin é também uma venda para efeitos fiscais.
+    </div>
+    <h2>Verificação</h2>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>Para que serve, sobretudo, a Lightning?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>Pagamentos pequenos e do dia a dia, em segundos</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Guardar bitcoin a longo prazo</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Minerar</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>A camada 1 liquida, a Lightning paga.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>Qual é a dificuldade principal de usar Bitcoin em compras, segundo a lição?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>De liquidez: faltam locais onde gastar</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>De interface: as aplicações são feias</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Não há dificuldade</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Não faltam interfaces. Falta haver onde gastar.</p>
+    </fieldset>
+
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>Mapa de comerciantes: <a href="https://btcmap.org" target="_blank" rel="noopener">btcmap.org</a>.</li>
+      <li>BTCPay Server: <a href="https://btcpayserver.org" target="_blank" rel="noopener">btcpayserver.org</a>.</li>
+      <li>Resumo do IPB das ideias da estrutura temática (temas 16.3 e 20.1).</li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="1.1">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="0.1-antes-de-comecar.html" rel="prev"><small>← Anterior</small><span>0.1 Antes de começar</span></a>
+      <a class="next" href="1.2-poupar-a-longo-prazo.html" rel="next"><small>Seguinte →</small><span>1.2 Poupar a longo prazo</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>

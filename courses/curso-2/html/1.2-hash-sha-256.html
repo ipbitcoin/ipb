@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Funções de hash e SHA-256 | Curso 2 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 1.2 do Curso 2: No fim desta lição, será possível explicar o que é uma função de hash, porque o SHA-256 é a base da ligação entre blocos e experimentá-lo.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#curso">← Curso 2 · A Tecnologia</a>
+    <span class="where">Lição 3 de 21</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="21" aria-valuenow="3"><span style="width:14.3%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+
+    <p class="eyebrow">Módulo 1 · Como funciona a rede · Lição 1.2</p>
+    <h1>Funções de hash e SHA-256</h1>
+    <p class="lead">No fim desta lição, será possível explicar o que é uma função de hash, porque o SHA-256 é a base da ligação entre blocos e experimentá-lo.</p>
+    <p class="meta"><span>10 min de leitura</span><span>2 perguntas · 1 calculadora</span></p>
+    <h2>Uma impressão digital para dados</h2>
+    <p>Uma <strong>função de hash</strong> pega em qualquer dado (uma palavra, um livro, um bloco de transações) e devolve um número de tamanho fixo, a que se chama <em>hash</em>. O Bitcoin usa a função <strong>SHA-256</strong>, que devolve sempre 256 bits, normalmente escritos como 64 caracteres em hexadecimal.</p>
+    <h2>Experimentar</h2>
+    <div class="card" id="hash">
+      <h3>Calculadora de SHA-256</h3>
+      <p style="margin:0 0 10px;font-size:16px;color:var(--muted)">Escrever qualquer texto. Depois mudar uma única letra e ver o que acontece.</p>
+      <label for="hash-in" style="display:block;font-size:14px;color:var(--muted);margin-bottom:4px">O texto</label>
+      <input type="text" id="hash-in" value="Olá, Bitcoin" autocomplete="off">
+      <pre class="ledger" id="hash-out" role="status" aria-live="polite" style="margin-top:12px;overflow-wrap:anywhere;white-space:pre-wrap"></pre>
+    </div>
+    <h2>O que se repara</h2>
+    <ul>
+      <li><strong>O resultado tem sempre o mesmo tamanho</strong>, seja o texto de uma letra ou de um livro.</li>
+      <li><strong>O mesmo texto dá sempre o mesmo hash.</strong> É determinista.</li>
+      <li><strong>Mudar uma letra muda tudo.</strong> Não há «hashes parecidos» para textos parecidos.</li>
+      <li><strong>Não se volta atrás.</strong> A partir do hash não se consegue descobrir o texto. A única forma é tentar textos até acertar.</li>
+    </ul>
+    <p>Um exemplo conhecido: o SHA-256 de <code>abc</code> é <code>ba7816bf…f20015ad</code>. Pode escrever-se acima para confirmar.</p>
+    <h2>Para que serve no Bitcoin</h2>
+    <div class="cards two">
+      <div class="card"><span class="n">1 · LIGAR BLOCOS</span><h3>Cada bloco guarda o hash do anterior</h3><p>Se alguém mudar um bloco antigo, o hash muda e a ligação quebra-se.</p></div>
+      <div class="card"><span class="n">2 · RESUMIR TRANSAÇÕES</span><h3>Raiz de Merkle</h3><p>Os hashes das transações combinam-se numa árvore. A raiz resume milhares de transações num só valor.</p></div>
+      <div class="card"><span class="n">3 · PROVAR TRABALHO</span><h3>Mineração</h3><p>Os mineradores procuram um bloco cujo hash comece por muitos zeros (lição 1.3).</p></div>
+      <div class="card"><span class="n">4 · ENDEREÇOS</span><h3>Das chaves aos endereços</h3><p>O endereço de uma carteira é derivado da chave pública com funções de hash (lição 5.2).</p></div>
+    </div>
+    <h2>O que o SHA-256 não faz</h2>
+    <p>O SHA-256 <strong>não assina transações</strong>: serve para a mineração e para encadear blocos. A assinatura usa outra matemática (curvas elípticas, lição 5.2). Esta distinção importa para a lição sobre o risco quântico: quebrar o SHA-256 não permitiria gastar as moedas de ninguém, ao passo que forjar assinaturas permitiria.</p>
+    <h2>O cabeçalho de um bloco</h2>
+    <p>O que entra no hash de um bloco é o seu <strong>cabeçalho</strong>, com 80 bytes e seis campos:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Campo</th><th>O que é</th></tr></thead>
+        <tbody>
+          <tr><td>Versão</td><td>Quais as regras que o bloco segue</td></tr>
+          <tr><td>Hash do bloco anterior</td><td>Liga este bloco ao anterior</td></tr>
+          <tr><td>Raiz de Merkle</td><td>Resumo de todas as transações do bloco</td></tr>
+          <tr><td>Data e hora</td><td>Quando o bloco foi produzido, aproximadamente</td></tr>
+          <tr><td>Alvo de dificuldade</td><td>Quantos zeros o hash precisa de ter</td></tr>
+          <tr><td>Nonce</td><td>O número que o minerador vai alterando até acertar</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Na prática, o Bitcoin aplica o SHA-256 duas vezes seguidas (SHA-256d). Para perceber a ideia, uma vez chega.</p>
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      Um hash é uma impressão digital: fácil de calcular, impossível de inverter, e qualquer alteração muda-o por completo. É isto que torna a cadeia de blocos infalsificável.
+    </div>
+    <h2>Verificação</h2>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>O que acontece ao hash se se mudar uma letra do texto?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>Muda só um bocadinho</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Muda por completo</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Fica igual</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>É a propriedade a que se chama efeito de avalanche: mudar um bit na entrada muda a saída de forma imprevisível.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>O SHA-256 assina as transações?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>Sim, é para isso que serve</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Não: serve para a mineração e para encadear blocos</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Só as transações grandes</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>A assinatura usa curvas elípticas. Por isso, quebrar o SHA-256 não permitiria gastar as moedas de ninguém.</p>
+    </fieldset>
+
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>NIST, FIPS 180-4, Secure Hash Standard (SHA-256): <a href="https://csrc.nist.gov/pubs/fips/180-4/upd1/final" target="_blank" rel="noopener">csrc.nist.gov</a>.</li>
+      <li>Bitcoin Developer Guide, «Block Chain»: <a href="https://developer.bitcoin.org/devguide/block_chain.html" target="_blank" rel="noopener">developer.bitcoin.org</a>.</li>
+      <li>Resumo do IPB das ideias da estrutura temática (tema 14.3).</li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="1.2">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="1.1-nos-e-mineradores.html" rel="prev"><small>← Anterior</small><span>1.1 Nós e mineradores</span></a>
+      <a class="next" href="1.3-mineracao-e-prova-de-trabalho.html" rel="next"><small>Seguinte →</small><span>1.3 Mineração e prova de trabalho</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>

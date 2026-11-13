@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quanto vale a erosão | Curso 1 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 3.2 do Curso 1: No fim desta lição, será possível calcular em quantos anos o dinheiro perde metade do poder de compra, situar a ordem de grandeza da erosão e conhecer o ar">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#curso">← Curso 1 · A Génese</a>
+    <span class="where">Lição 11 de 26</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="26" aria-valuenow="11"><span style="width:42.3%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+
+    <p class="eyebrow">Módulo 3 · Inflação · Lição 3.2</p>
+    <h1>Quanto vale a erosão</h1>
+    <p class="lead">No fim desta lição, será possível calcular em quantos anos o dinheiro perde metade do poder de compra, situar a ordem de grandeza da erosão e conhecer o argumento a favor de uma inflação baixa.</p>
+    <p class="meta"><span>10 min de leitura</span><span>2 perguntas</span></p>
+    <h2>Quanto cresce a oferta de moeda</h2>
+    <p>Segundo uma estimativa de 2022, a oferta de moeda tem crescido cerca de 7% ao ano, enquanto as ações rendem cerca de 10% e a economia real cresce entre 2% e 3%. Isto significa que grande parte do rendimento nominal é monetário. <!-- [VERIFICAR] Estimativa de T3:8, datada de 2022; atualizar com séries do BCE e da Reserva Federal. -->Quem toma crédito barato para comprar ativos beneficia à custa dos outros.</p>
+    <p>A escola austríaca estima ainda que, a nível global, a oferta de moeda fiduciária cresceu cerca de 14% ao ano desde os anos 60 (ponderada por valor), contra cerca de 1,5% ao ano do stock de ouro. Nas democracias estáveis (por exemplo, Estados Unidos, Suíça, Dinamarca e Suécia) a média rondaria os 6% a 7%. <!-- [VERIFICAR] Estimativas de T4:40 e T5:27 (anos 2021 a 2022): confirmar a fonte e o período antes de manter. --></p>
+    <div class="bars">
+      <h3>Crescimento anual da oferta de moeda (estimativas citadas)</h3>
+      <div class="bar"><span class="lab">Ouro</span><span class="track"><span style="width:10.7%"></span></span><span class="val">~1,5%</span></div>
+      <div class="bar"><span class="lab">Democracias estáveis</span><span class="track"><span style="width:46.4%"></span></span><span class="val">6 a 7%</span></div>
+      <div class="bar hl"><span class="lab">Global, ponderada</span><span class="track"><span style="width:100.0%"></span></span><span class="val">~14%</span></div>
+      <p class="src">Estimativas citadas pela escola austríaca. Datas e metodologia por confirmar.</p>
+    </div>
+    <h2>A regra dos 72</h2>
+    <p>Há um atalho para saber em quantos anos o dinheiro perde metade do poder de compra:</p>
+    <p><strong>anos ≈ 72 ÷ taxa de inflação anual (em %)</strong></p>
+    <div class="card" id="calc">
+      <h3>Calculadora de poder de compra</h3>
+      <div class="tool" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+        <div><label for="calc-amount">Quanto se tem (€)</label><input id="calc-amount" type="text" inputmode="decimal" value="10000" autocomplete="off"></div>
+        <div><label for="calc-rate">Inflação anual (%)</label><input id="calc-rate" type="text" inputmode="decimal" value="2" autocomplete="off"></div>
+        <div><label for="calc-years">Daqui a quantos anos</label><input id="calc-years" type="text" inputmode="decimal" value="36" autocomplete="off"></div>
+      </div>
+      <div id="calc-out" class="tool-out" style="margin-top:14px;font-family:var(--font);font-size:17px;color:var(--text)" role="status" aria-live="polite"></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Inflação anual</th><th class="num">Metade do poder de compra perde-se em</th><th class="num">10.000 € de hoje equivalem, nessa altura, a</th></tr></thead>
+        <tbody>
+          <tr><td>2%</td><td class="num">36 anos</td><td class="num">~4.900 €</td></tr>
+          <tr><td>3%</td><td class="num">24 anos</td><td class="num">~4.900 €</td></tr>
+          <tr><td>6%</td><td class="num">12 anos</td><td class="num">~5.000 €</td></tr>
+          <tr><td>10%</td><td class="num">7 anos</td><td class="num">~5.100 €</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>A regra é uma aproximação, boa para taxas até uns 10%. Com 10%, o cálculo exato dá 7,3 anos. Uma inflação de 2% equivale a um navio que perde 2% do casco por ano: meia-vida de cerca de 35 anos, a mesma de um dinheiro em ouro em condições perfeitas.</p>
+    <p>Os defensores do dinheiro duro estimam que o dólar tenha perdido cerca de 99,7% do seu poder de compra, e que as medições oficiais mostrem uma erosão de 95%. <!-- [VERIFICAR] Afirmação de T3:11-12; confirmar o período e a série (por exemplo, desde 1913). --></p>
+    <h2>O argumento a favor de uma inflação baixa</h2>
+    <div class="callout view">
+      <span class="tag">O que defendem os bancos centrais</span>
+      <p>O BCE tem como meta uma inflação de 2% ao ano a médio prazo. Uma inflação baixa e estável dá margem de manobra em crises, evita o risco de deflação e permite aos bancos centrais baixar os juros quando a economia abranda. O dinheiro raramente fica parado: se a conta pagar juros, o efeito diminui. O que importa é o juro real (juro menos inflação).</p>
+    </div>
+    <p>A meta nem sempre é cumprida. Em outubro de 2022, a inflação anual da zona euro chegou a 10,6%, o valor mais alto desde que o Eurostat começou a publicar a série, em 1997, empurrada sobretudo pela energia e pelos alimentos.</p>
+    <div class="positions">
+      <div class="pos"><span class="k">Resposta da escola austríaca</span><p>O argumento de que uma inflação moderada estimula o consumo é falso: o desejo de consumir é ilimitado, e o limite é o custo de oportunidade.</p><p>Uma inflação de 2% parece pouco, mas implica que a moeda tem uma vida de 35 anos. A ideia de que a moeda deva ter esta duração é, para esta escola, absurda.</p></div>
+      <div class="pos"><span class="k">Onde há acordo</span><p>O dinheiro parado perde poder de compra se o juro for inferior à inflação.</p><p>A meta nem sempre é cumprida, e nem toda a inflação vem de «mais dinheiro»: em 2022 houve um choque de energia.</p></div>
+    </div>
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      2% ao ano parece pouco, mas leva o dinheiro parado a perder metade do poder de compra em cerca de 36 anos. Se isso é um custo razoável pela estabilidade ou uma erosão evitável, é onde as escolas se separam.
+    </div>
+    <h2>Verificação</h2>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>Pela regra dos 72, com inflação de 3% ao ano, o dinheiro parado perde metade do poder de compra em cerca de…</legend>
+      <label class="opt"><input type="radio" name="q1"><span>12 anos</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>24 anos</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>72 anos</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>72 ÷ 3 = 24 anos.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>O que é o «juro real»?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>O juro menos a inflação</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>O juro que o banco central fixa</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>O juro mais a inflação</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Se o juro for inferior à inflação, o juro real é negativo e o poder de compra continua a cair.</p>
+    </fieldset>
+
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>BCE, meta de inflação de 2% a médio prazo (revisão da estratégia, 2021).</li>
+      <li>Eurostat, índice harmonizado de preços no consumidor (HICP), zona euro: 10,6% em outubro de 2022.</li>
+      <li>Resumo do IPB das estimativas citadas pela escola austríaca (estrutura temática, tema 5.1).</li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="3.2">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="3.1-sentidos-de-inflacao.html" rel="prev"><small>← Anterior</small><span>3.1 Os sentidos de «inflação» e como se mede</span></a>
+      <a class="next" href="3.3-o-que-causa-a-inflacao.html" rel="next"><small>Seguinte →</small><span>3.3 O que causa a inflação</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A rede de liquidação | Curso 2 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 3.1 do Curso 2: No fim desta lição, será possível explicar porque a camada base do Bitcoin é uma rede de liquidação, porque a baixa capacidade pode ser uma virtude e como ">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#curso">← Curso 2 · A Tecnologia</a>
+    <span class="where">Lição 9 de 21</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="21" aria-valuenow="9"><span style="width:42.9%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+
+    <p class="eyebrow">Módulo 3 · Camadas e escala · Lição 3.1</p>
+    <h1>A rede de liquidação</h1>
+    <p class="lead">No fim desta lição, será possível explicar porque a camada base do Bitcoin é uma rede de liquidação, porque a baixa capacidade pode ser uma virtude e como a taxa de transação distribui o uso pelas camadas.</p>
+    <p class="meta"><span>10 min de leitura</span><span>2 perguntas</span></p>
+    <h2>Poucas transações por segundo</h2>
+    <p>A camada base do Bitcoin (a <em>camada 1</em>) processa algo da ordem de 3 a 7 transações por segundo, em média. Isso não é o limite do sistema, porque a base não foi desenhada para pagar cafés: foi desenhada para <strong>liquidar</strong>. O Bitcoin é uma rede de liquidação, comparável ao Fedwire, com outras camadas por cima, como a Visa ou o PayPal, que trabalham com promessas (IOUs) entre bancos.</p>
+    <ol class="flow">
+      <li><strong>Camada 1</strong>Liquidação final entre quem desconfia uns dos outros. Pouca mobilidade, máxima integridade.</li>
+      <li><strong>Camada 2</strong>Pagamentos rápidos entre canais (Lightning), com segurança herdada da base.</li>
+      <li><strong>Camadas 3 e 4</strong>Serviços de empresas, mais cómodos, com confiança no operador.</li>
+    </ol>
+    <h2>A camada 1 como rocha de base</h2>
+    <p>A camada 1 existe para a liquidação de propriedade: mover grandes somas com segurança e durar para sempre (o desafio é mover mil milhões para o ano 2140). Deve ser como uma rocha de base, de baixa mobilidade e máxima integridade e imortalidade. A camada 1 não deve aumentar a velocidade à custa da integridade.</p>
+    <p>A <strong>taxa de transação</strong> modula o uso: com taxas altas, as pequenas transações vão para a camada 2, e a base fica para liquidações grandes. Assim, o custo e a energia por transação tornam-se desprezáveis, porque a mesma energia protege uma quantidade enorme de valor.</p>
+    <h2>Defeito ou virtude?</h2>
+    <div class="positions">
+      <div class="pos"><span class="k">Defeito</span><p>Uma rede de pagamentos que só faz poucas transações por segundo não pode ser dinheiro de uso corrente.</p><p>O Bitcoin não pode ser meio de troca de massas sem as camadas por cima.</p></div>
+      <div class="pos"><span class="k">Virtude</span><p>A segurança de liquidação importa mais do que a velocidade. Os outros mecanismos liquidam com menos finalidade.</p><p>O Bitcoin só precisa de ser reserva de valor e cede as transações a camadas superiores. Não tenta ser a rede de pagamentos mais barata, tenta ser um ativo ao portador descentralizado e uma rede de liquidação.</p></div>
+    </div>
+    <p>Uma rede eficiente tem despesas que crescem mais devagar do que a utilidade. No Bitcoin, a despesa de segurança não cresce com as transações. A inovação em transações empurra-se para camadas superiores com compromissos de minimização de confiança, como acontece na biologia e na internet, que evoluem por camadas.</p>
+    <div class="callout limit">
+      <span class="tag">Limites</span>
+      <p>O curso não tem dados de adoção que digam quanto uso do dia a dia as camadas superiores conseguem hoje absorver. A tese é de desenho: a camada base como liquidação, e o resto por cima.</p>
+    </div>
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      A camada 1 não é lenta por defeito: foi desenhada para liquidar com segurança, e empurra os pagamentos pequenos para as camadas superiores.
+    </div>
+    <h2>Verificação</h2>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>Para que foi desenhada a camada base do Bitcoin?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>Para liquidar valor com segurança</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Para pagar cafés</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Para guardar ficheiros</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>A base é uma rede de liquidação, com outras camadas por cima.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>O que faz a taxa de transação, segundo a lição?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>Leva as pequenas transações para a camada 2 e deixa a base para liquidações grandes</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Aumenta a energia por transação</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Paga aos bancos</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>A taxa distribui o uso pelas camadas.</p>
+    </fieldset>
+
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>Resumo do IPB das ideias da estrutura temática (tema 16.1).</li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="3.1">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="2.2-energia-desperdicada-e-debate.html" rel="prev"><small>← Anterior</small><span>2.2 Energia desperdiçada, rede elétrica e o debate</span></a>
+      <a class="next" href="3.2-lightning-e-outras-camadas.html" rel="next"><small>Seguinte →</small><span>3.2 Lightning e outras camadas</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>

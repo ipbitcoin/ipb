@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ameaça quântica e migração | Curso 2 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 6.1 do Curso 2: No fim desta lição, será possível explicar o que um computador quântico poderia quebrar no Bitcoin, o que não pode, porque o problema é de migração e não d">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#curso">← Curso 2 · A Tecnologia</a>
+    <span class="where">Lição 20 de 21</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="21" aria-valuenow="20"><span style="width:95.2%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+
+    <p class="eyebrow">Módulo 6 · Riscos técnicos · Lição 6.1</p>
+    <h1>Ameaça quântica e migração</h1>
+    <p class="lead">No fim desta lição, será possível explicar o que um computador quântico poderia quebrar no Bitcoin, o que não pode, porque o problema é de migração e não de falha, e quais as opções para as moedas que não migrarem.</p>
+    <p class="meta"><span>12 min de leitura</span><span>4 perguntas</span></p>
+    <div class="callout risk">
+      <span class="tag">Aviso de risco</span>
+      <p>O risco de migração criptográfica é real, ainda que não imediato: se vierem a existir computadores quânticos suficientemente grandes, as assinaturas atuais deixarão de ser seguras, e a rede terá de migrar. Esta lição explica o que está em causa. Não é uma previsão, e não há calendário certo.</p>
+    </div>
+    <h2>O que teria de quebrar</h2>
+    <p>O maior risco é <strong>forjar assinaturas</strong>, o que permitiria gastar o dinheiro de qualquer pessoa. O SHA-256, como se viu na lição 1.2, não assina transações: serve para a mineração e para encadear blocos. Por isso, quebrá-lo não permitiria gastar as moedas de Satoshi. A computação quântica é hardware, e o limite atual é de hardware: os algoritmos têm décadas.</p>
+    <h2>Dois algoritmos</h2>
+    <div class="positions">
+      <div class="pos"><span class="k">Grover (hash)</span><p>Dá um ganho de raiz quadrada: reduz o SHA-256 de 256 para cerca de 128 bits.</p><p>Continua a exigir mais tentativas do que a idade do universo.</p><p>Mesmo que um computador quântico minerasse mais depressa, a dificuldade ajustar-se-ia, e a mineração é adivinhar, sem vantagem por talento.</p></div>
+      <div class="pos"><span class="k">Shor (assinaturas)</span><p>Ataca a matemática das assinaturas (a curva secp256k1).</p><p>É a ameaça real.</p></div>
+    </div>
+    <p>Se a matemática falhasse em geral, tudo falharia, não só o Bitcoin. Isso valia já antes da inteligência artificial e da computação quântica, e seria um mundo «não investível». Não há evidência de que se prepare.</p>
+    <h2>Quão perto está</h2>
+    <p>O chip Willow, da Google, tem 105 qubits. Num artigo de 31 de março de 2026, escrito com colaboradores académicos, a Google estimou que quebrar a curva elíptica do Bitcoin exigiria menos de 500 mil qubits físicos, cerca de vinte vezes menos do que a melhor estimativa anterior, sem alegar que um computador desses exista ou seja iminente. A Google aponta para 2029 como prazo da sua própria migração, o governo dos EUA para 2030 a 2032, e o Pentágono testa até 2033. A Google vende computadores quânticos, e outros investigadores falam de 2040 a 2050. <!-- [VERIFICAR] Calendários de T12:19 (2026) por confirmar caso a caso; o artigo de março de 2026 foi confirmado na imprensa especializada, convém citar o original. -->Ninguém acredita que seja um problema hoje, mas é responsável preparar, porque a migração demora.</p>
+    <h2>Quem está exposto</h2>
+    <p>As moedas da era de Satoshi, cujas chaves públicas já estão na blockchain. Mais poder de hash ou armazenamento a frio não ajuda. Perto de 7 milhões de chaves públicas estão expostas, e cerca de 2,5 milhões parecem nunca migrar (donos mortos, perdidos ou desatentos). <!-- [VERIFICAR] Números de T12:27; confirmar. --></p>
+    <h2>O Bitcoin consegue atualizar-se?</h2>
+    <p>Em mensagens de 2010, Satoshi escreveu que o SHA-256 pode durar décadas e que, se quebrasse de repente, a rede acordaria qual a blockchain honesta e continuaria com uma nova função de hash. Se quebrasse gradualmente, transitaria de forma ordenada. Para as assinaturas, o software atualizado voltaria a assinar todo o dinheiro com um algoritmo mais forte. O Bitcoin já atualizou várias vezes e terá de o fazer ainda por uma razão independente: o relógio em segundos desde 1970 esgota-se no século XXII.</p>
+    <p>Há trabalho em curso: uma proposta de «enviar primeiro o crítico», um relatório de maio de 2025 de uma empresa de formação de programadores (Chaincode Labs) sobre a migração, várias propostas de melhoria (BIPs) e um consórcio de grandes instituições que se comprometeu com 15 milhões em três anos, sobretudo para segurança quântica. Como termo de comparação, atualizações anteriores como o SegWit e o Taproot levaram vários anos a adotar. <!-- [VERIFICAR] A estrutura (T12:24) refere um plano de 2 a 7 anos; não confirmado no original do relatório de maio de 2025. Confirmar o consórcio e os 15 milhões. -->A leitura de fundo é que o Bitcoin não tem hoje um problema quântico, tem um <strong>problema de migração</strong>.</p>
+    <p>O Bitcoin é aberto, sem fundador, diretor-geral nem dever fiduciário. Quem quer algo feito deve financiar, participar ou ler.</p>
+    <h2>O que fazer às moedas que não migram</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Opção</th><th>Consequência</th></tr></thead>
+        <tbody>
+          <tr><td>Deixá-las e aceitar que serão roubadas</td><td>Pressão vendedora que pode derrubar o preço</td></tr>
+          <tr><td>Congelá-las ou queimá-las (como peça de museu)</td><td>A comunidade faz um juízo sobre a propriedade alheia</td></tr>
+          <tr><td>Definir uma data-limite a partir da qual deixam de ser gastáveis</td><td>Quem não migrar até lá perde o acesso</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Há quem argumente que não deve congelar-se nada, porque o Bitcoin deixa de ser interessante se abdicar desta propriedade fundamental, e que prefere um mundo em que quem não consegue proteger as moedas as perde a um em que a comunidade faz um juízo sobre a propriedade alheia. O debate é filosófico e político (e se Satoshi estiver vivo?).</p>
+    <div class="callout limit">
+      <span class="tag">Limites</span>
+      <p>O material do curso não tem uma defesa com argumento próprio de congelar ou queimar as moedas, para além de apresentar essa opção. Não há almoço grátis em nenhuma das três.</p>
+    </div>
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      O risco quântico para o Bitcoin é de assinaturas e de migração, não do SHA-256. Ninguém sabe o calendário, mas migrar demora, e por isso convém preparar já.
+    </div>
+    <h2>Verificação do módulo 6</h2>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>O que um computador quântico poderia quebrar, que o SHA-256 não permite?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>As assinaturas, o que permitiria gastar o dinheiro de qualquer pessoa</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>O calendário de emissão</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>O número de blocos</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>O algoritmo de Shor ataca as assinaturas. O hash só perde parte da margem de segurança.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>Quem está mais exposto hoje?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>As moedas cujas chaves públicas já estão na blockchain, como as da era de Satoshi</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>As moedas novas</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Todas por igual</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Mais poder de hash ou armazenamento a frio não ajuda.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>O que é, na leitura do curso, o problema quântico do Bitcoin?</legend>
+      <label class="opt"><input type="radio" name="q3"><span>Um problema de migração, e não de falha imediata</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Uma falha atual do SHA-256</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Uma proibição</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>O software pode atualizar-se, mas a migração demora.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>Qual é uma das opções para as moedas que não migram?</legend>
+      <label class="opt"><input type="radio" name="q4"><span>Definir uma data-limite a partir da qual deixam de ser gastáveis</span></label>
+      <label class="opt"><input type="radio" name="q4"><span>Apagar a blockchain</span></label>
+      <label class="opt"><input type="radio" name="q4"><span>Aumentar o limite de 21 milhões</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Há três opções em debate, nenhuma sem custo.</p>
+    </fieldset>
+
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>Resumo do IPB das ideias da estrutura temática (tema 21.2 e 21.3).</li>
+      <li>Satoshi Nakamoto, mensagens de 2010 sobre a robustez do SHA-256 (arquivo de listas de email de criptografia).</li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="6.1">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="5.5-transacoes-e-comissoes.html" rel="prev"><small>← Anterior</small><span>5.5 Transações, mempool e comissões</span></a>
+      <a class="next" href="7.1-revisao-e-proximos-passos.html" rel="next"><small>Seguinte →</small><span>7.1 Revisão e próximos passos</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>

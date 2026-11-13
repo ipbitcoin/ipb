@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quem decide as regras: forks e governação | Curso 2 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 1.5 do Curso 2: No fim desta lição, será possível distinguir hard fork de soft fork, contar o que aconteceu na guerra do tamanho do bloco, explicar porque o Bitcoin se diz">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#curso">← Curso 2 · A Tecnologia</a>
+    <span class="where">Lição 6 de 21</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="21" aria-valuenow="6"><span style="width:28.6%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+
+    <p class="eyebrow">Módulo 1 · Como funciona a rede · Lição 1.5</p>
+    <h1>Quem decide as regras: forks e governação</h1>
+    <p class="lead">No fim desta lição, será possível distinguir hard fork de soft fork, contar o que aconteceu na guerra do tamanho do bloco, explicar porque o Bitcoin se diz «imutável» e rever o módulo.</p>
+    <p class="meta"><span>11 min de leitura</span><span>4 perguntas</span></p>
+    <h2>Dois tipos de mudança</h2>
+    <p>Um <strong>hard fork</strong> é uma alteração incompatível com as regras dos nós existentes e cria uma cadeia paralela. Um <strong>soft fork</strong> é retrocompatível e mais restritivo: os nós antigos continuam a aceitar os blocos novos. Quem detinha bitcoins quando houve um hard fork recebeu também as moedas do fork. A maioria vendeu-as, o que as fez perder valor.</p>
+    <h2>A guerra do tamanho do bloco</h2>
+    <p>Em 2015 a 2017, mais de 80% do poder minerador, o maior fabricante de equipamento, antigos programadores e grandes custodiantes e exchanges apoiaram a proposta SegWit2x, e falharam. Programadores e a maioria dos operadores de nós recusaram. A razão: aumentar o bloco aumenta os requisitos de largura de banda e de armazenamento, afasta o utilizador comum e obriga a confiar em grandes fornecedores. Foi uma crise constitucional que o Bitcoin superou. <!-- [VERIFICAR] Percentagens e atores de T7:15; confirmar com fonte histórica (2015 a 2017). --></p>
+    <ol class="timeline">
+      <li><span class="when">2015 a 2017</span><strong>Debate sobre o tamanho do bloco</strong><p>Parte da indústria defende blocos maiores para pagar mais transações na camada base.</p></li>
+      <li><span class="when">2017</span><strong>A proposta falha</strong><p>Os nós e os programadores não a aceitam. Os mineradores não conseguem impor a mudança.</p></li>
+      <li><span class="when">Depois</span><strong>Os forks de blocos grandes</strong><p>Perdem capitalização e poder de cálculo.</p></li>
+    </ol>
+    <h2>Uma separação de poderes</h2>
+    <p>O Bitcoin tem uma espécie de separação de poderes (nós, mineradores, programadores) com resistência à mudança. As mudanças só passam com consenso esmagador dos utilizadores, por soft forks retrocompatíveis. Se o Bitcoin alguma vez mudar de sistema, será só com consenso esmagador.</p>
+    <p>Sob prova de participação, as grandes exchanges e custodiantes teriam votado com as moedas dos clientes e remodelado o Bitcoin. O Bitcoin sobreviveu porque não é prova de participação (lição 4.2).</p>
+    <h2>A «imutabilidade»</h2>
+    <p>O Bitcoin é «imutável» no sentido de resistir à mudança: o software de 2009 ainda sincroniza, e os parâmetros que importam não mudaram. Quem duvida («é só uma linha de código») pode responder-se com um criador anónimo que desapareceu, quase vinte anos sem ninguém ao comando e tentativas de alterar parâmetros que falharam.</p>
+    <div class="positions">
+      <div class="pos"><span class="k">No Bitcoin</span><p>Os parâmetros de consenso estão praticamente fixos, e a mudança exige consenso esmagador.</p><p>Quem quer mudar as regras tem de convencer utilizadores e nós, não só mineradores ou empresas.</p></div>
+      <div class="pos"><span class="k">Em muitas outras criptomoedas</span><p>Os parâmetros mudam em hard forks frequentes, como nas empresas, o que as torna dependentes de um grupo.</p><p>Quem controla as «atualizações» pode multiplicar a oferta. Há projetos que dependem de atualizações e de «bombas de dificuldade» e que já tiveram divisões de cadeia por erros de atualização.</p></div>
+    </div>
+    <div class="callout limit">
+      <span class="tag">Limites</span>
+      <p>A ossificação tem um custo: um sistema difícil de mudar é difícil de adaptar. A lição 6.1 mostra o exemplo mais exigente, a migração criptográfica. E o desfecho de 2017 é um caso, não uma garantia de que o próximo conflito acabe da mesma forma.</p>
+    </div>
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      Quem decide as regras do Bitcoin são os utilizadores e os nós, não os mineradores nem as empresas. Em 2017, mesmo uma coligação com a maioria do poder minerador não conseguiu mudá-las.
+    </div>
+    <h2>Verificação do módulo 1</h2>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>Qual é a diferença entre hard fork e soft fork?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>O hard fork é incompatível com as regras dos nós existentes; o soft fork é retrocompatível</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>O soft fork é mais rápido</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Só o hard fork cria bitcoins</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>O soft fork restringe as regras e continua aceite pelos nós antigos.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>Como terminou a proposta SegWit2x?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>Falhou, porque os nós e os programadores a recusaram</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Foi aprovada pelos mineradores</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Foi imposta pelo maior fabricante</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Mesmo com a maioria do poder minerador, a proposta não passou, porque os nós são soberanos.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>Que cadeia adotam os nós quando há duas versões do passado recente?</legend>
+      <label class="opt"><input type="radio" name="q3"><span>A que tem mais trabalho acumulado e cumpre as regras</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>A mais antiga</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>A do maior minerador</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>É a regra da cadeia com mais trabalho.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>O que significa dizer que o Bitcoin é «imutável»?</legend>
+      <label class="opt"><input type="radio" name="q4"><span>Que resiste à mudança: o software de 2009 ainda sincroniza</span></label>
+      <label class="opt"><input type="radio" name="q4"><span>Que nunca se atualiza</span></label>
+      <label class="opt"><input type="radio" name="q4"><span>Que não tem nós</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>É resistência à mudança, não impossibilidade técnica.</p>
+    </fieldset>
+
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>Resumo do IPB das ideias da estrutura temática (temas 15.1 a 15.3).</li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="1.5">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="1.4-finalidade-e-ataque-de-51.html" rel="prev"><small>← Anterior</small><span>1.4 Finalidade, reorganizações e ataque de 51%</span></a>
+      <a class="next" href="2.1-escala-e-necessidade-da-energia.html" rel="next"><small>Seguinte →</small><span>2.1 Escala e necessidade da energia</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>

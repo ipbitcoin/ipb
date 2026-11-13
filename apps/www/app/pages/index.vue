@@ -42,6 +42,8 @@
       :show-date="false"
     />
 
+    <IPBOnlineCourseCta />
+
     <IPBPartners
       v-if="pendingPartners || partners?.length"
       :partners="partners"

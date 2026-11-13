@@ -5,7 +5,7 @@
     "regulations": "Regulamento da Associação",
     "research": "Investigação",
     "education": "Educação",
-    "training": "Formações",
+    "training": "Formação presencial",
     "news": "Notícias",
     "faq": "FAQ",
     "team": "Equipa",
@@ -17,7 +17,8 @@
     "menu": "Menu",
     "main": "Principal",
     "skip": "Saltar para o conteúdo",
-    "language": "Idioma"
+    "language": "Idioma",
+    "onlineCourse": "Curso online"
   },
   "main": {
     "header": "A construir o Futuro de Bitcoin em Portugal",
@@ -226,7 +227,8 @@
           "Participar em grupos temáticos e distritais no WhatsApp",
           "Participar em encontros e mercados P2P",
           "Preço de membro na conferência anual, jantar anual, workshops e apoio técnico 101",
-          "Apoio digital às comunidades locais"
+          "Apoio digital às comunidades locais",
+          "10% de desconto nos cursos online"
         ]
       },
       "t2": {
@@ -241,7 +243,8 @@
           "Organizar encontros e mercados P2P",
           "Conferência anual e jantar anual incluídos",
           "50% de desconto em workshops e apoio técnico 101",
-          "Apoio presencial às comunidades locais"
+          "Apoio presencial às comunidades locais",
+          "25% de desconto nos cursos online"
         ]
       },
       "eyebrow": "Membros"

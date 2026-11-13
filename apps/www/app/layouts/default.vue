@@ -241,6 +241,14 @@
                 <li>
                   <NuxtLink
                     :class="footerLinkClass"
+                    :to="localePath('curso-online')"
+                  >
+                    {{ $t("nav.onlineCourse") }}
+                  </NuxtLink>
+                </li>
+                <li>
+                  <NuxtLink
+                    :class="footerLinkClass"
                     to="https://bitcoin.org/bitcoin.pdf"
                     external
                     target="_blank"
@@ -356,6 +364,7 @@ const NAV_ITEMS: NavItem[] = [
   { key: "research", label: "nav.research", route: "investigacao" },
   { key: "education", label: "nav.education", route: "educacao" },
   { key: "training", label: "nav.training", route: "formacoes" },
+  { key: "online-course", label: "nav.onlineCourse", route: "curso-online" },
   { key: "faq", label: "nav.faq", hash: "#faq" },
 ];
 

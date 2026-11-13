@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Finalidade, reorganizações e ataque de 51% | Curso 2 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 1.4 do Curso 2: No fim desta lição, será possível explicar a regra da cadeia com mais trabalho, o que é a finalidade de uma liquidação, o que um ataque de 51% pode e não p">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#curso">← Curso 2 · A Tecnologia</a>
+    <span class="where">Lição 5 de 21</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="21" aria-valuenow="5"><span style="width:23.8%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+
+    <p class="eyebrow">Módulo 1 · Como funciona a rede · Lição 1.4</p>
+    <h1>Finalidade, reorganizações e ataque de 51%</h1>
+    <p class="lead">No fim desta lição, será possível explicar a regra da cadeia com mais trabalho, o que é a finalidade de uma liquidação, o que um ataque de 51% pode e não pode fazer e o que aconteceu à rede quando a China proibiu a mineração.</p>
+    <p class="meta"><span>10 min de leitura</span><span>2 perguntas</span></p>
+    <h2>O trabalho é o árbitro da verdade</h2>
+    <p>Quando dois mineradores encontram um bloco quase ao mesmo tempo, a rede fica por instantes com duas versões do passado recente. A regra que resolve é simples: vale a <strong>cadeia com mais trabalho acumulado que cumpre as regras dos nós</strong>. Os nós adotam essa, e a outra fica órfã. A isto chama-se <em>reorganização</em>.</p>
+    <ol class="flow">
+      <li><strong>Dois blocos quase juntos</strong>Dois mineradores acertam à mesma hora, e a rede divide-se.</li>
+      <li><strong>Cada nó escolhe</strong>Fica com o que viu primeiro, e trabalha sobre ele.</li>
+      <li><strong>Chega o bloco seguinte</strong>Um minerador acrescenta um bloco a uma das duas cadeias.</li>
+      <li><strong>Vale a de mais trabalho</strong>Todos os nós adotam a cadeia mais pesada, e a outra fica órfã.</li>
+    </ol>
+    <p>Por isso uma transação só se considera definitiva depois de vários blocos por cima dela: cada bloco acrescenta trabalho, e a cadeia fica menos reversível.</p>
+    <h2>Liquidação final</h2>
+    <p><strong>Liquidação final</strong> é a fase em que os bancos acertam as diferenças líquidas entre si. Sob o ouro, estava ancorada numa mercadoria que ninguém imprime. Sob o dinheiro fiduciário, a camada final é o crédito do governo, de modo que quem é amigo do governo nunca vai à falência. No Bitcoin, cada bloco incorpora trabalho real e é menos reversível, o que dá maior garantia de finalidade. Estima-se que o Bitcoin liquide com finalidade em cerca de duas horas, contra semanas no sistema fiduciário. <!-- [VERIFICAR] Comparação de T2:88 e T4:53; confirmar tempos de liquidação. --></p>
+    <h2>O ataque de 51%</h2>
+    <p>O ataque mais temido é o dos <strong>51%</strong>: quem controlasse a maioria do poder de cálculo poderia reescrever blocos recentes e gastar a mesma moeda duas vezes. Mesmo assim, não poderia roubar bitcoin de outra pessoa nem criar moedas além do limite, porque os nós rejeitariam esses blocos. O ataque é possível em teoria, mas muito caro, e destruiria o valor do que o atacante ganhasse. É nas redes copiadas, com pouca energia a protegê-las, que o ataque se torna realista.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Um atacante com mais de 50% pode…</th><th>Não pode…</th></tr></thead>
+        <tbody>
+          <tr><td>Reescrever blocos recentes</td><td>Roubar bitcoin de outra pessoa</td></tr>
+          <tr><td>Gastar a mesma moeda duas vezes</td><td>Criar moedas além dos 21 milhões</td></tr>
+          <tr><td>Bloquear temporariamente transações</td><td>Alterar as regras que os nós aplicam</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h2>Um teste real: a China, em 2021</h2>
+    <p>Em 2021, a proibição chinesa da mineração deixou cerca de metade da rede offline (a imprensa especializada fala de uma queda de 50% a 55% do poder de cálculo). A rede continuou a funcionar, sem interromper o serviço (100% de disponibilidade), a dificuldade reequilibrou-se e o poder de cálculo recuperou em poucos meses. Seria difícil para uma empresa como a Amazon perder metade da sua infraestrutura de um dia para o outro sem parar. Atacar os mineradores cria, além disso, incentivos para que outros minerem.</p>
+    <div class="callout limit">
+      <span class="tag">Limites</span>
+      <p>O exemplo mostra resiliência perante a perda de capacidade, não perante um ataque de 51% concreto. A segurança desta regra depende de existir energia suficiente a proteger a rede, e por isso a lição seguinte do módulo 2 é sobre energia.</p>
+    </div>
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      A rede escolhe sempre a cadeia com mais trabalho que cumpre as regras. Quanto mais blocos por cima, mais difícil é desfazer uma transação, e esse trabalho tem um custo real em energia.
+    </div>
+    <h2>Verificação</h2>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>Que cadeia adotam os nós quando há duas versões do passado recente?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>A mais longa no calendário</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>A que tem mais trabalho acumulado e cumpre as regras</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>A do maior minerador</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>É a regra da cadeia com mais trabalho.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>O que não pode fazer um atacante com 51% do poder de cálculo?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>Gastar a mesma moeda duas vezes</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Criar moedas além dos 21 milhões</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Reescrever blocos recentes</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Os nós rejeitariam esses blocos, porque quebram as regras de emissão.</p>
+    </fieldset>
+
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>Satoshi Nakamoto, «Bitcoin: A Peer-to-Peer Electronic Cash System», 2008, secção 11.</li>
+      <li>Imprensa especializada (Decrypt, Bitcoin Magazine, Cointelegraph), 2021, sobre a queda e a recuperação do poder de cálculo após a proibição chinesa.</li>
+      <li>Resumo do IPB das ideias da estrutura temática (tema 14.2).</li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="1.4">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="1.3-mineracao-e-prova-de-trabalho.html" rel="prev"><small>← Anterior</small><span>1.3 Mineração e prova de trabalho</span></a>
+      <a class="next" href="1.5-quem-decide-as-regras.html" rel="next"><small>Seguinte →</small><span>1.5 Quem decide as regras: forks e governação</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>

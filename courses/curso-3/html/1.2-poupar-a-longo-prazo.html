@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Poupar a longo prazo | Curso 3 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 1.2 do Curso 3: No fim desta lição, será possível distinguir poupar de investir, expor os argumentos sobre poupar em Bitcoin e conhecer o HODL e o DCA, com os seus riscos,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#curso">← Curso 3 · A Revolução</a>
+    <span class="where">Lição 3 de 14</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="14" aria-valuenow="3"><span style="width:21.4%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+
+    <p class="eyebrow">Módulo 1 · Usos e adoção · Lição 1.2</p>
+    <h1>Poupar a longo prazo</h1>
+    <p class="lead">No fim desta lição, será possível distinguir poupar de investir, expor os argumentos sobre poupar em Bitcoin e conhecer o HODL e o DCA, com os seus riscos, sem qualquer recomendação.</p>
+    <p class="meta"><span>11 min de leitura</span><span>2 perguntas · 1 simulação</span></p>
+    <div class="callout risk">
+      <span class="tag">Aviso de risco</span>
+      <p>Esta lição descreve posições e estratégias conhecidas, com os seus riscos. Não é uma recomendação de compra, não faz previsões de preço e não é aconselhamento financeiro.</p>
+    </div>
+    <h2>Poupar não é investir</h2>
+    <p>Poupar é guardar valor com liquidez e risco baixo. Investir é aceitar risco à procura de retorno. Segundo a escola austríaca, o dinheiro que perde valor obriga todos a tornarem-se investidores ou jogadores, porque a maioria dos profissionais não bate a expansão monetária (lição 3.5 do Curso 1). Convém ainda separar quatro ideias: <em>investir</em>, <em>poupar</em>, <em>especular</em> e <em>negociar</em>. Meme coins, por exemplo, são vistas por esta corrente como especulação.</p>
+    <h2>O argumento a favor de poupar em Bitcoin</h2>
+    <div class="positions">
+      <div class="pos"><span class="k">Posição da escola austríaca</span><p>O dinheiro duro baixa a preferência temporal, alarga o horizonte e incentiva a poupança.</p><p>O dinheiro fiduciário oferece estabilidade de curto prazo com declínio a longo prazo. O Bitcoin oferece volatilidade de curto prazo com subida a longo prazo.</p><p>A volatilidade resolve-se com o dimensionamento da posição, e diminui com a liquidez, porque o mercado é pequeno face ao do dinheiro fiduciário e do ouro.</p></div>
+      <div class="pos"><span class="k">Posição crítica</span><p>O dinheiro não deve ser reserva permanente de valor nem objeto de especulação.</p><p>O valor do Bitcoin depende da crença de que outros o continuarão a querer, e a volatilidade é um custo real.</p><p>O Bitcoin não resolve o problema de fundo, que é o modo de produção e a distribuição.</p></div>
+    </div>
+    <div class="callout limit">
+      <span class="tag">Limites</span>
+      <p>O passado não garante o futuro: poucos ciclos não são uma lei. O curso não estima o valor futuro do Bitcoin, e as estimativas de «mercado endereçável» que circulam divergem muito entre autores.</p>
+    </div>
+    <h2>HODL</h2>
+    <p>A palavra nasceu de um erro de escrita num fórum de Bitcoin, em 2013, durante uma queda forte. A ideia ficou: <strong>comprar e manter durante muito tempo</strong>, sem vender por pânico. A vantagem de quem poupa é o tempo, e não é preciso adivinhar o melhor momento. Mas já houve quedas de 75% a 80% do máximo anterior, que levaram anos a recuperar. <!-- [VERIFICAR] Confirmar quedas e data da mensagem «I AM HODLING» (Bitcointalk, dezembro de 2013). --></p>
+    <h2>DCA: comprar aos poucos</h2>
+    <p><em>Dollar Cost Averaging</em> (ou «custo médio»): em vez de comprar tudo de uma vez, compra-se uma quantia fixa, de forma regular, independentemente do preço. Quando o preço está baixo, compra-se mais bitcoin. Quando está alto, compra-se menos.</p>
+    <div class="card" id="dca">
+      <h3>DCA contra compra única</h3>
+      <p style="margin:0 0 10px;font-size:16px;color:var(--muted)">Preços inventados, em milhares de euros por bitcoin, ao longo de 12 meses: 80, 60, 50, 55, 70, 85, 75, 65, 80, 95, 100, 90. É um exemplo para perceber a mecânica, não uma previsão.</p>
+      <div class="tool">
+        <div><label for="dca-amount">Quanto se investe por mês (€)</label><input type="number" id="dca-amount" value="100" min="1" step="10"></div>
+        <div class="tool-out" id="dca-out" role="status" aria-live="polite"></div>
+      </div>
+    </div>
+    <p>O DCA não garante lucro nem bate sempre a compra única. O que faz é <strong>reduzir o risco de comprar tudo no pior momento</strong> e tirar a pressão de acertar no preço.</p>
+    <h2>As armadilhas</h2>
+    <ul>
+      <li><strong>Vender em pânico.</strong> A maioria das perdas vem de comprar caro com entusiasmo e vender barato com medo.</li>
+      <li><strong>Apostar mais do que se pode perder.</strong> Nunca com dinheiro de que se precisa a curto prazo.</li>
+      <li><strong>Seguir previsões.</strong> Quem diz saber o preço do mês seguinte ou não sabe ou quer vender algo.</li>
+      <li><strong>Esquecer as comissões.</strong> Compras pequenas e muito frequentes numa plataforma com comissões fixas podem custar caro.</li>
+    </ul>
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      Poupar e investir são coisas diferentes. A escola austríaca vê no Bitcoin um instrumento de poupança de oferta fixa, os críticos veem um ativo volátil que depende da crença. O tempo e o risco são o que cada pessoa tem de avaliar.
+    </div>
+    <h2>Verificação</h2>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>Qual é a diferença entre poupar e investir, na lição?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>Poupar é guardar com liquidez e risco baixo; investir é aceitar risco</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Poupar é comprar ações; investir é guardar dinheiro</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Não há diferença</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>É a distinção em que assenta o resto do debate.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>O que faz o DCA?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>Reduz o risco de comprar tudo no pior momento</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Garante lucro</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Elimina as comissões</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Não garante lucro nem bate sempre a compra única.</p>
+    </fieldset>
+
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>Histórico de preços: CoinMarketCap ou CoinGecko (consultar a data).</li>
+      <li>Resumo do IPB das posições em debate (estrutura temática, temas 7, 14.6 e 20.2).</li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="1.2">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="1.1-pagar-e-receber.html" rel="prev"><small>← Anterior</small><span>1.1 Pagar e receber com Bitcoin</span></a>
+      <a class="next" href="1.3-emprestimos-com-bitcoin.html" rel="next"><small>Seguinte →</small><span>1.3 Empréstimos com Bitcoin como garantia</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>

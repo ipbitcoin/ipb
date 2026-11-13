@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Impostos em Portugal | Curso 3 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 2.2 do Curso 3: No fim desta lição, fica-se a saber como são tributados os criptoativos em Portugal, o que é preciso declarar e o que perguntar a um contabilista.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#curso">← Curso 3 · A Revolução</a>
+    <span class="where">Lição 8 de 14</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="14" aria-valuenow="8"><span style="width:57.1%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+
+    <p class="eyebrow">Módulo 2 · Estado e regras · Lição 2.2</p>
+    <h1>Impostos em Portugal</h1>
+    <p class="lead">No fim desta lição, fica-se a saber como são tributados os criptoativos em Portugal, o que é preciso declarar e o que perguntar a um contabilista.</p>
+    <p class="meta"><span>15 min de leitura</span><span>3 perguntas · 1 lista de verificação · 1 calculadora</span></p>
+
+
+    <div class="callout warning">
+      <span class="tag">Muito importante</span>
+      <p>Esta lição descreve o regime geral em vigor em novembro de 2026. A lei fiscal muda e as situações concretas variam muito. <strong>Não é aconselhamento fiscal.</strong> Convém confirmar sempre com um contabilista ou com a Autoridade Tributária (AT) antes de decidir ou declarar.</p>
+    </div>
+    <h2>A regra geral: o tempo conta</h2>
+    <p>Para uma pessoa singular que não faz da Bitcoin a sua atividade profissional, o ganho com a venda de criptoativos (a <strong>mais-valia</strong>, a diferença entre o preço de venda e o de compra) segue duas regras:</p>
+    <div class="cards two">
+      <div class="card"><span class="n">DETIDO MENOS DE 365 DIAS</span><h3>Tributado a 28%</h3><p>A mais-valia é tributada à taxa autónoma de 28% (categoria G do IRS). É possível optar pelo englobamento às taxas progressivas. É obrigatório quando o rendimento coletável atinge o último escalão de IRS (cerca de 86.700 € em 2026). <!-- [VERIFICAR] limiar exato de 2026: 86.696 € (ECO) contra 86.634 € (simulador); confirmar na tabela da AT. --></p></div>
+      <div class="card"><span class="n">DETIDO 365 DIAS OU MAIS</span><h3>Isento de IRS</h3><p>A mais-valia não é tributada. Mas é preciso declarar a operação, no anexo G1 da declaração de IRS, como rendimento não tributado (as vendas com menos de 365 dias vão no anexo G, quadro 18A). <!-- [VERIFICAR] anexos e quadros do IRS de 2026. --></p></div>
+    </div>
+    <p>Quando se vende só uma parte do que se tem, o fisco entende que foi vendido primeiro o que foi comprado primeiro (método <strong>FIFO</strong>). <!-- [VERIFICAR] método FIFO. --> As menos-valias com criptoativos só compensam ganhos com criptoativos, e a isenção dos 365 dias não se aplica se a contraparte ou a residência se situar num paraíso fiscal.</p>
+    <div class="card" id="hold">
+      <h3>Quanto tempo foi detido?</h3>
+      <div class="tool">
+        <div><label for="hold-from">Data de compra</label><input type="date" id="hold-from"></div>
+        <div><label for="hold-to">Data de venda</label><input type="date" id="hold-to"></div>
+        <div class="tool-out" id="hold-out" role="status" aria-live="polite">Escolher as duas datas.</div>
+      </div>
+    </div>
+    <h2>O que conta como venda</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Situação</th><th>Em regra</th></tr></thead>
+        <tbody>
+          <tr><td>Vender bitcoin por euros</td><td>Mais-valia (sujeita à regra dos 365 dias)</td></tr>
+          <tr><td>Pagar uma compra com bitcoin</td><td>Conta como venda desse bitcoin</td></tr>
+          <tr><td>Trocar bitcoin por outro criptoativo</td><td>Sem imposto, em regra, se não houver euros pelo meio. A AT tem explicado casos limite (por exemplo, na informação vinculativa PIV 28969, de outubro de 2025), por isso convém confirmar. <!-- [VERIFICAR] ler a PIV 28969 no original. --></td></tr>
+          <tr><td>Enviar bitcoin de uma carteira sua para outra sua</td><td>Não é venda</td></tr>
+          <tr><td>Receber bitcoin como pagamento de trabalho ou serviço</td><td>Rendimento (categorias A ou B)</td></tr>
+          <tr><td>Mineração como atividade</td><td>Categoria B (rendimentos empresariais e profissionais)</td></tr>
+          <tr><td>Rendimento passivo (por exemplo, juros ou <em>staking</em>)</td><td>Em regra, categoria E (rendimentos de capitais) <!-- [VERIFICAR]. --></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h2>O que é preciso guardar</h2>
+    <ul>
+      <li>Data e valor em euros de cada compra e venda, incluindo comissões.</li>
+      <li>Identificação das plataformas e carteiras usadas.</li>
+      <li>Os extratos das plataformas (muitas só os mantêm por tempo limitado).</li>
+    </ul>
+    <p>O ónus de provar o custo e a data é do contribuinte. Quem não tem registos arrisca-se a pagar imposto sobre o valor todo da venda.</p>
+    <h2>O fisco sabe?</h2>
+    <p>Cada vez mais. A diretiva europeia <strong>DAC8</strong> foi transposta para Portugal pela <strong>Lei n.º 26/2026, de 3 de junho</strong>, e aplica-se desde 1 de janeiro de 2026. As plataformas (prestadores de serviços de criptoativos) têm de comunicar à AT a informação sobre os clientes residentes e as suas operações. As plataformas reportam à AT até 31 de maio do ano seguinte, e o primeiro reporte, relativo a 2026, é entregue em 2027. Isto abrange as plataformas, não a carteira própria, mas é por aí que a AT cruza dados.</p>
+    <div class="callout warning">
+      <span class="tag">Atenção</span>
+      <p>«O fisco não vai saber» não é uma estratégia. A omissão de rendimentos tem coimas e pode ser crime fiscal. Em caso de dúvida, convém declarar e perguntar.</p>
+    </div>
+    <h2>Perguntas para um contabilista</h2>
+    <ul class="checklist">
+      <li><label><input type="checkbox" id="c-2-2-1-1"><span>Como tenho de declarar as minhas operações do ano passado?</span></label></li>
+      <li><label><input type="checkbox" id="c-2-2-1-2"><span>Como calculo e documento o custo de aquisição?</span></label></li>
+      <li><label><input type="checkbox" id="c-2-2-1-3"><span>Há vantagem em optar pelo englobamento?</span></label></li>
+      <li><label><input type="checkbox" id="c-2-2-1-4"><span>Como trato comissões, trocas entre criptoativos e <em>staking</em>?</span></label></li>
+      <li><label><input type="checkbox" id="c-2-2-1-5"><span>Há alguma alteração à lei que me afete este ano?</span></label></li>
+    </ul>
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      Em Portugal, o tempo conta: menos de 365 dias paga 28%, pelo menos 365 dias é isento mas declara-se. E as plataformas já reportam à AT.
+    </div>
+    <h2>Verificar o que se aprendeu</h2>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>Bitcoin vendido com lucro 200 dias depois de comprado. Qual a regra geral?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>Isento</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Tributado a 28%</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Só se paga se for vendido tudo</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Menos de 365 dias: tributação autónoma a 28%, salvo opção pelo englobamento.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>Pagar um café com bitcoin é, fiscalmente…</legend>
+      <label class="opt"><input type="radio" name="q2"><span>Uma venda desse bitcoin</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Algo irrelevante</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Isento por ser pequeno</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Gastar é alienar.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>Passar bitcoin da carteira A para a carteira B, ambas suas, é…</legend>
+      <label class="opt"><input type="radio" name="q3"><span>Uma venda</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Não é venda</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Tributado a 28%</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Não há alienação: é só mudar de carteira.</p>
+    </fieldset>
+
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>Código do IRS (CIRS), regime de tributação de criptoativos. <!-- [VERIFICAR] artigos e redação em vigor em 2026. --></li>
+      <li>Autoridade Tributária, informações vinculativas sobre criptoativos (por exemplo, PIV 28969, de 31 de outubro de 2025): <a href="https://info.portaldasfinancas.gov.pt" target="_blank" rel="noopener">info.portaldasfinancas.gov.pt</a>.</li>
+      <li>Lei n.º 26/2026, de 3 de junho (transpõe a DAC8 e a DAC9), Diário da República.</li>
+      <li>Diretiva (UE) 2023/2226 (DAC8).</li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="2.2">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="2.1-quem-regula-o-que.html" rel="prev"><small>← Anterior</small><span>2.1 Quem regula o quê</span></a>
+      <a class="next" href="2.3-euro-digital-e-cbdc.html" rel="next"><small>Seguinte →</small><span>2.3 O euro digital e as CBDC</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>

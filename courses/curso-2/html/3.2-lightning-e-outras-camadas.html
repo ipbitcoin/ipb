@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lightning e outras camadas | Curso 2 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 3.2 do Curso 2: No fim desta lição, será possível explicar como funciona a Lightning, o que são as outras camadas e quais os limites de cada uma, e rever o módulo.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#curso">← Curso 2 · A Tecnologia</a>
+    <span class="where">Lição 10 de 21</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="21" aria-valuenow="10"><span style="width:47.6%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+
+    <p class="eyebrow">Módulo 3 · Camadas e escala · Lição 3.2</p>
+    <h1>Lightning e outras camadas</h1>
+    <p class="lead">No fim desta lição, será possível explicar como funciona a Lightning, o que são as outras camadas e quais os limites de cada uma, e rever o módulo.</p>
+    <p class="meta"><span>11 min de leitura</span><span>4 perguntas</span></p>
+    <h2>Como funciona a Lightning</h2>
+    <p>A Lightning é um protocolo aberto, sem permissões e não custodial, que usa o token da camada 1 e reduz o capital em risco por canal. Isso permite escalar em fatores enormes. Funciona assim:</p>
+    <ol>
+      <li><strong>Abrir um canal.</strong> Duas pessoas fazem uma transação on-chain que bloqueia bitcoin num endereço partilhado, que só elas conseguem gastar em conjunto.</li>
+      <li><strong>Pagar sem ir à blockchain.</strong> Quando uma paga à outra, só atualizam entre si o saldo do canal. Podem fazê-lo um número ilimitado de vezes, de forma instantânea e quase sem custos.</li>
+      <li><strong>Encaminhar.</strong> Não é preciso ter um canal com cada pessoa. O pagamento pode saltar por vários canais, de nó em nó, por intermediários sem confiança, até ao destino.</li>
+      <li><strong>Fechar o canal.</strong> Quando quiserem, fecham-no com outra transação on-chain, que regista o saldo final de cada um.</li>
+    </ol>
+    <p>O que impede o trânsito de ser roubado são contratos criptográficos (os HTLC), que garantem que o pagamento ou chega ao destino, ou volta à origem.</p>
+    <h2>Os limites da Lightning</h2>
+    <ul>
+      <li><strong>Liquidez:</strong> para receber é preciso que alguém tenha aberto um canal, e para enviar é preciso ter saldo no canal.</li>
+      <li><strong>Estar online:</strong> o nó tem de estar atento para evitar que a outra parte feche o canal com um saldo antigo.</li>
+      <li><strong>Valores muito grandes</strong> podem falhar por falta de caminho com liquidez.</li>
+      <li><strong>Complexidade:</strong> por isso muitas pessoas usam carteiras que gerem os canais, e algumas são custodiais (lição 5.1).</li>
+    </ul>
+    <div class="callout warning">
+      <span class="tag">Cuidado</span>
+      <p>Uma carteira Lightning «fácil» pode ser custodial: quem gere os canais é o fornecedor e tem o Bitcoin. Antes de usar uma, convém descobrir de quem é a chave.</p>
+    </div>
+    <div class="callout limit">
+      <span class="tag">Limites</span>
+      <p>Os limites e riscos da Lightning não estão tratados no material de referência do curso (a estrutura temática assinala esta lacuna). As limitações acima são as habituais da própria tecnologia e valem como ponto de partida.</p>
+    </div>
+    <h2>As outras camadas</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Camada</th><th>O que é</th><th>Confiança necessária</th></tr></thead>
+        <tbody>
+          <tr><td>1 · Base</td><td>Liquidação final na blockchain</td><td>Nenhuma entidade</td></tr>
+          <tr><td>2 · Lightning</td><td>Canais de pagamento abertos e sem permissões</td><td>Mínima: minimização de confiança</td></tr>
+          <tr><td>Sidechains federadas (por exemplo, Liquid)</td><td>Tokens ligados ao bitcoin (peg-in e peg-out), para liquidações maiores e mais rápidas</td><td>Compromissos de contraparte e segurança</td></tr>
+          <tr><td>3 · Custodial</td><td>Exchanges e aplicações, com confiança total no operador. Há protocolos como o Fedimint, de custódia comunitária</td><td>Total no operador</td></tr>
+          <tr><td>4 · Produtos proprietários</td><td>Produtos com Bitcoin embutido e sem direito de levantamento</td><td>Total, sem saída</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Qualquer plataforma pode «embrulhar» bitcoin. Há soluções de contratos inteligentes que levam essa funcionalidade ao Bitcoin (Liquid, Rootstock, Lightning), embora menores do que as de outras criptomoedas, por cultura (quem tem Bitcoin retém mais do que especula) e por liquidez e efeito de rede.</p>
+    <p>O ecossistema precisa das camadas todas, porque as empresas fazem melhor a complexidade, a conformidade e o atendimento. A corrupção nas camadas superiores é possível, mas a opção de levantar os ativos e mudar de custodiante é um dissuasor que nenhum outro ativo oferece.</p>
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      A Lightning não substitui o Bitcoin: usa a sua segurança. A camada 1 liquida, a camada 2 paga os cafés, e quanto mais acima, mais confiança num operador.
+    </div>
+    <h2>Verificação do módulo 3</h2>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>Porque é que um pagamento Lightning é tão rápido?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>Porque é feito fora da blockchain, entre canais</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Porque os mineradores ganham mais</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Porque usa outra moeda</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Só a abertura e o fecho do canal vão à blockchain.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>Qual destes é um limite real da Lightning?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>Não funciona com bitcoin</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Precisa de liquidez e de o nó estar online</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Só funciona nos EUA</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>A liquidez dos canais e a disponibilidade do nó são limites práticos.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>Numa camada custodial (como uma exchange), em quem é preciso confiar?</legend>
+      <label class="opt"><input type="radio" name="q3"><span>No operador</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Em ninguém</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Nos mineradores</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>É o que distingue as camadas superiores da base.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>Uma carteira Lightning que não deixa ver a frase de recuperação é provavelmente…</legend>
+      <label class="opt"><input type="radio" name="q4"><span>Autocustodial</span></label>
+      <label class="opt"><input type="radio" name="q4"><span>Custodial</span></label>
+      <label class="opt"><input type="radio" name="q4"><span>Mais segura</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Sem acesso à frase de recuperação, a chave não é de quem usa a carteira.</p>
+    </fieldset>
+
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>Joseph Poon e Thaddeus Dryja, «The Bitcoin Lightning Network», 2016.</li>
+      <li>Estatísticas da rede: <a href="https://mempool.space/lightning" target="_blank" rel="noopener">mempool.space/lightning</a>.</li>
+      <li>Resumo do IPB das ideias da estrutura temática (tema 16.2).</li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="3.2">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="3.1-rede-de-liquidacao.html" rel="prev"><small>← Anterior</small><span>3.1 A rede de liquidação</span></a>
+      <a class="next" href="4.1-propriedade-ou-valor-mobiliario.html" rel="next"><small>Seguinte →</small><span>4.1 Propriedade ou valor mobiliário</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>

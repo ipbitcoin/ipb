@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nós e mineradores | Curso 2 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 1.1 do Curso 2: No fim desta lição, será possível dizer quem são os três participantes da rede Bitcoin, o que faz cada um e porque nenhum manda sozinho.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#curso">← Curso 2 · A Tecnologia</a>
+    <span class="where">Lição 2 de 21</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="21" aria-valuenow="2"><span style="width:9.5%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+
+    <p class="eyebrow">Módulo 1 · Como funciona a rede · Lição 1.1</p>
+    <h1>Nós e mineradores</h1>
+    <p class="lead">No fim desta lição, será possível dizer quem são os três participantes da rede Bitcoin, o que faz cada um e porque nenhum manda sozinho.</p>
+    <p class="meta"><span>10 min de leitura</span><span>2 perguntas</span></p>
+    <h2>Uma rede sem chefe</h2>
+    <p>O euro tem um banco central, o Bitcoin não. Mesmo assim, as regras cumprem-se. Isto acontece porque na rede há <strong>três papéis</strong>, com interesses diferentes, que se vigiam uns aos outros.</p>
+    <div class="cards">
+      <div class="card"><span class="n">1 · UTILIZADORES</span><h3>Quem usa</h3><p>Enviam e recebem bitcoin através de carteiras. Escolhem que software correr e que regras aceitam.</p></div>
+      <div class="card"><span class="n">2 · NÓS</span><h3>Quem verifica</h3><p>Computadores com uma cópia completa do registo. Verificam todas as transações e todos os blocos e rejeitam o que quebra as regras.</p></div>
+      <div class="card"><span class="n">3 · MINERADORES</span><h3>Quem escreve</h3><p>Agrupam transações em blocos e gastam energia para os propor à rede. Recebem bitcoin novo e comissões.</p></div>
+    </div>
+    <h2>Os nós mandam nas regras</h2>
+    <p>Um <strong>nó</strong> (<em>node</em>) é um computador que corre o software do Bitcoin e guarda o registo completo. Cada nó confere, por conta própria, se cada bloco cumpre as regras: assinaturas válidas, bitcoin que existe, oferta dentro do limite dos 21 milhões. Quem corre um nó audita toda a cadeia sem precisar de confiar em ninguém. O Bitcoin foi desenhado para que isto se possa fazer com hardware modesto e a baixo custo, ao contrário de outras redes.</p>
+    <p>Os mineradores vendem blocos aos nós, que são soberanos e determinam as regras de consenso. Os mineradores investem capital à partida (máquinas e eletricidade) e só são pagos se obedecerem aos nós. Por isso o que importa para a descentralização é a descentralização dos nós. Alguns nós podem ser lançados na nuvem, mas o que conta é <strong>quem decide as regras</strong>.</p>
+    <h2>Os mineradores ordenam as transações</h2>
+    <p>Os mineradores não fazem as regras: <strong>cumprem-nas</strong>. A sua função é decidir a ordem das transações e agrupá-las em blocos, através de um trabalho que custa energia (prova de trabalho, lição 1.3). Em troca, recebem uma recompensa. A mineração é descentralizada porque qualquer pessoa com energia barata pode entrar ou sair. Nós e mineradores são mutuamente indispensáveis.</p>
+    <h2>A blockchain: blocos ligados</h2>
+    <p>Cada bloco contém milhares de transações e a <strong>impressão digital</strong> (o <em>hash</em>) do bloco anterior. Assim, os blocos ficam presos uns aos outros numa cadeia. Para alterar uma transação antiga, teria de se refazer o trabalho desse bloco e de todos os que vieram depois, mais depressa do que o resto da rede continua a trabalhar.</p>
+    <ol class="timeline">
+      <li><span class="when">3 jan. 2009</span><strong>Bloco 0, o bloco génese</strong><p>O primeiro bloco da cadeia, minerado por Satoshi Nakamoto.</p></li>
+      <li><span class="when">~ 10 minutos</span><strong>Um bloco novo</strong><p>Em média, a rede encontra um bloco novo a cada dez minutos.</p></li>
+    </ol>
+    <h2>As regras de consenso são como uma constituição</h2>
+    <p>Os parâmetros de consenso (por exemplo, o calendário de emissão) funcionam como uma constituição: quem os quebra fica com outra moeda, com menos liquidez e menor capacidade de competir. O Bitcoin é, por isso, cada vez mais «ossificado»: o software de 2009 ainda sincroniza com a rede. Os parâmetros importam mais do que quaisquer atualizações de rotina.</p>
+    <h2>O preço da descentralização</h2>
+    <p>Há uma troca assumida: tudo o que é mais eficiente a pagar ou a guardar ativos tende a ser também mais centralizado, e há um compromisso entre eficiência e resiliência. Uma blockchain é, em certo sentido, uma <strong>base de dados ineficiente</strong>: os utilizadores trocam eficiência por descentralização. Uma base de dados centralizada não é auditável nem controlável por terceiros (contas sociais, contas bancárias). A «aplicação assassina» de uma base de dados descentralizada é o dinheiro: um livro-razão imutável em que se guarda valor memorizando um número e se transfere sem alteração, impedimento ou diluição.</p>
+    <div class="callout limit">
+      <span class="tag">Limites</span>
+      <p>Fica por responder, neste material, o grau real de concentração da mineração. A pergunta é feita (o poder computacional crescente favorece mais nós, mas quanto está concentrado nos mineradores?), sem dados que a respondam.</p>
+    </div>
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      Ninguém manda no Bitcoin e toda a gente tem voto. Os utilizadores escolhem as regras, os nós verificam-nas, os mineradores ordenam as transações.
+    </div>
+    <h2>Verificação</h2>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>Quem verifica se cada bloco cumpre as regras do Bitcoin?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>Só os mineradores</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Todos os nós, cada um por si</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Um banco central</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Cada nó verifica tudo sozinho. Um bloco inválido é rejeitado, mesmo que um minerador tenha gasto energia a produzi-lo.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>Porque são os nós, e não os mineradores, que determinam as regras?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>Os mineradores só são pagos se obedecerem às regras que os nós aplicam</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Os nós têm mais energia</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Os mineradores não existem</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>O minerador investe à partida e só recebe se o bloco for aceite pelos nós.</p>
+    </fieldset>
+
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>Satoshi Nakamoto, «Bitcoin: A Peer-to-Peer Electronic Cash System», 2008: <a href="https://bitcoin.org/bitcoin.pdf" target="_blank" rel="noopener">bitcoin.org/bitcoin.pdf</a>.</li>
+      <li>Altura do bloco em tempo real: <a href="https://mempool.space" target="_blank" rel="noopener">mempool.space</a>.</li>
+      <li>Resumo do IPB das ideias da estrutura temática (temas 14.4 e 15.1).</li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="1.1">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="0.1-antes-de-comecar.html" rel="prev"><small>← Anterior</small><span>0.1 Antes de começar</span></a>
+      <a class="next" href="1.2-hash-sha-256.html" rel="next"><small>Seguinte →</small><span>1.2 Funções de hash e SHA-256</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>
