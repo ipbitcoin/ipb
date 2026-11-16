@@ -26,7 +26,7 @@ export function coursePriceCents(layer?: CourseMemberLayer): number {
 
 export interface OnlineCourse {
   slug: string;
-  number: 1 | 2 | 3;
+  number: 1 | 2 | 3 | 4;
   /** Folder under `courses/` that holds the lessons. */
   folder: string;
   title: { pt: string; en: string };
@@ -124,6 +124,33 @@ export const ONLINE_COURSES: readonly OnlineCourse[] = [
     slug: "a-revolucao",
     tagline: { en: "Using it and the rules", pt: "Usar e as regras" },
     title: { en: "Revolution", pt: "A Revolução" },
+  },
+  {
+    description: {
+      en: "The ideas behind Bitcoin: the state, war, the international monetary order, inequality and culture, laid out as positions you can weigh for yourself.",
+      pt: "As ideias por trás da Bitcoin: o Estado, a guerra, a ordem monetária internacional, a desigualdade e a cultura, expostas como posições que cada pessoa pode avaliar.",
+    },
+    diplomaTopic: {
+      pt: "o Estado, a ordem monetária internacional e as ideias por trás da Bitcoin",
+    },
+    folder: "curso-4",
+    hours: 3,
+    number: 4,
+    outcomes: {
+      en: [
+        "Explain how money relates to the state, war and the international monetary order.",
+        "Set out the main positions on inequality, culture and society, and what each leaves unanswered.",
+        "Tell apart what the course presents as evidence and what it presents as one perspective.",
+      ],
+      pt: [
+        "Explicar como o dinheiro se relaciona com o Estado, a guerra e a ordem monetária internacional.",
+        "Expor as principais posições sobre desigualdade, cultura e sociedade, e o que cada uma deixa por responder.",
+        "Distinguir o que o curso apresenta como evidência do que apresenta como uma perspetiva.",
+      ],
+    },
+    slug: "a-civilizacao",
+    tagline: { en: "The ideas behind it", pt: "As ideias por trás" },
+    title: { en: "Civilization", pt: "A Civilização" },
   },
 ];
 

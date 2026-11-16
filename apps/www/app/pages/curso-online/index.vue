@@ -22,7 +22,7 @@
       :aria-label="copy.coursesLabel"
       class="section section-gap"
     >
-      <ul class="grid gap-6 lg:grid-cols-3">
+      <ul class="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
         <li
           v-for="(course, index) in ONLINE_COURSES"
           :key="course.slug"
@@ -131,7 +131,7 @@ const COPY = {
     coursesLabel: "Online courses",
     cta: "See the courses",
     description:
-      "Three self-paced courses that take you from why money loses value to your first transaction. 100% online, at your own pace, with a diploma at the end.",
+      "Four self-paced courses that take you from why money loses value to the ideas behind Bitcoin. 100% online, at your own pace, with a diploma at the end.",
     eyebrow: "Online courses",
     faq: [
       {
@@ -190,7 +190,7 @@ const COPY = {
     coursesLabel: "Cursos online",
     cta: "Ver os cursos",
     description:
-      "Três cursos de autoestudo, desde «porque é que o dinheiro perde valor» até à primeira transação. 100% online, ao ritmo de cada pessoa, com diploma no fim.",
+      "Quatro cursos de autoestudo, desde «porque é que o dinheiro perde valor» até às ideias por trás da Bitcoin. 100% online, ao ritmo de cada pessoa, com diploma no fim.",
     eyebrow: "Cursos online",
     faq: [
       {

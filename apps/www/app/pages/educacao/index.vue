@@ -19,7 +19,7 @@
         </UiButton>
       </div>
 
-      <ul class="mt-12 grid gap-6 lg:grid-cols-3">
+      <ul class="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
         <li
           v-for="(course, index) in ONLINE_COURSES"
           :key="course.slug"
@@ -149,14 +149,14 @@ const COURSES_COPY = {
   en: {
     all: "About the online courses",
     description:
-      "Three self-paced courses, 100% online, with a diploma at the end. Members get a discount.",
+      "Four self-paced courses, 100% online, with a diploma at the end. Members get a discount.",
     note: "Each course costs €39 (members: 10% or 25% off). The lessons are written in Portuguese.",
     title: "Online courses",
   },
   pt: {
     all: "Sobre os cursos online",
     description:
-      "Três cursos de autoestudo, 100% online, com diploma no fim. Os membros têm desconto.",
+      "Quatro cursos de autoestudo, 100% online, com diploma no fim. Os membros têm desconto.",
     note: "Cada curso custa 39 € (membros: 10% ou 25% de desconto). As lições estão escritas em português.",
     title: "Cursos online",
   },

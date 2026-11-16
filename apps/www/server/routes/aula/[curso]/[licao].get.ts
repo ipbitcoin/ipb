@@ -45,7 +45,7 @@ export default defineEventHandler(async (event) => {
     slug,
   }).replaceAll("<", String.raw`<`);
 
-  const courseLink = (n: 1 | 2 | 3) =>
+  const courseLink = (n: 1 | 2 | 3 | 4) =>
     `/curso-online/${ONLINE_COURSES.find((c) => c.number === n)?.slug}`;
 
   const html = String(page)
@@ -69,6 +69,7 @@ export default defineEventHandler(async (event) => {
     .replaceAll('href="#curso"', `href="/curso-online/${slug}"`)
     .replaceAll('href="#curso-2"', `href="${courseLink(2)}"`)
     .replaceAll('href="#curso-3"', `href="${courseLink(3)}"`)
+    .replaceAll('href="#curso-4"', `href="${courseLink(4)}"`)
     .replaceAll('href="#diploma"', `href="/curso-online/diploma/${slug}"`);
 
   setHeader(event, "Content-Type", "text/html; charset=utf-8");

@@ -77,14 +77,14 @@ const COPY = {
     cta: "See the online courses",
     eyebrow: "Online courses",
     price: "€39 each · members get a discount",
-    text: "Three self-paced courses, from why money loses value to your first transaction. 100% online, with a diploma in your name at the end.",
+    text: "Four self-paced courses, from why money loses value to the ideas behind Bitcoin. 100% online, with a diploma in your name at the end.",
     title: "Learn Bitcoin at your own pace",
   },
   pt: {
     cta: "Ver os cursos online",
     eyebrow: "Cursos online",
     price: "39 € cada · membros têm desconto",
-    text: "Três cursos de autoestudo, de «porque é que o dinheiro perde valor» até à primeira transação. 100% online, com diploma em nome próprio no fim.",
+    text: "Quatro cursos de autoestudo, de «porque é que o dinheiro perde valor» até às ideias por trás da Bitcoin. 100% online, com diploma em nome próprio no fim.",
     title: "Aprender Bitcoin ao ritmo de cada pessoa",
   },
 } as const;
