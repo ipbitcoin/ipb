@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Antes de Satoshi | Curso 1 | Instituto Português de Bitcoin</title>
-  <meta name="description" content="Lição 5.2 do Curso 1: No fim desta lição, será possível contar de onde veio o Bitcoin: as ideias que o antecederam, o contexto de 2008 e o que se sabe do desaparecimento de Sato">
+  <meta name="description" content="Lição 5.2 do Curso 1: No fim desta lição, será possível contar de onde veio a Bitcoin: as ideias que a antecederam, o contexto de 2008, a mensagem gravada no bloco génese e o qu">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
@@ -25,30 +25,44 @@
 
     <p class="eyebrow">Módulo 5 · O Bitcoin como resposta · Lição 5.2</p>
     <h1>Antes de Satoshi</h1>
-    <p class="lead">No fim desta lição, será possível contar de onde veio o Bitcoin: as ideias que o antecederam, o contexto de 2008 e o que se sabe do desaparecimento de Satoshi.</p>
-    <p class="meta"><span>8 min de leitura</span><span>2 perguntas</span></p>
+    <p class="lead">No fim desta lição, será possível contar de onde veio a Bitcoin: as ideias que a antecederam, o contexto de 2008, a mensagem gravada no bloco génese e o que se sabe do desaparecimento de Satoshi.</p>
+    <p class="meta"><span>8 min de leitura</span><span>3 perguntas</span></p>
     <h2>Uma invenção com décadas de preparação</h2>
-    <p>O Bitcoin foi apresentado em 2008 por alguém que assina Satoshi Nakamoto, um pseudónimo cuja identidade nunca foi confirmada. Mas a ideia não saiu do nada. Juntou peças desenvolvidas ao longo de mais de trinta anos, e muitas tentativas anteriores de dinheiro digital falharam.</p>
+    <p>A Bitcoin foi apresentada em 2008 por alguém que assina Satoshi Nakamoto, um pseudónimo cuja identidade nunca foi confirmada. Mas a ideia não saiu do nada. Juntou peças desenvolvidas ao longo de mais de trinta anos, e muitas tentativas anteriores de dinheiro digital falharam.</p>
     <ol class="timeline">
       <li><span class="when">1976</span><strong>Criptografia de chave pública</strong><p>Whitfield Diffie e Martin Hellman descrevem como assinar mensagens sem partilhar um segredo. É a base das chaves e assinaturas.</p></li>
       <li><span class="when">1983</span><strong>eCash</strong><p>David Chaum propõe dinheiro eletrónico anónimo, mas dependente de uma empresa central, que acaba por falir.</p></li>
-      <li><span class="when">1997</span><strong>Hashcash</strong><p>Adam Back cria um sistema de prova de trabalho contra o spam: para enviar, o computador gasta um pouco de esforço. O Bitcoin usa uma versão desta ideia.</p></li>
+      <li><span class="when">1997</span><strong>Hashcash</strong><p>Adam Back propõe o Hashcash, uma defesa contra o spam: para enviar um email, o computador tem de resolver primeiro um pequeno problema de cálculo. Quem envia poucas mensagens quase não sente o custo, mas quem envia milhões gasta muito. A este esforço chama-se prova de trabalho, e a Bitcoin usa uma versão desta ideia.</p></li>
       <li><span class="when">1998</span><strong>b-money e bit gold</strong><p>Wei Dai e Nick Szabo desenham projetos de dinheiro digital que antecipam o Bitcoin, mas nenhum chega a ser posto em prática.</p></li>
     </ol>
     <p>Todos esbarraram no mesmo problema: como impedir que o mesmo dinheiro digital seja gasto duas vezes, sem uma entidade central de confiança. A resposta de Satoshi é o tema da lição 5.3.</p>
     <h2>2008: o contexto</h2>
-    <p>Em setembro de 2008, o banco de investimento Lehman Brothers pediu falência, no ponto mais dramático de uma crise financeira que levou governos a injetar milhares de milhões para salvar bancos. A 31 de outubro, Satoshi publicou numa lista de email de criptografia o documento «Bitcoin: A Peer-to-Peer Electronic Cash System», que descrevia um sistema de dinheiro eletrónico «totalmente peer-to-peer, sem uma terceira parte de confiança». A rede arrancou a 3 de janeiro de 2009, e no bloco génese ficou gravado o título de um jornal britânico desse dia sobre o segundo resgate à banca.</p>
+    <p>Em setembro de 2008, o banco de investimento Lehman Brothers pediu falência, no ponto mais dramático de uma crise financeira que levou governos a injetar milhares de milhões para salvar bancos. A 31 de outubro, Satoshi publicou numa lista de email de criptografia o documento «Bitcoin: A Peer-to-Peer Electronic Cash System», que descrevia um sistema de dinheiro eletrónico «totalmente peer-to-peer, sem uma terceira parte de confiança». A rede arrancou a 3 de janeiro de 2009.</p>
+    <h2>A mensagem no bloco génese</h2>
+    <p>O primeiro bloco da rede, o bloco génese, contém uma mensagem escondida nos dados: «The Times 03/Jan/2009 Chancellor on brink of second bailout for banks». É a manchete do jornal britânico <em>The Times</em> desse dia, sobre o ministro das Finanças do Reino Unido estar à beira de um segundo resgate à banca. A mensagem tem duas funções.</p>
+    <p><strong>Datação (<em>timestamping</em>).</strong> Uma manchete só pode ser conhecida no dia em que sai. Ao gravá-la no bloco, Satoshi prova que o bloco não foi criado antes de 3 de janeiro de 2009. Esta função é central na Bitcoin: o seu registo de transações é, no fundo, um servidor de datação distribuído, que ordena as transações no tempo. É essa ordem que permite saber qual de dois gastos do mesmo dinheiro veio primeiro (lição 5.3).</p>
+    <p><strong>Contexto.</strong> A manchete fala de resgates à banca, o mesmo tema que marcava 2008. Satoshi nunca explicou a intenção. A leitura mais comum é a de uma crítica ao sistema em que os governos têm de salvar bancos, em contraste com um dinheiro cujas regras ninguém pode mudar a favor de alguém. É uma leitura, e não um facto.</p>
     <h2>Um lançamento sem privilegiados</h2>
-    <p>Qualquer pessoa podia minerar desde o primeiro dia, e todos obtiveram moedas a preço de mercado ou minerando a custo próximo do preço. Por isso se descreve como uma «imaculada conceção»: não há insiders. Os indícios de que é um bem comum são: um fundador anónimo e desaparecido, moedas por mexer, nenhuma venda inicial de moedas (ICO), nenhum patrocinador, 15 meses sem valor comercial e uma enorme simplicidade.</p>
+    <p>A Bitcoin arrancou aberta a todos. Qualquer pessoa podia minerar desde o primeiro dia, bastando correr o software num computador comum, e todos obtiveram bitcoins ao preço de mercado ou minerando a um custo próximo do preço. Não houve reserva para fundadores nem venda prévia. Por isso se descreve este arranque como uma «imaculada conceção»: não há insiders.</p>
+    <p>Os indícios de que a Bitcoin é um bem comum, e não o produto de uma empresa ou de um grupo, são seis:</p>
+    <ul>
+      <li><strong>Fundador anónimo e desaparecido.</strong> Ninguém pode ser chamado a decidir, ou a responder, pela rede.</li>
+      <li><strong>Moedas por mexer.</strong> As bitcoins que Satoshi minerou nunca foram gastas. Estima-se que sejam cerca de um milhão. <!-- [VERIFICAR] Confirmar a estimativa de bitcoins minerados por Satoshi (T14:5). --></li>
+      <li><strong>Nenhuma venda inicial de moedas (ICO).</strong> Não houve venda para financiar o projeto, como viria a ser comum noutros criptoativos.</li>
+      <li><strong>Nenhum patrocinador.</strong> Nenhuma empresa ou investidor financiou o arranque.</li>
+      <li><strong>Cerca de quinze meses sem valor comercial.</strong> Nesse período, quem participava fazia-o por convicção, e não por lucro. <!-- [VERIFICAR] Confirmar os 15 meses sem valor comercial (T14:5). --></li>
+      <li><strong>Enorme simplicidade.</strong> O software inicial era simples e de código aberto, e qualquer pessoa o podia ler e verificar.</li>
+    </ul>
+    <p>Isto não quer dizer que todos tenham ganho o mesmo. Nos primeiros meses, poucas pessoas, a começar por Satoshi, mineraram quase todos os blocos, e quem chegou cedo obteve bitcoins com um custo muito baixo. A oportunidade esteve, porém, aberta a todos, e poucos a viram. Discute-se se esta vantagem foi um privilégio ou o prémio de ter chegado cedo a um projeto sem valor conhecido. Talvez as duas leituras sejam verdadeiras ao mesmo tempo: quem chegou cedo teve uma vantagem real, e arriscou tempo e atenção num projeto que a maioria ignorou.</p>
     <h2>O desaparecimento de Satoshi</h2>
     <p>Satoshi deixou de comunicar em 2011 e nunca mexeu nas primeiras moedas que minerou. Esta ausência é, para os defensores do Bitcoin, o mais importante: a rede continua sem ele. Há leituras diferentes.</p>
     <div class="positions">
       <div class="pos"><span class="k">Leitura 1</span><p>É provável que Satoshi esteja morto ou incapacitado, porque seria improvável alguém resistir a mexer na própria criação.</p><p>Quem não consegue largar a criação, como os criadores de outras moedas, acaba com um «Frankenstein».</p></div>
-      <div class="pos"><span class="k">Leitura 2</span><p>Satoshi é uma figura que o poder não corrompeu. A sua ausência reforça a descentralização, por não haver pessoa a vilipendiar.</p><p>Mesmo que voltasse, não controlaria a rede.</p></div>
+      <div class="pos"><span class="k">Leitura 2</span><p>Satoshi é uma figura que o poder não corrompeu. A sua ausência reforça a descentralização, porque não há ninguém a quem atacar ou pressionar.</p><p>Mesmo que voltasse, não controlaria a rede.</p></div>
     </div>
     <div class="callout key">
       <span class="tag">Ideia-chave</span>
-      O Bitcoin juntou décadas de trabalho em criptografia e dinheiro digital, num lançamento sem privilegiados, e continua a funcionar sem o seu criador.
+      A Bitcoin juntou décadas de trabalho em criptografia e dinheiro digital. Arrancou aberta a quem quisesse participar, e continua a funcionar sem o seu criador, que desapareceu.
     </div>
     <h2>Verificação</h2>
 
@@ -70,6 +84,16 @@
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
       <p class="explanation" hidden>Todos obtiveram moedas a preço de mercado ou minerando a custo próximo do preço.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="2">
+      <legend>O que prova a manchete gravada no bloco génese?</legend>
+      <label class="opt"><input type="radio" name="q3"><span>Que o jornal financiou o arranque da rede</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Que Satoshi trabalhava no jornal The Times</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Que o bloco não foi criado antes de 3 de janeiro de 2009</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Uma manchete só se conhece no dia em que sai. É por isso que a mensagem funciona como datação.</p>
     </fieldset>
 
 

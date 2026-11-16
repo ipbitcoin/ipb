@@ -157,7 +157,7 @@ const COURSES_COPY = {
     all: "Sobre os cursos online",
     description:
       "Três cursos de autoestudo, 100% online, com diploma no fim. Os membros têm desconto.",
-    note: "Cada curso custa 39 € (membros: 10% ou 25% de desconto). As lições estão escritas em português.",
+    note: "Cada curso custa 39 € (membros: 10% ou 25% de desconto). As lições estão escritas em português.",
     title: "Cursos online",
   },
 } as const;

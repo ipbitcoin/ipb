@@ -83,7 +83,7 @@ const COPY = {
   pt: {
     cta: "Ver os cursos online",
     eyebrow: "Cursos online",
-    price: "39 € cada · membros têm desconto",
+    price: "39 € cada · membros têm desconto",
     text: "Três cursos de autoestudo, de «porque é que o dinheiro perde valor» até à primeira transação. 100% online, com diploma em nome próprio no fim.",
     title: "Aprender Bitcoin ao ritmo de cada pessoa",
   },

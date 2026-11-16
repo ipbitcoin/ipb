@@ -710,7 +710,7 @@ const CONTENT = {
       individuals: {
         detail: "3 workshops práticos",
         label: "Para particulares",
-        price: "200 €",
+        price: "200 €",
         title: "Bitcoin para Todos (8h)",
         vat: "(IVA incluído)",
       },
@@ -718,7 +718,7 @@ const CONTENT = {
     },
     facts: {
       items: [
-        { label: "Preço", note: "IVA incluído", value: "200 €" },
+        { label: "Preço", note: "IVA incluído", value: "200 €" },
         { label: "Duração", note: "Dia inteiro", value: "8 horas" },
         {
           label: "Formato",
@@ -742,7 +742,7 @@ const CONTENT = {
         },
         {
           answer:
-            "A formação custa 200 € (IVA incluído) para particulares. Empresas e organizações podem contactar-nos para uma proposta personalizada.",
+            "A formação custa 200 € (IVA incluído) para particulares. Empresas e organizações podem contactar-nos para uma proposta personalizada.",
           question: "Qual é o preço da formação?",
         },
         {
@@ -851,7 +851,7 @@ const CONTENT = {
           },
         },
       ],
-      summary: "200 € · 8 horas · Presencial",
+      summary: "200 € · 8 horas · Presencial",
       title: "Programa",
     },
     register: "Inscrever-se",

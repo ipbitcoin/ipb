@@ -94,30 +94,6 @@
     run();
   }
 
-  // Simulador de gasto duplo (lição 3.3).
-  var sim = document.getElementById("sim");
-  if (sim) {
-    var ledger = document.getElementById("sim-ledger");
-    var spent = false;
-    var log = [];
-    var show = function () { ledger.textContent = log.join("\n"); };
-    var reset = function () { spent = false; log = ["Registo público: a Ana tem 1 bitcoin."]; show(); };
-    var send = function (to) {
-      if (!spent) {
-        spent = true;
-        log.push("Transação 1: Ana → " + to + " (1 bitcoin). ACEITE.");
-        log.push("Agora o 1 bitcoin pertence a " + to + ".");
-      } else {
-        log.push("Transação 2: Ana → " + to + " (1 bitcoin). REJEITADA: a Ana já gastou este bitcoin.");
-      }
-      show();
-    };
-    document.getElementById("sim-bob").addEventListener("click", function () { send("Bruno"); });
-    document.getElementById("sim-carla").addEventListener("click", function () { send("Carla"); });
-    document.getElementById("sim-reset").addEventListener("click", reset);
-    reset();
-  }
-
   // Lição concluída. No site, o estado vem da conta e guarda-se no servidor.
   var done = document.getElementById("done");
   if (done) {
@@ -226,7 +202,7 @@
     });
   }
 
-  // Calculadora de comissão (Curso 2, lição 3.5).
+  // Calculadora de taxa (Curso 2, lição 3.5).
   var feeRate = document.getElementById("fee-rate");
   if (feeRate) {
     var feeSize = document.getElementById("fee-size");
@@ -240,7 +216,7 @@
       }
       var sats = rate * size;
       var eur = sats / 1e8 * price;
-      feeOut.textContent = "Comissão: " + pt(sats, 0) + " satoshis, cerca de " + pt(eur, 2) + " € (com o preço do exemplo).";
+      feeOut.textContent = "Taxa: " + pt(sats, 0) + " satoshis, cerca de " + pt(eur, 2) + "\u00a0€ (com o preço do exemplo).";
     };
     [feeRate, feeSize, feePrice].forEach(function (el) { el.addEventListener("input", feeRun); });
     feeRun();
@@ -260,9 +236,9 @@
       var last = prices[prices.length - 1] * 1000;
       dcaOut.innerHTML = "";
       [
-        "Investe-se no total <strong>" + pt(invested, 0) + " €</strong>.",
-        "<strong>DCA:</strong> preço médio de compra " + pt(invested / btcDca, 0) + " €. Valor no fim: <strong>" + pt(btcDca * last, 0) + " €</strong>.",
-        "<strong>Compra única no mês 1:</strong> preço " + pt(prices[0] * 1000, 0) + " €. Valor no fim: <strong>" + pt(btcLump * last, 0) + " €</strong>."
+        "Investe-se no total <strong>" + pt(invested, 0) + "\u00a0€</strong>.",
+        "<strong>DCA:</strong> preço médio de compra " + pt(invested / btcDca, 0) + "\u00a0€. Valor no fim: <strong>" + pt(btcDca * last, 0) + "\u00a0€</strong>.",
+        "<strong>Compra única no mês 1:</strong> preço " + pt(prices[0] * 1000, 0) + "\u00a0€. Valor no fim: <strong>" + pt(btcLump * last, 0) + "\u00a0€</strong>."
       ].forEach(function (t) {
         var p = document.createElement("p");
         p.style.margin = "0 0 6px";
