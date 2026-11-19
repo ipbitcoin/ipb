@@ -15,9 +15,9 @@
 <header class="topbar">
   <div class="topbar-inner">
     <a href="#curso">← Curso 2 · A Tecnologia</a>
-    <span class="where">Lição 6 de 22</span>
+    <span class="where">Lição 6 de 24</span>
   </div>
-  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="22" aria-valuenow="6"><span style="width:27.3%"></span></div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="24" aria-valuenow="6"><span style="width:25.0%"></span></div>
 </header>
 
 <main class="page">
@@ -28,7 +28,7 @@
     <p class="lead">No fim desta lição, será possível distinguir hard fork de soft fork, contar o que aconteceu na guerra do tamanho do bloco, explicar porque se diz que o Bitcoin é «imutável» e rever o módulo.</p>
     <p class="meta"><span>11 min de leitura</span><span>3 perguntas</span></p>
     <h2>Dois tipos de mudança</h2>
-    <p>Um <strong>hard fork</strong> é uma alteração incompatível com as regras dos nós existentes e cria uma cadeia paralela. Um <strong>soft fork</strong> só restringe as regras, por isso é compatível: os nós antigos continuam a aceitar os blocos novos.</p>
+    <p>Um <strong>hard fork</strong> é uma alteração incompatível com as regras dos nós existentes e cria uma cadeia paralela. Um <strong>soft fork</strong> só restringe as regras, e por isso é compatível, já que os nós antigos continuam a aceitar os blocos novos.</p>
     <p>Quando houve hard forks, quem tinha bitcoin recebeu também moedas da nova cadeia. Isto acontece porque as duas cadeias partilham o mesmo histórico até ao momento da divisão: quem controlava as chaves de uma quantia antes do fork passa a controlar a mesma quantia nas duas cadeias. Foi o que aconteceu em 2017 com a Bitcoin Cash, quando cada bitcoin passou a ter uma moeda correspondente na nova cadeia. Muitos venderam-nas, e elas perderam valor em relação ao Bitcoin com o passar dos anos, como a maioria das cadeias que nasceram assim. <!-- [VERIFICAR] Confirmar a data da divisão da Bitcoin Cash (1 de agosto de 2017) e a evolução do seu preço em relação ao Bitcoin, com fonte e data de consulta. --></p>
     <h2>A guerra do tamanho do bloco (<em>blocksize war</em>)</h2>
     <p>Entre 2015 e 2017, houve um conflito sobre o tamanho dos blocos. A proposta SegWit2x, que duplicava o limite do bloco de 1 MB para 2 MB, teve o apoio de mais de 80% do poder de mineração, do maior fabricante de equipamento, de antigos programadores e de grandes custodiantes e <em>exchanges</em>. Mesmo assim, falhou: os operadores de nós recusaram-na.</p>
@@ -46,7 +46,8 @@
     <p>O Bitcoin tem uma espécie de separação de poderes, em que cada papel limita os outros. Os programadores propõem alterações ao software, mas ninguém é obrigado a instalá-las. Os utilizadores e os nós decidem que software correm e, por isso, que regras aplicam. Os mineradores ordenam as transações, mas só recebem a recompensa se os nós aceitarem os seus blocos. Nenhum dos três consegue impor sozinho uma mudança, e qualquer um pode recusá-la.</p>
     <p>Por isso uma alteração só passa se os utilizadores a aceitarem de forma esmagadora, e de preferência por soft fork: como os nós antigos continuam a funcionar, ninguém é forçado a mudar e a rede não se divide. Quem quer mudar as regras tem de convencer utilizadores e nós, e não só mineradores ou empresas.</p>
     <h2>A «imutabilidade»</h2>
-    <p>Diz-se que o Bitcoin é «imutável» no sentido de resistir à mudança: as regras essenciais são as mesmas desde 2009. Há quem responda que o Bitcoin é só código e que qualquer linha se pode alterar. A resposta é prática: o criador era anónimo e desapareceu, há mais de quinze anos que ninguém comanda a rede, e as tentativas de mudar parâmetros essenciais falharam.</p>
+    <p>Diz-se que o Bitcoin é «imutável», e isto não quer dizer que o código não se possa alterar. Qualquer pessoa pode copiá-lo e mudá-lo no seu computador. Quer dizer que ninguém consegue mudar as regras da rede sem que quase todos os utilizadores e operadores de nós aceitem a mudança. As regras essenciais, como o limite de 21 milhões de bitcoins, são as mesmas desde 2009.</p>
+    <p>Não há ninguém a quem pedir uma mudança. O criador era anónimo e desapareceu há mais de uma década, e nenhuma pessoa nem empresa comanda a rede. As tentativas de mudar parâmetros essenciais, como o aumento do tamanho do bloco entre 2015 e 2017, falharam porque os operadores de nós as recusaram. As alterações que passaram, como o SegWit e o Taproot, foram soft forks, que os nós antigos continuaram a aceitar. <!-- [VERIFICAR] Confirmar com fonte o desaparecimento de Satoshi Nakamoto (última mensagem conhecida em 2011) e as datas do SegWit (2017) e do Taproot (2021) como soft forks. --></p>
     <div class="positions">
       <div class="pos"><span class="k">No Bitcoin</span><p>Os parâmetros de consenso estão praticamente fixos, e a mudança exige consenso esmagador.</p></div>
       <div class="pos"><span class="k">Em muitas outras criptomoedas</span><p>Os parâmetros mudam com frequência, em hard forks decididos por um grupo restrito, como numa empresa.</p><p>Quem controla as atualizações pode mudar até a oferta de moeda, e já houve projetos que dividiram a cadeia por erros de atualização. <!-- [VERIFICAR] Dar exemplos de projetos com divisão de cadeia por erro de atualização, com fonte. --></p></div>
@@ -55,7 +56,7 @@
       <span class="tag">Ideia-chave</span>
       Quem decide as regras do Bitcoin são os utilizadores e os nós, e não os mineradores nem as empresas. Em 2017, nem uma coligação com a maioria do poder de mineração conseguiu mudá-las.
     </div>
-    <h2>Verificação do módulo 1</h2>
+    <h2>Verificação</h2>
 
     <fieldset class="quiz" data-answer="1">
       <legend>Qual é a diferença entre hard fork e soft fork?</legend>
@@ -99,7 +100,7 @@
 
     <nav class="pager" aria-label="Navegação entre lições">
       <a href="1.4-finalidade-e-ataque-de-51.html" rel="prev"><small>← Anterior</small><span>1.4 Finalidade, reorganizações e ataque de 51%</span></a>
-      <a class="next" href="2.1-escala-e-necessidade-da-energia.html" rel="next"><small>Seguinte →</small><span>2.1 Escala e necessidade da energia</span></a>
+      <a class="next" href="1.6-o-bitcoin-sob-stress.html" rel="next"><small>Seguinte →</small><span>1.6 O Bitcoin sob stress</span></a>
     </nav>
   </article>
 </main>

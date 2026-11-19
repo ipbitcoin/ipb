@@ -1,6 +1,6 @@
 # Curso 2 · A Tecnologia: plano
 
-Reescrito em novembro de 2026 a partir da estrutura temática. 22 lições, cerca de 3 h 49 min. Sem workshops.
+Reescrito em novembro de 2026 a partir da estrutura temática. 24 lições, cerca de 4 h 20 min. Sem workshops.
 
 Regras: linguagem neutra, «mineradores», «energia desperdiçada», «a Bitcoin» (rede) e «o Bitcoin» (ativo).
 
@@ -8,26 +8,28 @@ Regras: linguagem neutra, «mineradores», «energia desperdiçada», «a Bitcoi
 - 0.1 Antes de começar (6 min)
 
 ## Módulo 1 · Como funciona a rede
-- 1.1 Nós e mineradores (10 min)
+- 1.1 Nós e mineradores (12 min)
 - 1.2 Funções de hash e SHA-256 (10 min)
-- 1.3 Mineração e prova de trabalho (11 min)
+- 1.3 Mineração e prova de trabalho (13 min)
 - 1.4 Finalidade, reorganizações e ataque de 51% (10 min)
 - 1.5 Quem decide as regras: forks e governação (11 min)
+- 1.6 O Bitcoin sob stress (10 min)
 
 ## Módulo 2 · Energia
 - 2.1 Escala e necessidade da energia (10 min)
 - 2.2 Energia desperdiçada, incluindo o metano (10 min)
 - 2.3 A mineração e a rede elétrica (11 min)
+- 2.4 Porque proteger o dinheiro justifica a energia (10 min)
 
 ## Módulo 3 · Camadas e escala
-- 3.1 A rede de liquidação (10 min)
-- 3.2 Lightning e outras camadas (11 min)
+- 3.1 A rede de liquidação (12 min)
+- 3.2 Lightning e outras camadas (13 min)
 
 ## Módulo 4 · Bitcoin e outras criptomoedas
 - 4.1 Propriedade ou valor mobiliário (10 min)
-- 4.2 Prova de trabalho ou prova de participação (12 min)
-- 4.3 Stablecoins (10 min)
-- 4.4 Altcoins, DeFi e protocolo contra sistema operativo (11 min)
+- 4.2 Prova de trabalho ou prova de participação (14 min)
+- 4.3 Stablecoins (11 min)
+- 4.4 Altcoins, DeFi e contratos inteligentes (11 min)
 
 ## Módulo 5 · Chaves e carteiras
 - 5.1 Quem guarda as chaves (10 min)

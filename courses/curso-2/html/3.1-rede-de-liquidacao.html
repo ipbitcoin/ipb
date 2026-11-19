@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>A rede de liquidação | Curso 2 | Instituto Português de Bitcoin</title>
-  <meta name="description" content="Lição 3.1 do Curso 2: No fim desta lição, será possível explicar porque a camada base do Bitcoin é uma rede de liquidação, porque a sua baixa capacidade pode ser uma virtude e c">
+  <meta name="description" content="Lição 3.1 do Curso 2: No fim desta lição, será possível explicar porque a camada base do Bitcoin é uma rede de liquidação, porque a sua baixa capacidade é uma virtude e c">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
@@ -15,9 +15,9 @@
 <header class="topbar">
   <div class="topbar-inner">
     <a href="#curso">← Curso 2 · A Tecnologia</a>
-    <span class="where">Lição 10 de 22</span>
+    <span class="where">Lição 12 de 24</span>
   </div>
-  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="22" aria-valuenow="10"><span style="width:45.5%"></span></div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="24" aria-valuenow="12"><span style="width:50.0%"></span></div>
 </header>
 
 <main class="page">
@@ -25,8 +25,8 @@
 
     <p class="eyebrow">Módulo 3 · Camadas e escala · Lição 3.1</p>
     <h1>A rede de liquidação</h1>
-    <p class="lead">No fim desta lição, será possível explicar porque a camada base do Bitcoin é uma rede de liquidação, porque a sua baixa capacidade pode ser uma virtude e como a taxa de transação distribui o uso pelas camadas.</p>
-    <p class="meta"><span>11 min de leitura</span><span>3 perguntas</span></p>
+    <p class="lead">No fim desta lição, será possível explicar porque a camada base do Bitcoin é uma rede de liquidação, porque a sua baixa capacidade é uma virtude e como a taxa de transação distribui o uso pelas camadas.</p>
+    <p class="meta"><span>12 min de leitura</span><span>3 perguntas</span></p>
     <h2>Poucas transações por segundo</h2>
     <p>A camada base do Bitcoin (a <em>camada 1</em>) processa, em média, entre 3 e 7 transações por segundo. <!-- [VERIFICAR] Confirmar a capacidade média da camada base (3 a 7 transações por segundo) e a data de consulta. -->Isto não é uma falha: a camada 1 não foi desenhada para pagar cafés, foi desenhada para <strong>liquidar</strong>. Liquidar é concluir de forma definitiva a transferência de valor entre duas partes, sem que nenhuma tenha de confiar na outra.</p>
     <p>Esta capacidade vem do espaço limitado de cada bloco: alguns milhares de transações, de dez em dez minutos, e não mais.</p>
@@ -43,6 +43,9 @@
     <p>O espaço de cada bloco é limitado, e quem quer ver a sua transação incluída depressa paga uma <strong>taxa de transação</strong> mais alta do que os outros. Quando há muita procura, as taxas sobem. Os pagamentos pequenos deixam de compensar na camada 1 e passam para a camada 2, e a base fica para as liquidações grandes.</p>
     <p>Isto tem uma consequência para o custo da segurança. Proteger um bloco custa o mesmo, quer ele leve muitas transações pequenas, quer leve poucas e grandes: a energia gasta pelos mineradores é a mesma. O que muda é o valor que essa energia protege.</p>
     <p>Um exemplo, com números inventados. Imagine-se um bloco com mil pagamentos de 10 euros, ou seja, 10 mil euros no total. O custo de o proteger pesa muito sobre cada pagamento. Agora imagine-se um bloco com dez liquidações de 10 milhões de euros, ou seja, 100 milhões no total. O custo de proteção é o mesmo, mas pesa muito menos em relação ao valor liquidado. Quanto mais valor cada bloco liquida, menor é o custo da segurança em relação ao valor transferido.</p>
+    <h2>O Bitcoin não é a Visa</h2>
+    <p>Compara-se muitas vezes a capacidade do Bitcoin com a da Visa. A Visa trata cerca de 4.000 transações por segundo e a camada base do Bitcoin cerca de 5, mais ou menos mil vezes menos. <!-- [VERIFICAR] Números de 2019 (Visa, cerca de 124 mil milhões de transações por ano; Bitcoin, cerca de 145 milhões por ano); atualizar com dados recentes e fonte. -->Mas a comparação é errada, porque as duas fazem trabalhos diferentes. A Visa não liquida nada em tempo real. Autoriza o pagamento e os bancos acertam as contas mais tarde, entre si. O que se compara com o Bitcoin é o sistema onde esse acerto final acontece, como a rede dos bancos centrais ou o ouro. Nesse terreno, o Bitcoin liquida de forma definitiva, a qualquer hora e sem pedir autorização, e a Visa podia funcionar por cima dele como hoje funciona por cima dos bancos.</p>
+    <p>A capacidade limitada tem ainda outra função. O espaço de cada bloco é escasso, e quem quer entrar depressa paga uma taxa. Se o espaço fosse ilimitado, as taxas seriam nulas, e quando o subsídio de bloco acabar ninguém pagaria a segurança da rede. Como a oferta de bitcoin é fixa, a segurança não pode ser paga com moeda nova, e tem de ser paga pelas taxas.</p>
     <h2>Defeito ou virtude?</h2>
     <div class="positions">
       <div class="pos"><span class="k">Defeito</span><p>Uma rede que só faz poucas transações por segundo não pode ser dinheiro de uso corrente.</p><p>Sem as camadas por cima, o Bitcoin não serve de meio de troca para a maioria das pessoas.</p></div>
@@ -88,6 +91,7 @@
 
     <h2>Fontes</h2>
     <ul class="sources">
+      <li>Parker Lewis, «Bitcoin is Not Too Slow», Unchained: <a href="https://www.unchained.com/blog/bitcoin-is-not-too-slow" target="_blank" rel="noopener">unchained.com</a>. Texto de opinião de um autor de uma empresa de custódia de Bitcoin.</li>
       <li>Resumo do IPB das ideias da estrutura temática (tema 16.1).</li>
     </ul>
 
@@ -96,7 +100,7 @@
     </div>
 
     <nav class="pager" aria-label="Navegação entre lições">
-      <a href="2.3-mineracao-e-rede-eletrica.html" rel="prev"><small>← Anterior</small><span>2.3 A mineração e a rede elétrica</span></a>
+      <a href="2.4-proteger-o-dinheiro-justifica-a-energia.html" rel="prev"><small>← Anterior</small><span>2.4 Porque proteger o dinheiro justifica a energia</span></a>
       <a class="next" href="3.2-lightning-e-outras-camadas.html" rel="next"><small>Seguinte →</small><span>3.2 Lightning e outras camadas</span></a>
     </nav>
   </article>

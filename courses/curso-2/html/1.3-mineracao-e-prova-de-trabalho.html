@@ -15,9 +15,9 @@
 <header class="topbar">
   <div class="topbar-inner">
     <a href="#curso">← Curso 2 · A Tecnologia</a>
-    <span class="where">Lição 4 de 22</span>
+    <span class="where">Lição 4 de 24</span>
   </div>
-  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="22" aria-valuenow="4"><span style="width:18.2%"></span></div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="24" aria-valuenow="4"><span style="width:16.7%"></span></div>
 </header>
 
 <main class="page">
@@ -26,9 +26,9 @@
     <p class="eyebrow">Módulo 1 · Como funciona a rede · Lição 1.3</p>
     <h1>Mineração e prova de trabalho</h1>
     <p class="lead">No fim desta lição, será possível explicar como se produz um bloco, o que é a prova de trabalho, porque ninguém ganha em fazer batota e porque o Bitcoin não se copia.</p>
-    <p class="meta"><span>11 min de leitura</span><span>3 perguntas · 1 simulação</span></p>
+    <p class="meta"><span>13 min de leitura</span><span>3 perguntas · 1 simulação</span></p>
     <h2>O puzzle</h2>
-    <p>Para propor um bloco, o minerador tem de encontrar um número, a <strong>nonce</strong>, que faça o hash do cabeçalho do bloco começar por um certo número de zeros. Não há atalho: só se descobre por tentativa e erro (força bruta). O minerador altera a nonce, calcula o hash novamente, vê se serve e repete, milhares de milhões de vezes por segundo. A mineração é, no essencial, <strong>adivinhar</strong>: não há vantagem por talento, só quem aplica mais dinheiro em máquinas ou tem energia mais barata. É isso que dá neutralidade e credibilidade.</p>
+    <p>Para propor um bloco, o minerador tem de encontrar um número, a <strong>nonce</strong>, que faça o hash do cabeçalho do bloco começar por um certo número de zeros. Não há atalho: só se descobre por tentativa e erro (força bruta). O minerador altera a nonce, calcula o hash novamente, vê se serve e repete, milhares de milhões de vezes por segundo. A mineração é, no essencial, <strong>adivinhar</strong>. Não há truque que dê vantagem, e quem faz mais tentativas tem mais hipóteses de acertar, ou seja, quem aplica mais dinheiro em máquinas ou tem energia mais barata. É isso que dá neutralidade e credibilidade.</p>
     <p>Numa versão de brinquedo, quantos mais zeros se pedirem, mais tentativas são precisas:</p>
     <div class="card" id="pow">
       <h3>Minerar um bloco de brinquedo</h3>
@@ -41,12 +41,13 @@
     </div>
     <p>Com um zero esperam-se cerca de 16 tentativas; com três, cerca de 4.000; com quatro, cerca de 65.000; com cinco, cerca de um milhão; com seis, cerca de 16 milhões, o que pode demorar vários minutos. A cada zero a mais, o trabalho multiplica-se. A rede real exige muito mais.</p>
     <h2>Difícil de fazer, fácil de verificar</h2>
-    <p>Encontrar a nonce custa muito trabalho. Verificar que está certa custa um só cálculo. É por isso que todos os nós conferem um bloco em milissegundos, ainda que o minerador tenha gasto uma enorme quantidade de tempo e energia a produzi-lo. É como um sudoku: difícil de resolver, instantâneo de conferir. Isto resolve um problema clássico da informática, o dos generais bizantinos: como chegar a acordo quando os participantes não se conhecem e alguns podem mentir. No Bitcoin, quem quer propor o próximo bloco tem de gastar energia a prová-lo, por isso mentir sai caro, e todos acabam por seguir a cadeia com mais trabalho, sem precisar de uma autoridade central.</p>
+    <p>Encontrar a nonce custa muito trabalho. Verificar que está certa custa um só cálculo. É por isso que todos os nós conferem um bloco em milissegundos, ainda que o minerador tenha gasto uma enorme quantidade de tempo e energia a produzi-lo. É como um sudoku, difícil de resolver e instantâneo de conferir. Isto resolve um problema clássico da informática, o dos generais bizantinos, que consiste em chegar a acordo quando os participantes não se conhecem e alguns podem mentir. No Bitcoin, quem quer propor o próximo bloco tem de gastar energia a prová-lo, por isso mentir sai caro, e todos acabam por seguir a cadeia com mais trabalho, sem precisar de uma autoridade central.</p>
     <h2>Porque ninguém ganha em fazer batota</h2>
     <div class="cards two">
       <div class="card"><span class="n">MINERADOR HONESTO</span><h3>Segue as regras</h3><p>Gasta energia, o bloco é aceite e recebe a recompensa.</p></div>
       <div class="card"><span class="n">MINERADOR DESONESTO</span><h3>Quebra as regras</h3><p>Gasta a mesma energia, o bloco é rejeitado por todos os nós e não recebe nada.</p></div>
     </div>
+    <p>Cada bloco da cadeia representa eletricidade realmente gasta e máquinas realmente a funcionar. Quem quisesse reescrever a história teria de repetir toda essa despesa, e fazê-lo mais depressa do que a rede honesta produz blocos novos, o que na prática não consegue. Por isso a segurança do Bitcoin assenta num custo físico, e não na boa-fé de quem participa nem em tribunais ou reguladores. Há ainda outro efeito. Só entra no registo o que alguém está disposto a pagar para lá ficar, porque registos inúteis ou falsos saem caros demais. <!-- [VERIFICAR] Confirmar a formulação do «custo da verdade» com as fontes do Scientific Bitcoin Institute e de Santostasi. --></p>
     <h2>A dificuldade ajusta-se sozinha</h2>
     <p>Se entrarem mais mineradores e os blocos aparecerem mais depressa, a rede aumenta a dificuldade. Se saírem e deixarem de minerar, a dificuldade diminui. Isto acontece a cada <strong>2.016 blocos</strong> (cerca de duas semanas), para manter a média de <strong>um bloco a cada dez minutos</strong>.</p>
     <p>O alvo de dez minutos é um «batimento cardíaco» saudável. Cada bloco novo demora alguns segundos a chegar a todos os nós do mundo, porque a informação não viaja mais depressa do que a luz e os nós podem correr em hardware modesto. Se os blocos surgissem de poucos em poucos segundos, dois mineradores encontrariam blocos ao mesmo tempo, sem saberem um do outro, com muito mais frequência. Só um desses blocos fica na cadeia: o outro é um <strong>bloco órfão</strong>, e a energia gasta nele perde-se. Os nós com pior ligação ou máquinas mais fracas ficariam sempre atrasados, e levariam vantagem os mineradores mais bem ligados, o que empurra a rede para a centralização. Com dez minutos, todos têm tempo de acompanhar. O custo é que uma transação demora a ficar confirmada, e por isso os pagamentos instantâneos fazem-se noutras camadas, construídas por cima da rede principal.</p>
@@ -70,7 +71,9 @@
     <p>O código do Bitcoin é aberto, por isso qualquer pessoa o pode copiar. O que não se copia é o que o torna seguro e útil.</p>
     <p>Primeiro, a energia. Uma cópia nasce sem mineradores, ou com poucos, e por isso com pouca energia a protegê-la. Quem controlar mais de metade do poder de mineração (um ataque de 51%) consegue reescrever os blocos mais recentes e gastar duas vezes as mesmas moedas. <!-- [VERIFICAR] Confirmar exemplos de ataques de 51% a redes pequenas de prova de trabalho (por exemplo, Ethereum Classic e Bitcoin Gold) e a data de consulta. -->Já aconteceu a várias redes pequenas de prova de trabalho. Para atacar o Bitcoin, seria preciso reunir máquinas e eletricidade em escala enorme.</p>
     <p>Depois, as pessoas. Os mineradores, os nós, os programadores, as empresas e os utilizadores que aceitam e usam bitcoin não vêm com o código. É o efeito de rede: cada pessoa que usa o Bitcoin torna-o mais útil para as outras, e uma cópia começa do zero.</p>
-    <p>Por isso a singularidade do Bitcoin está na segurança pela energia e no efeito de rede, e não no código.</p>
+    <p>Por fim, a liquidez. Quem quer guardar valor escolhe o ativo mais fácil de trocar por tudo o resto, e escolher uma rede pequena e menos segura quando existe uma maior e mais segura é uma má decisão. Nassim Taleb chama a isto a regra da minoria: um grupo intransigente pode impor o seu hábito a uma maioria flexível. O exemplo mais conhecido é o da comida. Se uma pequena parte dos clientes só aceita alimentos certificados (como os kosher ou os halal) e a maioria come qualquer coisa, a empresa que serve os dois grupos acha mais simples produzir tudo certificado. Acaba por servir toda a gente com o mesmo produto, porque a maioria não se importa e a minoria não cede.</p>
+    <p>No dinheiro passa-se o mesmo. Se um grupo só aceita Bitcoin e a maioria aceita vários meios de pagamento, quem negoceia com os dois tem motivos para aceitar Bitcoin, porque assim vende ao primeiro grupo sem perder o segundo. Quem aceita vários meios nada perde em aceitar mais um, e quem só aceita um não pode ceder. Por isso um grupo que só aceita Bitcoin pode arrastar os outros, e não o contrário. <!-- [VERIFICAR] Confirmar a regra da minoria (Taleb) e o exemplo dos alimentos certificados, e a sua aplicação ao dinheiro, com fonte. --></p>
+    <p>Copiar o código é fácil, e é por isso que o código não é o que dá valor ao Bitcoin. O que o distingue são três coisas que se foram construindo ao longo dos anos e que ninguém consegue copiar de uma vez. A primeira é a energia, porque a segurança do Bitcoin assenta em muito trabalho já gasto e em máquinas já a funcionar. A segunda são as pessoas, que o usam, o verificam e o mantêm. A terceira é a liquidez, porque é onde se compra e vende com mais facilidade. Uma cópia pode ter o mesmo código, mas começa sem nada disto, e só o tempo e a adoção lho dão.</p>
     <div class="callout key">
       <span class="tag">Ideia-chave</span>
       A prova de trabalho transforma energia em segurança: é caro escrever no registo e barato verificá-lo. Por isso mentir custa mais do que cumprir.
@@ -110,6 +113,9 @@
 
     <h2>Fontes</h2>
     <ul class="sources">
+      <li>Giovanni Santostasi, «Bitcoin Value Triad, Part 1», Medium, 2025: <a href="https://giovannisantostasi.medium.com/bitcoin-value-triad-part-1-the-immutable-ledger-of-humanity-and-the-zero-energy-universe-25e3a5d1305c" target="_blank" rel="noopener">medium.com</a>. Texto de opinião de um autor que defende o Bitcoin.</li>
+      <li>Scientific Bitcoin Institute, «Bitcoin Fundamentals»: <a href="https://scientificbitcoininstitute.org/education/bitcoin-fundamentals" target="_blank" rel="noopener">scientificbitcoininstitute.org</a>. Texto introdutório de um instituto que defende o Bitcoin.</li>
+      <li>Parker Lewis, «Bitcoin Can't Be Copied», Unchained: <a href="https://www.unchained.com/blog/bitcoin-cant-be-copied" target="_blank" rel="noopener">unchained.com</a>. Texto de opinião de um autor de uma empresa de custódia de Bitcoin.</li>
       <li>Satoshi Nakamoto, «Bitcoin: A Peer-to-Peer Electronic Cash System», 2008, secções 4 e 6.</li>
       <li>Halving de abril de 2024 (bloco 840.000): <a href="https://mempool.space/graphs/mining/reward-stats" target="_blank" rel="noopener">mempool.space</a>.</li>
       <li>Resumo do IPB das ideias da estrutura temática (temas 14.1 e 14.2).</li>

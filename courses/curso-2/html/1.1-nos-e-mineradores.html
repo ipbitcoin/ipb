@@ -15,9 +15,9 @@
 <header class="topbar">
   <div class="topbar-inner">
     <a href="#curso">← Curso 2 · A Tecnologia</a>
-    <span class="where">Lição 2 de 22</span>
+    <span class="where">Lição 2 de 24</span>
   </div>
-  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="22" aria-valuenow="2"><span style="width:9.1%"></span></div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="24" aria-valuenow="2"><span style="width:8.3%"></span></div>
 </header>
 
 <main class="page">
@@ -26,19 +26,19 @@
     <p class="eyebrow">Módulo 1 · Como funciona a rede · Lição 1.1</p>
     <h1>Nós e mineradores</h1>
     <p class="lead">No fim desta lição, será possível dizer quem são os três participantes da rede Bitcoin, o que faz cada um e porque nenhum manda sozinho.</p>
-    <p class="meta"><span>10 min de leitura</span><span>3 perguntas</span></p>
+    <p class="meta"><span>12 min de leitura</span><span>3 perguntas</span></p>
     <h2>Uma rede sem chefe</h2>
-    <p>O euro tem um banco central, o Bitcoin não. Mesmo assim, as regras cumprem-se. Isto acontece porque na rede há <strong>três papéis</strong>, com interesses diferentes, que se vigiam uns aos outros.</p>
+    <p>O euro tem um banco central, o Bitcoin não. Mesmo assim, as regras cumprem-se. Isto acontece porque na rede há <strong>três papéis</strong>, com interesses diferentes, que se vigiam uns aos outros. O acordo entre eles não se negoceia, calcula-se. Cada nó aplica as mesmas regras aos mesmos dados e chega à mesma conclusão.</p>
     <div class="cards">
       <div class="card"><span class="n">1 · UTILIZADORES</span><h3>Quem usa</h3><p>Enviam e recebem bitcoin através de carteiras. Escolhem que software correr e que regras aceitam.</p></div>
       <div class="card"><span class="n">2 · NÓS</span><h3>Quem verifica</h3><p>Computadores com uma cópia completa do registo (blockchain). Verificam todas as transações e todos os blocos e rejeitam tudo o que quebra as regras.</p></div>
       <div class="card"><span class="n">3 · MINERADORES</span><h3>Quem escreve</h3><p>Agrupam transações em blocos e gastam energia para os propor à rede. Recebem bitcoin novo e taxas associadas a todas as transações incluídas nos blocos.</p></div>
     </div>
     <h2>Os nós mandam nas regras</h2>
-    <p>Um <strong>nó</strong> (<em>node</em>) é um computador que corre o software do Bitcoin e guarda o registo completo. Cada nó confere, por conta própria, se cada bloco cumpre as regras: assinaturas válidas, bitcoin que existe, oferta dentro do limite dos 21 milhões. Quem corre um nó audita toda a cadeia sem precisar de confiar em ninguém. O Bitcoin foi desenhado para que isto se possa fazer com hardware modesto e a baixo custo, ao contrário de outras redes.</p>
+    <p>Um <strong>nó</strong> (<em>node</em>) é um computador que corre o software do Bitcoin e guarda o registo completo. Cada nó confere, por conta própria, se cada bloco cumpre as regras: assinaturas válidas, bitcoin que existe, oferta dentro do limite dos 21 milhões. Quem corre um nó audita toda a cadeia sem precisar de confiar em ninguém. Há cerca de 20 mil nós acessíveis ao público, e muitos mais que funcionam em privado. <!-- [VERIFICAR] Confirmar o número de nós acessíveis (cerca de 20 mil) com uma fonte atual e a data de consulta. --> O Bitcoin foi desenhado para que isto se possa fazer com hardware modesto e a baixo custo, ao contrário de outras redes.</p>
     <p>Os mineradores propõem blocos e os nós decidem se os aceitam. São os nós, soberanos, que determinam as regras de consenso. Os mineradores investem capital à partida (máquinas e eletricidade) e só são pagos se obedecerem aos nós. Por isso, é importante que os nós sejam descentralizados.</p>
     <h2>Os mineradores ordenam as transações</h2>
-    <p>Os mineradores não fazem as regras: <strong>cumprem-nas</strong>. A sua função é decidir a ordem das transações e agrupá-las em blocos, através de <strong>trabalho</strong> que custa energia (prova de trabalho, lição 1.3). Em troca, recebem uma recompensa. A mineração é descentralizada porque qualquer pessoa ou empresa com energia barata pode entrar ou sair. Nós e mineradores são mutuamente indispensáveis.</p>
+    <p>Os mineradores não fazem as regras: <strong>cumprem-nas</strong>. A sua função é decidir a ordem das transações e agrupá-las em blocos, através de <strong>trabalho</strong> que custa energia (prova de trabalho). Em troca, recebem uma recompensa. A mineração é descentralizada porque qualquer pessoa ou empresa com energia barata pode entrar ou sair. Nós e mineradores são mutuamente indispensáveis.</p>
     <h2>A blockchain: blocos ligados</h2>
     <p>Cada bloco contém milhares de transações e a <strong>impressão digital</strong> (o <em>hash</em>) do bloco anterior. Assim, os blocos ficam presos uns aos outros numa cadeia. Para alterar uma transação antiga, teria de se refazer o trabalho desse bloco e de todos os que vieram depois, mais depressa do que o resto da rede continua a trabalhar.</p>
     <p>O espaço de cada bloco é limitado a cerca de 1 milhão de bytes virtuais (vB), a unidade em que se mede o tamanho das transações. Uma transação simples ocupa cerca de 140 vB, por isso cada bloco leva alguns milhares de transações, e não mais. Quem quer ver a sua transação incluída num bloco compete por esse espaço, pagando uma taxa. <!-- [VERIFICAR] Confirmar o limite de 4 milhões de unidades de peso (cerca de 1 milhão de vB), o tamanho típico de uma transação simples e o número médio de transações por bloco, com fonte e data de consulta. --></p>
@@ -46,10 +46,18 @@
       <li><span class="when">3 jan. 2009</span><strong>Bloco 0, o bloco génese</strong><p>O primeiro bloco da cadeia, minerado por Satoshi Nakamoto.</p></li>
       <li><span class="when">~ 10 minutos</span><strong>Um bloco novo</strong><p>Em média, a rede encontra um bloco novo a cada dez minutos.</p></li>
     </ol>
+    <h2>O registo antes da blockchain</h2>
+    <p>Registar o que cada um deve e tem é uma das tarefas mais antigas da economia. As primeiras tabuinhas de argila com contas, em Uruk, na Mesopotâmia, têm cerca de 5.300 anos. Em 1494, o italiano Luca Pacioli descreveu o método que ainda hoje é a base da contabilidade, o das partidas dobradas. Cada operação regista-se duas vezes, como saída de uma conta e como entrada noutra, pelo mesmo valor, e se os dois lados não coincidirem há um erro. Mas o registo continuava nas mãos de quem guardava os livros, e os erros, a corrupção e as correções feitas por uma só parte eram frequentes. <!-- [VERIFICAR] Confirmar as tabuinhas de Uruk (cerca de 3300 a. C.) e o método das partidas dobradas descrito por Luca Pacioli (1494), com fonte. --></p>
+    <p>A blockchain acrescenta um terceiro registo. A operação continua a envolver as duas partes, e fica ainda anotada de forma pública e permanente, protegida pelo consenso e pelo trabalho gasto. Já não é preciso confiar em quem guarda os livros, porque todos os podem verificar. Por isso se fala em contabilidade de partida tripla. <!-- [VERIFICAR] Confirmar o conceito de contabilidade de partida tripla aplicado ao Bitcoin, com fonte. --></p>
+    <h2>A blockchain existe por causa do dinheiro</h2>
+    <p>Não há uma blockchain única guardada num sítio. Cada nó mantém a sua cópia e verifica-a por si, e todos chegam ao mesmo registo porque seguem as mesmas regras. Manter essa rede tem custos, e é aqui que a moeda entra.</p>
+    <p>Quem paga o trabalho de proteger o registo são os mineradores, que gastam eletricidade e máquinas e recebem em troca bitcoin novo e taxas. A segurança da blockchain é paga na própria moeda, e é por isso que a blockchain depende dela. Sem uma moeda para pagar a segurança, teria de ser paga por alguém de confiança, como uma empresa, um consórcio ou um Estado, e a confiança é justamente o que a blockchain dispensa.</p>
+    <p>A imutabilidade também não é uma propriedade da tecnologia. Ligar os blocos por hashes torna qualquer alteração visível, mas não a torna impossível, porque qualquer pessoa pode refazer os blocos com hashes novos. O que torna a alteração impraticável é o custo. Alterar o passado exige refazer todo o trabalho gasto desde esse bloco e ainda ultrapassar o resto da rede, com muitos nós a recusar o que não cumpre as regras.</p>
+    <p>Isso só acontece enquanto a moeda tiver valor. Os mineradores gastam energia porque o que recebem vale mais do que o que gastam, e se o valor da moeda cair, o trabalho a proteger o registo diminui e atacá-lo fica mais barato. Uma base de dados com os mesmos blocos, mas sem moeda própria, não tem quem a proteja por interesse próprio. Seria só uma base de dados que alguém controla, e uma base de dados comum faria o mesmo mais depressa e a menor custo. <!-- [VERIFICAR] Confirmar a formulação com o artigo da Unchained («Bitcoin, Not Blockchain», 2019). --></p>
     <h2>As regras de consenso são como uma constituição</h2>
-    <p>Há regras que todos os nós aplicam e que ninguém pode mudar sozinho: o limite de 21 milhões, o calendário de emissão e o que torna válidos um bloco ou uma assinatura. São as regras de consenso, e funcionam como uma constituição: são difíceis de alterar, porque mudá-las exige que os utilizadores e os nós aceitem correr software novo. Quem as altera por conta própria produz blocos que os outros nós rejeitam, e fica numa cadeia à parte, com outra moeda, menos liquidez e menos gente a aceitá-la. Por isso o essencial das regras é o mesmo desde 2009 e as mudanças são raras e cautelosas. A isto chama-se «ossificação»: o Bitcoin tende a mudar cada vez menos.</p>
+    <p>Há regras que todos os nós aplicam e que ninguém pode mudar sozinho: o limite de 21 milhões, o calendário de emissão e o que torna válidos um bloco ou uma assinatura. São as regras de consenso, e funcionam como uma constituição, porque são difíceis de alterar. Mudá-las exige que os utilizadores e os nós aceitem correr software novo. Quem as altera por conta própria produz blocos que os outros nós rejeitam, e fica numa cadeia à parte, com outra moeda, menos liquidez e menos gente a aceitá-la. Por isso o essencial das regras é o mesmo desde 2009 e as mudanças são raras e cautelosas. A isto chama-se «ossificação»: o Bitcoin tende a mudar cada vez menos.</p>
     <h2>O preço da descentralização</h2>
-    <p>Tudo o que é mais eficiente a pagar ou a guardar ativos tende a ser também mais centralizado, e há um compromisso entre eficiência e resiliência. Uma blockchain é, em certo sentido, uma <strong>base de dados ineficiente</strong>: os utilizadores trocam eficiência por descentralização. Uma base de dados centralizada não é auditável nem controlável por terceiros (contas sociais, contas bancárias). O uso mais importante de uma base de dados descentralizada é o dinheiro: um registo que ninguém pode alterar, em que o valor é um número que só o dono consegue mover, sem que ninguém o possa bloquear nem diluir criando mais.</p>
+    <p>Tudo o que é mais eficiente a pagar ou a guardar ativos tende a ser também mais centralizado, e há um compromisso entre eficiência e resiliência. Uma blockchain é, em certo sentido, uma <strong>base de dados ineficiente</strong>, em que os utilizadores trocam eficiência por descentralização. Uma base de dados centralizada não é auditável nem controlável por terceiros (contas sociais, contas bancárias). O uso mais importante de uma base de dados descentralizada é o dinheiro, um registo que ninguém pode alterar, em que o valor é um número que só o dono consegue mover, sem que ninguém o possa bloquear nem diluir criando mais.</p>
     <div class="callout key">
       <span class="tag">Ideia-chave</span>
       Ninguém manda no Bitcoin e toda a gente tem voto. Os utilizadores escolhem as regras, os nós verificam-nas, os mineradores ordenam as transações.
@@ -89,6 +97,9 @@
 
     <h2>Fontes</h2>
     <ul class="sources">
+      <li>Giovanni Santostasi, «Bitcoin Value Triad, Part 1», Medium, 2025: <a href="https://giovannisantostasi.medium.com/bitcoin-value-triad-part-1-the-immutable-ledger-of-humanity-and-the-zero-energy-universe-25e3a5d1305c" target="_blank" rel="noopener">medium.com</a>. Texto de opinião de um autor que defende o Bitcoin.</li>
+      <li>Scientific Bitcoin Institute, «Bitcoin Fundamentals»: <a href="https://scientificbitcoininstitute.org/education/bitcoin-fundamentals" target="_blank" rel="noopener">scientificbitcoininstitute.org</a>. Texto introdutório de um instituto que defende o Bitcoin.</li>
+      <li>Parker Lewis, «Bitcoin, Not Blockchain», Unchained: <a href="https://www.unchained.com/blog/bitcoin-not-blockchain" target="_blank" rel="noopener">unchained.com</a>. Texto de opinião de um autor de uma empresa de custódia de Bitcoin.</li>
       <li>Satoshi Nakamoto, «Bitcoin: A Peer-to-Peer Electronic Cash System», 2008: <a href="https://bitcoin.org/bitcoin.pdf" target="_blank" rel="noopener">bitcoin.org/bitcoin.pdf</a>.</li>
       <li>Altura do bloco em tempo real: <a href="https://mempool.space" target="_blank" rel="noopener">mempool.space</a>.</li>
       <li>Resumo do IPB das ideias da estrutura temática (temas 14.4 e 15.1).</li>

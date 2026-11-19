@@ -1,6 +1,6 @@
 # Curso 3 · A Revolução: plano
 
-Reescrito em novembro de 2026. 14 lições, cerca de 2 h 27 min. Sem workshops.
+Reescrito em novembro de 2026. 14 lições, cerca de 2 h 31 min. Sem workshops.
 
 Regras: linguagem neutra, «mineradores», «energia desperdiçada», sem recomendações de compra nem previsões de preço.
 

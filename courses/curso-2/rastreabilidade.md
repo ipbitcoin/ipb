@@ -17,7 +17,7 @@ Documento interno (não é servido aos alunos). Ideias da estrutura temática (`
 | 4.1 | Propriedade ou valor mobiliário | T3:28–30, T3:33, T3:44–47, T3:64–66; T7:2, T7:31, T7:51–52 (tema 17.1–17.2) | • Confirmar o enquadramento regulatório atual na UE (MiCA) antes de usar como referência jurídica. |
 | 4.2 | Prova de trabalho ou prova de participação | T6:49–53; T7:4, T7:8–13, T7:18–22; T4:67–69; T2:91 (tema 15.4) | • Dados de T7:18-20 (2021 a 2023); confirmar com fontes atuais, incluindo o estado de cada rede. |
 | 4.3 | Stablecoins | T7:23–24, T7:29–31, T7:39–40; T3:56, T3:64 (tema 15.5, 17.4) | • Número de endereços bloqueados de T7:24 e T7:30 (2022 a 2023); confirmar. |
-| 4.4 | Altcoins, DeFi e protocolo contra sistema operativo | T7:34–38, T7:45–51; T5:46–47; T4:33, T4:55, T4:57, T4:65, T4:70–71; T3:59–60; T2:86 (tema 15.6, 17.3, 17.5) | • Dados de T7:48 (2022 a 2023); atualizar com a quota atual. |
+| 4.4 | Altcoins, DeFi e contratos inteligentes | T7:34–38, T7:45–51; T5:46–47; T4:33, T4:55, T4:57, T4:65, T4:70–71; T3:59–60; T2:86 (tema 15.6, 17.3, 17.5) | • Dados de T7:48 (2022 a 2023); atualizar com a quota atual. |
 | 5.1 | Quem guarda as chaves | T12:8; T6:9; T3:31, T3:37; (casos e MiCA: fora da estrutura) | • Confirmar números e calendário de reembolsos. |
 | 5.2 | Chaves, endereços e frase de recuperação | T12:7–10; T14.3; (BIP-32/39: fora da estrutura) | — |
 | 5.3 | Tipos de carteira | Fora da estrutura (lição prática mantida) | — |

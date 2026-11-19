@@ -15,9 +15,9 @@
 <header class="topbar">
   <div class="topbar-inner">
     <a href="#curso">← Curso 2 · A Tecnologia</a>
-    <span class="where">Lição 21 de 22</span>
+    <span class="where">Lição 23 de 24</span>
   </div>
-  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="22" aria-valuenow="21"><span style="width:95.5%"></span></div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="24" aria-valuenow="23"><span style="width:95.8%"></span></div>
 </header>
 
 <main class="page">
@@ -32,10 +32,10 @@
       <p>O risco de migração criptográfica é real, ainda que não imediato: se vierem a existir computadores quânticos suficientemente grandes, as assinaturas atuais deixarão de ser seguras, e a rede terá de migrar. Esta lição explica o que está em causa. Não é uma previsão, e não há calendário certo.</p>
     </div>
     <h2>O que teria de quebrar</h2>
-    <p>O maior risco é <strong>forjar assinaturas</strong>, o que permitiria gastar o dinheiro de qualquer pessoa. O SHA-256, como se viu na lição 1.2, não assina transações: serve para a mineração e para encadear blocos. Por isso, quebrá-lo não permitiria gastar as moedas de Satoshi. A computação quântica é hardware, e o limite atual é de hardware: os algoritmos têm décadas.</p>
+    <p>O maior risco é <strong>forjar assinaturas</strong>, o que permitiria gastar o dinheiro de qualquer pessoa. O SHA-256, não assina transações: serve para a mineração e para encadear blocos. Por isso, quebrá-lo não permitiria gastar as moedas de Satoshi. A computação quântica é hardware, e o limite atual é de hardware: os algoritmos têm décadas.</p>
     <h2>Dois algoritmos</h2>
     <div class="positions">
-      <div class="pos"><span class="k">Grover (hash)</span><p>Dá um ganho de raiz quadrada: reduz o SHA-256 de 256 para cerca de 128 bits.</p><p>Continua a exigir mais tentativas do que a idade do universo.</p><p>Mesmo que um computador quântico minerasse mais depressa, a dificuldade ajustar-se-ia, e a mineração é adivinhar, sem vantagem por talento.</p></div>
+      <div class="pos"><span class="k">Grover (hash)</span><p>Dá um ganho de raiz quadrada: reduz o SHA-256 de 256 para cerca de 128 bits.</p><p>Continua a exigir mais tentativas do que a idade do universo.</p><p>Mesmo que um computador quântico minerasse mais depressa, a dificuldade ajustar-se-ia, e a mineração é adivinhar, sem truque que dê vantagem.</p></div>
       <div class="pos"><span class="k">Shor (assinaturas)</span><p>Ataca a matemática das assinaturas (a curva secp256k1).</p><p>É a ameaça real.</p></div>
     </div>
     <p>Se a matemática falhasse em geral, tudo falharia, não só o Bitcoin. Isso valia já antes da inteligência artificial e da computação quântica, e seria um mundo «não investível». Não há evidência de que se prepare.</p>

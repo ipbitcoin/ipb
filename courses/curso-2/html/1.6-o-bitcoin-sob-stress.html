@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>O Bitcoin sob stress | Curso 2 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 1.6 do Curso 2: No fim desta lição, será possível explicar o que é a antifragilidade, que provas a rede Bitcoin já passou e o que essas provas não demonstram.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#curso">← Curso 2 · A Tecnologia</a>
+    <span class="where">Lição 7 de 24</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="24" aria-valuenow="7"><span style="width:29.2%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+
+    <p class="eyebrow">Módulo 1 · Como funciona a rede · Lição 1.6</p>
+    <h1>O Bitcoin sob stress</h1>
+    <p class="lead">No fim desta lição, será possível explicar o que é a antifragilidade, que provas a rede Bitcoin já passou e o que essas provas não demonstram.</p>
+    <p class="meta"><span>10 min de leitura</span><span>3 perguntas</span></p>
+    <h2>Frágil, robusto e antifrágil</h2>
+    <p>Nassim Taleb distingue três tipos de sistemas. O sistema frágil parte-se com o stress, como um copo de vidro. O robusto resiste e fica igual. O antifrágil melhora com o stress, como o corpo que ganha força com o exercício. O Bitcoin comporta-se como um sistema antifrágil, e não apenas robusto, porque cada ataque, erro ou crise deixou a rede mais difícil de atacar da vez seguinte.</p>
+    <h2>Um sistema sem ponto único de falha</h2>
+    <p>Uma empresa tem uma administração que se pode chamar ao parlamento, uma sede que se pode encerrar e contas que se podem congelar. A rede Bitcoin não tem nada disto. Não há um responsável a convocar nem um servidor a desligar, e as regras estão em milhares de nós espalhados pelo mundo. Também não há resgates. Nenhuma empresa é «demasiado grande para falhar», e se uma plataforma ou um grande investidor perder tudo, não há banco central nem Estado que cubra o prejuízo com o dinheiro dos contribuintes. <!-- [VERIFICAR] Confirmar o exemplo da Libra, do Facebook, e a convocação dos seus responsáveis ao Congresso dos Estados Unidos em 2019. --></p>
+    <h2>O que a rede já aguentou</h2>
+    <p>Em 2017, mineradores com mais de 80% do poder de computação e as principais empresas do setor tentaram aumentar o tamanho do bloco e falharam, porque os nós recusaram. Em 2021, a China proibiu a mineração e cerca de metade do poder de computação desapareceu em poucas semanas. A rede continuou a funcionar e o poder de computação recuperou em poucos meses. Em 2018, a Índia tentou impedir os bancos de servirem plataformas de criptoativos, e o Supremo Tribunal anulou a medida em 2020. <!-- [VERIFICAR] Confirmar o caso da Índia (decisão do banco central em 2018 e anulação pelo Supremo Tribunal em 2020). --></p>
+    <p>Também houve erros. Em 2010, uma falha de programação permitiu criar 184 mil milhões de bitcoins num único bloco, e a rede corrigiu-a em poucas horas. As plataformas de negociação foram assaltadas várias vezes. A Mt. Gox, que chegou a ser a maior do mundo, perdeu cerca de 850.000 bitcoins e fechou em 2014, e a Bitfinex foi assaltada em 2016. Cada caso levou mais gente a guardar o seu bitcoin em carteiras próprias, e as carteiras de hardware cresceram com isso. <!-- [VERIFICAR] Confirmar o erro de 2010, os assaltos à Mt. Gox e à Bitfinex e o efeito nas carteiras de hardware, com fontes. --></p>
+    <p>O preço caiu cerca de 80% em 2018 e cerca de 77% em 2022, e a rede nunca deixou de produzir blocos. Como não há resgates, quem comprou demais perde, e o preço ajusta-se.</p>
+    <p>A rede também se ajusta sozinha. A cada 2.016 blocos, a dificuldade sobe se entrar mais poder de computação e desce se sair, e o ritmo de um bloco a cada dez minutos mantém-se. Foi isto que permitiu à rede recuperar depois da saída dos mineradores da China.</p>
+    <h2>Porque cada prova reforça a rede</h2>
+    <p>Cada prova elimina uma dúvida e atrai mais gente. Quem estudou o assunto e viu um ataque falhar fica mais convencido. Mais valor atrai mais nós e mais mineradores, o que torna a rede mais difícil de atacar e mais valiosa.</p>
+    <h2>O que estas provas não demonstram</h2>
+    <p>Ter sobrevivido a ataques passados não prova que a rede sobreviva a todos os futuros. A amostra é pequena, porque a Bitcoin tem menos de vinte anos. Há riscos que ainda não se verificaram, como um ataque de um Estado com recursos enormes ou a quebra das assinaturas por computadores quânticos. A rede resiste bem a falhas ao acaso, mas é mais vulnerável a ataques aos pontos onde se concentra, como as grandes empresas de mineração. <!-- [VERIFICAR] Confirmar com a fonte (Santostasi, 2026) a distinção entre robustez a falhas aleatórias e vulnerabilidade a ataques aos nós centrais. --> A antifragilidade também não é um resultado medido. O que os casos mostram é que as regras resistiram a ataques de empresas, de governos e de erros, e continuam em vigor.</p>
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      A rede Bitcoin não tem ponto único de falha, e cada ataque, erro ou proibição foi seguido de uma rede que continuou a funcionar. É um bom indício, mas não uma prova.
+    </div>
+    <h2>Verificação do módulo 1</h2>
+
+    <fieldset class="quiz" data-answer="2">
+      <legend>Quem verifica se cada bloco cumpre as regras do Bitcoin?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>Só os mineradores</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Um banco central</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Todos os nós, cada um por si</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Cada nó verifica tudo sozinho e rejeita o que quebra as regras, mesmo que um minerador tenha gasto energia a produzir o bloco.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>O que mostrou a proibição da mineração na China, em 2021?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>Que a rede aguenta a saída de metade dos mineradores</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Que a rede depende de um só país</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Que os mineradores chineses controlam a rede</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>A rede continuou a funcionar e o poder de computação recuperou em poucos meses.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>O que quer dizer que o Bitcoin é antifrágil?</legend>
+      <label class="opt"><input type="radio" name="q3"><span>Que nunca pode ser atacado</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Que cada ataque ou erro o deixa mais difícil de atacar</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Que o preço nunca desce</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Antifrágil é o que melhora com o stress, e não apenas o que resiste. Não é um resultado medido, e os casos passados não o provam para todos os ataques futuros.</p>
+    </fieldset>
+
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>Giovanni Santostasi, «Buckminster Fuller and Bitcoin», X, 2026: <a href="https://x.com/Giovann35084111/status/2043842411110248649" target="_blank" rel="noopener">x.com</a>. Excerto de um livro do autor, que defende o Bitcoin.</li>
+      <li>Parker Lewis, «Bitcoin is Antifragile», Unchained, 2020: <a href="https://www.unchained.com/blog/bitcoin-is-antifragile" target="_blank" rel="noopener">unchained.com</a>. Texto de opinião de um autor de uma empresa de custódia de Bitcoin.</li>
+      <li>Nassim Nicholas Taleb, «Antifragile», 2012 (conceito).</li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="1.6">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="1.5-quem-decide-as-regras.html" rel="prev"><small>← Anterior</small><span>1.5 Quem decide as regras: forks e governação</span></a>
+      <a class="next" href="2.1-escala-e-necessidade-da-energia.html" rel="next"><small>Seguinte →</small><span>2.1 Escala e necessidade da energia</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>
