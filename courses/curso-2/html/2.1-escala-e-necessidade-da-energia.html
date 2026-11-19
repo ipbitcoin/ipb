@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Escala e necessidade da energia | Curso 2 | Instituto Português de Bitcoin</title>
-  <meta name="description" content="Lição 2.1 do Curso 2: No fim desta lição, será possível dizer quanta energia o Bitcoin gasta, porque a prova de trabalho a exige e porque a comparação «consome mais do que um pa">
+  <meta name="description" content="Lição 2.1 do Curso 2: No fim desta lição, será possível dizer quanta energia a rede Bitcoin gasta e o que limita esse gasto.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
@@ -15,9 +15,9 @@
 <header class="topbar">
   <div class="topbar-inner">
     <a href="#curso">← Curso 2 · A Tecnologia</a>
-    <span class="where">Lição 7 de 21</span>
+    <span class="where">Lição 7 de 22</span>
   </div>
-  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="21" aria-valuenow="7"><span style="width:33.3%"></span></div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="22" aria-valuenow="7"><span style="width:31.8%"></span></div>
 </header>
 
 <main class="page">
@@ -25,52 +25,67 @@
 
     <p class="eyebrow">Módulo 2 · Energia · Lição 2.1</p>
     <h1>Escala e necessidade da energia</h1>
-    <p class="lead">No fim desta lição, será possível dizer quanta energia o Bitcoin gasta, porque a prova de trabalho a exige e porque a comparação «consome mais do que um país» engana.</p>
-    <p class="meta"><span>10 min de leitura</span><span>2 perguntas</span></p>
+    <p class="lead">No fim desta lição, será possível dizer quanta energia a rede Bitcoin gasta e o que limita esse gasto.</p>
+    <p class="meta"><span>10 min de leitura</span><span>3 perguntas</span></p>
     <h2>Porque importa saber</h2>
-    <p>O consumo de energia importa porque condiciona a probabilidade de o Bitcoin ser uma boa rede de pagamentos e uma boa reserva de valor. Se tivesse problemas de escala energética, falharia no mercado por não dar utilidade suficiente pelo custo. A perspetiva de engenharia é que não tem.</p>
+    <p>A mineração gasta eletricidade, e isso levanta duas perguntas: quanta energia gasta, e se o que a rede Bitcoin dá em troca compensa esse gasto. Esta lição responde à primeira com números. Quanto à segunda, o próprio desenho da rede Bitcoin limita-a: os mineradores só gastam o que ganham, por isso o consumo não pode ir além do valor que a rede tem.</p>
     <h2>Quanto gasta</h2>
-    <p>O melhor estudo público é o do Cambridge Centre for Alternative Finance. Em 2025, estimou um consumo anual de cerca de <strong>138 TWh</strong>, com dados de mineradores que representam perto de metade da rede. Há estimativas mais altas para o ano seguinte, perto de 190 TWh. Ninguém mede diretamente: faz-se com o poder de cálculo da rede e a eficiência das máquinas.</p>
-    <p>A leitura depende da referência. Cerca de 138 TWh são da ordem de 0,5% da <em>eletricidade</em> mundial, mas bem menos de 0,1% da <em>energia</em> mundial total. Segundo uma das fontes do curso, o consumo é um «erro de arredondamento» face à energia mundial, mesmo no pico, e as previsões alarmistas de que consumiria toda a energia falharam em três ordens de grandeza. <!-- [VERIFICAR] Fração da energia mundial de T6:1 (2021 a 2023); confirmar com a energia primária mundial mais recente. --></p>
+    <p>Ninguém mede o consumo diretamente: estima-se a partir do poder de computação da rede e da eficiência das máquinas de mineração. A melhor estimativa pública é a do Cambridge Centre for Alternative Finance, que em 2025 apontou para cerca de <strong>138 TWh</strong> por ano, com dados de empresas de mineração que representam perto de metade da rede.</p>
+    <p>O que estes números significam depende da referência. Cerca de 138 TWh são da ordem de 0,5% da <em>eletricidade</em> consumida no mundo, mas bem menos de 0,1% da <em>energia</em> mundial total. A diferença existe porque a eletricidade é só uma parte da energia que o mundo usa: o resto vem de combustíveis queimados diretamente, como o petróleo nos carros ou o gás no aquecimento. <!-- [VERIFICAR] Fração da energia mundial de T6:1 (2021 a 2023); confirmar com a energia primária mundial mais recente. --></p>
     <div class="bars">
       <h3>Origem da eletricidade usada na mineração</h3>
-      <div class="bar"><span class="lab">Gás nat.</span><span class="track"><span style="width:76.4%"></span></span><span class="val">38,2%</span></div>
-      <div class="bar hl"><span class="lab">Renov.</span><span class="track"><span style="width:85.2%"></span></span><span class="val">42,6%</span></div>
+      <div class="bar"><span class="lab">Gás</span><span class="track"><span style="width:76.4%"></span></span><span class="val">38,2%</span></div>
+      <div class="bar hl"><span class="lab">Renovável</span><span class="track"><span style="width:85.2%"></span></span><span class="val">42,6%</span></div>
       <div class="bar"><span class="lab">Nuclear</span><span class="track"><span style="width:19.6%"></span></span><span class="val">9,8%</span></div>
-      <p class="src">Fonte: Cambridge Centre for Alternative Finance, 2025 (empresas que representam cerca de metade da rede). As restantes fontes (carvão, petróleo) fazem o resto.</p>
+      <p class="src">Fonte: Cambridge Centre for Alternative Finance, 2025 (empresas que representam cerca de metade da rede). As restantes fontes, como o carvão e o petróleo, fazem o resto.</p>
     </div>
-    <h2>Dois cenários</h2>
-    <p>Num cenário de sucesso extremo, o consumo ficaria em algumas décimas de ponto percentual da energia mundial, talvez 1% com modelação agressiva. Se o Bitcoin falhar, o consumo estagna e diminui com o subsídio decrescente. Em ambos os casos, o consumo não excede a utilidade.</p>
-    <p>A razão é estrutural: a despesa dos mineradores (subsídio mais taxas) é o limite superior do gasto em dólares, e hoje representa menos de 2% da capitalização, perto de 1% depois de 2024. <!-- [VERIFICAR] Percentagens de T6:23, anteriores a 2024; atualizar com dados recentes. -->A preocupação mais plausível é a oposta: que a rede use pouca energia quando depender só de taxas, porque por desenho só pode usar muita se houver muita utilidade.</p>
+    <h2>O que limita o consumo</h2>
+    <p>O consumo de energia da mineração tem um teto económico: os mineradores não gastam em eletricidade mais do que ganham. O que ganham é o subsídio de bloco (bitcoin novo) mais as taxas de transação, medidos em dólares. Quem gasta mais do que isso tem prejuízo e desliga as máquinas.</p>
+    <p>Daqui decorre que o consumo não pode crescer sem limite: só aumenta se o Bitcoin valer mais, e diminui se valer menos. Estima-se que, num cenário de sucesso extremo, o consumo ficaria em algumas décimas de ponto percentual da energia mundial, talvez 1% com modelação agressiva. Se o Bitcoin falhar, os mineradores ganham menos e o consumo estagna e diminui.</p>
     <h2>Porque a energia é necessária</h2>
-    <p>A prova de trabalho exige energia e não há substituto: quanto mais energia, mais seguro. A energia gasta é independente do número de transações, por isso o argumento do «custo energético por transação» falha (lição 3.1). Mover a segurança para moedas bloqueadas substitui um custo que não se pode forjar por governação (lição 4.2).</p>
-    <p>Para uma das posições, a energia é uma característica, não um custo a eliminar: o consumo de energia é progresso.</p>
+    <p>Na prova de trabalho, a segurança vem do custo de produzir blocos: quanto mais energia os mineradores gastam, mais caro é reescrever o registo. Por isso a energia não é um defeito a corrigir, mas o que protege a rede.</p>
+    <p>A energia gasta também não depende do número de transações. Por isso o cálculo do «custo energético por transação» engana.</p>
+    <p>Esse cálculo divide o consumo anual da rede pelo número de transações, e dá um valor enorme por transação. Mas a rede não gasta energia por transação: gasta-a para produzir blocos, um a cada dez minutos, e um bloco custa o mesmo trabalho quer leve poucas transações, quer leve muitas. Se os blocos levarem mais transações, o consumo não muda e o custo por transação desce.</p>
+    <p>O que decide o consumo é o que os mineradores ganham: quanto mais ganham, mais máquinas ligam e mais energia usam, haja mais transações ou não. E o que essa energia protege não é cada pagamento, mas o registo inteiro.</p>
     <h2>«Consome mais do que um país»</h2>
-    <p>A comparação é enganadora, pois o mesmo vale para plataformas e indústrias inteiras. Um aumento de 10% na eficiência do desligar de aparelhos em modo de espera poupa mais do que a rede gasta. Segundo uma das fontes, os jornalistas erram por não perceberem o processo de escala da rede, e porque a sensação rende cliques. É uma crítica à cobertura; o debate de fundo está na lição seguinte.</p>
+    <p>A frase é verdadeira nos números: 138 TWh por ano é mais do que a eletricidade que muitos países consomem num ano. <!-- [VERIFICAR] Confirmar com o índice de Cambridge e dados da AIE quantos países consomem menos de 138 TWh por ano. -->Mas a comparação engana.</p>
+    <p>Primeiro, porque um país é uma medida arbitrária. Há indústrias que, no seu conjunto, gastam mais energia do que muitos países, como a dos centros de dados, e ninguém conclui daí que não devem existir. <!-- [VERIFICAR] Confirmar a comparação com a energia dos centros de dados e as fontes. -->Qualquer atividade suficientemente grande, quando se soma, acaba por ser maior do que algum país.</p>
+    <p>Depois, porque um país é um conjunto de milhões de pessoas e de atividades, e a rede Bitcoin é uma só, usada em todo o mundo. Compará-los diz o tamanho do consumo, mas não diz o que se recebe em troca.</p>
+    <p>Para saber se compensa, é mais útil comparar com o serviço que a rede presta: guardar e transferir valor sem intermediários. Comparar com um país diz o tamanho. Só a comparação com o serviço diz se compensa.</p>
     <div class="callout key">
       <span class="tag">Ideia-chave</span>
-      O Bitcoin gasta muita energia de propósito: é o que o protege. Mas gasta pouco face à energia mundial, e por desenho não pode gastar mais do que a utilidade que presta.
+      A rede Bitcoin gasta muita energia de propósito, porque é o que a protege. Mas gasta pouco face à energia mundial e não pode gastar mais do que a utilidade que presta, porque os mineradores só gastam o que ganham.
     </div>
     <h2>Verificação</h2>
 
     <fieldset class="quiz" data-answer="1">
-      <legend>Porque é que a prova de trabalho exige energia?</legend>
-      <label class="opt"><input type="radio" name="q1"><span>Por acaso, por um erro de desenho</span></label>
-      <label class="opt"><input type="radio" name="q1"><span>Porque o custo real de escrever no registo é o que o protege</span></label>
+      <legend>Porque exige a prova de trabalho tanta energia?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>Por um erro de desenho</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Porque esse custo protege o registo</span></label>
       <label class="opt"><input type="radio" name="q1"><span>Para pagar aos bancos</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>O gasto de energia é o que torna caro atacar ou reescrever o registo.</p>
+      <p class="explanation" hidden>Quanto mais energia os mineradores gastam, mais caro é reescrever o registo. O gasto é o que protege a rede.</p>
     </fieldset>
 
-    <fieldset class="quiz" data-answer="1">
+    <fieldset class="quiz" data-answer="2">
       <legend>A energia gasta pela rede depende do número de transações?</legend>
       <label class="opt"><input type="radio" name="q2"><span>Sim, cresce com cada transação</span></label>
-      <label class="opt"><input type="radio" name="q2"><span>Não: é independente do número de transações</span></label>
-      <label class="opt"><input type="radio" name="q2"><span>Só em dias de pico</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Só em dias de muita atividade</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Não, depende do que os mineradores ganham</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>Por isso o argumento do custo por transação falha: um bloco gasta a mesma energia com mais ou menos transações.</p>
+      <p class="explanation" hidden>Um bloco gasta o mesmo trabalho com poucas ou muitas transações. Por isso o «custo energético por transação» engana.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>O que limita a energia que os mineradores gastam?</legend>
+      <label class="opt"><input type="radio" name="q3"><span>O que ganham com o subsídio e as taxas</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>A decisão do governo de cada país</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>O número de transações por bloco</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Os mineradores não gastam mais em eletricidade do que ganham, porque teriam prejuízo e desligariam as máquinas.</p>
     </fieldset>
 
 
@@ -86,7 +101,7 @@
 
     <nav class="pager" aria-label="Navegação entre lições">
       <a href="1.5-quem-decide-as-regras.html" rel="prev"><small>← Anterior</small><span>1.5 Quem decide as regras: forks e governação</span></a>
-      <a class="next" href="2.2-energia-desperdicada-e-debate.html" rel="next"><small>Seguinte →</small><span>2.2 Energia desperdiçada, rede elétrica e o debate</span></a>
+      <a class="next" href="2.2-energia-desperdicada.html" rel="next"><small>Seguinte →</small><span>2.2 Energia desperdiçada</span></a>
     </nav>
   </article>
 </main>

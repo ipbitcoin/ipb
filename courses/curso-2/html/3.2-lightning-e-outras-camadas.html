@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Lightning e outras camadas | Curso 2 | Instituto Português de Bitcoin</title>
-  <meta name="description" content="Lição 3.2 do Curso 2: No fim desta lição, será possível explicar como funciona a Lightning, o que são as outras camadas e quais os limites de cada uma, e rever o módulo.">
+  <meta name="description" content="Lição 3.2 do Curso 2: No fim desta lição, será possível explicar como funcionam a Lightning e a Ark, o que são as outras camadas e quais os limites de cada uma, e rever o módulo">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
@@ -15,9 +15,9 @@
 <header class="topbar">
   <div class="topbar-inner">
     <a href="#curso">← Curso 2 · A Tecnologia</a>
-    <span class="where">Lição 10 de 21</span>
+    <span class="where">Lição 11 de 22</span>
   </div>
-  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="21" aria-valuenow="10"><span style="width:47.6%"></span></div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="22" aria-valuenow="11"><span style="width:50.0%"></span></div>
 </header>
 
 <main class="page">
@@ -25,71 +25,161 @@
 
     <p class="eyebrow">Módulo 3 · Camadas e escala · Lição 3.2</p>
     <h1>Lightning e outras camadas</h1>
-    <p class="lead">No fim desta lição, será possível explicar como funciona a Lightning, o que são as outras camadas e quais os limites de cada uma, e rever o módulo.</p>
-    <p class="meta"><span>11 min de leitura</span><span>4 perguntas</span></p>
+    <p class="lead">No fim desta lição, será possível explicar como funcionam a Lightning e a Ark, o que são as outras camadas e quais os limites de cada uma, e rever o módulo.</p>
+    <p class="meta"><span>13 min de leitura</span><span>3 perguntas</span></p>
     <h2>Como funciona a Lightning</h2>
-    <p>A Lightning é um protocolo aberto, sem permissões e não custodial, que usa o token da camada 1 e reduz o capital em risco por canal. Isso permite escalar em fatores enormes. Funciona assim:</p>
+    <p>A Lightning é um protocolo aberto, que não precisa da autorização de ninguém e em que cada pessoa guarda o seu próprio bitcoin (não é custodial). Usa o bitcoin da camada 1 e permite fazer muitos pagamentos pequenos fora da blockchain, o que a camada 1 sozinha não consegue. Funciona assim:</p>
     <ol>
-      <li><strong>Abrir um canal.</strong> Duas pessoas fazem uma transação on-chain que bloqueia bitcoin num endereço partilhado, que só elas conseguem gastar em conjunto.</li>
-      <li><strong>Pagar sem ir à blockchain.</strong> Quando uma paga à outra, só atualizam entre si o saldo do canal. Podem fazê-lo um número ilimitado de vezes, de forma instantânea e quase sem custos.</li>
-      <li><strong>Encaminhar.</strong> Não é preciso ter um canal com cada pessoa. O pagamento pode saltar por vários canais, de nó em nó, por intermediários sem confiança, até ao destino.</li>
-      <li><strong>Fechar o canal.</strong> Quando quiserem, fecham-no com outra transação on-chain, que regista o saldo final de cada um.</li>
+      <li><strong>Abrir um canal.</strong> Duas pessoas enviam bitcoin, numa transação normal da camada 1 (<em>on-chain</em>), para um endereço partilhado que só se pode gastar com a assinatura das duas. O bitcoin fica bloqueado aí enquanto o canal estiver aberto.</li>
+      <li><strong>Pagar sem usar a blockchain.</strong> Cada pagamento é um novo registo do saldo do canal, que diz quanto do bitcoin bloqueado é de cada pessoa. As duas assinam-na e guardam-na só entre si. Cada registo novo substitui o anterior, por isso não é preciso publicar nada na blockchain, e podem fazê-lo milhares de vezes, de forma instantânea e quase sem custo.</li>
+      <li><strong>Encaminhar.</strong> Não é preciso ter um canal com cada pessoa. O pagamento pode passar por vários canais, de nó em nó, por intermediários em quem não é preciso confiar, até chegar ao destino.</li>
+      <li><strong>Fechar o canal.</strong> Quando quiserem, uma das pessoas publica na blockchain o último registo de saldos, numa transação da camada 1, que reparte o bitcoin bloqueado conforme o saldo final de cada uma.</li>
     </ol>
-    <p>O que impede o trânsito de ser roubado são contratos criptográficos (os HTLC), que garantem que o pagamento ou chega ao destino, ou volta à origem.</p>
+    <figure style="margin:24px 0;padding:16px;background:#fff;border-radius:16px;box-shadow:var(--shadow-border)">
+      <svg viewBox="0 0 560 290" width="100%" role="img" aria-labelledby="ln-t ln-d" style="display:block;max-width:100%;height:auto">
+      <title id="ln-t">Rede de canais da Lightning</title>
+      <desc id="ln-d">Sete pessoas ligadas por canais. Um pagamento da Ana ao Bruno passa por dois intermediários, a Carla e a Eva, em três saltos.</desc>
+      <line x1="50" y1="150" x2="170" y2="230" stroke="#c4c4c4" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="170" y1="70" x2="170" y2="230" stroke="#c4c4c4" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="170" y1="230" x2="300" y2="230" stroke="#c4c4c4" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="300" y1="70" x2="300" y2="230" stroke="#c4c4c4" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="300" y1="230" x2="430" y2="230" stroke="#c4c4c4" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="430" y1="230" x2="510" y2="150" stroke="#c4c4c4" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="50" y1="150" x2="170" y2="70" stroke="#f29500" stroke-width="5" stroke-linecap="round"/>
+      <line x1="170" y1="70" x2="300" y2="70" stroke="#f29500" stroke-width="5" stroke-linecap="round"/>
+      <line x1="300" y1="70" x2="510" y2="150" stroke="#f29500" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="110" cy="110" r="11" fill="#0a0a0a"/><text x="110" y="115" text-anchor="middle" font-size="14" font-weight="600" fill="#fff" font-family="Inter,system-ui,sans-serif">1</text>
+      <circle cx="235" cy="70" r="11" fill="#0a0a0a"/><text x="235" y="75" text-anchor="middle" font-size="14" font-weight="600" fill="#fff" font-family="Inter,system-ui,sans-serif">2</text>
+      <circle cx="405" cy="110" r="11" fill="#0a0a0a"/><text x="405" y="115" text-anchor="middle" font-size="14" font-weight="600" fill="#fff" font-family="Inter,system-ui,sans-serif">3</text>
+      <circle cx="50" cy="150" r="22" fill="#0a0a0a" stroke="#0a0a0a" stroke-width="2.5"/>
+      <text x="50" y="194" text-anchor="middle" font-size="15" font-weight="600" fill="#262626" font-family="Inter,system-ui,sans-serif">Ana</text>
+      <circle cx="170" cy="70" r="22" fill="#fef3e2" stroke="#0a0a0a" stroke-width="2.5"/>
+      <text x="170" y="38" text-anchor="middle" font-size="15" font-weight="600" fill="#262626" font-family="Inter,system-ui,sans-serif">Carla</text>
+      <circle cx="170" cy="230" r="22" fill="#ffffff" stroke="#8a8a8a" stroke-width="2.5"/>
+      <text x="170" y="274" text-anchor="middle" font-size="15" font-weight="600" fill="#262626" font-family="Inter,system-ui,sans-serif">Diogo</text>
+      <circle cx="300" cy="70" r="22" fill="#fef3e2" stroke="#0a0a0a" stroke-width="2.5"/>
+      <text x="300" y="38" text-anchor="middle" font-size="15" font-weight="600" fill="#262626" font-family="Inter,system-ui,sans-serif">Eva</text>
+      <circle cx="300" cy="230" r="22" fill="#ffffff" stroke="#8a8a8a" stroke-width="2.5"/>
+      <text x="300" y="274" text-anchor="middle" font-size="15" font-weight="600" fill="#262626" font-family="Inter,system-ui,sans-serif">Filipe</text>
+      <circle cx="430" cy="230" r="22" fill="#ffffff" stroke="#8a8a8a" stroke-width="2.5"/>
+      <text x="430" y="274" text-anchor="middle" font-size="15" font-weight="600" fill="#262626" font-family="Inter,system-ui,sans-serif">Gil</text>
+      <circle cx="510" cy="150" r="22" fill="#0a0a0a" stroke="#0a0a0a" stroke-width="2.5"/>
+      <text x="510" y="194" text-anchor="middle" font-size="15" font-weight="600" fill="#262626" font-family="Inter,system-ui,sans-serif">Bruno</text>
+      </svg>
+      <figcaption style="margin:12px 0 0;font-size:15px;line-height:1.5;color:var(--muted)">Cada círculo é uma pessoa, ou um nó, e cada linha é um canal aberto entre duas pessoas. A Ana não tem um canal com o Bruno, mas consegue pagar-lhe: o pagamento (a laranja) passa pela Carla e pela Eva, em três saltos, e nenhum deles vai à blockchain. Os canais a cinzento não são usados neste pagamento.</figcaption>
+    </figure>
+    <p>Um exemplo, com números inventados. A Ana e o Bruno abrem um canal e bloqueiam nele 100.000 satoshis, todos da Ana (um satoshi é a cem milionésima parte de um bitcoin). O registo inicial diz: Ana 100.000, Bruno 0. A Ana compra um café ao Bruno por 1.000 satoshis, e assinam um registo novo: Ana 99.000, Bruno 1.000. Compra outro, e o registo passa a Ana 98.000, Bruno 2.000. Fazem isto cinquenta vezes. Cada registo é só uma mensagem entre os dois, e nenhuma vai à blockchain. No fim, quando fecham o canal, só o último (Ana 50.000, Bruno 50.000) é publicado. Cinquenta pagamentos custaram, na camada 1, apenas duas transações: a abertura e o fecho.</p>
+    <p>Se alguém tentar publicar um registo antigo, que lhe dava mais, a outra pessoa pode provar que já existe um mais recente e reclamar o bitcoin. É por isso que as duas partes confiam nos registos sem precisarem de confiar uma na outra.</p>
+    <p>O que impede um intermediário de ficar com o dinheiro são contratos criptográficos, que garantem que o pagamento ou chega ao destino, ou volta à origem.</p>
+    <h2>Como escala para milhares de milhões de pessoas</h2>
+    <p>O que limita a camada 1 é o espaço dos blocos, e a Lightning contorna esse limite de duas maneiras. Primeiro, os pagamentos dentro de um canal não passam pela blockchain, por isso não gastam espaço: duas pessoas podem trocar milhares de pagamentos com uma só abertura e um só fecho do canal. Segundo, não é preciso um canal com cada pessoa. Como os pagamentos saltam de canal em canal, cada pessoa só precisa de estar ligada, direta ou indiretamente, à rede.</p>
+    <p>Mesmo assim, há um limite. Cada canal precisa de pelo menos duas transações na camada 1, uma para abrir e outra para fechar. A camada 1 trata, no máximo, algumas centenas de milhares de transações por dia, ou seja, cerca de 100 a 200 milhões por ano. Se cada uma de 8 mil milhões de pessoas abrisse e fechasse um só canal, seriam 16 mil milhões de transações, o que levaria várias décadas, mesmo com os blocos sempre cheios e sem mais ninguém a usar a camada 1. <!-- [VERIFICAR] Estimativa própria, a partir de cerca de 1 milhão de vB por bloco, 140 vB por transação simples e 144 blocos por dia; confirmar com dados atuais e data de consulta. Não foi confirmada a estimativa do artigo original da Lightning (Poon e Dryja, 2016). --></p>
+    <p>Por isso, para chegar a milhares de milhões de pessoas, é preciso partilhar as transações da camada 1, em vez de dar um canal a cada pessoa. Há três caminhos:</p>
+    <ul>
+      <li><strong>Nós muito ligados:</strong> muita gente liga-se a um número pequeno de nós grandes, que tratam da liquidez e da ligação ao resto da rede.</li>
+      <li><strong>Protocolos como a Ark:</strong> muitas pessoas partilham uma só transação da camada 1. Se cada pessoa abrisse e fechasse um canal, cem pessoas custariam à camada 1 duzentas transações. Num lote da Ark, as mesmas cem pessoas custam uma só. Em troca, é preciso um coordenador para organizar cada lote.</li>
+      <li><strong>Camadas custodiais ou federadas:</strong> muita gente usa o mesmo saldo, gerido por um operador, e confia nele.</li>
+    </ul>
+    <p>A Lightning dá, assim, uma capacidade enorme de pagamentos, mas a escala para milhares de milhões de pessoas não está demonstrada. Depende destas soluções, e algumas custam confiança ou descentralização.</p>
     <h2>Os limites da Lightning</h2>
     <ul>
-      <li><strong>Liquidez:</strong> para receber é preciso que alguém tenha aberto um canal, e para enviar é preciso ter saldo no canal.</li>
-      <li><strong>Estar online:</strong> o nó tem de estar atento para evitar que a outra parte feche o canal com um saldo antigo.</li>
-      <li><strong>Valores muito grandes</strong> podem falhar por falta de caminho com liquidez.</li>
-      <li><strong>Complexidade:</strong> por isso muitas pessoas usam carteiras que gerem os canais, e algumas são custodiais (lição 5.1).</li>
+      <li><strong>Liquidez:</strong> para receber, é preciso que alguém tenha aberto um canal com a pessoa, e para enviar, é preciso ter saldo no canal.</li>
+      <li><strong>Estar online:</strong> o nó tem de estar atento, para evitar que a outra parte feche o canal com um saldo antigo e fique com mais do que lhe cabe.</li>
+      <li><strong>Valores muito grandes:</strong> podem falhar, por não haver um caminho com liquidez suficiente.</li>
+      <li><strong>Complexidade:</strong> por isso muitas pessoas usam carteiras que gerem os canais por elas.</li>
     </ul>
     <div class="callout warning">
       <span class="tag">Cuidado</span>
-      <p>Uma carteira Lightning «fácil» pode ser custodial: quem gere os canais é o fornecedor e tem o Bitcoin. Antes de usar uma, convém descobrir de quem é a chave.</p>
+      <p>Uma carteira Lightning «fácil» pode ser custodial: quem gere os canais é o fornecedor, e é ele que tem o bitcoin. Antes de usar uma, convém descobrir de quem é a chave.</p>
     </div>
-    <div class="callout limit">
-      <span class="tag">Limites</span>
-      <p>Os limites e riscos da Lightning não estão tratados no material de referência do curso (a estrutura temática assinala esta lacuna). As limitações acima são as habituais da própria tecnologia e valem como ponto de partida.</p>
-    </div>
-    <h2>As outras camadas</h2>
+    <h2>A Ark</h2>
+    <p>A <strong>Ark</strong> é um protocolo de camada 2 para pagamentos com bitcoin, pensado para evitar o problema da liquidez dos canais da Lightning. Em vez de cada par de pessoas abrir um canal, muitas pessoas usam, de uma só vez, uma única transação da camada 1.</p>
+    <p>Funciona assim. Numa <em>ronda</em>, um coordenador junta os pedidos de várias pessoas, por exemplo cem, e publica na camada 1 uma única transação que bloqueia o bitcoin de todas num mesmo endereço. Esse bitcoin só pode ser gasto por uma sequência de transações que as pessoas já assinaram, mas que ficam guardadas fora da blockchain. Essas transações dividem o bitcoin bloqueado passo a passo, como os ramos de uma árvore: o total divide-se em duas partes, cada parte em outras duas, e assim sucessivamente, até cada pessoa ter a sua parte. A parte de cada pessoa chama-se <strong>VTXO</strong> (<em>virtual transaction output</em>, ou «saída de transação virtual»), e cada pessoa guarda o ramo de transações que leva até ela. <!-- [VERIFICAR] Confirmar a descrição da Ark com o Bitcoin Optech (bitcoinops.org/en/topics/ark/) e a documentação das implementações; as fontes divergem em detalhes como a duração das rondas e dos prazos de saída. --></p>
+    <p>Enquanto ninguém precisar, nenhuma dessas transações é publicada: a blockchain só vê a primeira. Se alguém quiser sair por conta própria, publica o seu ramo e reclama a sua parte na camada 1. Por isso se diz que as pessoas partilham uma só transação: cem pessoas custaram à camada 1 uma transação, e não cem.</p>
+    <figure style="margin:24px 0;padding:16px;background:#fff;border-radius:16px;box-shadow:var(--shadow-border)">
+      <svg viewBox="0 0 560 320" width="100%" role="img" aria-labelledby="ark-t ark-d" style="display:block;max-width:100%;height:auto">
+        <title id="ark-t">Como as pessoas partilham uma transação na Ark</title>
+        <desc id="ark-d">Uma transação da camada 1 bloqueia o bitcoin de quatro pessoas. Por baixo, fora da blockchain, uma árvore de transações já assinadas divide o bitcoin até cada pessoa ter a sua parte, o VTXO. O ramo do Bruno está destacado.</desc>
+        <text x="10" y="22" font-size="12" letter-spacing="1.2" fill="#737373" font-family="Inter,system-ui,sans-serif">NA BLOCKCHAIN</text>
+        <line x1="10" y1="96" x2="550" y2="96" stroke="#d4d4d4" stroke-width="2" stroke-dasharray="6 6"/>
+        <text x="10" y="116" font-size="12" letter-spacing="1.2" fill="#737373" font-family="Inter,system-ui,sans-serif">FORA DA BLOCKCHAIN</text>
+        <line x1="280" y1="74" x2="390" y2="176" stroke="#b5b5b5" stroke-width="2.5" stroke-dasharray="7 6" stroke-linecap="round"/>
+        <line x1="390" y1="176" x2="330" y2="250" stroke="#b5b5b5" stroke-width="2.5" stroke-dasharray="7 6" stroke-linecap="round"/>
+        <line x1="390" y1="176" x2="450" y2="250" stroke="#b5b5b5" stroke-width="2.5" stroke-dasharray="7 6" stroke-linecap="round"/>
+        <line x1="170" y1="176" x2="110" y2="250" stroke="#b5b5b5" stroke-width="2.5" stroke-dasharray="7 6" stroke-linecap="round"/>
+        <line x1="280" y1="74" x2="170" y2="176" stroke="#f29500" stroke-width="5" stroke-dasharray="9 6" stroke-linecap="round"/>
+        <line x1="170" y1="176" x2="230" y2="250" stroke="#f29500" stroke-width="5" stroke-dasharray="9 6" stroke-linecap="round"/>
+        <circle cx="170" cy="176" r="9" fill="#fff" stroke="#f29500" stroke-width="3"/>
+        <circle cx="390" cy="176" r="9" fill="#fff" stroke="#8a8a8a" stroke-width="3"/>
+        <rect x="185" y="30" width="190" height="44" rx="10" fill="#fef3e2" stroke="#f29500" stroke-width="3"/>
+        <text x="280" y="58" text-anchor="middle" font-size="16" font-weight="700" fill="#0a0a0a" font-family="Inter,system-ui,sans-serif">1 transação</text>
+        <rect x="62" y="250" width="96" height="52" rx="10" fill="#fff" stroke="#0a0a0a" stroke-width="2.5"/>
+        <text x="110" y="272" text-anchor="middle" font-size="15" font-weight="700" fill="#262626" font-family="Inter,system-ui,sans-serif">Ana</text>
+        <text x="110" y="291" text-anchor="middle" font-size="12" fill="#737373" font-family="Inter,system-ui,sans-serif">VTXO</text>
+        <rect x="182" y="250" width="96" height="52" rx="10" fill="#fff" stroke="#f29500" stroke-width="4"/>
+        <text x="230" y="272" text-anchor="middle" font-size="15" font-weight="700" fill="#262626" font-family="Inter,system-ui,sans-serif">Bruno</text>
+        <text x="230" y="291" text-anchor="middle" font-size="12" fill="#737373" font-family="Inter,system-ui,sans-serif">VTXO</text>
+        <rect x="282" y="250" width="96" height="52" rx="10" fill="#fff" stroke="#0a0a0a" stroke-width="2.5"/>
+        <text x="330" y="272" text-anchor="middle" font-size="15" font-weight="700" fill="#262626" font-family="Inter,system-ui,sans-serif">Carla</text>
+        <text x="330" y="291" text-anchor="middle" font-size="12" fill="#737373" font-family="Inter,system-ui,sans-serif">VTXO</text>
+        <rect x="402" y="250" width="96" height="52" rx="10" fill="#fff" stroke="#0a0a0a" stroke-width="2.5"/>
+        <text x="450" y="272" text-anchor="middle" font-size="15" font-weight="700" fill="#262626" font-family="Inter,system-ui,sans-serif">Diogo</text>
+        <text x="450" y="291" text-anchor="middle" font-size="12" fill="#737373" font-family="Inter,system-ui,sans-serif">VTXO</text>
+      </svg>
+      <figcaption style="margin:12px 0 0;font-size:15px;line-height:1.5;color:var(--muted)">Quatro pessoas partilham uma só transação da camada 1, a caixa de cima. Por baixo, as linhas tracejadas são transações já assinadas, guardadas fora da blockchain, que dividem o bitcoin até cada pessoa ter a sua parte (o VTXO). Se o Bruno quisesse sair por conta própria, publicaria só o seu ramo, a laranja, e reclamaria a sua parte na camada 1.</figcaption>
+    </figure>
+    <ol>
+      <li><strong>Entrar.</strong> Um coordenador, o fornecedor do serviço Ark, junta de tempos a tempos os pedidos de várias pessoas num lote, a que se chama <em>ronda</em>, e publica na camada 1 uma só transação que os cobre a todos. Cada pessoa fica com o seu VTXO.</li>
+      <li><strong>Pagar.</strong> Para pagar a alguém, a pessoa passa-lhe o VTXO através do fornecedor, sem usar a blockchain e quase sem custos. Na ronda seguinte, o destinatário pode trocá-lo por um novo.</li>
+      <li><strong>Sair.</strong> Para levantar o bitcoin, a pessoa pede ao fornecedor que o envie para a camada 1. Se o fornecedor falhar ou se recusar, pode sair por conta própria, publicando as transações pré-assinadas (a <em>saída unilateral</em>).</li>
+    </ol>
+    <p>Em comparação com a Lightning, a Ark não exige canais nem que quem paga tenha liquidez própria. Em troca, depende de um fornecedor para coordenar as rondas, e tem limites:</p>
+    <ul>
+      <li><strong>Confiança:</strong> o fornecedor não pode roubar os VTXO, mas tem de estar disponível para fazer as trocas. Quem recebe fora de uma ronda tem de contar que o remetente e o fornecedor não se combinam para gastar o mesmo VTXO duas vezes.</li>
+      <li><strong>Prazo:</strong> os VTXO têm um prazo, e têm de ser renovados ou levantados antes de expirarem.</li>
+      <li><strong>Custo da saída:</strong> a saída unilateral é mais cara do que o levantamento normal, e, se as taxas da camada 1 subirem muito, pode custar mais do que o valor de um VTXO pequeno.</li>
+    </ul>
+    <h2>As camadas</h2>
     <div class="table-wrap">
       <table>
         <thead><tr><th>Camada</th><th>O que é</th><th>Confiança necessária</th></tr></thead>
         <tbody>
           <tr><td>1 · Base</td><td>Liquidação final na blockchain</td><td>Nenhuma entidade</td></tr>
-          <tr><td>2 · Lightning</td><td>Canais de pagamento abertos e sem permissões</td><td>Mínima: minimização de confiança</td></tr>
-          <tr><td>Sidechains federadas (por exemplo, Liquid)</td><td>Tokens ligados ao bitcoin (peg-in e peg-out), para liquidações maiores e mais rápidas</td><td>Compromissos de contraparte e segurança</td></tr>
-          <tr><td>3 · Custodial</td><td>Exchanges e aplicações, com confiança total no operador. Há protocolos como o Fedimint, de custódia comunitária</td><td>Total no operador</td></tr>
-          <tr><td>4 · Produtos proprietários</td><td>Produtos com Bitcoin embutido e sem direito de levantamento</td><td>Total, sem saída</td></tr>
+          <tr><td>2 · Lightning</td><td>Canais de pagamento abertos, sem autorização de ninguém</td><td>Pouca: os pagamentos protegem-se por contratos criptográficos</td></tr>
+          <tr><td>2 · Ark</td><td>Pagamentos fora da cadeia, em saldos partilhados (VTXO), coordenados por um fornecedor</td><td>No fornecedor, com saída unilateral para a camada 1</td></tr>
+          <tr><td>Sidechains federadas (por exemplo, a Liquid)</td><td>Outra blockchain, gerida por um grupo de entidades, com tokens ligados ao bitcoin, para liquidações maiores e mais rápidas</td><td>No grupo que gere a sidechain</td></tr>
+          <tr><td>3 · Custodial</td><td>Exchanges e aplicações, em que o operador guarda o bitcoin. Há protocolos, como o Fedimint, em que a custódia é partilhada por uma comunidade</td><td>Total, no operador</td></tr>
+          <tr><td>4 · Produtos proprietários</td><td>Produtos com bitcoin incorporado e sem direito de levantamento</td><td>Total, sem saída</td></tr>
         </tbody>
       </table>
     </div>
-    <p>Qualquer plataforma pode «embrulhar» bitcoin. Há soluções de contratos inteligentes que levam essa funcionalidade ao Bitcoin (Liquid, Rootstock, Lightning), embora menores do que as de outras criptomoedas, por cultura (quem tem Bitcoin retém mais do que especula) e por liquidez e efeito de rede.</p>
-    <p>O ecossistema precisa das camadas todas, porque as empresas fazem melhor a complexidade, a conformidade e o atendimento. A corrupção nas camadas superiores é possível, mas a opção de levantar os ativos e mudar de custodiante é um dissuasor que nenhum outro ativo oferece.</p>
+    <p>Nas sidechains, os tokens ligados ao bitcoin criam-se ao entrar na sidechain (<em>peg-in</em>) e destroem-se ao sair dela (<em>peg-out</em>), e o bitcoin correspondente fica bloqueado entretanto.</p>
+    <p>Qualquer plataforma pode criar tokens que representam bitcoin noutra rede. Também há soluções de contratos inteligentes no ecossistema do Bitcoin, como a Liquid e a Rootstock, mas são bem menos usadas do que as de outras criptomoedas, em parte por cultura (quem tem Bitcoin tende a guardá-lo mais do que a especular com ele) e em parte por falta de liquidez e de efeito de rede.</p>
+    <p>O ecossistema precisa de todas as camadas, porque as empresas tratam melhor da complexidade, do cumprimento das regras e do atendimento ao cliente. Nas camadas superiores pode haver abusos, mas a possibilidade de levantar o bitcoin e mudar de custodiante limita-os, e nenhum outro ativo oferece essa opção.</p>
     <div class="callout key">
       <span class="tag">Ideia-chave</span>
-      A Lightning não substitui o Bitcoin: usa a sua segurança. A camada 1 liquida, a camada 2 paga os cafés, e quanto mais acima, mais confiança num operador.
+      A Lightning e a Ark não substituem o Bitcoin: usam a sua segurança. A camada 1 liquida, a camada 2 paga os cafés, e quanto mais acima, mais é preciso confiar num operador.
     </div>
     <h2>Verificação do módulo 3</h2>
 
-    <fieldset class="quiz" data-answer="0">
+    <fieldset class="quiz" data-answer="1">
       <legend>Porque é que um pagamento Lightning é tão rápido?</legend>
-      <label class="opt"><input type="radio" name="q1"><span>Porque é feito fora da blockchain, entre canais</span></label>
       <label class="opt"><input type="radio" name="q1"><span>Porque os mineradores ganham mais</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Porque é feito fora da blockchain, entre canais</span></label>
       <label class="opt"><input type="radio" name="q1"><span>Porque usa outra moeda</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
       <p class="explanation" hidden>Só a abertura e o fecho do canal vão à blockchain.</p>
     </fieldset>
 
-    <fieldset class="quiz" data-answer="1">
-      <legend>Qual destes é um limite real da Lightning?</legend>
-      <label class="opt"><input type="radio" name="q2"><span>Não funciona com bitcoin</span></label>
-      <label class="opt"><input type="radio" name="q2"><span>Precisa de liquidez e de o nó estar online</span></label>
-      <label class="opt"><input type="radio" name="q2"><span>Só funciona nos EUA</span></label>
+    <fieldset class="quiz" data-answer="2">
+      <legend>O que é um VTXO, na Ark?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>Um canal aberto entre duas pessoas</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Uma moeda diferente do bitcoin</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>A parte de cada pessoa num lote partilhado</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>A liquidez dos canais e a disponibilidade do nó são limites práticos.</p>
+      <p class="explanation" hidden>Muitas pessoas partilham uma só transação da camada 1, e cada uma fica com um VTXO, a sua parte desse lote.</p>
     </fieldset>
 
     <fieldset class="quiz" data-answer="0">
@@ -102,20 +192,12 @@
       <p class="explanation" hidden>É o que distingue as camadas superiores da base.</p>
     </fieldset>
 
-    <fieldset class="quiz" data-answer="1">
-      <legend>Uma carteira Lightning que não deixa ver a frase de recuperação é provavelmente…</legend>
-      <label class="opt"><input type="radio" name="q4"><span>Autocustodial</span></label>
-      <label class="opt"><input type="radio" name="q4"><span>Custodial</span></label>
-      <label class="opt"><input type="radio" name="q4"><span>Mais segura</span></label>
-      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
-      <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>Sem acesso à frase de recuperação, a chave não é de quem usa a carteira.</p>
-    </fieldset>
-
 
     <h2>Fontes</h2>
     <ul class="sources">
       <li>Joseph Poon e Thaddeus Dryja, «The Bitcoin Lightning Network», 2016.</li>
+      <li>Bitcoin Optech, «Ark»: <a href="https://bitcoinops.org/en/topics/ark/" target="_blank" rel="noopener">bitcoinops.org/en/topics/ark</a>.</li>
+      <li>Bitcoin Wiki, «Ark»: <a href="https://en.bitcoin.it/wiki/Ark" target="_blank" rel="noopener">en.bitcoin.it/wiki/Ark</a>.</li>
       <li>Estatísticas da rede: <a href="https://mempool.space/lightning" target="_blank" rel="noopener">mempool.space/lightning</a>.</li>
       <li>Resumo do IPB das ideias da estrutura temática (tema 16.2).</li>
     </ul>

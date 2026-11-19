@@ -15,9 +15,9 @@
 <header class="topbar">
   <div class="topbar-inner">
     <a href="#curso">← Curso 2 · A Tecnologia</a>
-    <span class="where">Lição 3 de 21</span>
+    <span class="where">Lição 3 de 22</span>
   </div>
-  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="21" aria-valuenow="3"><span style="width:14.3%"></span></div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="22" aria-valuenow="3"><span style="width:13.6%"></span></div>
 </header>
 
 <main class="page">
@@ -26,7 +26,7 @@
     <p class="eyebrow">Módulo 1 · Como funciona a rede · Lição 1.2</p>
     <h1>Funções de hash e SHA-256</h1>
     <p class="lead">No fim desta lição, será possível explicar o que é uma função de hash, porque o SHA-256 é a base da ligação entre blocos e experimentá-lo.</p>
-    <p class="meta"><span>10 min de leitura</span><span>2 perguntas · 1 calculadora</span></p>
+    <p class="meta"><span>10 min de leitura</span><span>3 perguntas · 1 calculadora</span></p>
     <h2>Uma impressão digital para dados</h2>
     <p>Uma <strong>função de hash</strong> pega em qualquer dado (uma palavra, um livro, um bloco de transações) e devolve um número de tamanho fixo, a que se chama <em>hash</em>. O Bitcoin usa a função <strong>SHA-256</strong>, que devolve sempre 256 bits, normalmente escritos como 64 caracteres em hexadecimal.</p>
     <h2>Experimentar</h2>
@@ -76,21 +76,31 @@
     </div>
     <h2>Verificação</h2>
 
-    <fieldset class="quiz" data-answer="1">
+    <fieldset class="quiz" data-answer="2">
       <legend>O que acontece ao hash se se mudar uma letra do texto?</legend>
       <label class="opt"><input type="radio" name="q1"><span>Muda só um bocadinho</span></label>
-      <label class="opt"><input type="radio" name="q1"><span>Muda por completo</span></label>
       <label class="opt"><input type="radio" name="q1"><span>Fica igual</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Muda por completo</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>É a propriedade a que se chama efeito de avalanche: mudar um bit na entrada muda a saída de forma imprevisível.</p>
+      <p class="explanation" hidden>É o efeito de avalanche: mudar um bit na entrada muda a saída de forma imprevisível.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>Para que serve o hash do bloco anterior guardado em cada bloco?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>Ligar os blocos numa cadeia</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Assinar as transações</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Guardar as chaves da carteira</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Se alguém mudar um bloco antigo, o hash muda e a ligação quebra-se.</p>
     </fieldset>
 
     <fieldset class="quiz" data-answer="1">
       <legend>O SHA-256 assina as transações?</legend>
-      <label class="opt"><input type="radio" name="q2"><span>Sim, é para isso que serve</span></label>
-      <label class="opt"><input type="radio" name="q2"><span>Não: serve para a mineração e para encadear blocos</span></label>
-      <label class="opt"><input type="radio" name="q2"><span>Só as transações grandes</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Sim, assina todas</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Não, a assinatura usa outra matemática</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Só as de valor grande</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
       <p class="explanation" hidden>A assinatura usa curvas elípticas. Por isso, quebrar o SHA-256 não permitiria gastar as moedas de ninguém.</p>

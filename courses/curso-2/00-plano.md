@@ -1,6 +1,6 @@
 # Curso 2 · A Tecnologia: plano
 
-Reescrito em novembro de 2026 a partir da estrutura temática. 21 lições, cerca de 3 h 39 min. Sem workshops.
+Reescrito em novembro de 2026 a partir da estrutura temática. 22 lições, cerca de 3 h 49 min. Sem workshops.
 
 Regras: linguagem neutra, «mineradores», «energia desperdiçada», «a Bitcoin» (rede) e «o Bitcoin» (ativo).
 
@@ -16,7 +16,8 @@ Regras: linguagem neutra, «mineradores», «energia desperdiçada», «a Bitcoi
 
 ## Módulo 2 · Energia
 - 2.1 Escala e necessidade da energia (10 min)
-- 2.2 Energia desperdiçada, rede elétrica e o debate (11 min)
+- 2.2 Energia desperdiçada, incluindo o metano (10 min)
+- 2.3 A mineração e a rede elétrica (11 min)
 
 ## Módulo 3 · Camadas e escala
 - 3.1 A rede de liquidação (10 min)

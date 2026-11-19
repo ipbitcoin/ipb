@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Stablecoins | Curso 2 | Instituto Português de Bitcoin</title>
-  <meta name="description" content="Lição 4.3 do Curso 2: No fim desta lição, será possível explicar o que é uma stablecoin, o que a distingue do Bitcoin e porque os custodiantes de stablecoins podem pesar mais do">
+  <meta name="description" content="Lição 4.3 do Curso 2: No fim desta lição, será possível explicar o que é uma stablecoin, como mantém o valor, o que a distingue do Bitcoin e porque os emissores de stablecoins t">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
@@ -15,9 +15,9 @@
 <header class="topbar">
   <div class="topbar-inner">
     <a href="#curso">← Curso 2 · A Tecnologia</a>
-    <span class="where">Lição 13 de 21</span>
+    <span class="where">Lição 14 de 22</span>
   </div>
-  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="21" aria-valuenow="13"><span style="width:61.9%"></span></div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="22" aria-valuenow="14"><span style="width:63.6%"></span></div>
 </header>
 
 <main class="page">
@@ -25,62 +25,80 @@
 
     <p class="eyebrow">Módulo 4 · Bitcoin e outras criptomoedas · Lição 4.3</p>
     <h1>Stablecoins</h1>
-    <p class="lead">No fim desta lição, será possível explicar o que é uma stablecoin, o que a distingue do Bitcoin e porque os custodiantes de stablecoins podem pesar mais do que os programadores em certas blockchains.</p>
-    <p class="meta"><span>10 min de leitura</span><span>2 perguntas</span></p>
-    <h2>O que são</h2>
-    <p>Uma <strong>stablecoin</strong> é um token que acompanha o valor de uma moeda (geralmente o dólar) e é emitido por uma entidade que guarda a reserva. É um salto face à banca para pagamentos internacionais e de grandes quantias, e tem utilidade clara em pagamentos automáticos e entre pessoas. O preço dessa utilidade é a <strong>centralização</strong>.</p>
-    <p>Há enorme procura por dólares em formato cripto, porque quem vive em países com moeda fraca quer converter moeda fraca em forte, propriedade física em digital e ativos em banco em autocustódia. As stablecoins otimizam taxas e mudam de plataforma (já passaram por várias redes), porque os utilizadores querem eficiência com supervisão, e não descentralização.</p>
+    <p class="lead">No fim desta lição, será possível explicar o que é uma stablecoin, como mantém o valor, o que a distingue do Bitcoin e porque os emissores de stablecoins têm poder sobre as redes onde circulam.</p>
+    <p class="meta"><span>11 min de leitura</span><span>3 perguntas</span></p>
+    <h2>O que é uma stablecoin</h2>
+    <p>Uma <strong>stablecoin</strong> é um token que acompanha o valor de outro ativo. Em regra é uma moeda fiduciária, como o dólar ou o euro, e a maioria acompanha o dólar, mas também pode ser o ouro. É emitido por uma empresa, que guarda reservas desse ativo (dinheiro e obrigações do Estado, no caso de uma moeda, ou ouro físico, no caso do ouro) e promete trocar cada token por uma unidade dele. Quem tem uma stablecoin pode enviá-la a qualquer pessoa, em qualquer país, a qualquer hora e em poucos minutos, sem passar por um banco.</p>
+    <p>É por isso que as stablecoins se usam em pagamentos internacionais, em transferências de grandes quantias, em pagamentos automáticos e entre pessoas. O preço dessa utilidade é a <strong>centralização</strong>: a empresa que emite o token decide quem o pode usar.</p>
+    <h2>Porque há tanta procura</h2>
+    <p>Quem vive num país com uma moeda fraca quer uma moeda mais forte, em regra o dólar, para proteger o que ganha da inflação. Uma stablecoin dá-lhe essa moeda sem precisar de uma conta num banco estrangeiro, e permite-lhe passar do dinheiro físico para o digital e guardá-lo por conta própria.</p>
+    <p>Uma stablecoin não pertence a uma só blockchain: o mesmo emissor pode emiti-la em várias, como o Ethereum, a Tron ou a Solana. Quem a usa escolhe a rede onde as taxas são mais baixas e as transações mais rápidas, e muda quando outra fica mais barata. <!-- [VERIFICAR] Confirmar as redes onde as maiores stablecoins circulam e onde se concentra o seu uso, com fonte e data de consulta. -->Isto acontece porque o que interessa a quem a usa é enviar dinheiro depressa e a baixo custo, e não que a rede seja descentralizada. Para o utilizador, a blockchain é só o registo onde a transferência fica anotada. A confiança está no emissor.</p>
+    <h2>Como mantêm o valor</h2>
+    <ul>
+      <li><strong>Com reservas em moeda.</strong> A empresa guarda o ativo (moeda e obrigações do Estado, ou ouro), em quantidade igual à dos tokens emitidos, e troca-os por ele quando lhe pedem. É o modelo das duas maiores, a Tether (USDT) e a USDC. <!-- [VERIFICAR] Confirmar que a Tether (USDT) e a USDC são as duas maiores stablecoins e que usam este modelo, com fonte e data de consulta. --></li>
+      <li><strong>Com outras criptomoedas como garantia.</strong> Quem quer emitir o token bloqueia criptomoedas de valor superior ao do token, para aguentar as quedas do preço.</li>
+      <li><strong>Por algoritmo.</strong> Não há reserva em moeda: um programa tenta manter o preço criando e destruindo tokens. Na TerraUSD, o mecanismo era trocar sempre 1 TerraUSD por um dólar de uma segunda moeda, a Luna, e vice-versa. Se a TerraUSD caía abaixo de um dólar, qualquer pessoa podia destruí-la e receber Luna no valor de um dólar, o que devia reduzir a oferta de TerraUSD e fazer o preço voltar a subir.</li>
+    </ul>
+    <p>Funcionou enquanto houve confiança. Em maio de 2022, a TerraUSD caiu abaixo de um dólar, e muita gente destruiu-a para receber Luna. A criação de Luna em massa fez o preço da Luna cair, e isso tornou cada TerraUSD destruída menos valiosa, o que aumentou a pressa de a destruir. Em poucos dias, as duas moedas perderam quase todo o valor, e desapareceram dezenas de milhares de milhões de dólares. <!-- [VERIFICAR] Confirmar o mecanismo da TerraUSD e da Luna, as datas (maio de 2022) e o valor destruído (dezenas de milhares de milhões de dólares) com fontes. --></p>
     <h2>Bitcoin e stablecoin</h2>
     <div class="table-wrap">
       <table>
         <thead><tr><th></th><th>Bitcoin</th><th>Stablecoin</th></tr></thead>
         <tbody>
-          <tr><td>Quem emite</td><td>Ninguém: emissão por mineração aberta</td><td>Uma entidade identificável</td></tr>
-          <tr><td>Pode ser congelada?</td><td>Não, em autocustódia</td><td>Sim: o emitente pode bloquear endereços</td></tr>
-          <tr><td>O que representa</td><td>Propriedade digital (a «conta poupança»)</td><td>Moeda digital (a «conta corrente»)</td></tr>
-          <tr><td>Confiança necessária</td><td>No protocolo e nas regras</td><td>No emitente e na sua reserva</td></tr>
+          <tr><td>Quem emite</td><td>Ninguém: os novos bitcoins criam-se pela mineração, sob regras públicas</td><td>Uma empresa identificável</td></tr>
+          <tr><td>Pode ser congelado?</td><td>Não, se estiver em autocustódia</td><td>Sim: o emissor pode bloquear endereços</td></tr>
+          <tr><td>O que é</td><td>Propriedade digital, como uma conta poupança</td><td>Moeda digital, como uma conta corrente</td></tr>
+          <tr><td>Em quem se confia</td><td>No protocolo e nas regras</td><td>No emissor e na sua reserva</td></tr>
         </tbody>
       </table>
     </div>
-    <h2>Quando o custodiante decide</h2>
-    <p>Em blockchains de contratos inteligentes que dependem de finanças descentralizadas (DeFi), o desfecho de um hard fork pode ser decidido pelos custodiantes de stablecoins. Estes podem anular o valor das stablecoins do lado da cadeia que não reconhecem, tornando insolvente o DeFi desse lado. Logo, todas as variáveis dessa blockchain são potencialmente mutáveis, mesmo contra a vontade dos nós.</p>
-    <p>Os custodiantes podem pôr endereços em lista negra (uma grande emissora bloqueou mais de 500 endereços), são entidades conhecidas e estão sujeitos a ação legal. Por isso, os governos podem apreender fundos, tornar insolvente grande parte do DeFi ou impor um hard fork com requisitos de vigilância. <!-- [VERIFICAR] Número de endereços bloqueados de T7:24 e T7:30 (2022 a 2023); confirmar. --></p>
-    <p>O Bitcoin está protegido porque nenhum emissor de stablecoins nem programador de carteiras pode dirigi-lo. Daí a conclusão desta leitura: o Bitcoin é dinheiro, e a maioria das outras criptomoedas são serviços financeiros «equity», com pré-mineração, mutáveis e políticos.</p>
+    <h2>O poder dos emissores</h2>
+    <p>Os emissores são empresas conhecidas e estão sujeitas à lei. Podem pôr endereços em lista negra, e fazem-no: entre 2023 e 2025, a Tether (USDT) bloqueou mais de sete mil endereços. <!-- [VERIFICAR] Confirmar o número (7.268 endereços entre 2023 e 2025, AMLBot) e a data de consulta. -->Por isso, os governos podem apreender fundos através deles.</p>
+    <p>Em redes de contratos inteligentes que dependem das chamadas «finanças descentralizadas» (DeFi, isto é, empréstimos, trocas e outros serviços financeiros que correm em programas na blockchain, e que na prática não são descentralizados), o emissor tem ainda um poder maior: pode decidir o resultado de um hard fork.</p>
+    <p>Se a rede se divide em duas, o emissor decide qual das duas passa a aceitar a sua stablecoin. O DeFi do outro lado perde a sua moeda principal e fica insolvente. Foi o que se anunciou na divisão do Ethereum em duas redes, em 2022: os principais emissores disseram que só reconheceriam a original. <!-- [VERIFICAR] Confirmar o anúncio dos emissores na divisão do Ethereum em 2022, com fonte. -->Nessas redes, qualquer regra pode, assim, ser mudada, mesmo contra a vontade dos nós.</p>
+    <p>O Bitcoin não está sujeito a isto, porque nenhum emissor de stablecoins nem programador de carteiras o pode dirigir. O Bitcoin é dinheiro. A maioria das outras criptomoedas são serviços financeiros controlados por empresas, com pré-mineração e regras que mudam por decisão de um grupo.</p>
     <h2>Para onde caminham</h2>
-    <p>As stablecoins reguladas tenderão a ser integradas nos sistemas financeiros, seja como moedas digitais de bancos centrais, seja como emissores privados muito regulados, mantendo vigilância e censura (KYC e AML). É o tema da lição sobre o euro digital, no Curso 3.</p>
-    <div class="callout limit">
-      <span class="tag">Limites</span>
-      <p>O curso não tem argumentos de defensores das stablecoins para além da sua utilidade prática. A análise acima é a da corrente que as considera um serviço financeiro, e não uma alternativa ao dinheiro neutro.</p>
-    </div>
+    <p>As stablecoins reguladas vão ser integradas no sistema financeiro, seja como dinheiro digital emitido por bancos centrais, seja como moedas de emissores privados sob regras apertadas. Em ambos os casos, mantêm a identificação dos clientes (KYC) e a prevenção do branqueamento de capitais (AML), e por isso podem ser vigiadas e censuradas.</p>
     <div class="callout key">
       <span class="tag">Ideia-chave</span>
-      A stablecoin é útil e centralizada: quem a emite pode congelá-la e, em certos casos, decidir o desfecho de uma disputa. O Bitcoin protege-se porque ninguém emite nem controla.
+      A stablecoin serve a quem quer uma moeda mais forte sem passar por um banco, e custa a centralização: quem a emite pode congelá-la e, em certos casos, decidir o resultado de uma disputa. O Bitcoin não pode ser congelado em autocustódia, porque ninguém o emite nem controla.
     </div>
     <h2>Verificação</h2>
 
-    <fieldset class="quiz" data-answer="0">
-      <legend>Qual é o preço da utilidade de uma stablecoin, segundo a lição?</legend>
-      <label class="opt"><input type="radio" name="q1"><span>A centralização: quem emite pode congelar</span></label>
+    <fieldset class="quiz" data-answer="1">
+      <legend>Qual é o preço da utilidade de uma stablecoin?</legend>
       <label class="opt"><input type="radio" name="q1"><span>A volatilidade extrema</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>A centralização: quem emite pode congelar</span></label>
       <label class="opt"><input type="radio" name="q1"><span>A falta de transações</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>A entidade emitente pode pôr endereços em lista negra.</p>
+      <p class="explanation" hidden>A empresa emitente pode pôr endereços em lista negra e está sujeita à lei do país onde opera.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="2">
+      <legend>Porque pode um emissor de stablecoins decidir o resultado de um hard fork?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>Porque tem mais máquinas de mineração</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Porque escreve o código da blockchain</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Porque só reconhece as suas stablecoins num dos lados</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>O DeFi do lado que o emissor não reconhece fica sem a sua moeda principal e torna-se insolvente.</p>
     </fieldset>
 
     <fieldset class="quiz" data-answer="0">
-      <legend>Porque pode um custodiante de stablecoins decidir um hard fork de uma blockchain de DeFi?</legend>
-      <label class="opt"><input type="radio" name="q2"><span>Porque pode anular o valor das stablecoins do lado que não reconhece</span></label>
-      <label class="opt"><input type="radio" name="q2"><span>Porque minera mais</span></label>
-      <label class="opt"><input type="radio" name="q2"><span>Porque escreve o código</span></label>
+      <legend>O que acontece a uma stablecoin que perde a ligação ao ativo que acompanha?</legend>
+      <label class="opt"><input type="radio" name="q3"><span>Passa a valer menos do que o ativo e pode colapsar</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Ganha valor, porque fica descentralizada</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Fica protegida pela reserva do Bitcoin</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>O DeFi desse lado ficaria insolvente.</p>
+      <p class="explanation" hidden>Foi o que aconteceu à TerraUSD em maio de 2022: perdeu a ligação ao dólar e o seu valor caiu para perto de zero.</p>
     </fieldset>
 
 
     <h2>Fontes</h2>
     <ul class="sources">
+      <li>AMLBot, «Stablecoin Freezes 2023–2025: A Data-Backed Analysis of USDT vs USDC»: <a href="https://blog.amlbot.com/stablecoin-freezes-2023-2025-a-data-backed-analysis-of-usdt-usdc-by-amlbot/" target="_blank" rel="noopener">blog.amlbot.com</a>.</li>
       <li>Resumo do IPB das posições em debate (estrutura temática, temas 15.5 e 17.4).</li>
     </ul>
 

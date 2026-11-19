@@ -15,9 +15,9 @@
 <header class="topbar">
   <div class="topbar-inner">
     <a href="#curso">← Curso 2 · A Tecnologia</a>
-    <span class="where">Lição 2 de 21</span>
+    <span class="where">Lição 2 de 22</span>
   </div>
-  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="21" aria-valuenow="2"><span style="width:9.5%"></span></div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="22" aria-valuenow="2"><span style="width:9.1%"></span></div>
 </header>
 
 <main class="page">
@@ -26,57 +26,64 @@
     <p class="eyebrow">Módulo 1 · Como funciona a rede · Lição 1.1</p>
     <h1>Nós e mineradores</h1>
     <p class="lead">No fim desta lição, será possível dizer quem são os três participantes da rede Bitcoin, o que faz cada um e porque nenhum manda sozinho.</p>
-    <p class="meta"><span>10 min de leitura</span><span>2 perguntas</span></p>
+    <p class="meta"><span>10 min de leitura</span><span>3 perguntas</span></p>
     <h2>Uma rede sem chefe</h2>
     <p>O euro tem um banco central, o Bitcoin não. Mesmo assim, as regras cumprem-se. Isto acontece porque na rede há <strong>três papéis</strong>, com interesses diferentes, que se vigiam uns aos outros.</p>
     <div class="cards">
       <div class="card"><span class="n">1 · UTILIZADORES</span><h3>Quem usa</h3><p>Enviam e recebem bitcoin através de carteiras. Escolhem que software correr e que regras aceitam.</p></div>
-      <div class="card"><span class="n">2 · NÓS</span><h3>Quem verifica</h3><p>Computadores com uma cópia completa do registo. Verificam todas as transações e todos os blocos e rejeitam o que quebra as regras.</p></div>
-      <div class="card"><span class="n">3 · MINERADORES</span><h3>Quem escreve</h3><p>Agrupam transações em blocos e gastam energia para os propor à rede. Recebem bitcoin novo e taxas.</p></div>
+      <div class="card"><span class="n">2 · NÓS</span><h3>Quem verifica</h3><p>Computadores com uma cópia completa do registo (blockchain). Verificam todas as transações e todos os blocos e rejeitam tudo o que quebra as regras.</p></div>
+      <div class="card"><span class="n">3 · MINERADORES</span><h3>Quem escreve</h3><p>Agrupam transações em blocos e gastam energia para os propor à rede. Recebem bitcoin novo e taxas associadas a todas as transações incluídas nos blocos.</p></div>
     </div>
     <h2>Os nós mandam nas regras</h2>
     <p>Um <strong>nó</strong> (<em>node</em>) é um computador que corre o software do Bitcoin e guarda o registo completo. Cada nó confere, por conta própria, se cada bloco cumpre as regras: assinaturas válidas, bitcoin que existe, oferta dentro do limite dos 21 milhões. Quem corre um nó audita toda a cadeia sem precisar de confiar em ninguém. O Bitcoin foi desenhado para que isto se possa fazer com hardware modesto e a baixo custo, ao contrário de outras redes.</p>
-    <p>Os mineradores vendem blocos aos nós, que são soberanos e determinam as regras de consenso. Os mineradores investem capital à partida (máquinas e eletricidade) e só são pagos se obedecerem aos nós. Por isso o que importa para a descentralização é a descentralização dos nós. Alguns nós podem ser lançados na nuvem, mas o que conta é <strong>quem decide as regras</strong>.</p>
+    <p>Os mineradores propõem blocos e os nós decidem se os aceitam. São os nós, soberanos, que determinam as regras de consenso. Os mineradores investem capital à partida (máquinas e eletricidade) e só são pagos se obedecerem aos nós. Por isso, é importante que os nós sejam descentralizados.</p>
     <h2>Os mineradores ordenam as transações</h2>
-    <p>Os mineradores não fazem as regras: <strong>cumprem-nas</strong>. A sua função é decidir a ordem das transações e agrupá-las em blocos, através de um trabalho que custa energia (prova de trabalho, lição 1.3). Em troca, recebem uma recompensa. A mineração é descentralizada porque qualquer pessoa com energia barata pode entrar ou sair. Nós e mineradores são mutuamente indispensáveis.</p>
+    <p>Os mineradores não fazem as regras: <strong>cumprem-nas</strong>. A sua função é decidir a ordem das transações e agrupá-las em blocos, através de <strong>trabalho</strong> que custa energia (prova de trabalho, lição 1.3). Em troca, recebem uma recompensa. A mineração é descentralizada porque qualquer pessoa ou empresa com energia barata pode entrar ou sair. Nós e mineradores são mutuamente indispensáveis.</p>
     <h2>A blockchain: blocos ligados</h2>
     <p>Cada bloco contém milhares de transações e a <strong>impressão digital</strong> (o <em>hash</em>) do bloco anterior. Assim, os blocos ficam presos uns aos outros numa cadeia. Para alterar uma transação antiga, teria de se refazer o trabalho desse bloco e de todos os que vieram depois, mais depressa do que o resto da rede continua a trabalhar.</p>
+    <p>O espaço de cada bloco é limitado a cerca de 1 milhão de bytes virtuais (vB), a unidade em que se mede o tamanho das transações. Uma transação simples ocupa cerca de 140 vB, por isso cada bloco leva alguns milhares de transações, e não mais. Quem quer ver a sua transação incluída num bloco compete por esse espaço, pagando uma taxa. <!-- [VERIFICAR] Confirmar o limite de 4 milhões de unidades de peso (cerca de 1 milhão de vB), o tamanho típico de uma transação simples e o número médio de transações por bloco, com fonte e data de consulta. --></p>
     <ol class="timeline">
       <li><span class="when">3 jan. 2009</span><strong>Bloco 0, o bloco génese</strong><p>O primeiro bloco da cadeia, minerado por Satoshi Nakamoto.</p></li>
       <li><span class="when">~ 10 minutos</span><strong>Um bloco novo</strong><p>Em média, a rede encontra um bloco novo a cada dez minutos.</p></li>
     </ol>
     <h2>As regras de consenso são como uma constituição</h2>
-    <p>Os parâmetros de consenso (por exemplo, o calendário de emissão) funcionam como uma constituição: quem os quebra fica com outra moeda, com menos liquidez e menor capacidade de competir. O Bitcoin é, por isso, cada vez mais «ossificado»: o software de 2009 ainda sincroniza com a rede. Os parâmetros importam mais do que quaisquer atualizações de rotina.</p>
+    <p>Há regras que todos os nós aplicam e que ninguém pode mudar sozinho: o limite de 21 milhões, o calendário de emissão e o que torna válidos um bloco ou uma assinatura. São as regras de consenso, e funcionam como uma constituição: são difíceis de alterar, porque mudá-las exige que os utilizadores e os nós aceitem correr software novo. Quem as altera por conta própria produz blocos que os outros nós rejeitam, e fica numa cadeia à parte, com outra moeda, menos liquidez e menos gente a aceitá-la. Por isso o essencial das regras é o mesmo desde 2009 e as mudanças são raras e cautelosas. A isto chama-se «ossificação»: o Bitcoin tende a mudar cada vez menos.</p>
     <h2>O preço da descentralização</h2>
-    <p>Há uma troca assumida: tudo o que é mais eficiente a pagar ou a guardar ativos tende a ser também mais centralizado, e há um compromisso entre eficiência e resiliência. Uma blockchain é, em certo sentido, uma <strong>base de dados ineficiente</strong>: os utilizadores trocam eficiência por descentralização. Uma base de dados centralizada não é auditável nem controlável por terceiros (contas sociais, contas bancárias). A «aplicação assassina» de uma base de dados descentralizada é o dinheiro: um livro-razão imutável em que se guarda valor memorizando um número e se transfere sem alteração, impedimento ou diluição.</p>
-    <div class="callout limit">
-      <span class="tag">Limites</span>
-      <p>Fica por responder, neste material, o grau real de concentração da mineração. A pergunta é feita (o poder computacional crescente favorece mais nós, mas quanto está concentrado nos mineradores?), sem dados que a respondam.</p>
-    </div>
+    <p>Tudo o que é mais eficiente a pagar ou a guardar ativos tende a ser também mais centralizado, e há um compromisso entre eficiência e resiliência. Uma blockchain é, em certo sentido, uma <strong>base de dados ineficiente</strong>: os utilizadores trocam eficiência por descentralização. Uma base de dados centralizada não é auditável nem controlável por terceiros (contas sociais, contas bancárias). O uso mais importante de uma base de dados descentralizada é o dinheiro: um registo que ninguém pode alterar, em que o valor é um número que só o dono consegue mover, sem que ninguém o possa bloquear nem diluir criando mais.</p>
     <div class="callout key">
       <span class="tag">Ideia-chave</span>
       Ninguém manda no Bitcoin e toda a gente tem voto. Os utilizadores escolhem as regras, os nós verificam-nas, os mineradores ordenam as transações.
     </div>
     <h2>Verificação</h2>
 
-    <fieldset class="quiz" data-answer="1">
-      <legend>Quem verifica se cada bloco cumpre as regras do Bitcoin?</legend>
-      <label class="opt"><input type="radio" name="q1"><span>Só os mineradores</span></label>
-      <label class="opt"><input type="radio" name="q1"><span>Todos os nós, cada um por si</span></label>
-      <label class="opt"><input type="radio" name="q1"><span>Um banco central</span></label>
+    <fieldset class="quiz" data-answer="2">
+      <legend>O que faz um minerador?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>Fixa as regras de consenso</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Verifica todos os blocos por si</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Propõe blocos que os nós podem recusar</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>Cada nó verifica tudo sozinho. Um bloco inválido é rejeitado, mesmo que um minerador tenha gasto energia a produzi-lo.</p>
+      <p class="explanation" hidden>O minerador propõe blocos e investe energia à partida. Os nós verificam cada bloco e rejeitam o que quebra as regras, e só então o minerador recebe.</p>
     </fieldset>
 
     <fieldset class="quiz" data-answer="0">
-      <legend>Porque são os nós, e não os mineradores, que determinam as regras?</legend>
-      <label class="opt"><input type="radio" name="q2"><span>Os mineradores só são pagos se obedecerem às regras que os nós aplicam</span></label>
-      <label class="opt"><input type="radio" name="q2"><span>Os nós têm mais energia</span></label>
-      <label class="opt"><input type="radio" name="q2"><span>Os mineradores não existem</span></label>
+      <legend>O que acontece a quem altera sozinho as regras de consenso?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>Fica numa cadeia à parte, com outra moeda</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Os outros nós adotam as suas regras</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Recebe uma recompensa maior</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>O minerador investe à partida e só recebe se o bloco for aceite pelos nós.</p>
+      <p class="explanation" hidden>Os outros nós rejeitam os seus blocos. Fica numa cadeia à parte, com outra moeda, menos liquidez e menos gente a aceitá-la.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>O que significa dizer que o Bitcoin está «ossificado»?</legend>
+      <label class="opt"><input type="radio" name="q3"><span>Que o seu preço deixou de variar</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Que tende a mudar cada vez menos</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Que os nós deixaram de verificar blocos</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>As regras de consenso são difíceis de alterar, por isso o essencial é o mesmo desde 2009 e as mudanças são raras e cautelosas.</p>
     </fieldset>
 
 
