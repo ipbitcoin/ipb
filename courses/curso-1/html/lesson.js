@@ -519,4 +519,24 @@
     netRange.addEventListener("input", netRun);
     netRun();
   }
+  // Tamanho da posição (lição 5.7): o cursor muda a parte das poupanças em bitcoin e o efeito de uma queda de 80%.
+  var posRange = document.getElementById("f57b-range");
+  if (posRange) {
+    var posFmt = function (n) { return String(Math.round(n * 10) / 10).replace(".", ","); };
+    var posRun = function () {
+      var p = parseInt(posRange.value, 10), W = 404, full = p / 100 * W, rest = full * 0.2;
+      document.getElementById("f57b-a").setAttribute("width", full.toFixed(1));
+      document.getElementById("f57b-b").setAttribute("width", rest.toFixed(1));
+      var lost = document.getElementById("f57b-l");
+      lost.setAttribute("x", (8 + rest).toFixed(1));
+      lost.setAttribute("width", (full - rest).toFixed(1));
+      document.getElementById("f57b-r1").textContent = "Perde " + posFmt(p * 0.8) + "% das poupanças";
+      document.getElementById("f57b-r2").textContent = "o resto continua igual";
+      document.getElementById("f57b-out").textContent = p + "%";
+      posRange.setAttribute("aria-valuetext", p + "% das poupanças em bitcoin, perde " + posFmt(p * 0.8) + "% das poupanças com uma queda de 80%");
+    };
+    posRange.closest(".fig-slider").hidden = false;
+    posRange.addEventListener("input", posRun);
+    posRun();
+  }
 })();
