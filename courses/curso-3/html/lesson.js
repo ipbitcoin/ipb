@@ -431,4 +431,29 @@
     };
     [holdFrom, holdTo].forEach(function (el) { el.addEventListener("input", holdRun); });
   }
+  // Preço de um ativo conforme o juro (lição 3.1): o cursor muda o juro e o preço.
+  var assetRange = document.getElementById("f31-range");
+  if (assetRange) {
+    var assetRates = [5, 4, 2.5, 2, 1.25, 1, 0.8, 0.5];
+    var assetFmt = function (n) { return String(n).replace(".", ","); };
+    var assetPt = function (n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, "."); };
+    var assetBar = document.getElementById("f31-bar");
+    var assetRun = function () {
+      var r = assetRates[parseInt(assetRange.value, 10)];
+      var price = 50000 / (r / 100);
+      var w = Math.max(price / 10000000 * 404, 10);
+      var txt = assetPt(price) + " €";
+      assetBar.setAttribute("width", w.toFixed(1));
+      var pr = document.getElementById("f31-price");
+      pr.textContent = txt;
+      if (w > 240) { pr.setAttribute("x", (8 + w - 12).toFixed(1)); pr.setAttribute("text-anchor", "end"); }
+      else { pr.setAttribute("x", (8 + w + 12).toFixed(1)); pr.setAttribute("text-anchor", "start"); }
+      document.getElementById("f31-rate").textContent = assetFmt(r) + "%";
+      document.getElementById("f31-calc").textContent = "50.000 € ÷ " + assetFmt(r) + "% = " + txt;
+      assetRange.setAttribute("aria-valuetext", "juro de " + assetFmt(r) + "%, preço de " + txt);
+    };
+    assetRange.closest(".fig-slider").hidden = false;
+    assetRange.addEventListener("input", assetRun);
+    assetRun();
+  }
 })();
