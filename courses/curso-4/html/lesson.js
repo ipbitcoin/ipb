@@ -487,4 +487,36 @@
     pcRange.addEventListener("input", pcRun);
     pcRun();
   }
+  // Rede de participantes (lição 5.4): o cursor muda o número de participantes e de ligações possíveis.
+  var netRange = document.getElementById("f54-range");
+  if (netRange) {
+    var NS = "http://www.w3.org/2000/svg";
+    var netG = document.getElementById("f54-net");
+    var netRun = function () {
+      var n = parseInt(netRange.value, 10), cx = 210, cy = 122, R = 96, pts = [], i, j, e;
+      while (netG.firstChild) netG.removeChild(netG.firstChild);
+      for (i = 0; i < n; i++) pts.push([cx + R * Math.sin(2 * Math.PI * i / n), cy - R * Math.cos(2 * Math.PI * i / n)]);
+      for (i = 0; i < n; i++) for (j = i + 1; j < n; j++) {
+        e = document.createElementNS(NS, "line");
+        e.setAttribute("x1", pts[i][0].toFixed(1)); e.setAttribute("y1", pts[i][1].toFixed(1));
+        e.setAttribute("x2", pts[j][0].toFixed(1)); e.setAttribute("y2", pts[j][1].toFixed(1));
+        e.setAttribute("stroke", "#a3a3a3"); e.setAttribute("stroke-width", n < 13 ? "1.6" : "1.1");
+        netG.appendChild(e);
+      }
+      for (i = 0; i < n; i++) {
+        e = document.createElementNS(NS, "circle");
+        e.setAttribute("cx", pts[i][0].toFixed(1)); e.setAttribute("cy", pts[i][1].toFixed(1));
+        e.setAttribute("r", n < 10 ? "9" : (n < 15 ? "8" : "7"));
+        e.setAttribute("fill", "#f29500"); e.setAttribute("stroke", "#0a0a0a"); e.setAttribute("stroke-width", "2.2");
+        netG.appendChild(e);
+      }
+      document.getElementById("f54-n").textContent = n;
+      document.getElementById("f54-l").textContent = n * (n - 1) / 2;
+      document.getElementById("f54-out").textContent = n;
+      netRange.setAttribute("aria-valuetext", n + " participantes, " + (n * (n - 1) / 2) + " ligações possíveis");
+    };
+    netRange.closest(".fig-slider").hidden = false;
+    netRange.addEventListener("input", netRun);
+    netRun();
+  }
 })();
