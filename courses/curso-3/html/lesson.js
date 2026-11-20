@@ -456,4 +456,35 @@
     assetRange.addEventListener("input", assetRun);
     assetRun();
   }
+  // Poder de compra de 10.000 € ao longo de 20 anos (lição 3.5): o cursor muda a perda de valor por ano.
+  var pcRange = document.getElementById("f35-range");
+  if (pcRange) {
+    var pcFmt = function (n) { return String(n).replace(".", ","); };
+    var pcPt = function (n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, "."); };
+    var pcRun = function () {
+      var r = parseInt(pcRange.value, 10) * 0.5;
+      var X0 = 70, X1 = 404, Y0 = 24, Y1 = 196, line = "", ex = 0, ey = 0, end = 0;
+      for (var t = 0; t <= 20; t++) {
+        var v = 10000 / Math.pow(1 + r / 100, t);
+        var x = X0 + (X1 - X0) * t / 20, y = Y1 - (Y1 - Y0) * v / 10000;
+        line += (t === 0 ? "M" : "L") + x.toFixed(1) + " " + y.toFixed(1) + " ";
+        ex = x; ey = y; end = v;
+      }
+      document.getElementById("f35-line").setAttribute("d", line.trim());
+      document.getElementById("f35-area").setAttribute("d", line + "L" + X1 + " " + Y1 + " L" + X0 + " " + Y1 + " Z");
+      var dot = document.getElementById("f35-dot");
+      dot.setAttribute("cx", ex); dot.setAttribute("cy", ey.toFixed(1));
+      var lab = document.getElementById("f35-end");
+      lab.textContent = pcPt(end) + " €";
+      lab.setAttribute("x", ex - 8);
+      lab.setAttribute("y", (ey + 30).toFixed(1));
+      document.getElementById("f35-rate").textContent = r === 0 ? "Dinheiro estável" : "Perde " + pcFmt(r) + "% ao ano";
+      document.getElementById("f35-sum").textContent = r === 0 ? "o mesmo que hoje" : "o que hoje compram cerca de " + pcPt(end) + " €";
+      document.getElementById("f35-out").textContent = pcFmt(r) + "%";
+      pcRange.setAttribute("aria-valuetext", "perda de " + pcFmt(r) + "% por ano, 10.000 € valem cerca de " + pcPt(end) + " € daqui a 20 anos");
+    };
+    pcRange.closest(".fig-slider").hidden = false;
+    pcRange.addEventListener("input", pcRun);
+    pcRun();
+  }
 })();
