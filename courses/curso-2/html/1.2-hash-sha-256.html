@@ -62,6 +62,8 @@
       <div class="card"><span class="n">3 · PROVAR TRABALHO</span><h3>Mineração</h3><p>Os mineradores procuram um bloco cujo hash comece por muitos zeros.</p></div>
       <div class="card"><span class="n">4 · ENDEREÇOS</span><h3>Das chaves aos endereços</h3><p>O endereço de uma carteira é derivado da chave pública com funções de hash.</p></div>
     </div>
+    <h2>Onde se usa a raiz de Merkle</h2>
+    <p>A raiz de Merkle está no cabeçalho do bloco e resume todas as suas transações num só valor de 32 bytes. Os mineradores aplicam o SHA-256 ao cabeçalho inteiro, à procura de um hash com muitos zeros. Por isso, mudar uma única transação muda a raiz, muda o cabeçalho e invalida a prova de trabalho desse bloco. Quando o número de transações é ímpar, a última é duplicada para fechar o par.</p>
     <figure class="fig">
       <div id="f12b-in" class="mk-in" hidden><label>T1<input type="text" maxlength="40" value="Ana paga 2 a Rui" autocomplete="off"></label><label>T2<input type="text" maxlength="40" value="Rui paga 1 a Eva" autocomplete="off"></label><label>T3<input type="text" maxlength="40" value="Eva paga 1 a Leo" autocomplete="off"></label><label>T4<input type="text" maxlength="40" value="Leo paga 2 a Ana" autocomplete="off"></label></div>
       <svg viewBox="0 0 420 304" role="img" aria-labelledby="f12b-t f12b-d" style="max-width:480px">
@@ -71,6 +73,7 @@
       </svg>
       <figcaption>Os hashes das transações combinam-se aos pares até restar um só, a raiz. Versão simplificada, com os seis primeiros caracteres de cada hash.</figcaption>
     </figure>
+    <p>A raiz serve também para provar que uma transação está num bloco sem descarregar o bloco todo. Uma carteira leve guarda apenas os cabeçalhos, com 80 bytes cada. Para confirmar um pagamento, pede a um nó só os hashes do caminho da transação até à raiz, a que se chama prova de Merkle. Num bloco com cerca de quatro mil transações bastam uns doze hashes. A carteira recalcula a raiz com eles e compara-a com a do cabeçalho, e se coincidir, a transação está no bloco. Satoshi descreveu este método no documento original, com o nome de verificação simplificada de pagamentos. A mesma ideia reaparece no Taproot, que esconde várias condições de gasto numa árvore e revela só a que se usa, e no SegWit, onde as assinaturas têm uma árvore própria. <!-- [VERIFICAR] Confirmar com fonte o número de hashes de uma prova de Merkle (cerca de log2 de 4000, ou seja 12), a secção 8 do documento de Satoshi, o uso de árvores de Merkle no Taproot (BIP 341) e a raiz das testemunhas no SegWit (BIP 141). --></p>
     <h2>O que o SHA-256 não faz</h2>
     <p>O SHA-256 <strong>não assina transações</strong>: serve para a mineração e para encadear blocos. A assinatura usa outra matemática (curvas elípticas). Esta distinção importa para o risco quântico, porque quebrar o SHA-256 não permitiria gastar as moedas de ninguém, ao passo que forjar assinaturas permitiria.</p>
     <h2>O cabeçalho de um bloco</h2>
@@ -130,6 +133,8 @@
     <ul class="sources">
       <li>NIST, FIPS 180-4, Secure Hash Standard (SHA-256): <a href="https://csrc.nist.gov/pubs/fips/180-4/upd1/final" target="_blank" rel="noopener">csrc.nist.gov</a>.</li>
       <li>Bitcoin Developer Guide, «Block Chain»: <a href="https://developer.bitcoin.org/devguide/block_chain.html" target="_blank" rel="noopener">developer.bitcoin.org</a>.</li>
+      <li>Satoshi Nakamoto, «Bitcoin: A Peer-to-Peer Electronic Cash System», 2008, secção 8 (verificação simplificada de pagamentos).</li>
+      <li>BIP 141 (SegWit) e BIP 341 (Taproot): <a href="https://github.com/bitcoin/bips" target="_blank" rel="noopener">github.com/bitcoin/bips</a>.</li>
     </ul>
 
     <div class="done-row">
