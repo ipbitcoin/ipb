@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quando poderá um computador quântico ameaçar o Bitcoin | Curso 2 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 6.2 do Curso 2: No fim desta lição, será possível descrever as cinco fases por que a computação quântica passaria até ameaçar o Bitcoin, dizer em que fase está hoje e expl">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#curso">← Curso 2 · A Tecnologia</a>
+    <span class="where">Lição 24 de 26</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="26" aria-valuenow="24"><span style="width:92.3%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+
+    <p class="eyebrow">Módulo 6 · Computação quântica · Lição 6.2</p>
+    <h1>Quando poderá um computador quântico ameaçar o Bitcoin</h1>
+    <p class="lead">No fim desta lição, será possível descrever as cinco fases por que a computação quântica passaria até ameaçar o Bitcoin, dizer em que fase está hoje e explicar porque é que o número de qubits necessários para o ataque tem vindo a baixar.</p>
+    <p class="meta"><span>11 min de leitura</span><span>3 perguntas</span></p>
+    <h2>Uma jornada, e não um dia</h2>
+    <p>Fala-se muito de um «Q-day», o dia em que um computador quântico passaria a quebrar o Bitcoin de um momento para o outro. Neste contexto, quebrar uma chave é calcular a chave privada a partir da chave pública. O relatório da Unchained e da ARK Invest considera a ideia de um dia único demasiado simples. As tecnologias amadurecem por muitos pequenos avanços e alguns saltos, e a computação quântica deve fazer o mesmo, com vários sinais pelo caminho. O relatório divide esse caminho em cinco fases.</p>
+    <h2>As cinco fases</h2>
+    <ol class="timeline">
+      <li><span class="when">Fase 0</span><strong>Existem, mas ainda não servem</strong><p>Os computadores quânticos existem em laboratórios, mas têm poucos qubits lógicos e cometem muitos erros. Para qualquer uso comercial, os computadores comuns continuam melhores. É a fase de hoje.</p></li>
+      <li><span class="when">Fase 1</span><strong>Úteis noutras áreas</strong><p>Passam a ser úteis na química e na simulação de materiais, por exemplo para descobrir fertilizantes ou medicamentos. Para isso bastam cerca de cem qubits lógicos fiáveis, a fazer entre mil e um milhão de operações seguidas, muito menos do que para atacar o Bitcoin. Nesta fase ainda não servem para quebrar criptografia.</p></li>
+      <li><span class="when">Fase 2</span><strong>Quebram criptografia fraca</strong><p>Ficam capazes de quebrar chaves curtas e sistemas antigos, muito antes de chegarem às chaves do Bitcoin. Os ataques começam pelos sistemas mais fracos e vão subindo até aos mais fortes. O bitcoin ainda não está ameaçado.</p></li>
+      <li><span class="when">Fase 3</span><strong>Quebram chaves do Bitcoin, devagar</strong><p>Conseguem quebrar uma chave de curva elíptica, mas cada chave demora muito tempo e custa muito. As UTXOs com a chave pública à vista passam a estar em risco, uma de cada vez.</p></li>
+      <li><span class="when">Fase 4</span><strong>Quebram chaves depressa</strong><p>Uma chave quebra-se em menos tempo do que os dez minutos que demora um bloco. Passa a ser possível roubar bitcoin no momento em que é gasto, mesmo de endereços cuja chave pública estava escondida. Nesta fase, o Bitcoin precisa de assinaturas que os computadores quânticos não consigam quebrar.</p></li>
+    </ol>
+    <p>As fases podem sobrepor-se. O relatório quer mostrar que o risco aparece como uma sequência de marcos que se podem observar, e não como um acontecimento único.</p>
+    <h2>Em que fase está hoje</h2>
+    <p>Na fase 0. Segundo o Bitcoin Policy Institute, os computadores quânticos mais avançados têm alguns milhares de qubits, e o melhor chip da Google, o Willow, tem 105. O maior conjunto de átomos neutros que já se conseguiu controlar individualmente, cada um a funcionar como um qubit, tem 6.100 átomos. Estes números contam qubits físicos, e ficam muito abaixo do que o ataque exigiria, como se vê mais adiante.</p>
+    <p>Há ainda uma diferença mais difícil de ver. As melhores experiências com correção de erros, feitas noutras máquinas que não o Willow, chegam a perto de cem qubits lógicos, mas só a algumas centenas de operações seguidas. O ataque exigiria entre 1.200 e 1.450 qubits lógicos a fazer dezenas de milhões de operações seguidas.</p>
+    <p>Cada operação tem uma pequena probabilidade de falhar, e os erros acumulam-se. Num cálculo de algumas centenas de operações, isso ainda se controla. Num cálculo de milhões de operações, quase de certeza haveria um erro algures, e o resultado final estaria errado. A correção de erros resolve este problema, porque reparte cada qubit lógico por muitos qubits físicos, que se vigiam uns aos outros e corrigem os erros à medida que surgem. É por isso que a estimativa da Google precisa de menos de 500 mil qubits físicos para cerca de 1.200 a 1.450 qubits lógicos, o que dá, no máximo, 350 a 400 qubits físicos por cada qubit lógico. Para lá chegar, não basta juntar mais qubits. É preciso também reduzir muito os erros, para que um cálculo tão longo chegue ao fim sem se estragar. <!-- [VERIFICAR] Confirmar com o relatório Unchained/ARK (nota 10 e fase 3) os valores de qubits lógicos e de operações das melhores experiências, e com a Google (menos de 500 mil qubits físicos; 1.200 a 1.450 qubits lógicos; 70 a 90 milhões de portas Toffoli) o do ataque. A razão de 350 a 400 é conta própria (500.000 a dividir por 1.450 e por 1.200). --></p>
+    <p>O relatório da Unchained e da ARK Invest acrescenta que o investimento acumulado em computação quântica ronda os 60 mil milhões de dólares e que nenhuma empresa do setor dá lucro. Todo o investimento assenta na expectativa do que a tecnologia virá a fazer. <!-- [VERIFICAR] Confirmar o investimento acumulado (cerca de 60 mil milhões de dólares) e a ausência de empresas lucrativas com a fonte primária; confirmar os 6.100 átomos com o artigo da Oratomic. --></p>
+    <h2>Quanto é preciso para quebrar uma chave</h2>
+    <p>Durante anos, a estimativa corrente foi de cerca de 10 milhões de qubits físicos para quebrar uma chave do Bitcoin. A 31 de março de 2026, dois artigos de investigação mudaram este quadro.</p>
+    <p>O primeiro, da equipa Quantum AI da Google, concluiu que bastam menos de 500 mil qubits físicos, cerca de vinte vezes menos do que a estimativa anterior. O ataque exigiria entre 1.200 e 1.450 qubits lógicos, e cada chave seria quebrada em poucos minutos.</p>
+    <p>O segundo, de investigadores da Oratomic, do Caltech e de Berkeley, partiu de outro tipo de máquina, em que cada qubit é um átomo neutro controlado individualmente, e concluiu que bastam entre 10.000 e 26.000 qubits físicos. O preço é o tempo, porque cada chave levaria alguns dias.</p>
+    <p>Os dois artigos não se contradizem. O primeiro mostrou como fazer o cálculo com menos qubits e menos operações, e o segundo mostrou como construir e organizar os qubits para que sejam precisos ainda menos. Juntos mostram que o que é preciso para o ataque está a baixar mais depressa do que se esperava.</p>
+    <p>Nenhum dos artigos diz que esse computador exista ou que esteja próximo. A Google não publicou a sequência exata de operações do ataque, para não facilitar a sua execução, e publicou em vez disso uma prova criptográfica de que os resultados que anuncia são verdadeiros. <!-- [VERIFICAR] Confirmar com o blogue da Google Research e com o artigo arXiv 2603.28627 os números (500 mil qubits físicos, 1.200 a 1.450 qubits lógicos, 10.000 a 26.000 qubits, tempos de cálculo) e a não publicação dos circuitos. --></p>
+    <h2>Quando pode acontecer</h2>
+    <p>Ninguém sabe. Há quem tema um computador capaz de atacar o Bitcoin antes de 2030, e há quem aponte para daqui a décadas. As empresas e as agências que constroem ou regulam esta tecnologia, como a Google, a IBM, a Microsoft e o NIST, apontam em geral para meados da década de 2030. A Google fixou 2029 como prazo para migrar os seus próprios sistemas, e os Estados Unidos deram às agências federais até 2035. <!-- [VERIFICAR] Confirmar os prazos (Google 2029, agências federais dos EUA 2035, ordem executiva 14144 de janeiro de 2025) com fontes primárias. --></p>
+    <h2>Quanto custa o ataque</h2>
+    <p>Quebrar uma chave custa caro. Um computador quântico capaz disto seria uma das máquinas mais avançadas do mundo, a funcionar durante muito tempo, e consome muita energia, sobretudo no arrefecimento a temperaturas extremas e na eletrónica de controlo. Uma estimativa de 2023 do Homeland Security Operational Analysis Center aponta cerca de 100.000 dólares só de eletricidade por chave, a que se somam os custos de desenvolver, construir, operar e manter a máquina.</p>
+    <p>Isto tem uma consequência. O atacante só ganha se o bitcoin roubado valer mais do que o custo de quebrar a chave, por isso as primeiras UTXOs visadas seriam as de maior saldo. O relatório da Unchained e da ARK Invest espera que o custo desça com o tempo, e com ele desça a proteção que o custo dá.</p>
+    <p>Além disso, um computador quântico quebra uma chave de cada vez. Cada chave corresponde a um endereço diferente, e cada ataque só rouba o que esse endereço tiver.</p>
+    <p>Os cerca de 1,1 milhões de bitcoin atribuídos a Satoshi estão em cerca de 22.000 endereços, com 50 bitcoin cada. Se quebrar uma chave levasse uma hora, quebrá-las todas levaria cerca de dois anos e meio. Se levasse um dia, levaria cerca de 60 anos. O prazo encurtaria com vários computadores a trabalhar ao mesmo tempo e com a melhoria da tecnologia. O relatório indica apenas que roubar todo o bitcoin exposto poderia levar vários anos, e esta estimativa depende de pressupostos que ninguém pode confirmar hoje. <!-- [VERIFICAR] O relatório indica mais de três anos para uma hora por chave; 22.000 horas são cerca de 2,5 anos. Confirmar o número de endereços e o cálculo. --></p>
+    <h2>Quem teria acesso</h2>
+    <p>Hoje, os computadores quânticos existem em laboratórios de grandes instituições, que têm uma reputação a perder e não os usam para cometer crimes. Além disso, ainda não servem para esse fim.</p>
+    <p>O relatório compara o caso com a inteligência artificial. Houve quem imaginasse que uma só pessoa ou empresa inventaria uma inteligência artificial todo-poderosa, e hoje há muitas empresas a avançar ao mesmo tempo. Pela mesma razão, o relatório acha pouco provável que uma só entidade tenha um computador quântico capaz de quebrar chaves e mais ninguém. Se a tecnologia chegar a esse ponto, já será uma indústria global, com muitas empresas a fabricar computadores quânticos e a vender o seu uso por serviços na nuvem, que já existem para os computadores de hoje.</p>
+    <p>Se uma entidade conseguisse quebrar a primeira chave do Bitcoin, o relatório estima que outras estariam a poucos meses de conseguir o mesmo, e o público em geral a cerca de um ano de poder usar esses computadores à distância. Roubar bitcoin ficaria então ao alcance de muita gente, como já acontece com as burlas feitas com inteligência artificial. O que decidiria quem o tentaria seria o custo do ataque e a probabilidade de êxito. <!-- [VERIFICAR] Confirmar com o relatório Unchained/ARK (secção «Who will be able and motivated to break public Bitcoin keys?») a comparação com a inteligência artificial e as estimativas de meses e de um ano. --></p>
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      O risco quântico chega por fases, e a computação quântica está hoje na primeira. As estimativas do que é preciso para atacar o Bitcoin têm baixado, mas ninguém sabe quando existirá um computador capaz.
+    </div>
+    <h2>Verificação</h2>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>Em que fase está hoje a computação quântica?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>Na fase 0, com computadores que existem mas não têm uso comercial</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Na fase 3, a quebrar chaves do Bitcoin devagar</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Na fase 4, a quebrar chaves em poucos minutos</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Os computadores quânticos de hoje têm poucos qubits lógicos e muitos erros, e os computadores comuns continuam melhores para qualquer uso comercial.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>O que mostraram os dois artigos de 31 de março de 2026?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>Que já existe um computador quântico que quebra o Bitcoin</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Que são precisos muito menos qubits do que se pensava para quebrar uma chave do Bitcoin</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Que o algoritmo de Shor não funciona</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>A Google estimou menos de 500 mil qubits físicos e o outro artigo entre 10.000 e 26.000, contra os cerca de 10 milhões da estimativa anterior. Nenhum diz que esse computador exista.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="2">
+      <legend>Porque demoraria muito tempo roubar todas as UTXOs com a chave pública à vista?</legend>
+      <label class="opt"><input type="radio" name="q3"><span>Porque a rede muda as chaves todos os dias</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Porque o bitcoin tem de ser minerado de novo</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Porque um computador quântico só consegue quebrar uma chave de cada vez</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Cada chave é um cálculo longo e caro. O relatório estima vários anos para todas, e menos com mais computadores.</p>
+    </fieldset>
+
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>Unchained e ARK Invest, «Bitcoin and Quantum Computing», março de 2026: <a href="https://www.ark-invest.com" target="_blank" rel="noopener">ark-invest.com</a>.</li>
+      <li>Bitcoin Policy Institute, «State of Play, Quantum Computing and Bitcoin's Path Forward», abril de 2026: <a href="https://btcpolicy.org" target="_blank" rel="noopener">btcpolicy.org</a>.</li>
+      <li>Google Quantum AI, estimativa de recursos para o logaritmo discreto em curva elíptica de 256 bits, 31 de março de 2026: <a href="https://research.google/blog/safeguarding-cryptocurrency-by-disclosing-quantum-vulnerabilities-responsibly/" target="_blank" rel="noopener">research.google</a>.</li>
+      <li>Oratomic, Caltech e UC Berkeley, «Shor's algorithm is possible with as few as 10,000 reconfigurable atomic qubits»: <a href="https://arxiv.org/abs/2603.28627" target="_blank" rel="noopener">arxiv.org/abs/2603.28627</a>.</li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="6.2">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="6.1-o-que-a-computacao-quantica-ameaca.html" rel="prev"><small>← Anterior</small><span>6.1 O que um computador quântico poderia fazer ao Bitcoin</span></a>
+      <a class="next" href="6.3-como-o-bitcoin-se-prepara.html" rel="next"><small>Seguinte →</small><span>6.3 Como se protege o Bitcoin dos computadores quânticos</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>

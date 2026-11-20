@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>O que um computador quântico poderia fazer ao Bitcoin | Curso 2 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 6.1 do Curso 2: No fim desta lição, será possível explicar o que é um computador quântico, que parte da criptografia do Bitcoin ele ameaça e que parte não ameaça, e que mo">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#curso">← Curso 2 · A Tecnologia</a>
+    <span class="where">Lição 23 de 26</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="26" aria-valuenow="23"><span style="width:88.5%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+
+    <p class="eyebrow">Módulo 6 · Computação quântica · Lição 6.1</p>
+    <h1>O que um computador quântico poderia fazer ao Bitcoin</h1>
+    <p class="lead">No fim desta lição, será possível explicar o que é um computador quântico, que parte da criptografia do Bitcoin ele ameaça e que parte não ameaça, e que bitcoin fica exposto.</p>
+    <p class="meta"><span>11 min de leitura</span><span>3 perguntas</span></p>
+    <h2>O que é um computador quântico</h2>
+    <p>Um computador comum guarda a informação em bits, e cada bit vale 0 ou 1. Um computador quântico usa qubits. Quando se mede um qubit, o resultado é sempre 0 ou 1. Antes de o medir, o qubit comporta-se como se tivesse os dois valores ao mesmo tempo, cada um com uma certa probabilidade, e a essa propriedade chama-se superposição. Vários qubits juntos representam muitas combinações ao mesmo tempo. Os algoritmos quânticos organizam o cálculo de modo a que as combinações erradas se anulem e a certa fique com a maior probabilidade, e por isso encontram a resposta sem testar todas as hipóteses uma a uma. Isto não torna o computador quântico mais rápido em tudo. Torna-o muito mais rápido em alguns problemas muito específicos, e para quase tudo o resto os computadores comuns continuam melhores.</p>
+    <p>Os qubits são frágeis e cometem erros. Para os corrigir, usam-se muitos qubits físicos para formar um só qubit lógico, que é o que consegue fazer cálculos longos e fiáveis. Por isso o número que conta é o dos qubits lógicos, e não o dos físicos. Hoje, o chip Willow, da Google, tem 105 qubits físicos, e as melhores experiências com correção de erros, feitas noutras máquinas, chegam a perto de cem qubits lógicos, mas só em cálculos curtos. As estimativas mais recentes para atacar o Bitcoin pedem entre 1.200 e 1.450 qubits lógicos a fazer cálculos de dezenas de milhões de operações. <!-- [VERIFICAR] Confirmar o número de qubits lógicos das melhores experiências (relatório Unchained/ARK, março de 2026, nota 10) e as estimativas da Google (blogue da Google Research, 31 de março de 2026). --></p>
+    <h2>O que a criptografia do Bitcoin usa</h2>
+    <p>A segurança do Bitcoin assenta em dois mecanismos diferentes. O primeiro são as funções de hash, como o SHA-256. Uma função de hash transforma qualquer dado numa sequência curta de tamanho fixo, e a partir da sequência é impossível voltar ao dado original. Serve para a mineração, para ligar os blocos uns aos outros e para calcular a maior parte dos endereços. O segundo são as assinaturas digitais, que usam curvas elípticas e servem para provar quem é o dono de cada UTXO, isto é, de cada pedaço de bitcoin por gastar. Um computador quântico ameaça os dois de forma muito diferente.</p>
+    <h2>Dois algoritmos quânticos</h2>
+    <h3>Grover contra as funções de hash</h3>
+    <p>O algoritmo de Grover procura uma solução entre muitas possibilidades mais depressa do que um computador comum, mas só ao ponto de reduzir o número de tentativas à sua raiz quadrada. No SHA-256, isso baixa a segurança de 256 para cerca de 128 bits, e 128 bits continuam a exigir cerca de 3,4 × 10<sup>38</sup> tentativas, um número tão grande que nenhum computador, quântico ou comum, o consegue fazer num prazo razoável.</p>
+    <p>Na mineração, o Grover permitiria a um computador quântico fazer a procura com menos tentativas. Se os blocos passassem a sair mais depressa do que de dez em dez minutos, a rede subiria a dificuldade para todos os mineradores, incluindo o quântico, o que faz a cada 2016 blocos, e o ritmo voltava ao normal. Um minerador quântico seria, na prática, um minerador com mais poder de computação do que os outros, e ficaria com uma parte maior dos blocos. Com o tempo, outros mineradores também teriam computadores quânticos, e a vantagem desapareceria. Por estas duas razões, as funções de hash são consideradas resistentes a computadores quânticos.</p>
+    <h3>Shor contra as assinaturas</h3>
+    <p>A chave pública calcula-se a partir da chave privada por uma operação matemática numa curva elíptica, e essa operação faz-se num instante. O caminho inverso, que é descobrir qual a chave privada que deu origem a uma chave pública, é um problema a que se chama logaritmo discreto. Com uma chave de 256 bits, um computador comum precisaria de muito mais tempo do que a idade do universo para o resolver.</p>
+    <p>O algoritmo de Shor resolve este problema muito mais depressa. Aproveita a superposição para descobrir o padrão que se repete dentro da operação, o que um computador comum só consegue tentando as hipóteses uma a uma. Hoje, quem conhece a chave pública de uma UTXO não consegue gastá-la. Com um computador quântico suficientemente grande, quem conhecesse essa chave pública poderia calcular a chave privada, assinar uma transação para um endereço seu e gastar a UTXO. A rede aceitaria a transação, porque a assinatura seria válida, e não saberia distinguir o dono verdadeiro de quem calculou a chave.</p>
+    <p>Uma carteira de hardware ou uma passphrase não mudam nada nisto, porque o que o computador quântico ataca é a matemática da assinatura. Se esta matemática falhasse, falhariam também os bancos, as comunicações e os governos, que usam a mesma criptografia. O problema não é só do Bitcoin.</p>
+    <h2>Que UTXOs ficam expostas</h2>
+    <p>Para atacar uma UTXO, o computador quântico precisa de conhecer a sua chave pública. Na maior parte dos endereços, essa chave não aparece. O endereço é o resultado de uma função de hash aplicada à chave pública, e a chave só se torna pública na blockchain quando a UTXO é gasta. Enquanto a UTXO está parada, o hash esconde a chave pública, e o computador quântico não tem por onde começar.</p>
+    <p>Ficam expostas as UTXOs cuja chave pública já está à vista, e isso acontece em três situações. A primeira são os endereços antigos do tipo P2PK, usados nos primeiros anos do Bitcoin, em que a chave pública faz parte do próprio endereço. A segunda são os endereços reutilizados. Quando alguém gasta parte do saldo de um endereço, a transação revela a chave pública, e o que sobra nesse endereço fica exposto a partir daí. A terceira são os endereços Taproot, que contêm diretamente uma chave pública, em vez de um hash dela.</p>
+    <p>Segundo o relatório da Unchained e da ARK Invest, de março de 2026, cerca de 6,9 milhões de bitcoin, perto de 35% do total em circulação, estão em endereços com a chave pública à vista. Cerca de 1,7 milhões estão em endereços P2PK e acredita-se que estejam perdidos. Os outros cerca de 5,2 milhões estão em endereços reutilizados ou Taproot, e os donos podem movê-los para endereços seguros. Os restantes, cerca de 65%, estão em endereços cuja chave pública ainda não é visível. <!-- [VERIFICAR] Confirmar os números (dados da Project Eleven e da Glassnode, a 17 de fevereiro de 2026) com a fonte primária. --></p>
+    <p>Mesmo as UTXOs que estão protegidas ficam expostas no momento em que são gastas. Quando a transação é publicada, a chave pública fica visível na mempool, a lista de espera das transações, até a transação entrar num bloco, o que demora cerca de dez minutos em média.</p>
+    <p>Um atacante com um computador quântico poderia vigiar a mempool, ver a chave pública de uma transação acabada de publicar e calcular a chave privada correspondente. Com ela, assinaria uma segunda transação, a gastar a mesma UTXO para um endereço seu, e pagaria uma taxa mais alta. Os mineradores preferem as transações que pagam mais, por isso incluiriam a do atacante num bloco, e a transação original, que gasta a mesma UTXO, deixaria de ser válida. Para isto resultar, o cálculo teria de ficar pronto antes de a transação original ser confirmada. A Google estima que um computador quântico muito rápido, já preparado, poderia fazê-lo em cerca de nove minutos, o que é próximo dos dez minutos de um bloco. Isto exigiria um computador muito mais avançado do que os de hoje. <!-- [VERIFICAR] Confirmar com o artigo da Google Quantum AI (31 de março de 2026) a estimativa de cerca de 9 minutos para o ataque a partir de um estado preparado. --></p>
+    <h2>O que um computador quântico não consegue fazer</h2>
+    <p>Um computador quântico permitiria roubar bitcoin. O ataque consiste em calcular a chave privada de uma UTXO a partir da sua chave pública, e só funciona nas UTXOs em que essa chave é conhecida. As UTXOs cuja chave pública ainda não é visível continuam protegidas enquanto não forem gastas.</p>
+    <p>Não cria bitcoin novo. O bitcoin novo só nasce na recompensa de cada bloco, com um valor fixado pelas regras, e todos os nós rejeitam um bloco que se desvie delas, seja quem for que o produza. Pela mesma razão, não altera o limite de 21 milhões nem as outras regras da rede.</p>
+    <p>Também não apaga a blockchain, porque ela existe em milhares de cópias, guardadas pelos nós.</p>
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      O computador quântico ameaça as assinaturas, e não as funções de hash. Ficam expostas as UTXOs cuja chave pública já está à vista, e todas as outras ficam expostas no momento em que se gastam.
+    </div>
+    <h2>Verificação</h2>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>Que parte da criptografia do Bitcoin um computador quântico poderia quebrar?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>As funções de hash, como o SHA-256</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>As assinaturas digitais de curva elíptica</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>O limite de 21 milhões</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>O algoritmo de Shor calcula a chave privada a partir da chave pública. O de Grover só reduz a segurança do SHA-256 de 256 para cerca de 128 bits, o que continua a ser demasiado para qualquer ataque.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="2">
+      <legend>Porque estão mais expostas as UTXOs em endereços P2PK?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>Porque os mineradores as controlam</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Porque as UTXOs mais antigas valem menos</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Porque a chave pública já está à vista na blockchain</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Quem conhece a chave pública pode, com um computador quântico suficientemente grande, calcular a chave privada. Nos endereços comuns, a chave só aparece quando a UTXO é gasta.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>Porque fica exposta uma UTXO quando é gasta, mesmo a partir de um endereço seguro?</legend>
+      <label class="opt"><input type="radio" name="q3"><span>Porque a chave pública fica visível enquanto a transação espera por um bloco</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Porque a taxa sobe</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Porque o endereço muda</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Se um computador quântico calcular a chave privada em menos de dez minutos, pode gastar a UTXO antes de a transação original ser confirmada.</p>
+    </fieldset>
+
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>Unchained e ARK Invest, «Bitcoin and Quantum Computing», março de 2026: <a href="https://www.ark-invest.com" target="_blank" rel="noopener">ark-invest.com</a>.</li>
+      <li>Bitcoin Policy Institute, «State of Play, Quantum Computing and Bitcoin's Path Forward», abril de 2026: <a href="https://btcpolicy.org" target="_blank" rel="noopener">btcpolicy.org</a>.</li>
+      <li>Google Research, «Safeguarding cryptocurrency by disclosing quantum vulnerabilities responsibly»: <a href="https://research.google/blog/safeguarding-cryptocurrency-by-disclosing-quantum-vulnerabilities-responsibly/" target="_blank" rel="noopener">research.google</a>.</li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="6.1">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="5.5-transacoes-e-comissoes.html" rel="prev"><small>← Anterior</small><span>5.5 Transações, mempool e taxas</span></a>
+      <a class="next" href="6.2-quao-perto-esta-a-ameaca.html" rel="next"><small>Seguinte →</small><span>6.2 Quando poderá um computador quântico ameaçar o Bitcoin</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>

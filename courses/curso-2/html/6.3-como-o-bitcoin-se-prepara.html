@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Como se protege o Bitcoin dos computadores quânticos | Curso 2 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 6.3 do Curso 2: No fim desta lição, será possível dizer que soluções existem, porque o Bitcoin demora a adotá-las, o que propõe o BIP-360 e que opções há para as moedas qu">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#curso">← Curso 2 · A Tecnologia</a>
+    <span class="where">Lição 25 de 26</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="26" aria-valuenow="25"><span style="width:96.2%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+
+    <p class="eyebrow">Módulo 6 · Computação quântica · Lição 6.3</p>
+    <h1>Como se protege o Bitcoin dos computadores quânticos</h1>
+    <p class="lead">No fim desta lição, será possível dizer que soluções existem, porque o Bitcoin demora a adotá-las, o que propõe o BIP-360 e que opções há para as moedas que não migrarem.</p>
+    <p class="meta"><span>12 min de leitura</span><span>3 perguntas</span></p>
+    <h2>As soluções já existem</h2>
+    <p>A criptografia pós-quântica é a que os computadores quânticos não conseguem quebrar. Em agosto de 2024, o NIST, o instituto norte-americano de normas, publicou as primeiras normas de criptografia pós-quântica. Duas são de assinaturas digitais. O ML-DSA assenta num problema matemático sobre reticulados, que são grelhas regulares de pontos num espaço com centenas de dimensões. Encontrar nessa grelha o ponto mais próximo de um ponto dado é muito difícil, e não se conhece nenhum algoritmo, quântico ou comum, que o resolva depressa. O SLH-DSA assenta apenas em funções de hash, as mesmas que o Bitcoin já usa. Navegadores, redes de distribuição de conteúdos e programas como o OpenSSH já usam criptografia pós-quântica, e parte do tráfego da internet já está protegida. <!-- [VERIFICAR] Confirmar com o NIST as normas de agosto de 2024 (FIPS 203, 204 e 205) e a adoção no OpenSSH e nos navegadores. --></p>
+    <h2>Porque é mais difícil no Bitcoin</h2>
+    <p>Adotar criptografia pós-quântica no Bitcoin é mais difícil do que numa empresa, por três razões.</p>
+    <p>A primeira é o espaço. A blockchain tem espaço limitado, e quem quer que uma transação entre num bloco paga ao minerador uma taxa que depende do espaço que a transação ocupa. As assinaturas pós-quânticas são muito maiores do que as atuais, e por isso cada transação ocuparia mais espaço e custaria mais em taxas.</p>
+    <p>A segunda é a compatibilidade. A solução tem de funcionar com as carteiras, as carteiras de hardware e os métodos de guardar chaves que já existem, porque muita gente os usa.</p>
+    <p>A terceira é o consenso. O Bitcoin não tem um dirigente que decida uma atualização, como um banco ou um governo. Qualquer alteração às regras exige a concordância de programadores, mineradores, empresas e utilizadores, e ninguém a pode impor. Mesmo as alterações mais simples, as soft forks, que os nós antigos continuam a aceitar, causaram tensões e divisões no passado.</p>
+    <p>Mudar devagar também protege. Uma empresa corrige e reverte um programa que tenha um defeito. No Bitcoin, uma alteração às regras que já esteja em uso é muito difícil de desfazer, porque exige de novo o consenso de todos. Uma solução escolhida à pressa, com uma falha escondida, podia ser explorada por atacantes, estragar outras funções da rede e obrigar a novas alterações. Por isso o Bitcoin muda poucas vezes, e a mesma lentidão que atrasa a resposta ao risco quântico protege a rede de más ideias, incluindo as que quisessem alterar o limite de 21 milhões.</p>
+    <h2>O BIP-360</h2>
+    <p>Um BIP (<em>Bitcoin Improvement Proposal</em>) é uma proposta de melhoria do Bitcoin, escrita por programadores e discutida em público. A mais discutida sobre este tema é o BIP-360, que propõe um novo tipo de endereço, o Pay-to-Merkle-Root, ou P2MR.</p>
+    <p>Um endereço Taproot pode ser gasto de duas maneiras. Na primeira, o dono assina com a chave que corresponde ao endereço, e para isso a chave pública fica à vista. É esta chave que um computador quântico atacaria. Na segunda, o dono cumpre um conjunto de condições definido de antemão. O P2MR elimina a primeira maneira e deixa só a segunda. O endereço deixa de conter uma chave pública, e as condições podem incluir, mais tarde, assinaturas pós-quânticas, acrescentadas por novas soft forks.</p>
+    <p>O BIP-360 não é, por si só, uma proteção completa. Protege as UTXOs que, de outro modo, ficariam durante anos com a chave pública à vista, mas não impede o ataque rápido, feito no momento do gasto, que só as assinaturas pós-quânticas resolvem. É ainda um rascunho. Foi aceite no repositório de propostas no início de 2026, o que não quer dizer que vá ser aprovado nem ativado. Em março de 2026 arrancou uma rede de testes com a proposta. <!-- [VERIFICAR] Confirmar com o texto do BIP-360 e com fontes independentes o estado (rascunho), a data de integração no repositório (as notícias dão entre 12 e 15 de fevereiro de 2026), as limitações descritas e a rede de testes de março de 2026 (Bitcoin Policy Institute). --></p>
+    <p>O Taproot, ativado em 2021, já tem este segundo caminho de gasto. Cada endereço Taproot pode esconder uma árvore de condições alternativas, e só se revela a condição que for usada para gastar. Segundo o Bitcoin Policy Institute, é possível configurar uma dessas condições para exigir uma verificação que resista a computadores quânticos, o que quer dizer que o Taproot foi desenhado com espaço para atualizações deste género.</p>
+    <p>Falta, porém, definir essas assinaturas pós-quânticas nas regras do Bitcoin, e isso exige uma nova soft fork. Sem ela, o segundo caminho existe, mas não há ainda uma assinatura pós-quântica que a rede aceite. <!-- [VERIFICAR] Confirmar esta afirmação do Bitcoin Policy Institute com uma fonte técnica, incluindo que as regras do Taproot deixam espaço para novas condições e que ainda não há assinaturas pós-quânticas aceites pela rede. --></p>
+    <h2>Três cenários</h2>
+    <p>Ninguém sabe quando existirá um computador quântico capaz de atacar o Bitcoin. Por isso, o relatório da Unchained e da ARK Invest descreve três cenários, consoante a tecnologia avance de forma súbita, trave ou siga o ritmo esperado.</p>
+    <h3>O avanço é súbito</h3>
+    <p>Um salto inesperado leva a computação quântica à fase 3 ou 4 antes de a rede estar preparada. Os programadores teriam de escolher depressa, sem tempo para uma análise cuidadosa. A solução podia não ser a melhor, podia exigir carteiras novas e podia gerar conflitos entre os participantes. Mesmo assim, o relatório conclui que o Bitcoin continuaria a funcionar, porque qualquer pessoa pode atualizar e distribuir o software, e a rede acabaria por seguir a versão que não fosse atacada. Seria, além disso, uma crise de toda a economia digital, e não só do Bitcoin, porque os bancos, as comunicações e os governos usam a mesma criptografia.</p>
+    <h3>O avanço trava</h3>
+    <p>A computação quântica esbarra em obstáculos e o prazo estende-se por décadas. O Bitcoin teria tempo para escolher uma criptografia já testada noutros sítios, e as carteiras, os fabricantes e as empresas teriam tempo para se adaptar. A maioria dos utilizadores passaria para endereços novos sem pressa.</p>
+    <h3>O avanço é o esperado</h3>
+    <p>Os computadores quânticos que ameaçam o Bitcoin chegariam daqui a 10 a 20 anos. Antes disso, passariam a ser úteis noutras áreas, e isso aumentaria a perceção do risco e a urgência de agir. A rede teria tempo para adotar endereços seguros antes da fase 3. A escolha podia ser imperfeita e ser criticada durante anos, mas ficaria feita antes de o ataque ser possível.</p>
+    <h2>O bitcoin que não migra</h2>
+    <p>Quando existirem endereços resistentes a computadores quânticos, quem tem as chaves poderá mover o bitcoin para eles. O bitcoin perdido ou abandonado não se move, porque ninguém tem as chaves para o fazer. Cerca de 1,7 milhões de bitcoin estão em endereços P2PK que se acredita perdidos, e entre eles estão os de Satoshi. Estes endereços têm a chave pública à vista, por isso um computador quântico capaz acabaria por os roubar, um endereço de cada vez. Há três opções para lidar com isto.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Opção</th><th>O que implica</th></tr></thead>
+        <tbody>
+          <tr><td>Deixá-lo como está</td><td>O bitcoin roubado entra em circulação, e quem o rouba pode vendê-lo, o que aumenta a oferta no mercado</td></tr>
+          <tr><td>Congelá-lo ou destruí-lo, com aviso prévio</td><td>A comunidade decide sobre a propriedade de outros, e fica aberto um precedente de censura</td></tr>
+          <tr><td>Fixar uma data a partir da qual deixa de poder ser gasto</td><td>Quem não mover o bitcoin até lá perde o acesso</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Congelar o bitcoin quer dizer que ninguém o pode gastar, e destruí-lo quer dizer que deixa de existir. Nos dois casos, o aviso prévio dá aos donos o tempo de o mover para endereços seguros.</p>
+    <p>Quem propõe congelar argumenta que os antigos donos perdem o bitcoin de qualquer forma, e que é melhor para a rede que ele deixe de circular do que ser roubado. Quem se opõe argumenta que impedir uma UTXO de ser gasta por decisão da comunidade abre um precedente de censura, e que o Bitcoin vale precisamente por dar ao titular um controlo que ninguém lhe pode retirar.</p>
+    <p>As duas discussões devem tratar-se em separado. A primeira é técnica e trata de que criptografia adotar e de como a pôr em funcionamento na rede. A segunda é política e trata do que fazer ao bitcoin vulnerável.</p>
+    <p>Misturá-las prejudica a primeira. A controvérsia sobre congelar bitcoin tem atrasado a decisão sobre a criptografia, e sem criptografia nova ninguém tem para onde mover o bitcoin. <!-- [VERIFICAR] Confirmar com o relatório Unchained/ARK (secção «No Consensus Exists About Protecting Coins That Remain Vulnerable To Quantum») que a situação por omissão é não congelar e que as duas discussões se misturam. --></p>
+    <h2>O que cada titular pode fazer</h2>
+    <p>Hoje não existe nenhum ataque possível, por isso não há motivo para pressa. Há, porém, três coisas que reduzem a exposição desde já.</p>
+    <p>A primeira é não reutilizar endereços. Cada vez que um endereço é reutilizado, a chave pública fica à vista, por isso convém usar um endereço novo a cada receção, o que as carteiras modernas fazem sozinhas. A segunda é mover o bitcoin que esteja em endereços antigos ou reutilizados para endereços novos, gerados por uma carteira atual. A terceira é acompanhar a evolução. Quando existirem endereços resistentes a computadores quânticos, será preciso mover o bitcoin para eles, e é provável que as carteiras ofereçam essa migração.</p>
+    <p>Convém também desconfiar. O medo de um ataque quântico serve de pretexto a burlas, como os falsos serviços de «migração» que pedem a frase de recuperação. Nenhum serviço legítimo a pede, e a migração faz-se sempre na própria carteira. <!-- [VERIFICAR] Confirmar que a migração para endereços resistentes se fará na própria carteira, e não por serviços externos; é previsão e cautela próprias, sem fonte. --></p>
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      As soluções criptográficas já existem. O que falta ao Bitcoin é um acordo sobre qual adotar e sobre o que fazer ao bitcoin que não migra, e uma decisão tomada com calma é mais segura do que uma tomada à pressa.
+    </div>
+    <h2>Verificação</h2>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>O que é a criptografia pós-quântica?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>Criptografia que os computadores quânticos não conseguem quebrar</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Criptografia que só funciona em computadores quânticos</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Criptografia que substitui o SHA-256 na mineração</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>O NIST publicou as primeiras normas em agosto de 2024, e parte da internet já as usa.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="2">
+      <legend>Porque é mais difícil adotá-la no Bitcoin do que num programa de uma empresa?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>Porque ninguém conhece criptografia pós-quântica</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Porque as assinaturas pós-quânticas ocupam menos espaço</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Porque exige acordo entre muitos participantes e as assinaturas pós-quânticas são maiores</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Ninguém pode impor a mudança, e o espaço na blockchain é limitado e caro.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>O que propõe o BIP-360?</legend>
+      <label class="opt"><input type="radio" name="q3"><span>Congelar as moedas de Satoshi</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Um novo tipo de saída em que o endereço não contém a chave pública, como base para assinaturas pós-quânticas</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Aumentar o limite de 21 milhões</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>É um rascunho, ainda não ativado, e não é por si só uma proteção completa.</p>
+    </fieldset>
+
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>NIST, «Post-Quantum Cryptography»: <a href="https://csrc.nist.gov/projects/post-quantum-cryptography" target="_blank" rel="noopener">csrc.nist.gov</a>.</li>
+      <li>BIP-360, «Pay to Merkle Root (P2MR)»: <a href="https://github.com/bitcoin/bips" target="_blank" rel="noopener">github.com/bitcoin/bips</a>.</li>
+      <li>Unchained e ARK Invest, «Bitcoin and Quantum Computing», março de 2026: <a href="https://www.ark-invest.com" target="_blank" rel="noopener">ark-invest.com</a>.</li>
+      <li>Bitcoin Policy Institute, «State of Play, Quantum Computing and Bitcoin's Path Forward», abril de 2026: <a href="https://btcpolicy.org" target="_blank" rel="noopener">btcpolicy.org</a>.</li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="6.3">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="6.2-quao-perto-esta-a-ameaca.html" rel="prev"><small>← Anterior</small><span>6.2 Quando poderá um computador quântico ameaçar o Bitcoin</span></a>
+      <a class="next" href="7.1-revisao-e-proximos-passos.html" rel="next"><small>Seguinte →</small><span>7.1 Revisão e próximos passos</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 # Curso 2 · A Tecnologia: plano
 
-Reescrito em novembro de 2026 a partir da estrutura temática. 24 lições, cerca de 4 h 20 min. Sem workshops.
+Reescrito em novembro de 2026 a partir da estrutura temática. 26 lições, cerca de 4 h 42 min. Sem workshops.
 
 Regras: linguagem neutra, «mineradores», «energia desperdiçada», «a Bitcoin» (rede) e «o Bitcoin» (ativo).
 
@@ -38,8 +38,10 @@ Regras: linguagem neutra, «mineradores», «energia desperdiçada», «a Bitcoi
 - 5.4 Como guardar a frase de recuperação (10 min)
 - 5.5 Transações, mempool e comissões (10 min)
 
-## Módulo 6 · Riscos técnicos
-- 6.1 Ameaça quântica e migração (12 min)
+## Módulo 6 · Computação quântica
+- 6.1 O que um computador quântico poderia fazer ao Bitcoin (11 min)
+- 6.2 Quando poderá um computador quântico ameaçar o Bitcoin (11 min)
+- 6.3 Como se protege o Bitcoin dos computadores quânticos (12 min)
 
 ## Módulo 7 · Fecho
 - 7.1 Revisão e próximos passos (10 min)

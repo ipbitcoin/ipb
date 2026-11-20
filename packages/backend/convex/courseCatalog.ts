@@ -70,8 +70,8 @@ export const ONLINE_COURSES: readonly OnlineCourse[] = [
   },
   {
     description: {
-      en: "How Bitcoin works inside, what a wallet really is and how to keep your own Bitcoin safe. Ends with a hands-on workshop.",
-      pt: "Como a Bitcoin funciona por dentro, o que é realmente uma carteira e como guardar o próprio Bitcoin em segurança. Termina com um workshop prático.",
+      en: "How Bitcoin works inside, what a wallet really is and how to keep your own Bitcoin safe.",
+      pt: "Como a Bitcoin funciona por dentro, o que é realmente uma carteira e como guardar o próprio Bitcoin em segurança.",
     },
     diplomaTopic: {
       pt: "o funcionamento da rede, as carteiras e a autocustódia",
