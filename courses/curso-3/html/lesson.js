@@ -185,6 +185,23 @@
     run();
   }
 
+
+  // Figuras com estados: os botões de .fig-tabs mostram um grupo do SVG e escondem os outros.
+  document.querySelectorAll(".fig-tabs").forEach(function (tabs) {
+    var fig = tabs.closest("figure");
+    if (!fig) return;
+    tabs.hidden = false;
+    var btns = tabs.querySelectorAll("button[data-fig-show]");
+    btns.forEach(function (b) {
+      b.addEventListener("click", function () {
+        btns.forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+        fig.querySelectorAll("[data-fig-state]").forEach(function (g) {
+          g.style.display = g.id === b.getAttribute("data-fig-show") ? "" : "none";
+        });
+      });
+    });
+  });
+
   // Lição concluída. No site, o estado vem da conta e guarda-se no servidor.
   var done = document.getElementById("done");
   if (done) {
