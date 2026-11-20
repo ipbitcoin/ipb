@@ -539,4 +539,89 @@
     posRange.addEventListener("input", posRun);
     posRun();
   }
+  // Cadeia de blocos ao vivo (Curso 2, lição 1.1): o hash de cada bloco calcula-se com o SHA-256 a partir do texto.
+  var chainLive = document.getElementById("f11-live");
+  if (chainLive) {
+    var sha256 = function (msg) {
+      var K = [], i, j;
+      var isPrime = function (n) { for (var d = 2; d * d <= n; d++) if (n % d === 0) return false; return true; };
+      var frac = function (x) { return ((x - Math.floor(x)) * 4294967296) | 0; };
+      for (var n = 2, c = 0; c < 64; n++) if (isPrime(n)) { K[c++] = frac(Math.cbrt(n)); }
+      var H = []; for (n = 2, c = 0; c < 8; n++) if (isPrime(n)) { H[c++] = frac(Math.sqrt(n)); }
+      var bytes = Array.prototype.slice.call(new TextEncoder().encode(msg));
+      var bitLen = bytes.length * 8;
+      bytes.push(0x80);
+      while (bytes.length % 64 !== 56) bytes.push(0);
+      for (i = 7; i >= 0; i--) bytes.push(i >= 4 ? 0 : (bitLen >>> (i * 8)) & 255);
+      var rotr = function (x, k) { return (x >>> k) | (x << (32 - k)); };
+      for (var off = 0; off < bytes.length; off += 64) {
+        var w = [];
+        for (i = 0; i < 16; i++) w[i] = (bytes[off + 4 * i] << 24) | (bytes[off + 4 * i + 1] << 16) | (bytes[off + 4 * i + 2] << 8) | bytes[off + 4 * i + 3];
+        for (i = 16; i < 64; i++) {
+          var s0 = rotr(w[i - 15], 7) ^ rotr(w[i - 15], 18) ^ (w[i - 15] >>> 3);
+          var s1 = rotr(w[i - 2], 17) ^ rotr(w[i - 2], 19) ^ (w[i - 2] >>> 10);
+          w[i] = (w[i - 16] + s0 + w[i - 7] + s1) | 0;
+        }
+        var a = H[0], b = H[1], cc = H[2], d = H[3], e = H[4], f = H[5], g = H[6], h = H[7];
+        for (i = 0; i < 64; i++) {
+          var S1 = rotr(e, 6) ^ rotr(e, 11) ^ rotr(e, 25);
+          var ch = (e & f) ^ (~e & g);
+          var t1 = (h + S1 + ch + K[i] + w[i]) | 0;
+          var S0 = rotr(a, 2) ^ rotr(a, 13) ^ rotr(a, 22);
+          var maj = (a & b) ^ (a & cc) ^ (b & cc);
+          var t2 = (S0 + maj) | 0;
+          h = g; g = f; f = e; e = (d + t1) | 0; d = cc; cc = b; b = a; a = (t1 + t2) | 0;
+        }
+        H[0] = (H[0] + a) | 0; H[1] = (H[1] + b) | 0; H[2] = (H[2] + cc) | 0; H[3] = (H[3] + d) | 0;
+        H[4] = (H[4] + e) | 0; H[5] = (H[5] + f) | 0; H[6] = (H[6] + g) | 0; H[7] = (H[7] + h) | 0;
+      }
+      var hex = ""; for (i = 0; i < 8; i++) hex += ("00000000" + (H[i] >>> 0).toString(16)).slice(-8);
+      return hex;
+    };
+    window.ipbSha256 = sha256;
+    var chainTx = ["Ana paga 2 a Rui", "Rui paga 1 a Eva", "Eva paga 1 a Leo", "Leo paga 2 a Ana"];
+    var chainShort = function (txt, prev) { return sha256(prev + "|" + txt).slice(0, 8); };
+    var chainPrev = ["00000000"], chainHash = [];
+    var chainEls = [];
+    var chainFig = chainLive.closest("figure");
+    var chainBtn = document.getElementById("f11-redo");
+    var chainRun = function () {
+      var i, bad = false, firstBad = -1;
+      for (i = 0; i < 4; i++) {
+        chainHash[i] = chainShort(chainTx[i], chainPrev[i]);
+        var ok = i === 0 || chainPrev[i] === chainHash[i - 1];
+        if (!ok && firstBad < 0) firstBad = i;
+        var valid = firstBad < 0;
+        chainEls[i].block.className = "chain-block" + (valid ? "" : " bad");
+        chainEls[i].prev.textContent = chainPrev[i];
+        chainEls[i].hash.textContent = chainHash[i];
+        chainEls[i].status.textContent = valid ? "encaixa no bloco anterior" : (i === firstBad ? "já não encaixa" : "rejeitado, vem depois");
+      }
+      chainBtn.hidden = firstBad < 0;
+      chainBtn.dataset.from = firstBad;
+    };
+    for (var bi = 0; bi < 4; bi++) {
+      (function (i) {
+        var block = document.createElement("div");
+        block.className = "chain-block";
+        block.innerHTML = '<div class="chain-head"><strong>Bloco ' + (i + 1) + '</strong><span class="chain-status"></span></div>' +
+          '<label>Transações<input type="text" maxlength="40" value="' + chainTx[i] + '"></label>' +
+          '<div class="chain-row"><span>Hash anterior</span><code class="prev"></code></div>' +
+          '<div class="chain-row"><span>O seu hash</span><code class="hash"></code></div>';
+        chainLive.appendChild(block);
+        chainEls[i] = { block: block, prev: block.querySelector(".prev"), hash: block.querySelector(".hash"), status: block.querySelector(".chain-status") };
+        block.querySelector("input").addEventListener("input", function (ev) { chainTx[i] = ev.target.value; chainRun(); });
+      })(bi);
+    }
+    for (var k = 1; k < 4; k++) chainPrev[k] = chainShort(chainTx[k - 1], chainPrev[k - 1]);
+    chainBtn.addEventListener("click", function () {
+      var from = parseInt(chainBtn.dataset.from, 10);
+      for (var m = from; m < 4; m++) chainPrev[m] = chainShort(chainTx[m - 1], chainPrev[m - 1]);
+      chainRun();
+    });
+    chainFig.querySelectorAll(".f11-static").forEach(function (el) { el.setAttribute("hidden", ""); });
+    chainLive.hidden = false;
+    chainFig.querySelector("figcaption").textContent = "Quatro blocos ligados pelo hash do bloco anterior. Os hashes calculam-se a sério, com o SHA-256, e mostram-se só os primeiros oito caracteres. Alterar o texto de uma transação mostra o que acontece à cadeia.";
+    chainRun();
+  }
 })();
