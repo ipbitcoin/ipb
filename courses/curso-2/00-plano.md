@@ -33,10 +33,10 @@ Regras: linguagem neutra, «mineradores», «energia desperdiçada», «a Bitcoi
 
 ## Módulo 5 · Chaves e carteiras
 - 5.1 Quem guarda as chaves (10 min)
-- 5.2 Chaves, endereços e frase de recuperação (12 min)
+- 5.2 Chaves, endereços e frase de recuperação (14 min)
 - 5.3 Tipos de carteira (10 min)
 - 5.4 Como guardar a frase de recuperação (10 min)
-- 5.5 Transações, mempool e comissões (12 min)
+- 5.5 Transações, mempool e comissões (10 min)
 
 ## Módulo 6 · Riscos técnicos
 - 6.1 Ameaça quântica e migração (12 min)

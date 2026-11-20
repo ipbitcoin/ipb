@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tipos de carteira | Curso 2 | Instituto Português de Bitcoin</title>
-  <meta name="description" content="Lição 5.3 do Curso 2: No fim desta lição, será possível distinguir os tipos de carteira e escolher o que serve a cada situação.">
+  <meta name="description" content="Lição 5.3 do Curso 2: No fim desta lição, será possível distinguir os tipos de carteira, dizer para que serve cada um e reconhecer os sinais de uma carteira que não é segura.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
@@ -25,75 +25,81 @@
 
     <p class="eyebrow">Módulo 5 · Chaves e carteiras · Lição 5.3</p>
     <h1>Tipos de carteira</h1>
-    <p class="lead">No fim desta lição, será possível distinguir os tipos de carteira e escolher o que serve a cada situação.</p>
+    <p class="lead">No fim desta lição, será possível distinguir os tipos de carteira, dizer para que serve cada um e reconhecer os sinais de uma carteira que não é segura.</p>
     <p class="meta"><span>10 min de leitura</span><span>3 perguntas</span></p>
 
 
     <h2>Uma questão de equilíbrio</h2>
-    <p>Há carteiras mais cómodas e outras mais seguras. Não há uma melhor para tudo, como não há para o dinheiro: levam-se uns euros no bolso, o resto no banco ou em casa. A escolha depende de <strong>quanto se tem</strong> e de <strong>quantas vezes</strong> é preciso mexer nele.</p>
+    <p>Quanto mais cómoda é uma carteira, mais ligada está à internet e mais exposta fica a ataques. Quanto mais segura é, mais trabalho dá a usar. Não existe uma carteira melhor para tudo. A escolha depende de quanto bitcoin se guarda e de quantas vezes é preciso mexer nele.</p>
     <h2>Os tipos</h2>
     <div class="table-wrap">
       <table>
         <thead><tr><th>Tipo</th><th>Quem tem as chaves</th><th>Para quê</th><th>Risco principal</th></tr></thead>
         <tbody>
-          <tr><td>Conta numa plataforma</td><td>A plataforma</td><td>Comprar, vender, começar</td><td>Falência, ataque, congelamento</td></tr>
-          <tr><td>Carteira de telemóvel ou computador (<em>hot wallet</em>)</td><td>O titular</td><td>Valores pequenos, uso diário</td><td>Malware, telemóvel roubado, phishing</td></tr>
-          <tr><td>Carteira de hardware (<em>cold wallet</em>)</td><td>O titular</td><td>Poupança a médio e longo prazo</td><td>Compra a vendedor errado, perda da frase</td></tr>
-          <tr><td>Carteira «air-gapped»</td><td>O titular</td><td>Valores grandes, máxima segurança</td><td>Complexidade, erro humano</td></tr>
-          <tr><td>Multiassinatura (<em>multisig</em>)</td><td>O titular, com várias chaves</td><td>Valores grandes, empresas, famílias</td><td>Complexidade e perda de uma das chaves</td></tr>
+          <tr><td>Conta numa plataforma</td><td>A plataforma</td><td>Comprar e vender</td><td>Falência, ataque, congelamento</td></tr>
+          <tr><td>Carteira de telemóvel ou de computador (<em>hot wallet</em>)</td><td>O titular</td><td>Valores pequenos, uso diário</td><td>Programas maliciosos, telemóvel roubado, phishing</td></tr>
+          <tr><td>Carteira de hardware (<em>cold wallet</em>)</td><td>O titular</td><td>Poupança a médio e longo prazo</td><td>Compra a um vendedor errado, perda da frase</td></tr>
+          <tr><td>Carteira «air-gapped»</td><td>O titular</td><td>Valores grandes, máxima segurança</td><td>Complexidade, erro humano, perda da chave</td></tr>
+          <tr><td>Multiassinatura (<em>multisig</em>)</td><td>O titular, com várias chaves</td><td>Valores grandes, empresas, famílias</td><td>Complexidade, perda de múltiplas chaves</td></tr>
         </tbody>
       </table>
     </div>
-    <h2>O que são</h2>
-    <ul>
-      <li><strong>Carteira de telemóvel ou computador:</strong> uma aplicação que guarda as chaves num dispositivo ligado à internet. É cómoda e, para pequenos valores, razoável. Convém escolher software de código aberto e descarregá-lo só do site oficial.</li>
-      <li><strong>Carteira de hardware:</strong> um pequeno aparelho que guarda as chaves e assina as transações sem as expor ao computador. Mesmo que o computador esteja infetado, as chaves não saem. Convém comprar sempre ao fabricante, nunca em segunda mão.</li>
-      <li><strong>Air-gapped:</strong> um dispositivo que nunca se liga à internet. Assina transações por código QR ou cartão SD. Exige mais prática.</li>
-      <li><strong>Multiassinatura:</strong> a transação só é válida com, por exemplo, 2 de 3 chaves. Nenhuma pessoa nem dispositivo, sozinhos, consegue gastar. Boa para valores grandes, mas mais complexa de montar.</li>
-    </ul>
-    <p>Há muitas marcas e aplicações, e vão mudando. Não recomendamos uma específica; recomendamos critérios: <strong>código aberto, reputação de anos, suporte à frase BIP-39 padrão</strong>, e que seja possível <strong>restaurar noutra marca</strong> se esta desaparecer.</p>
+    <h2>Como funciona cada tipo</h2>
+    <h3>Conta numa plataforma</h3>
+    <p>Uma conta numa plataforma não é autocustódia, porque quem tem as chaves é a plataforma. Serve para comprar e vender, e é por onde muita gente começa. O objetivo é passar o bitcoin para uma carteira em que só o titular tem as chaves.</p>
+    <h3>Carteira de telemóvel ou de computador</h3>
+    <p>A carteira de telemóvel ou de computador é uma aplicação que guarda as chaves no próprio aparelho, e esse aparelho está ligado à internet. Chama-se carteira quente (<em>hot wallet</em>). É a mais cómoda, mas quem infetar o aparelho ou o roubar pode chegar às chaves. Serve para valores pequenos, de uso diário. Deve ter código aberto e descarrega-se só do site oficial do programador ou da loja de aplicações oficial, a App Store ou a Google Play.</p>
+    <h3>Carteira de hardware</h3>
+    <p>A carteira de hardware é um pequeno aparelho feito só para guardar chaves. Gera as chaves lá dentro e assina lá dentro as transações, e o computador ou o telemóvel a que se liga só recebe a transação já assinada. Mesmo que esse computador esteja infetado, as chaves não saem do aparelho. Chama-se carteira fria (<em>cold wallet</em>) porque as chaves ficam num aparelho próprio, que não navega na internet nem corre outras aplicações.</p>
+    <h3>Carteira air-gapped</h3>
+    <p>A carteira air-gapped é um aparelho que nunca se liga a nada, nem por cabo, nem por Bluetooth, nem por Wi-Fi. A transação entra por código QR ou por cartão SD, o aparelho assina-a, e a assinatura sai da mesma maneira. Como não tem ligação, é a mais difícil de atacar à distância, mas dá mais trabalho a usar e pede mais prática.</p>
+    <h3>Multiassinatura</h3>
+    <p>Na multiassinatura, a carteira tem várias chaves e a transação só é válida com um número mínimo delas, por exemplo 2 de 3. As chaves ficam em aparelhos diferentes e, muitas vezes, em sítios diferentes. Quem roubar uma chave não consegue gastar, e quem perder uma não perde o bitcoin, desde que restem as suficientes. É indicada para valores grandes, empresas e famílias.</p>
+    <p>O preço é a complexidade. Para recuperar uma carteira multiassinatura, as frases não bastam. É preciso guardar também a descrição da carteira, que diz quais são as chaves públicas de todas as chaves e quantas são precisas para assinar. Sem ela, quem tem só as frases de duas das três chaves consegue assinar, mas não consegue voltar a calcular os endereços da carteira. A descrição não permite gastar, por isso pode guardar-se em várias cópias. <!-- [VERIFICAR] Confirmar com fonte (por exemplo, a documentação do Bitcoin Core sobre descritores) que a recuperação de uma carteira multiassinatura exige a descrição da carteira (chaves públicas de todos os cossignatários, regra m de n e tipo de script), que as frases de m chaves não bastam para a reconstruir, e que a descrição não permite gastar. --></p>
+    <h2>Como escolher uma carteira</h2>
+    <p>Há muitas marcas e aplicações, e vão mudando, por isso a lição não recomenda nenhuma em particular. Recomenda quatro critérios. O código deve ser aberto, para qualquer pessoa o poder examinar. A marca deve ter anos de reputação. A carteira deve usar a frase de recuperação padrão (BIP-39). E deve ser possível restaurar a frase noutra marca, para que o bitcoin não fique preso se a marca desaparecer.</p>
     <div class="callout tip">
       <span class="tag">Regra prática</span>
-      <p>Uma regra simples: numa carteira de telemóvel não deve ficar mais do que se levaria na carteira de bolso. Para o resto, convém pensar num dispositivo de hardware.</p>
+      <p>Numa carteira de telemóvel não deve ficar mais bitcoin do que o dinheiro que se levaria na carteira de bolso. O resto pertence a uma carteira de hardware.</p>
     </div>
     <div class="callout warning">
       <span class="tag">Atenção</span>
-      <p>Cuidado com carteiras «fáceis» em que nunca se vê a frase de recuperação: provavelmente são custodiais. E cuidado com aplicações falsas nas lojas: convém confirmar o nome do fabricante e o site oficial.</p>
+      <p>Uma carteira «fácil» em que nunca se vê a frase de recuperação é, provavelmente, custodial, e isso quer dizer que a empresa guarda as chaves. Há também aplicações falsas nas lojas de aplicações, por isso convém confirmar o nome do fabricante e o site oficial. Uma carteira de hardware nova gera a frase quando se liga pela primeira vez. Se vier com uma frase já escrita, é uma burla, e uma carteira comprada em segunda mão pode ter sido adulterada.</p>
     </div>
     <div class="callout key">
       <span class="tag">Ideia-chave</span>
-      Escolher a carteira pela função: uma para o dia a dia (pouco) e outra para guardar (muito). E que a frase de recuperação permita sair de qualquer uma.
+      A carteira escolhe-se pela função. Uma serve para o dia a dia, com pouco bitcoin, e outra para guardar o resto. Em ambas, a frase de recuperação deve permitir sair para qualquer outra carteira.
     </div>
-    <h2>Verificar o que se aprendeu</h2>
+    <h2>Verificação</h2>
 
     <fieldset class="quiz" data-answer="1">
-      <legend>Qual a principal vantagem de uma carteira de hardware?</legend>
-      <label class="opt"><input type="radio" name="q1"><span>É mais rápida</span></label>
-      <label class="opt"><input type="radio" name="q1"><span>As chaves não saem do dispositivo, mesmo que o computador esteja infetado</span></label>
+      <legend>Qual é a principal vantagem de uma carteira de hardware?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>É mais rápida de usar</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>As chaves não saem do aparelho, mesmo que o computador esteja infetado</span></label>
       <label class="opt"><input type="radio" name="q1"><span>Não precisa de frase de recuperação</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>O dispositivo assina por dentro. O computador só vê a transação assinada.</p>
+      <p class="explanation" hidden>O aparelho assina a transação por dentro, e o computador só vê a transação já assinada.</p>
     </fieldset>
 
-    <fieldset class="quiz" data-answer="1">
-      <legend>Uma carteira de telemóvel é mais adequada para…</legend>
-      <label class="opt"><input type="radio" name="q2"><span>Todas as poupanças</span></label>
-      <label class="opt"><input type="radio" name="q2"><span>Valores pequenos, de uso diário</span></label>
-      <label class="opt"><input type="radio" name="q2"><span>Guardar a herança dos filhos</span></label>
+    <fieldset class="quiz" data-answer="0">
+      <legend>Para que serve uma carteira de telemóvel?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>Para valores pequenos, de uso diário</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Para guardar todas as poupanças</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Para guardar a herança dos filhos</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>Está ligada à internet, por isso o risco é maior. Usa-se como carteira de bolso.</p>
+      <p class="explanation" hidden>O telemóvel está ligado à internet, por isso está mais exposto. A carteira de telemóvel funciona como a carteira de bolso.</p>
     </fieldset>
 
-    <fieldset class="quiz" data-answer="1">
-      <legend>O que pode correr mal ao comprar uma carteira de hardware em segunda mão?</legend>
-      <label class="opt"><input type="radio" name="q3"><span>Nada</span></label>
-      <label class="opt"><input type="radio" name="q3"><span>Pode ter sido adulterada</span></label>
-      <label class="opt"><input type="radio" name="q3"><span>Não funciona com bitcoin</span></label>
+    <fieldset class="quiz" data-answer="2">
+      <legend>Uma carteira de hardware nova já traz a frase de recuperação escrita. O que significa?</legend>
+      <label class="opt"><input type="radio" name="q3"><span>É normal, para facilitar a primeira utilização</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Que a carteira é de multiassinatura</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>É uma burla, porque a frase deve ser gerada pela carteira quando se liga pela primeira vez</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>Convém comprar sempre ao fabricante ou a revendedores oficiais.</p>
+      <p class="explanation" hidden>Quem conhece a frase tem o bitcoin. A frase só é segura se for gerada pelo próprio titular, no aparelho.</p>
     </fieldset>
 
 

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Transações, mempool e taxas | Curso 2 | Instituto Português de Bitcoin</title>
-  <meta name="description" content="Lição 5.5 do Curso 2: No fim desta lição, fica-se a saber como se envia uma transação, o que é a mempool, como se calcula a taxa e quando é que é possível considerá-la defin">
+  <meta name="description" content="Lição 5.5 do Curso 2: No fim desta lição, será possível dizer como se envia uma transação, o que é a mempool, como se calcula a taxa e quando é que uma transação é definitiva.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
@@ -25,78 +25,90 @@
 
     <p class="eyebrow">Módulo 5 · Chaves e carteiras · Lição 5.5</p>
     <h1>Transações, mempool e taxas</h1>
-    <p class="lead">No fim desta lição, fica-se a saber como se envia uma transação, o que é a mempool, como se calcula a taxa e quando é que é possível considerá-la definitiva.</p>
-    <p class="meta"><span>12 min de leitura</span><span>3 perguntas · 1 lista de verificação · 1 calculadora</span></p>
+    <p class="lead">No fim desta lição, será possível dizer como se envia uma transação, o que é a mempool, como se calcula a taxa e quando é que uma transação é definitiva.</p>
+    <p class="meta"><span>10 min de leitura</span><span>3 perguntas · 1 calculadora</span></p>
 
 
     <h2>O ciclo de uma transação</h2>
     <ol class="timeline">
-      <li><span class="when">1 · Criar</span><strong>Escolher o valor e o endereço</strong><p>A carteira junta as moedas a gastar e prepara a transação.</p></li>
-      <li><span class="when">2 · Assinar</span><strong>Com a chave privada</strong><p>A assinatura prova que é o titular. A chave não sai da carteira.</p></li>
-      <li><span class="when">3 · Transmitir</span><strong>Para a rede</strong><p>A carteira envia a transação a um nó, que a passa aos outros.</p></li>
-      <li><span class="when">4 · Mempool</span><strong>A fila de espera</strong><p>A transação espera, em cada nó, até um minerador a escolher.</p></li>
-      <li><span class="when">5 · Bloco</span><strong>Primeira confirmação</strong><p>Um minerador incluiu-a num bloco. Passou, em média, cerca de 10 minutos.</p></li>
-      <li><span class="when">6 · Mais blocos</span><strong>Confirmações seguintes</strong><p>Cada novo bloco por cima torna a reversão mais difícil. Seis confirmações (~ 1 hora) é a referência habitual para valores grandes.</p></li>
+      <li><span class="when">1 · Criar</span><strong>Escolher o valor e o endereço</strong><p>A carteira escolhe as moedas que vai gastar e prepara a transação com o valor e o endereço de destino.</p></li>
+      <li><span class="when">2 · Assinar</span><strong>Com a chave privada</strong><p>A assinatura prova que a transação é do titular. A chave privada não sai da carteira.</p></li>
+      <li><span class="when">3 · Transmitir</span><strong>Para a rede</strong><p>A carteira envia a transação a um nó, e esse nó passa-a aos outros. Em pouco tempo, quase todos os nós a recebem.</p></li>
+      <li><span class="when">4 · Mempool</span><strong>A lista de espera</strong><p>Cada nó que aceita a transação guarda-a na sua mempool, a lista das transações válidas que ainda não entraram num bloco. Aí espera que um minerador a escolha.</p></li>
+      <li><span class="when">5 · Bloco</span><strong>Primeira confirmação</strong><p>Um minerador inclui a transação num bloco. Um bloco novo demora, em média, cerca de 10 minutos, mas uma transação com taxa baixa pode esperar bastante mais.</p></li>
+      <li><span class="when">6 · Mais blocos</span><strong>Confirmações seguintes</strong><p>Cada bloco novo por cima torna a reversão mais difícil. Seis confirmações, cerca de uma hora, são a referência habitual para qualquer transação.</p></li>
     </ol>
+    <h2>A mempool</h2>
+    <p>O nome vem de <em>memory pool</em>, a «reserva de memória» onde cada nó guarda as transações à espera. Não existe uma mempool única. Cada nó tem a sua, e elas podem diferir um pouco, porque cada nó recebe as transações em momentos diferentes e aplica as suas próprias regras. A mempool não faz parte do registo, ou seja, não é a blockchain. É só a lista de espera de cada nó, e o que conta é o que fica nos blocos.</p>
     <h2>Entradas e saídas</h2>
-    <p>A Bitcoin não funciona com contas e saldos, funciona com <strong>moedas inteiras</strong>, chamadas UTXO (<em>unspent transaction outputs</em>). Com duas moedas, de 0,3 e 0,5, para enviar 0,4, a transação gasta a de 0,5 e cria duas saídas: 0,4 para o destinatário e 0,1 de <strong>troco</strong> de volta para o remetente. A carteira faz isto automaticamente. O que importa saber é que as transações têm entradas e saídas, e que o troco volta para um endereço seu.</p>
+    <p>Um banco guarda contas, e cada conta tem um saldo que sobe e desce. A Bitcoin não funciona assim, porque não existe nenhuma lista de contas nem de saldos. O que existe é o registo de todas as transações. Cada transação cria <strong>saídas</strong>, que são pedaços de bitcoin com um valor certo, ligados a um endereço. Enquanto uma saída não for gasta, pertence a quem tem a chave desse endereço. A estas saídas por gastar chama-se UTXO (<em>unspent transaction outputs</em>).</p>
+    <p>Uma UTXO funciona como uma nota. Uma nota de 50 euros tem esse valor e não se gasta aos bocados. Para pagar 40 euros, entrega-se a nota inteira e recebem-se 10 de troco. Com as UTXOs passa-se o mesmo. Gasta-se a UTXO inteira, e a transação cria saídas novas, uma para quem recebe e outra para o troco. A UTXO gasta deixa de existir, e as saídas novas passam a ser UTXOs por gastar.</p>
+    <p>O saldo que a carteira mostra não está guardado em lado nenhum. A carteira procura no registo todas as UTXOs que as suas chaves conseguem gastar e soma os valores.</p>
+    <p>Quem tem duas UTXOs, uma de 0,3 e outra de 0,5 bitcoin, tem um saldo de 0,8. Se quiser enviar 0,4, a UTXO de 0,3 não chega, por isso a carteira gasta a de 0,5. A transação tem então uma entrada de 0,5 e cria duas saídas. Uma é de 0,4 e vai para o endereço do destinatário. A outra é o <strong>troco</strong>, o que sobra da UTXO de 0,5, e volta para um endereço novo do próprio remetente, que a carteira poderá gastar mais tarde.</p>
+    <p>A taxa também sai desta conta. Tudo o que entra numa transação e não sai numa saída fica para o minerador. Para simplificar, pense-se numa taxa de 0,0001 bitcoin, embora na realidade costume ser bem menor. A transação gasta 0,5, paga 0,4 ao destinatário e 0,0001 de taxa ao minerador, e o troco é de 0,0999. Se a carteira não criasse o troco, os 0,1 que sobram iriam todos para o minerador. A carteira faz isto sozinha, e o que importa saber é que o troco é bitcoin do remetente e que a transação tem de o incluir.</p>
     <h2>As taxas</h2>
-    <p>Quem quiser que a transação entre num bloco paga uma <strong>taxa</strong> ao minerador. A taxa não depende do valor enviado, depende do <strong>tamanho da transação em bytes virtuais (vB)</strong> e do preço oferecido por vB, em satoshis (sat/vB). Enviar 10 euros ou 10.000 euros custa o mesmo, se as transações tiverem o mesmo tamanho.</p>
+    <p>Quem quer que a transação entre num bloco paga uma <strong>taxa</strong> ao minerador. A taxa não depende do valor enviado. Depende do tamanho da transação, medido em bytes virtuais (vB), e do preço que o remetente oferece por cada vB, em satoshis (sat/vB). Um satoshi é a centésima milionésima parte de um bitcoin. O tamanho da transação depende de quantas moedas se gastam e de quantas saídas há, e não do valor, por isso enviar 10 euros ou 10.000 euros custa o mesmo, se as transações tiverem o mesmo tamanho. Uma transação simples, com uma moeda gasta e duas saídas, tem perto de 140 vB, e é esse o tamanho que a calculadora usa de início.</p>
     <div class="card" id="fee">
       <h3>Calculadora de taxa</h3>
       <div class="tool">
-        <div><label for="fee-rate">Preço (sat/vB)</label><input type="number" id="fee-rate" value="5" min="1" step="1"></div>
-        <div><label for="fee-size">Tamanho (vB)</label><input type="number" id="fee-size" value="140" min="1" step="1"></div>
+        <div><label for="fee-rate">Taxa oferecida por vB (sat/vB)</label><input type="number" id="fee-rate" value="5" min="1" step="1"></div>
+        <div><label for="fee-size">Tamanho da transação (vB)</label><input type="number" id="fee-size" value="140" min="1" step="1"></div>
         <div><label for="fee-price">Preço de 1 bitcoin (€, exemplo)</label><input type="number" id="fee-price" value="80000" min="1" step="1000"></div>
         <div class="tool-out" id="fee-out" role="status" aria-live="polite"></div>
       </div>
     </div>
-    <p>Uma transação simples típica anda perto dos 140 vB. Os mineradores preferem as que pagam mais por vB, por isso a fila organiza-se por preço. Em dias calmos, uns poucos sat/vB chegam; em momentos de congestionamento (houve picos em 2017, 2021 e abril de 2024), as taxas subiram muito. <!-- [VERIFICAR] valores históricos. --> Havendo pressa, paga-se mais. Não havendo, paga-se o mínimo e espera-se.</p>
+    <p>Os blocos têm espaço limitado, e os mineradores preferem as transações que pagam mais por vB. Por isso a mempool organiza-se por preço, e a taxa mede a procura por espaço nos blocos. Em dias calmos bastam poucos sat/vB. Em períodos de congestionamento as taxas sobem muito, como aconteceu em 2017, 2021 e abril de 2024. <!-- [VERIFICAR] valores históricos. -->Quem tem pressa paga mais, e quem não tem paga pouco e espera. Se uma transação ficar presa por a taxa ser baixa, algumas carteiras permitem substituí-la por outra, igual, com uma taxa mais alta.</p>
+    <div class="callout tip">
+      <span class="tag">Consolidação de UTXOs</span>
+      <p>Consolidar é juntar várias UTXOs pequenas numa só. O titular envia todas, numa única transação, para um endereço seu, e fica com uma UTXO maior em vez de muitas pequenas.</p>
+      <p>Faz-se porque cada UTXO gasta acrescenta uma entrada à transação, e cada entrada ocupa espaço, cerca de 68 vB. Quem recebeu bitcoin em muitos pagamentos pequenos tem muitas UTXOs, e gastá-las todas de uma vez dá uma transação grande e cara. Com dez UTXOs, a transação tem cerca de 720 vB em vez de 140, e a taxa é cerca de cinco vezes maior. Como a taxa depende da procura, quem consolida costuma esperar por um período em que as taxas estão baixas, e paga agora uma taxa pequena para poupar uma grande mais tarde. <!-- [VERIFICAR] Confirmar com fonte o tamanho de uma entrada SegWit nativa (cerca de 68 vB) e a conta de 10 entradas e 1 saída (cerca de 720 vB). --></p>
+      <p>Tem dois custos. Paga-se a taxa da própria consolidação, e juntar várias UTXOs numa só transação mostra que as entradas provavelmente pertencem à mesma pessoa, o que reduz a privacidade.</p>
+    </div>
     <div class="card">
       <h3>Ver na prática</h3>
       <p style="margin:0;font-size:16px;color:var(--muted)">O site <a href="https://mempool.space" target="_blank" rel="noopener">mempool.space</a> mostra, em tempo real, os blocos por minerar, as taxas recomendadas e as transações a confirmar. Vale a pena abri-lo e acompanhar uma transação, mesmo de valor mínimo.</p>
     </div>
     <h2>Cuidados antes de enviar</h2>
-    <ul class="checklist">
-      <li><label><input type="checkbox" id="c-3-5-1-1"><span>Confirmei o endereço completo, e não só os primeiros e os últimos caracteres.</span></label></li>
-      <li><label><input type="checkbox" id="c-3-5-1-2"><span>Fiz um envio de teste com um valor pequeno, se o valor for grande.</span></label></li>
-      <li><label><input type="checkbox" id="c-3-5-1-3"><span>Escolhi uma taxa adequada ao tempo que posso esperar.</span></label></li>
-      <li><label><input type="checkbox" id="c-3-5-1-4"><span>Sei que não há botão de desfazer: uma transação confirmada é definitiva.</span></label></li>
+    <ul>
+      <li>Confirmar o endereço completo, e não só os primeiros e os últimos caracteres, porque há programas maliciosos que trocam o endereço copiado por outro parecido.</li>
+      <li>Fazer um envio de teste com um valor pequeno, se o valor for grande.</li>
+      <li>Escolher uma taxa adequada ao tempo que se pode esperar.</li>
+      <li>Ter presente que não há botão de desfazer, porque uma transação confirmada é definitiva.</li>
     </ul>
     <div class="callout key">
       <span class="tag">Ideia-chave</span>
-      Uma transação Bitcoin é pública, assinada pelo titular e definitiva depois de confirmada. A taxa depende do tamanho e da procura, não do valor.
+      Uma transação Bitcoin é pública, assinada pelo titular e definitiva depois de confirmada. A taxa depende do tamanho da transação e da procura por espaço nos blocos, e não do valor enviado.
     </div>
-    <h2>Verificar o que se aprendeu</h2>
+    <h2>Verificação</h2>
 
     <fieldset class="quiz" data-answer="1">
       <legend>De que depende a taxa?</legend>
       <label class="opt"><input type="radio" name="q1"><span>Do valor enviado</span></label>
-      <label class="opt"><input type="radio" name="q1"><span>Do tamanho da transação e da procura por espaço no bloco</span></label>
-      <label class="opt"><input type="radio" name="q1"><span>Da distância entre remetente e destinatário</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Do tamanho da transação e da procura por espaço nos blocos</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Da distância entre o remetente e o destinatário</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>A taxa paga-se por vB, não pelo valor.</p>
+      <p class="explanation" hidden>A taxa paga-se por vB, e não pelo valor.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="2">
+      <legend>O que é a mempool?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>O nome do primeiro bloco</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>A carteira do minerador</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>A lista de transações à espera de entrar num bloco, que cada nó guarda</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Cada nó tem a sua mempool, e é aí que as transações esperam por um minerador.</p>
     </fieldset>
 
     <fieldset class="quiz" data-answer="0">
-      <legend>O que é a mempool?</legend>
-      <label class="opt"><input type="radio" name="q2"><span>A fila de transações à espera de entrar num bloco</span></label>
-      <label class="opt"><input type="radio" name="q2"><span>A carteira do minerador</span></label>
-      <label class="opt"><input type="radio" name="q2"><span>O nome do primeiro bloco</span></label>
-      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
-      <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>Cada nó tem a sua; é onde as transações esperam um minerador.</p>
-    </fieldset>
-
-    <fieldset class="quiz" data-answer="1">
       <legend>É possível reverter uma transação já confirmada?</legend>
+      <label class="opt"><input type="radio" name="q3"><span>Não, só o destinatário pode devolver o bitcoin, se quiser</span></label>
       <label class="opt"><input type="radio" name="q3"><span>Sim, no prazo de 24 horas</span></label>
-      <label class="opt"><input type="radio" name="q3"><span>Não: só o destinatário a pode devolver, se quiser</span></label>
-      <label class="opt"><input type="radio" name="q3"><span>Sim, pedindo ao IPB</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Sim, se o remetente pedir à rede</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>Não há entidade que reverta transações. Daí a importância de conferir o endereço.</p>
+      <p class="explanation" hidden>Nenhuma entidade reverte transações, por isso é importante conferir o endereço antes de enviar.</p>
     </fieldset>
 
 

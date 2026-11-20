@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Quem guarda as chaves | Curso 2 | Instituto Português de Bitcoin</title>
-  <meta name="description" content="Lição 5.1 do Curso 2: No fim desta lição, será possível dizer o que significa ter as chaves do Bitcoin, o que se arrisca ao deixá-lo numa plataforma e o que se arrisca ao guardá">
+  <meta name="description" content="Lição 5.1 do Curso 2: No fim desta lição, será possível dizer o que significa ter as chaves do Bitcoin, o que se arrisca ao deixá-lo numa plataforma e porque a autocustódia é o">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
@@ -25,65 +25,80 @@
 
     <p class="eyebrow">Módulo 5 · Chaves e carteiras · Lição 5.1</p>
     <h1>Quem guarda as chaves</h1>
-    <p class="lead">No fim desta lição, será possível dizer o que significa ter as chaves do Bitcoin, o que se arrisca ao deixá-lo numa plataforma e o que se arrisca ao guardá-lo sozinho.</p>
-    <p class="meta"><span>10 min de leitura</span><span>2 perguntas</span></p>
+    <p class="lead">No fim desta lição, será possível dizer o que significa ter as chaves do Bitcoin, o que se arrisca ao deixá-lo numa plataforma e porque a autocustódia é o objetivo.</p>
+    <p class="meta"><span>10 min de leitura</span><span>3 perguntas</span></p>
     <h2>Quem tem as chaves, tem o Bitcoin</h2>
-    <p>Nesta lição, ter bitcoin quer dizer ter as chaves privadas que permitem gastá-lo. Quando se compra bitcoin numa plataforma, a plataforma costuma ficar com as chaves, e o cliente fica com um saldo na conta dela: uma promessa de que é possível levantar. Ter «Bitcoin» numa plataforma é, na prática, um <strong>IOU</strong> (uma promessa de pagamento). A rede só valida assinaturas: não sabe o que são as exchanges, as empresas ou as pessoas.</p>
+    <p>Ter bitcoin é ter as chaves privadas que permitem gastá-lo. A rede só valida assinaturas e não sabe o que são plataformas, empresas ou pessoas. Quem controla as chaves controla o bitcoin.</p>
+    <p>Quando se compra bitcoin numa plataforma, é essa empresa que costuma ficar com as chaves. O cliente fica com um saldo na conta, que é uma promessa de pagamento (em inglês, um <strong>IOU</strong>, de «I owe you»). Esse saldo é um crédito sobre a plataforma, e não bitcoin.</p>
     <div class="table-wrap">
       <table>
         <thead><tr><th></th><th>Custódia (plataforma)</th><th>Autocustódia (pessoal)</th></tr></thead>
         <tbody>
           <tr><td>Quem tem as chaves</td><td>A plataforma</td><td>O titular</td></tr>
-          <tr><td>Se a palavra-passe for esquecida</td><td>A conta recupera-se</td><td>O acesso perde-se, se a frase se perder</td></tr>
-          <tr><td>Se a plataforma falir ou for atacada</td><td>É possível perder tudo ou esperar anos</td><td>Não é afetado</td></tr>
-          <tr><td>Se a conta for congelada</td><td>Não é possível aceder</td><td>Ninguém pode impedir o acesso</td></tr>
-          <tr><td>Se houver engano ao enviar</td><td>Pode haver suporte</td><td>Não há reversão</td></tr>
-          <tr><td>Esforço</td><td>Baixo</td><td>Médio: aprender e fazer cópias de segurança</td></tr>
+          <tr><td>Se a palavra-passe se esquecer</td><td>A conta recupera-se</td><td>Sem a frase de recuperação, o acesso perde-se</td></tr>
+          <tr><td>Se a plataforma falir ou for atacada</td><td>O cliente pode perder tudo ou esperar anos</td><td>O titular não é afetado</td></tr>
+          <tr><td>Se a conta for congelada</td><td>O cliente deixa de ter acesso</td><td>Ninguém pode impedir o acesso</td></tr>
+          <tr><td>Se houver um engano ao enviar</td><td>Pode haver apoio ao cliente</td><td>Não há reversão</td></tr>
+          <tr><td>Esforço</td><td>Baixo</td><td>Médio, exige aprender e fazer cópias de segurança</td></tr>
         </tbody>
       </table>
     </div>
     <h2>A propriedade mais difícil de confiscar</h2>
-    <p>O Bitcoin é um livro-razão público com chaves, e as chaves podem guardar-se offline e memorizar-se. Por isso é dos ativos mais portáteis e mais difíceis de confiscar: seria preciso extrair uma frase da mente de quem a sabe, embora sob coação isso pudesse acontecer. Mesmo quando as camadas superiores se corrompem, a opção de levantar os ativos e mudar de custodiante é um dissuasor que nenhum outro ativo oferece. Esta é a «opção de saída» do Bitcoin.</p>
+    <p>As chaves são só informação. Podem guardar-se offline, em papel ou em metal, e até decorar-se. Por isso o bitcoin é dos ativos mais fáceis de transportar e mais difíceis de confiscar. Para o tirar a alguém, seria preciso obter-lhe a frase de recuperação, e sob coação isso pode acontecer.</p>
+    <p>Quem guarda o bitcoin em autocustódia não depende de nenhuma plataforma. Pode usá-lo, enviá-lo ou entregá-lo a outra empresa quando quiser, sem pedir licença a ninguém. Num banco ou numa plataforma, o acesso depende sempre de a empresa o permitir.</p>
     <h2>Casos reais de plataformas</h2>
     <ol class="timeline">
-      <li><span class="when">2014</span><strong>Mt. Gox</strong><p>A maior plataforma do mundo à época anunciou a perda de cerca de 850.000 bitcoin, entre clientes e seus. Os reembolsos só começaram, em parte, anos depois. <!-- [VERIFICAR] Confirmar números e calendário de reembolsos. --></p></li>
-      <li><span class="when">2022</span><strong>Celsius, Voyager, FTX, BlockFi</strong><p>Quatro empresas pediram falência entre julho e novembro de 2022. Clientes ficaram anos sem acesso, e muitos recuperaram só parte do valor.</p></li>
+      <li><span class="when">2014</span><strong>Mt. Gox</strong><p>A maior plataforma do mundo na altura anunciou a perda de cerca de 850.000 bitcoin, entre os dos clientes e os seus. Os reembolsos só começaram, em parte, anos depois. <!-- [VERIFICAR] Confirmar números e calendário de reembolsos. --></p></li>
+      <li><span class="when">2022</span><strong>Celsius, Voyager, FTX, BlockFi</strong><p>Quatro empresas pediram falência entre julho e novembro de 2022. Os clientes ficaram anos sem acesso e muitos recuperaram só parte do valor.</p></li>
     </ol>
-    <p>Nenhuma destas empresas era uma pequena aventura: eram nomes conhecidos. O que falhou foi a confiança. Daí a frase da comunidade: «not your keys, not your coins».</p>
+    <p>Estas empresas eram conhecidas, e quem lá deixou o bitcoin ficou sem ele ou sem acesso a ele. Daí a frase «not your keys, not your coins», que se repete na comunidade Bitcoin e quer dizer que, sem as chaves, as moedas não são do cliente.</p>
     <h2>O que mudou na Europa</h2>
-    <p>Desde o fim de 2024, o regulamento MiCA obriga as plataformas autorizadas na UE a guardar os ativos dos clientes separados dos seus e a responder pelas perdas que lhes sejam imputáveis. É uma proteção real, que antes não existia. Mas não é um seguro de depósito como o dos bancos (que cobre até 100.000 euros por depositante): se uma plataforma falir, a recuperação depende dos processos de insolvência. O registo da ESMA diz se uma plataforma está autorizada.</p>
-    <h2>A autocustódia também tem riscos</h2>
+    <p>Desde o fim de 2024, o regulamento MiCA obriga as plataformas autorizadas na UE a manter os ativos dos clientes separados dos seus e a responder pelas perdas que lhes sejam imputáveis. É uma proteção real, que antes não existia.</p>
+    <p>Mas o MiCA não é um seguro de depósito. O seguro dos bancos garante a cada depositante até 100.000 euros, mesmo que o banco falhe, e é pago por um fundo de garantia. O MiCA não tem fundo nenhum. Obriga a plataforma a indemnizar os clientes pelas perdas de que seja responsável, mas só com o dinheiro que a própria plataforma tiver. <!-- [VERIFICAR] Confirmar que o MiCA não prevê fundo de garantia de depósitos para criptoativos e que a responsabilidade do prestador se limita às perdas que lhe sejam imputáveis (art. 75.º), com fonte. --></p>
+    <p>Se a plataforma falir, os clientes não recebem o bitcoin de volta no dia seguinte. Tudo passa pelo processo de insolvência, que pode demorar anos. A separação dos ativos reforça o direito dos clientes a reaver o seu bitcoin, mas não garante que o recebam, nem quando.</p>
+    <p>Mesmo regulada, a plataforma continua a ter as chaves. Um ataque informático, uma fraude ou um erro interno podem fazer desaparecer o bitcoin dos clientes, e a regulação só decide quem responde depois de o bitcoin desaparecer. O registo da ESMA diz se uma plataforma está autorizada na UE. Quem usa uma plataforma que não consta do registo não tem sequer esta proteção.</p>
+    <h2>Cuidados a ter com a autocustódia</h2>
     <ul>
-      <li>Perder a frase de recuperação e o dispositivo é perder o Bitcoin, para sempre.</li>
-      <li>Se alguém vê a frase, pode esvaziar a carteira.</li>
-      <li>Um engano no endereço não tem reversão.</li>
-      <li>Em caso de falecimento sem instruções, a família pode nunca aceder.</li>
+      <li>Quem perde a frase de recuperação e a carteira de hardware perde o bitcoin para sempre.</li>
+      <li>Quem tem posse da frase de recuperação pode esvaziar a carteira.</li>
+      <li>Um engano no endereço para onde se envia não se reverte.</li>
+      <li>Se o titular morrer sem deixar instruções, a família pode nunca chegar ao bitcoin.</li>
     </ul>
-    <p>Estes riscos gerem-se com boas práticas, que se aprendem nas lições seguintes. A autocustódia não é para todos desde o primeiro dia, e não é preciso fazer tudo de uma vez.</p>
+    <p>Tudo isto vem do método e não da rede, e evita-se com boas práticas, que as lições seguintes ensinam. Quem começa numa plataforma pode passar para a autocustódia por etapas, e o objetivo é chegar lá.</p>
     <div class="callout key">
       <span class="tag">Ideia-chave</span>
-      Com a custódia, confia-se numa empresa. Com a autocustódia, confia-se em si próprio. Nenhuma é de risco zero, e convém saber qual foi escolhida.
+      Na custódia, o bitcoin depende de uma empresa. Na autocustódia, depende só de quem tem as chaves, e só assim ninguém o pode congelar nem gastar sem o titular. A autocustódia exige cuidados, que se aprendem com boas práticas.
     </div>
     <h2>Verificação</h2>
 
-    <fieldset class="quiz" data-answer="0">
-      <legend>O que quer dizer ter Bitcoin numa plataforma, em termos de chaves?</legend>
-      <label class="opt"><input type="radio" name="q1"><span>Ter uma promessa de pagamento, porque a plataforma guarda as chaves</span></label>
-      <label class="opt"><input type="radio" name="q1"><span>Ter as chaves privadas</span></label>
-      <label class="opt"><input type="radio" name="q1"><span>Ter um seguro de depósito</span></label>
+    <fieldset class="quiz" data-answer="1">
+      <legend>O que tem quem guarda o bitcoin numa plataforma?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>As chaves privadas do seu bitcoin</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Uma promessa de pagamento da plataforma, que é quem guarda as chaves</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Um seguro de depósito</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>A rede só valida assinaturas: quem tem as chaves tem o Bitcoin.</p>
+      <p class="explanation" hidden>A rede só valida assinaturas, e quem tem as chaves tem o bitcoin. Quem tem só um saldo tem um crédito sobre a plataforma.</p>
     </fieldset>
 
-    <fieldset class="quiz" data-answer="1">
-      <legend>O MiCA funciona como um seguro de depósito como o dos bancos?</legend>
-      <label class="opt"><input type="radio" name="q2"><span>Sim, até 100.000 euros</span></label>
-      <label class="opt"><input type="radio" name="q2"><span>Não: obriga a segregar ativos, mas a recuperação depende da insolvência</span></label>
-      <label class="opt"><input type="radio" name="q2"><span>Sim, para qualquer valor</span></label>
+    <fieldset class="quiz" data-answer="0">
+      <legend>O que garante o MiCA a quem deixa bitcoin numa plataforma autorizada?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>Que a plataforma mantém os seus ativos separados dos dela e responde pelas perdas de que seja responsável</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>O reembolso até 100.000 euros, como num banco</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Que recupera todo o bitcoin se a plataforma falir</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>A proteção é real mas diferente.</p>
+      <p class="explanation" hidden>O MiCA não tem fundo de garantia. Se a plataforma falir, a recuperação passa pelo processo de insolvência e pode demorar anos.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="2">
+      <legend>O que acontece a quem perde a frase de recuperação e a carteira de hardware?</legend>
+      <label class="opt"><input type="radio" name="q3"><span>Pede uma nova palavra-passe à rede</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>A rede devolve o bitcoin ao fim de algum tempo</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Perde o bitcoin para sempre, porque ninguém pode repor as chaves</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Na autocustódia não há ninguém a quem pedir ajuda. Por isso é preciso guardar a frase de recuperação com cuidado.</p>
     </fieldset>
 
 
@@ -91,7 +106,6 @@
     <ul class="sources">
       <li>Regulamento (UE) 2023/1114 (MiCA): <a href="https://eur-lex.europa.eu/eli/reg/2023/1114/oj" target="_blank" rel="noopener">EUR-Lex</a>.</li>
       <li>Registo de prestadores de serviços de criptoativos da ESMA: <a href="https://www.esma.europa.eu" target="_blank" rel="noopener">esma.europa.eu</a>.</li>
-      <li>Resumo do IPB das ideias da estrutura temática (temas 14.3 e 16.2).</li>
     </ul>
 
     <div class="done-row">

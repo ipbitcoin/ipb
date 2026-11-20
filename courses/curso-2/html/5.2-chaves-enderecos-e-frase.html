@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Chaves, endereços e frase de recuperação | Curso 2 | Instituto Português de Bitcoin</title>
-  <meta name="description" content="Lição 5.2 do Curso 2: No fim desta lição, será possível dizer o que é uma chave privada, uma chave pública, um endereço e uma frase de recuperação, como se relacionam e o que é,">
+  <meta name="description" content="Lição 5.2 do Curso 2: No fim desta lição, será possível dizer o que são a chave privada, a chave pública, o endereço e a frase de recuperação, e porque a frase tem de ser mesmo">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
@@ -25,73 +25,95 @@
 
     <p class="eyebrow">Módulo 5 · Chaves e carteiras · Lição 5.2</p>
     <h1>Chaves, endereços e frase de recuperação</h1>
-    <p class="lead">No fim desta lição, será possível dizer o que é uma chave privada, uma chave pública, um endereço e uma frase de recuperação, como se relacionam e o que é, de facto, «enviar» bitcoin.</p>
-    <p class="meta"><span>12 min de leitura</span><span>2 perguntas</span></p>
+    <p class="lead">No fim desta lição, será possível dizer o que são a chave privada, a chave pública, o endereço e a frase de recuperação, e porque a frase tem de ser mesmo aleatória.</p>
+    <p class="meta"><span>14 min de leitura</span><span>3 perguntas</span></p>
     <h2>Uma carteira não guarda moedas</h2>
-    <p>Uma carteira Bitcoin não guarda moedas. As moedas existem como entradas no registo público (a blockchain). O que a carteira guarda são as chaves que permitem gastá-las. É por isso que perder o telemóvel não faz perder o Bitcoin, se houver a frase de recuperação.</p>
-    <h2>Três peças ligadas por matemática</h2>
+    <p>Uma carteira Bitcoin não guarda moedas. O bitcoin existe como entradas no registo público, a blockchain, que dizem quanto pertence a cada endereço. A carteira guarda as chaves que permitem gastar esse bitcoin. Por isso o bitcoin não está dentro da carteira de hardware nem de uma aplicação. Está no registo, e as chaves são o que permite movê-lo.</p>
+    <h2>Chave privada, chave pública e endereço</h2>
+    <p>Uma carteira trabalha com três peças, ligadas entre si por operações matemáticas.</p>
     <div class="cards">
-      <div class="card"><span class="n">1 · CHAVE PRIVADA</span><h3>O segredo</h3><p>Um número aleatório enorme (256 bits). Quem a tem, controla os fundos. Nunca se partilha.</p></div>
-      <div class="card"><span class="n">2 · CHAVE PÚBLICA</span><h3>Derivada da privada</h3><p>Calcula-se por curvas elípticas a partir da privada, mas não se consegue voltar atrás. Serve para verificar assinaturas.</p></div>
-      <div class="card"><span class="n">3 · ENDEREÇO</span><h3>O IBAN</h3><p>Derivado da chave pública por funções de hash. Pode partilhar-se à vontade: serve para receber bitcoin.</p></div>
+      <div class="card"><span class="n">1 · CHAVE PRIVADA</span><h3>O segredo</h3><p>É um número aleatório com 256 bits, ou seja, uma sequência de 256 zeros e uns. Quem a tem controla o bitcoin que lhe corresponde, por isso nunca se partilha.</p></div>
+      <div class="card"><span class="n">2 · CHAVE PÚBLICA</span><h3>Calculada a partir da privada</h3><p>Obtém-se da chave privada por uma operação matemática que se faz num instante e que ninguém consegue desfazer. Serve para verificar assinaturas.</p></div>
+      <div class="card"><span class="n">3 · ENDEREÇO</span><h3>Onde se recebe bitcoin</h3><p>Calcula-se a partir da chave pública e identifica onde está o bitcoin. Dá-se a quem queira enviar bitcoin, porque conhecê-lo não permite gastá-lo.</p></div>
     </div>
-    <p>O sentido direto (da privada à pública, e desta ao endereço) é instantâneo. O sentido inverso é «efetivamente impossível».</p>
+    <p>Passar da chave privada à chave pública, e desta ao endereço, é instantâneo. O caminho inverso é impossível na prática, porque exigiria testar um número astronómico de possibilidades. Na maior parte dos formatos, o endereço calcula-se com uma função de hash, que transforma qualquer dado numa sequência curta de tamanho fixo e que não se desfaz. Por isso a chave pública e o endereço podem ser conhecidos por todos sem pôr a chave privada em risco.</p>
     <h2>«Enviar» é assinar e publicar</h2>
-    <p>Para gastar, a carteira usa a chave privada para <strong>assinar</strong> a transação, e publica-a. A rede verifica a assinatura com a chave pública, e confirma que é o titular, sem nunca ver a chave privada. A rede só valida a assinatura: não sabe o que é uma exchange, uma empresa ou uma pessoa. A assinatura é o ponto crítico: forjá-la seria o maior risco, e é o tema da lição 6.1.</p>
-    <ol class="flow">
-      <li><strong>Carteira</strong>Prepara a transação e assina com a chave privada.</li>
-      <li><strong>Rede</strong>Propaga a transação e cada nó verifica a assinatura com a chave pública.</li>
-      <li><strong>Mineradores</strong>Incluem a transação num bloco.</li>
-      <li><strong>Confirmação</strong>Os nós aceitam o bloco e a transação fica registada.</li>
-    </ol>
-    <h2>Um endereço, por fora</h2>
+    <p>Gastar bitcoin é provar à rede que se controla a chave privada, sem a mostrar. A carteira faz isso assinando a transação com a chave privada, e publica-a na rede. A assinatura é um número que só se consegue calcular com a chave privada e que qualquer pessoa pode verificar com a chave pública.</p>
+    <p>A transação traz a chave pública de quem envia. Cada nó faz duas verificações. Primeiro, confirma que essa chave pública pertence ao endereço de onde sai o bitcoin, e para isso calcula o endereço a partir da chave pública e compara-o com o endereço que recebeu o bitcoin. Se coincidirem, a chave pública é a certa. Depois, verifica a assinatura com essa chave pública, o que prova que a assinatura foi feita pela chave privada correspondente, e só por ela. Se as duas verificações passarem, a transação é válida e o nó aceita-a. Se falhar uma, rejeita-a. Em nenhum momento o nó vê a chave privada. A rede não sabe se quem envia é uma pessoa, uma empresa ou uma plataforma, e não precisa de saber.</p>
+    <p>Depois, os mineradores incluem a transação num bloco. Quando os nós aceitam o bloco, a transação fica registada e o bitcoin passa a estar no endereço de destino.</p>
+    <h2>Como se reconhece um endereço</h2>
+    <p>O início do endereço indica o formato. Todos servem para receber bitcoin, e uma carteira pode enviar para qualquer um deles.</p>
     <ul>
-      <li><code>bc1q…</code> é o SegWit nativo, o mais comum.</li>
-      <li><code>bc1p…</code> é o Taproot, mais recente.</li>
-      <li><code>1…</code> ou <code>3…</code> são formatos antigos, que ainda funcionam.</li>
+      <li>Os que começam por <code>bc1q</code> são SegWit nativo, o formato mais comum.</li>
+      <li>Os que começam por <code>bc1p</code> são Taproot, de 2021, o formato mais recente.</li>
+      <li>Os que começam por <code>1</code> ou <code>3</code> são formatos antigos, anteriores ao SegWit, e ainda funcionam.</li>
     </ul>
     <h2>A frase de recuperação</h2>
-    <p>Uma chave privada com 64 caracteres é impossível de decorar e fácil de copiar mal. Por isso, as carteiras geram uma <strong>frase de recuperação</strong> (<em>seed phrase</em>), com 12 ou 24 palavras escolhidas de uma lista fixa de 2.048 (padrão BIP-39). A frase é a carteira: com ela, restaura-se tudo em qualquer dispositivo.</p>
-    <p>Uma frase de 12 palavras tem 128 bits de aleatoriedade, ou seja, cerca de 3,4 × 10<sup>38</sup> combinações. Adivinhá-la é, na prática, impossível. O risco nunca é a matemática: é a forma como se guarda. Como as carteiras modernas são determinísticas hierárquicas (padrão BIP-32), uma só frase gera uma árvore inteira de chaves e endereços. Por isso a carteira mostra um endereço novo a cada receção, o que melhora a privacidade e exige um só backup.</p>
+    <p>Uma chave privada tem 64 caracteres, é impossível de decorar e fácil de copiar mal. Por isso, as carteiras geram uma <strong>frase de recuperação</strong> (<em>seed phrase</em>), com 12 ou 24 palavras escolhidas de uma lista fixa de 2.048 palavras (padrão BIP-39). A frase codifica um número aleatório, a que se chama semente (<em>seed</em>). Cada palavra da lista representa 11 bits, por isso 12 palavras codificam 128 bits e 24 palavras codificam 256, a que se junta uma pequena soma de controlo que deteta erros de cópia.</p>
+    <p>A partir da semente, a carteira calcula uma chave mestra e, a partir dela, as chaves privadas de que precisa, uma a uma, cada uma com a sua chave pública e o seu endereço. Para isso usa uma função de hash, que dá sempre o mesmo resultado para os mesmos dados e um resultado completamente diferente se os dados mudarem. A carteira junta à chave mestra um número de ordem, 0, 1, 2 e assim por diante, e cada número dá uma chave privada diferente. Como a função de hash não se desfaz, as chaves não revelam a semente. E como o método e a ordem são sempre os mesmos, a mesma semente dá sempre as mesmas chaves. É por isso que a frase é a carteira, e quem a introduzir noutra carteira compatível, num aparelho novo ou de outra marca, obtém as mesmas chaves e os mesmos endereços e volta a controlar o mesmo bitcoin. <!-- [VERIFICAR] Confirmar com o BIP-32 a descrição simplificada da derivação (chave mestra, número de ordem e função de hash HMAC-SHA512). --></p>
+    <p>Uma carteira não usa uma única chave privada. Cada endereço tem a sua, e a frase gera-as todas. As carteiras modernas são determinísticas, porque a mesma frase dá sempre as mesmas chaves, e hierárquicas, porque as chaves se organizam numa árvore a partir de uma raiz (padrão BIP-32). Por isso a carteira mostra um endereço novo a cada receção. Quem conhece um endereço vê todos os pagamentos que ele recebeu, e usar um endereço novo de cada vez impede que se liguem todos os pagamentos à mesma pessoa. Basta uma única cópia de segurança, a da frase.</p>
     <div class="callout risk">
       <span class="tag">Regra de ouro</span>
-      <p>Quem tem a frase tem o Bitcoin. Nunca se deve digitá-la num site, enviá-la por mensagem ou fotografá-la. Nenhuma pessoa, empresa ou «suporte» legítimo pede a frase. Isto inclui o IPB.</p>
+      <p>Quem tem a frase tem o bitcoin. A frase nunca se digita num site, nunca se envia por mensagem e nunca se fotografa, porque sites falsos, mensagens e cópias de fotografias na nuvem são formas de ela chegar a quem a quer roubar. Nenhuma pessoa, empresa ou serviço de apoio legítimo a pede.</p>
     </div>
-    <h2>A frase de segurança extra</h2>
-    <p>Muitas carteiras permitem acrescentar uma <em>passphrase</em>, por vezes chamada «a 25.ª palavra». Dá origem a uma carteira completamente diferente. Aumenta a segurança, mas se for esquecida, o acesso perde-se para sempre. Não é para o primeiro dia.</p>
+    <h2>Porque ninguém adivinha a frase</h2>
+    <p>O que protege a carteira é o número de frases possíveis, e cada bit a mais duplica esse número. Uma frase de 12 palavras tem 128 bits de aleatoriedade, que dão cerca de 3,4 × 10<sup>38</sup> frases possíveis. Uma frase de 24 palavras tem 256 bits, cerca de 1,2 × 10<sup>77</sup>.</p>
+    <p>Números desta ordem são difíceis de imaginar, por isso compara-se cada frase possível a um átomo. As frases possíveis de 24 palavras não cabem num grão de areia, que tem cerca de 2<sup>60</sup> átomos, nem em Júpiter, com cerca de 2<sup>180</sup> átomos, nem na Via Láctea inteira, com cerca de 2<sup>225</sup> átomos. Seriam precisos cerca de dois mil milhões de galáxias como a Via Láctea. Adivinhar uma frase assim equivale a encontrar um único átomo, escolhido ao acaso, entre os de todas essas galáxias. <!-- [VERIFICAR] Confirmar as estimativas de átomos (grão de areia, Júpiter, Via Láctea) com fonte e a conta 2^256 / 2^225 = 2^31, cerca de 2,1 mil milhões. --></p>
+    <h2>Quando a aleatoriedade falha</h2>
+    <p>Este número só vale se a carteira escolher a frase mesmo ao acaso. Um computador não escolhe ao acaso por si e precisa de uma fonte de aleatoriedade. Um programa que gera números segundo uma regra fixa parece aleatório, mas quem conhecer a regra e o ponto de partida reproduz os mesmos números. Se a carteira usar um programa assim, o atacante já não precisa de procurar entre todas as frases e só tem de testar as que o programa pode produzir.</p>
+    <p>Foi o que aconteceu com as carteiras de hardware da Coldcard, uma marca da empresa Coinkite. Em 2021, uma alteração ao código do fabricante fez com que as carteiras gerassem as frases com um programa previsível, em vez de usarem o gerador físico do aparelho. Para quem as usava, as frases pareciam normais. Segundo o fabricante, as frases dos modelos Mk3 ficaram com cerca de 40 bits e as dos modelos Mk4, Mk5 e Q com cerca de 72, em vez de 128. Cada bit a menos reduz as combinações para metade, e com 72 bits há cerca de 7 × 10<sup>16</sup> vezes menos combinações do que com 128. Isso bastou para que atacantes esvaziassem carteiras e roubassem dezenas de milhões de dólares. <!-- [VERIFICAR] Confirmar com o aviso do fabricante (Coinkite) e fontes independentes a data da alteração (2021), os modelos afetados, as estimativas de entropia (cerca de 40 bits nas Mk3, cerca de 72 nas Mk4, Mk5 e Q) e o valor roubado (as notícias divergem, entre cerca de 70 e 88 milhões de dólares). --></p>
+    <p>Atualizar o aparelho depois não repara uma frase que já foi gerada, porque a fraqueza está na frase e não no aparelho. Acrescentar uma passphrase também não resolve. Quem tem uma frase gerada com o código afetado tem de criar uma frase nova, com o código corrigido ou noutra carteira, e passar o bitcoin para ela.</p>
+    <p>O fabricante indica que quem juntou pelo menos 50 lançamentos de dados à geração da frase não é afetado. Alguns aparelhos permitem fazê-lo. O titular lança um dado de seis faces, regista cada resultado no aparelho, e o aparelho junta esses números à sua própria aleatoriedade para gerar a frase.</p>
+    <p>Cada lançamento acrescenta cerca de 2,6 bits, e 50 lançamentos acrescentam cerca de 129, tanto como uma frase de 12 palavras. Como esses bits vêm do dado e não do programa, uma falha no programa deixa de permitir prever a frase. <!-- [VERIFICAR] Confirmar a indicação do fabricante sobre os 50 lançamentos de dados e sobre a migração para uma frase nova. --></p>
+    <p>Foi um erro de programação do fabricante, e não uma falha da criptografia do Bitcoin. Mostra que a segurança da autocustódia depende de a frase ser mesmo aleatória.</p>
+    <h2>A passphrase</h2>
+    <p>Muitas carteiras permitem acrescentar à frase de recuperação uma palavra-passe a que se chama <em>passphrase</em>. Cada passphrase dá origem a uma carteira diferente, com outras chaves e outros endereços. Quem encontrar a frase de recuperação, sem a passphrase, abre uma carteira vazia e não chega ao bitcoin.</p>
+    <p>O preço é que quem esquecer a passphrase perde o acesso ao bitcoin para sempre, porque ela não fica guardada em lado nenhum e não há forma de a recuperar. Por isso convém acrescentá-la só depois de dominar o resto.</p>
     <div class="callout key">
       <span class="tag">Ideia-chave</span>
-      A frase de recuperação é a carteira. O telemóvel é só uma janela para ela, e «enviar» é assinar com a chave privada.
+      A frase de recuperação é a carteira, e «enviar» é assinar com a chave privada. Quem tem a frase controla o bitcoin, por isso ela tem de ser aleatória e secreta.
     </div>
     <h2>Verificação</h2>
 
-    <fieldset class="quiz" data-answer="0">
-      <legend>O que se vê da chave privada, quando se envia uma transação?</legend>
-      <label class="opt"><input type="radio" name="q1"><span>Nada: a rede só valida a assinatura</span></label>
-      <label class="opt"><input type="radio" name="q1"><span>A chave inteira, para confirmar</span></label>
-      <label class="opt"><input type="radio" name="q1"><span>Os últimos 4 dígitos</span></label>
+    <fieldset class="quiz" data-answer="1">
+      <legend>O que mostra uma carteira à rede quando envia uma transação?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>A chave privada inteira, para a rede confirmar</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>A assinatura, que a rede verifica com a chave pública</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Os últimos quatro dígitos da chave privada</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>A rede verifica a assinatura com a chave pública, sem nunca ver a chave privada.</p>
+      <p class="explanation" hidden>A rede verifica a assinatura com a chave pública e nunca vê a chave privada.</p>
     </fieldset>
 
-    <fieldset class="quiz" data-answer="1">
-      <legend>O que acontece se se perder o telemóvel mas houver a frase de recuperação?</legend>
-      <label class="opt"><input type="radio" name="q2"><span>O Bitcoin perde-se</span></label>
-      <label class="opt"><input type="radio" name="q2"><span>Restaura-se tudo noutro dispositivo</span></label>
-      <label class="opt"><input type="radio" name="q2"><span>O IPB repõe a frase</span></label>
+    <fieldset class="quiz" data-answer="2">
+      <legend>O que enfraqueceu as frases geradas pelas carteiras Coldcard afetadas?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>Uma falha na criptografia do Bitcoin</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Terem apenas 12 palavras</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Um gerador previsível, que escolhia a frase num conjunto muito menor</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>A frase é a carteira.</p>
+      <p class="explanation" hidden>As frases pareciam aleatórias, mas vinham de um conjunto muito menor, e por isso um atacante conseguiu procurá-las. A criptografia do Bitcoin não teve falha.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>Quem pode legitimamente pedir a frase de recuperação a um titular?</legend>
+      <label class="opt"><input type="radio" name="q3"><span>Ninguém</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>O serviço de apoio da carteira</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>A plataforma onde o titular comprou o bitcoin</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Quem tem a frase tem o bitcoin. Qualquer pedido da frase é uma tentativa de golpe.</p>
     </fieldset>
 
 
     <h2>Fontes</h2>
     <ul class="sources">
+      <li>CyberInsider, «Coldcard warns of wallet seed flaw as stolen amounts reach $88.6M»: <a href="https://cyberinsider.com/coldcard-warns-of-wallet-seed-flaw-as-stolen-amounts-reach-88-6-million/" target="_blank" rel="noopener">cyberinsider.com</a>.</li>
+      <li>Coinkite, «Entropy Technical Backgrounder»: <a href="https://blog.coinkite.com/entropy-technical-backgrounder" target="_blank" rel="noopener">blog.coinkite.com</a>.</li>
+      <li>Coinkite, aviso sobre a geração de frases nas Coldcard Mk3: <a href="https://blog.coinkite.com/coldcard-mk3-seed-generation-warning/" target="_blank" rel="noopener">blog.coinkite.com</a>.</li>
       <li>BIP-39, «Mnemonic code for generating deterministic keys»: <a href="https://github.com/bitcoin/bips" target="_blank" rel="noopener">github.com/bitcoin/bips</a>.</li>
       <li>BIP-32, «Hierarchical Deterministic Wallets».</li>
       <li>Andreas Antonopoulos e David Harding, «Mastering Bitcoin», 3.ª edição, 2023, caps. 4 e 5.</li>
-      <li>Resumo do IPB das ideias da estrutura temática (tema 14.3).</li>
     </ul>
 
     <div class="done-row">
