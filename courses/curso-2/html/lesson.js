@@ -66,6 +66,95 @@
     cb.addEventListener("change", function () { write(key, cb.checked ? "1" : "0"); });
   });
 
+
+  // Gráfico do poder de compra (lição 3.2): acompanha os valores da calculadora.
+  var chartState = null;
+  var CH = { W0: 84, W1: 356, H0: 44, H1: 252 };
+  var fmtE = function (v) { return v.toLocaleString("pt-PT", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }); };
+  var fmtN = function (v) { return v.toLocaleString("pt-PT", { maximumFractionDigits: 1 }); };
+  var drawCalcChart = function (a, r, y) {
+    var g = document.getElementById("calc-chart-dyn");
+    if (!g) return;
+    var cur = document.getElementById("calc-chart-cur");
+    if (cur) cur.innerHTML = "";
+    if (!isFinite(a) || !isFinite(r) || !isFinite(y) || a <= 0 || r <= 0 || y <= 0) { chartState = null; g.innerHTML = ""; return; }
+    chartState = { a: a, r: r, y: y };
+    var W0 = CH.W0, W1 = CH.W1, H0 = CH.H0, H1 = CH.H1, n = 60;
+    var px = function (t) { return W0 + (W1 - W0) * (t / y); };
+    var py = function (v) { return H1 - (H1 - H0) * (v / a); };
+    var path = function (rate) {
+      var f = 1 + rate / 100, d = "";
+      for (var i = 0; i <= n; i++) {
+        var t = y * i / n;
+        d += (i ? " L" : "M") + px(t).toFixed(1) + " " + py(a / Math.pow(f, t)).toFixed(1);
+      }
+      return d;
+    };
+    var f = 1 + r / 100;
+    var curve = path(r);
+    var lost = "M" + W0 + " " + H0 + " L" + W1 + " " + H0;
+    for (var k = n; k >= 0; k--) {
+      var tk = y * k / n;
+      lost += " L" + px(tk).toFixed(1) + " " + py(a / Math.pow(f, tk)).toFixed(1);
+    }
+    lost += " Z";
+    var vEnd = a / Math.pow(f, y), half = Math.log(2) / Math.log(f), yh = py(a / 2);
+    var s = "";
+    s += '<path d="' + lost + '" fill="#fdeeee"/>';
+    s += '<line x1="' + W0 + '" y1="' + yh.toFixed(1) + '" x2="' + W1 + '" y2="' + yh.toFixed(1) + '" stroke="#c4c4c4" stroke-width="1.8" stroke-dasharray="5 5"/>';
+    s += '<path d="M' + W0 + ' ' + H0 + ' L' + W0 + ' ' + H1 + ' L' + W1 + ' ' + H1 + '" fill="none" stroke="#a3a3a3" stroke-width="1.8" stroke-linecap="round"/>';
+    var refs = [2, 3, 6, 10], labels = [{ y: py(vEnd), text: fmtN(r) + "%", strong: true }];
+    refs.forEach(function (rr) {
+      if (Math.abs(rr - r) < 0.05) return;
+      s += '<path d="' + path(rr) + '" fill="none" stroke="#c4c4c4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>';
+      labels.push({ y: py(a / Math.pow(1 + rr / 100, y)), text: rr + "%", strong: false });
+    });
+    s += '<path d="' + curve + '" fill="none" stroke="#f29500" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>';
+    var placed = [];
+    labels.sort(function (p, q) { return (q.strong ? 1 : 0) - (p.strong ? 1 : 0); }).forEach(function (l) {
+      if (placed.some(function (yy) { return Math.abs(yy - l.y) < 17; })) return;
+      placed.push(l.y);
+      s += '<text x="' + (W1 + 14) + '" y="' + (l.y + 5).toFixed(1) + '" font-size="15" font-weight="' + (l.strong ? 700 : 400) + '" fill="' + (l.strong ? "#0a0a0a" : "#737373") + '">' + l.text + '</text>';
+    });
+    s += '<text x="76" y="' + (H0 + 5) + '" text-anchor="end" font-size="15" font-weight="600" fill="#0a0a0a">' + fmtE(a) + '</text>';
+    s += '<text x="76" y="' + (yh + 5).toFixed(1) + '" text-anchor="end" font-size="15" fill="#525252">' + fmtE(a / 2) + '</text>';
+    s += '<text x="76" y="' + (H1 + 5) + '" text-anchor="end" font-size="15" fill="#525252">0</text>';
+    s += '<text x="' + W0 + '" y="' + (H1 + 26) + '" font-size="15" fill="#525252">hoje</text>';
+    s += '<text x="' + W1 + '" y="' + (H1 + 26) + '" text-anchor="end" font-size="15" fill="#525252">daqui a ' + fmtN(y) + ' anos</text>';
+    if (half <= y) {
+      var hx = px(half), left = hx > (W0 + W1) / 2 + 20;
+      s += '<line x1="' + hx.toFixed(1) + '" y1="' + yh.toFixed(1) + '" x2="' + hx.toFixed(1) + '" y2="' + H1 + '" stroke="#0a0a0a" stroke-width="1.8" stroke-dasharray="4 4"/>';
+      s += '<circle cx="' + hx.toFixed(1) + '" cy="' + yh.toFixed(1) + '" r="6" fill="#0a0a0a" stroke="#fff" stroke-width="2"/>';
+      s += '<text x="' + (left ? hx - 10 : hx + 10).toFixed(1) + '" y="' + (H1 - 10) + '" text-anchor="' + (left ? "end" : "start") + '" font-size="15" font-weight="600" fill="#0a0a0a">metade em ' + fmtN(half) + ' anos</text>';
+    }
+    s += '<circle cx="' + W1 + '" cy="' + py(vEnd).toFixed(1) + '" r="6" fill="#f29500" stroke="#0a0a0a" stroke-width="2.2"/>';
+    s += '<text x="' + (W1 - 4) + '" y="' + (py(vEnd) - 12).toFixed(1) + '" text-anchor="end" font-size="16" font-weight="700" fill="#0a0a0a">' + fmtE(vEnd) + '</text>';
+    g.innerHTML = s;
+  };
+  var chartSvg = document.getElementById("calc-chart");
+  if (chartSvg) {
+    var moveCursor = function (ev) {
+      var cur = document.getElementById("calc-chart-cur");
+      if (!cur || !chartState) return;
+      var rect = chartSvg.getBoundingClientRect();
+      var x = (ev.clientX - rect.left) * (chartSvg.viewBox.baseVal.width / rect.width);
+      if (x < CH.W0 || x > CH.W1) { cur.innerHTML = ""; return; }
+      var a = chartState.a, y = chartState.y, f = 1 + chartState.r / 100;
+      var t = (x - CH.W0) / (CH.W1 - CH.W0) * y, v = a / Math.pow(f, t);
+      var cy = CH.H1 - (CH.H1 - CH.H0) * (v / a);
+      var tx = Math.min(Math.max(x, CH.W0 + 64), CH.W1 - 64);
+      cur.innerHTML =
+        '<line x1="' + x.toFixed(1) + '" y1="' + CH.H0 + '" x2="' + x.toFixed(1) + '" y2="' + CH.H1 + '" stroke="#0a0a0a" stroke-width="1.5"/>' +
+        '<circle cx="' + x.toFixed(1) + '" cy="' + cy.toFixed(1) + '" r="6.5" fill="#f29500" stroke="#0a0a0a" stroke-width="2.4"/>' +
+        '<rect x="' + (tx - 66).toFixed(1) + '" y="' + (CH.H0 - 2) + '" width="132" height="44" rx="9" fill="#0a0a0a"/>' +
+        '<text x="' + tx.toFixed(1) + '" y="' + (CH.H0 + 17) + '" text-anchor="middle" font-size="14" fill="#fff">daqui a ' + fmtN(t) + ' anos</text>' +
+        '<text x="' + tx.toFixed(1) + '" y="' + (CH.H0 + 37) + '" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">' + fmtE(v) + '</text>';
+    };
+    chartSvg.addEventListener("pointermove", moveCursor);
+    chartSvg.addEventListener("pointerdown", moveCursor);
+    chartSvg.addEventListener("pointerleave", function () { var c = document.getElementById("calc-chart-cur"); if (c) c.innerHTML = ""; });
+  }
+
   // Calculadora de poder de compra (lição 2.2).
   var calc = document.getElementById("calc");
   if (calc) {
@@ -79,9 +168,11 @@
       var a = num(amount), r = num(rate), y = num(years);
       if (!isFinite(a) || !isFinite(r) || !isFinite(y) || a < 0 || r <= 0 || y < 0) {
         out.textContent = "Escrever valores positivos nos três campos.";
+        drawCalcChart(NaN, NaN, NaN);
         return;
       }
       var power = a / Math.pow(1 + r / 100, y);
+      drawCalcChart(a, r, y);
       var half = Math.log(2) / Math.log(1 + r / 100);
       out.innerHTML = "";
       var l1 = document.createElement("p");
