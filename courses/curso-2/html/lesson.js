@@ -202,6 +202,64 @@
     });
   });
 
+
+  // Gráfico de emissão (lição 5.1): cursor com o ano, os bitcoins criados e a recompensa.
+  var emSvg = document.getElementById("emission-chart");
+  if (emSvg) {
+    var EH = [2009.0, 2012.9, 2016.5, 2020.4, 2024.3];
+    for (var ek = 1; ek <= 14; ek++) EH.push(2024.3 + 4 * ek);
+    var emSupply = function (yr) {
+      var s = 0;
+      for (var k = 0; k < EH.length - 1; k++) {
+        var a = EH[k], b = EH[k + 1], r = 50 / Math.pow(2, k);
+        if (yr <= a) break;
+        s += r * 210000 * (Math.min(yr, b) - a) / (b - a);
+      }
+      return s;
+    };
+    var emReward = function (yr) {
+      for (var k = 0; k < EH.length - 1; k++) if (EH[k] <= yr && yr < EH[k + 1]) return 50 / Math.pow(2, k);
+      return 50 / Math.pow(2, EH.length - 2);
+    };
+    var emMove = function (ev) {
+      var cur = document.getElementById("emission-cur");
+      var rect = emSvg.getBoundingClientRect();
+      var x = (ev.clientX - rect.left) * (emSvg.viewBox.baseVal.width / rect.width);
+      if (x < 56 || x > 404) { cur.innerHTML = ""; return; }
+      var yr = 2009 + (x - 56) / (404 - 56) * (2036 - 2009);
+      var sup = emSupply(yr), rw = emReward(yr);
+      var cy = 170 - (170 - 44) * (sup / 21e6);
+      var tx = Math.min(Math.max(x, 56 + 92), 404 - 92);
+      var ty = x < 150 ? 52 : 100;
+      var fm = function (v, d) { return v.toLocaleString("pt-PT", { maximumFractionDigits: d }); };
+      cur.innerHTML =
+        '<line x1="' + x.toFixed(1) + '" y1="44" x2="' + x.toFixed(1) + '" y2="296" stroke="#0a0a0a" stroke-width="1.5"/>' +
+        '<circle cx="' + x.toFixed(1) + '" cy="' + cy.toFixed(1) + '" r="6" fill="#f29500" stroke="#0a0a0a" stroke-width="2.2"/>' +
+        '<rect x="' + (tx - 92).toFixed(1) + '" y="' + ty + '" width="184" height="64" rx="9" fill="#0a0a0a"/>' +
+        '<text x="' + tx.toFixed(1) + '" y="' + (ty + 20) + '" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">' + Math.floor(yr) + '</text>' +
+        '<text x="' + tx.toFixed(1) + '" y="' + (ty + 39) + '" text-anchor="middle" font-size="16" font-weight="700" fill="#f29500">' + fm(sup / 1e6, 2) + ' milhões criados</text>' +
+        '<text x="' + tx.toFixed(1) + '" y="' + (ty + 57) + '" text-anchor="middle" font-size="14" fill="#fff">recompensa ' + fm(rw, 3) + ' BTC</text>';
+    };
+    var emToday = document.getElementById("emission-today");
+    if (emToday) {
+      var nowD = new Date();
+      var yrNow = nowD.getFullYear() + (nowD.getMonth() + (nowD.getDate() - 1) / 31) / 12;
+      if (yrNow > 2009 && yrNow < 2036) {
+        var tx0 = 56 + (yrNow - 2009) / (2036 - 2009) * (404 - 56);
+        var supNow = emSupply(yrNow), ty0 = 170 - (170 - 44) * (supNow / 21e6);
+        var pct = Math.round(supNow / 21e6 * 100);
+        emToday.innerHTML =
+          '<line x1="' + tx0.toFixed(1) + '" y1="' + (ty0 + 8).toFixed(1) + '" x2="' + tx0.toFixed(1) + '" y2="170" stroke="#0a0a0a" stroke-width="1.8" stroke-dasharray="4 4"/>' +
+          '<circle cx="' + tx0.toFixed(1) + '" cy="' + ty0.toFixed(1) + '" r="6.5" fill="#0a0a0a" stroke="#fff" stroke-width="2"/>' +
+          '<text x="' + (tx0 - 8).toFixed(1) + '" y="132" text-anchor="end" font-size="15" font-weight="700" fill="#0a0a0a">hoje</text>' +
+          '<text x="' + (tx0 - 8).toFixed(1) + '" y="150" text-anchor="end" font-size="15" fill="#525252">' + pct + '% criado</text>';
+      }
+    }
+    emSvg.addEventListener("pointermove", emMove);
+    emSvg.addEventListener("pointerdown", emMove);
+    emSvg.addEventListener("pointerleave", function () { var c = document.getElementById("emission-cur"); if (c) c.innerHTML = ""; });
+  }
+
   // Lição concluída. No site, o estado vem da conta e guarda-se no servidor.
   var done = document.getElementById("done");
   if (done) {
