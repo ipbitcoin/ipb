@@ -624,4 +624,73 @@
     chainFig.querySelector("figcaption").textContent = "Quatro blocos ligados pelo hash do bloco anterior. Os hashes calculam-se a sério, com o SHA-256, e mostram-se só os primeiros oito caracteres. Alterar o texto de uma transação mostra o que acontece à cadeia.";
     chainRun();
   }
+  // Efeito de avalanche (Curso 2, lição 1.2): dois textos quase iguais, os dois hashes lado a lado.
+  var avLive = document.getElementById("f12-live");
+  if (avLive) {
+    var avGrids = [], avInputs = [], avSum = document.getElementById("f12-sum");
+    var avBuild = function (idx, value, label) {
+      var wrap = document.createElement("div");
+      wrap.className = "av-block";
+      var lab = document.createElement("label");
+      lab.textContent = label;
+      var inp = document.createElement("input");
+      inp.type = "text"; inp.maxLength = 60; inp.value = value; inp.autocomplete = "off";
+      lab.appendChild(inp);
+      var grid = document.createElement("div");
+      grid.className = "av-grid";
+      for (var c = 0; c < 64; c++) grid.appendChild(document.createElement("span"));
+      wrap.appendChild(lab); wrap.appendChild(grid);
+      avLive.appendChild(wrap);
+      avGrids[idx] = grid; avInputs[idx] = inp;
+    };
+    avBuild(0, "Bitcoin", "Texto A");
+    avBuild(1, "bitcoin", "Texto B");
+    var avPop = function (n) { var k = 0; while (n) { k += n & 1; n >>= 1; } return k; };
+    var avRun = function () {
+      Promise.all([sha256Hex(avInputs[0].value), sha256Hex(avInputs[1].value)]).then(function (h) {
+        var diff = 0, bits = 0, i;
+        for (i = 0; i < 64; i++) {
+          var d = h[0][i] !== h[1][i];
+          if (d) diff++;
+          bits += avPop(parseInt(h[0][i], 16) ^ parseInt(h[1][i], 16));
+          avGrids[0].children[i].textContent = h[0][i]; avGrids[1].children[i].textContent = h[1][i];
+          avGrids[0].children[i].className = d ? "d" : ""; avGrids[1].children[i].className = d ? "d" : "";
+        }
+        avSum.textContent = avInputs[0].value === avInputs[1].value
+          ? "Os dois textos são iguais, por isso os hashes são iguais."
+          : "Os hashes diferem em " + diff + " dos 64 caracteres e em " + bits + " dos 256 bits.";
+      }).catch(function () { avSum.textContent = "O browser não suporta esta demonstração."; });
+    };
+    avInputs[0].addEventListener("input", avRun);
+    avInputs[1].addEventListener("input", avRun);
+    avLive.closest("figure").querySelectorAll(".f12-static").forEach(function (el) { el.setAttribute("hidden", ""); });
+    avLive.hidden = false;
+    avLive.closest("figure").querySelector("figcaption").textContent = "Os hashes de dois textos quase iguais. Os caracteres a laranja são os que mudaram, e os dois textos podem ser alterados.";
+    avRun();
+  }
+  // Raiz de Merkle (Curso 2, lição 1.2): quatro transações, dois níveis de hashes e a raiz.
+  var mkIn = document.getElementById("f12b-in");
+  if (mkIn) {
+    var mkBase = null, mkBox = function (id, changed) {
+      document.getElementById(id + "-b").setAttribute("fill", changed ? "#f29500" : "#f5f5f5");
+    };
+    var mkInputs = mkIn.querySelectorAll("input");
+    var mkRun = function () {
+      var tx = Array.prototype.map.call(mkInputs, function (i) { return i.value; });
+      Promise.all(tx.map(sha256Hex)).then(function (L) {
+        return Promise.all([sha256Hex(L[0] + L[1]), sha256Hex(L[2] + L[3])]).then(function (M) {
+          return sha256Hex(M[0] + M[1]).then(function (R) { return { L: L, M: M, R: R }; });
+        });
+      }).then(function (t) {
+        if (!mkBase) mkBase = t;
+        t.L.forEach(function (x, i) { document.getElementById("f12b-l" + i).textContent = x.slice(0, 6); mkBox("f12b-l" + i, x !== mkBase.L[i]); });
+        t.M.forEach(function (x, i) { document.getElementById("f12b-m" + i).textContent = x.slice(0, 6); mkBox("f12b-m" + i, x !== mkBase.M[i]); });
+        document.getElementById("f12b-r").textContent = t.R.slice(0, 6); mkBox("f12b-r", t.R !== mkBase.R);
+      });
+    };
+    mkInputs.forEach(function (i) { i.addEventListener("input", mkRun); });
+    mkIn.hidden = false;
+    mkIn.closest("figure").querySelector("figcaption").textContent = "Os hashes das transações combinam-se aos pares até restar um só, a raiz. Alterar uma transação muda os hashes no caminho até à raiz, e esses ficam a laranja. Versão simplificada, com os seis primeiros caracteres de cada hash.";
+    mkRun();
+  }
 })();

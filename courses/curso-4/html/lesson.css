@@ -276,4 +276,14 @@ code { font-family: var(--mono); font-size: 0.88em; background: #f5f5f5; border-
 .chain-row code { font-family: var(--mono); font-size: 15px; background: #fef3e2; color: var(--ink); padding: 2px 8px; border-radius: 6px; }
 .chain-block.bad .chain-row code { background: #fdeeee; color: #991b1b; }
 .chain-actions { margin: 10px 0 0; }
+.av-live { display: grid; gap: 12px; margin: 0 0 6px; }
+.av-block label { display: block; font-size: 14px; color: var(--muted); margin: 0 0 6px; }
+.av-block input { display: block; width: 100%; margin-top: 4px; font: inherit; font-size: 16px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: #fff; color: var(--ink); }
+.av-grid { display: grid; grid-template-columns: repeat(16, 1fr); gap: 3px; }
+.av-grid span { font-family: var(--mono); font-size: 12px; text-align: center; padding: 5px 0; border-radius: 4px; background: #f5f5f5; color: #525252; }
+.av-grid span.d { background: #f29500; color: #0a0a0a; font-weight: 600; }
+.av-sum { margin: 4px 0 0; font-size: 16px; font-weight: 600; }
+.mk-in { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 0 12px; }
+.mk-in label { display: block; font-size: 14px; color: var(--muted); }
+.mk-in input { display: block; width: 100%; margin-top: 4px; font: inherit; font-size: 15px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: #fff; color: var(--ink); }
 .fig-tabs button:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
