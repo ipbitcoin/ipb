@@ -693,4 +693,47 @@
     mkIn.closest("figure").querySelector("figcaption").textContent = "Os hashes das transações combinam-se aos pares até restar um só, a raiz. Alterar uma transação muda os hashes no caminho até à raiz, e esses ficam a laranja. Versão simplificada, com os seis primeiros caracteres de cada hash.";
     mkRun();
   }
+  // Ajuste da dificuldade (Curso 2, lição 1.3): o cursor muda o poder de mineração e quantos blocos aparecem numa hora.
+  var dfRange = document.getElementById("f13b-range");
+  if (dfRange) {
+    var dfVals = [1 / 2, 2 / 3, 5 / 6, 1, 4 / 3, 5 / 3, 2];
+    var dfFmt = function (n) { return String(n).replace(".", ","); };
+    var dfNS = "http://www.w3.org/2000/svg";
+    var dfCells = function (gid, n) {
+      var g = document.getElementById(gid);
+      while (g.firstChild) g.removeChild(g.firstChild);
+      var total = Math.max(n, 6);
+      for (var i = 0; i < total; i++) {
+        var r = document.createElementNS(dfNS, "rect");
+        r.setAttribute("x", 8 + (i % 6) * 30); r.setAttribute("y", 82 + Math.floor(i / 6) * 30);
+        r.setAttribute("width", "24"); r.setAttribute("height", "24"); r.setAttribute("rx", "5");
+        if (i >= n) { r.setAttribute("fill", "#fff"); r.setAttribute("stroke", "#a3a3a3"); r.setAttribute("stroke-dasharray", "4 3"); r.setAttribute("stroke-width", "2"); }
+        else if (i >= 6) { r.setAttribute("fill", "#fdeeee"); r.setAttribute("stroke", "#991b1b"); r.setAttribute("stroke-width", "2.2"); }
+        else { r.setAttribute("fill", "#f29500"); r.setAttribute("stroke", "#0a0a0a"); r.setAttribute("stroke-width", "2.2"); }
+        g.appendChild(r);
+      }
+    };
+    var dfRun = function () {
+      var x = dfVals[parseInt(dfRange.value, 10)], n = Math.round(6 * x), pct = Math.round(x * 100);
+      dfCells("f13b-g1", n);
+      document.getElementById("f13b-c1").textContent = n;
+      document.getElementById("f13b-l1").setAttribute("x", n >= 10 ? 66 : 40);
+      var rows = Math.ceil(Math.max(n, 6) / 6), noteY = 82 + rows * 30 + 10;
+      document.getElementById("f13b-note").setAttribute("transform", "translate(0 " + noteY + ")");
+      document.getElementById("f13b-svg").setAttribute("viewBox", "0 0 420 " + (noteY + 138));
+      var dir = pct > 100 ? "up" : (pct < 100 ? "down" : "same");
+      var col = dir === "up" ? "#991b1b" : (dir === "down" ? "#166534" : "#525252");
+      var ic = document.getElementById("f13b-ic"), head = document.getElementById("f13b-n0");
+      ic.setAttribute("d", dir === "up" ? "M20 4 L36 24 H27 V42 H13 V24 H4 Z" : (dir === "down" ? "M20 42 L36 22 H27 V4 H13 V22 H4 Z" : "M4 14 H36 V22 H4 Z M4 28 H36 V36 H4 Z"));
+      ic.setAttribute("fill", col); head.setAttribute("fill", col);
+      head.textContent = dir === "up" ? "A dificuldade sobe" : (dir === "down" ? "A dificuldade desce" : "A dificuldade fica igual");
+      document.getElementById("f13b-n3").textContent = dir === "same" ? "porque o poder de mineração não mudou" : "passa a " + pct + "% do que era";
+      document.getElementById("f13b-n1").textContent = "2.016 blocos demoram " + dfFmt(Math.round(14 / x * 10) / 10) + " dias";
+      document.getElementById("f13b-out").textContent = pct === 100 ? "100%, o normal" : pct + "%";
+      dfRange.setAttribute("aria-valuetext", "poder de mineração a " + pct + "% do normal, " + n + " blocos numa hora antes do ajuste");
+    };
+    dfRange.closest(".fig-slider").hidden = false;
+    dfRange.addEventListener("input", dfRun);
+    dfRun();
+  }
 })();
