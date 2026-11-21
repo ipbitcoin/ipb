@@ -815,4 +815,60 @@
     enRange.addEventListener("input", enRun);
     enRun();
   }
+
+  // Quando o gasto se justifica (Curso 2, lição 2.4): o cenário escolhido acende o ramo e o resultado.
+  var q24 = document.getElementById("f24-q");
+  if (q24) {
+    var st24 = "1";
+    var msg24 = {
+      "1": "Com o Bitcoin usado como dinheiro, a energia protege o valor de uma moeda de oferta fixa. O gasto vale a pena.",
+      "0": "Se as pessoas continuarem a preferir o dólar e o euro, a energia protege o que ninguém usa. O gasto não se justifica."
+    };
+    var run24 = function () {
+      var m = st24 === "1";
+      var on = { yes: m, ok: m, no: !m, bad: !m };
+      Object.keys(on).forEach(function (id) { document.getElementById("f24-" + id).setAttribute("opacity", on[id] ? "1" : "0.22"); });
+      ["ok", "bad"].forEach(function (k) {
+        document.getElementById("f24-" + k).querySelector("rect").setAttribute("stroke-width", on[k] ? "3.5" : "2");
+      });
+      q24.querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-v") === st24 ? "true" : "false"); });
+      var mm = document.getElementById("f24-msg");
+      mm.textContent = msg24[st24]; mm.hidden = false;
+    };
+    q24.querySelectorAll("button").forEach(function (b) {
+      b.addEventListener("click", function () { st24 = b.getAttribute("data-v"); run24(); });
+    });
+    document.getElementById("f24-ok").addEventListener("click", function () { st24 = "1"; run24(); });
+    document.getElementById("f24-bad").addEventListener("click", function () { st24 = "0"; run24(); });
+    q24.hidden = false;
+    run24();
+  }
+  // Critérios da propriedade digital (Curso 2, lição 4.1): cada critério liga-se ou desliga-se e o resultado muda.
+  var crBox = document.getElementById("f41-crit");
+  if (crBox) {
+    var crRows = crBox.querySelectorAll(".crit-row"), crRes = document.getElementById("f41-res");
+    var crRun = function () {
+      var off = [], i;
+      for (i = 0; i < crRows.length; i++) if (crRows[i].getAttribute("aria-checked") === "false") off.push(i);
+      var strong = crRes.querySelector("strong"), p = crRes.querySelector("p");
+      crRes.classList.toggle("bad", off.length > 0);
+      if (!off.length) {
+        strong.textContent = "Propriedade digital";
+        p.textContent = "Cumpre os quatro critérios, como o Bitcoin. Como ninguém o controla, ninguém ganha mais por o promover.";
+        return;
+      }
+      strong.textContent = "Não é propriedade digital";
+      var why = ["O código não é público.", "Nem toda a gente o pode usar sem pedir autorização.", "Pode ser censurado.", "Há um Estado ou uma empresa a controlá-lo."];
+      var t = off.length === 1 ? "Falha um dos quatro critérios." : "Falham " + off.length + " dos quatro critérios.";
+      off.forEach(function (k) { t += " " + why[k]; });
+      if (off.indexOf(3) !== -1) t += " Quem o controla ganha se o preço subir, e por isso tem conflito de interesses.";
+      p.textContent = t;
+    };
+    crRows.forEach(function (b) {
+      b.addEventListener("click", function () {
+        b.setAttribute("aria-checked", b.getAttribute("aria-checked") === "true" ? "false" : "true");
+        crRun();
+      });
+    });
+  }
 })();
