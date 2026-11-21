@@ -736,4 +736,56 @@
     dfRange.addEventListener("input", dfRun);
     dfRun();
   }
+  // Confirmações e finalidade (Curso 2, lição 1.4): os cursores mudam os blocos por cima da transação e o poder do atacante.
+  var cfRange = document.getElementById("f14b-range");
+  var cfQRange = document.getElementById("f14b-qrange");
+  if (cfRange && cfQRange) {
+    var cfQ = [0.1, 0.2, 0.3, 0.4, 0.45, 0.51];
+    var cfPt = function (n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, "."); };
+    var cfProb = function (q, z) {
+      var p = 1 - q;
+      if (q >= p) return 1;
+      var lambda = z * q / p, sum = 1, k, j, poisson;
+      for (k = 0; k <= z; k++) {
+        poisson = Math.exp(-lambda);
+        for (j = 1; j <= k; j++) poisson *= lambda / j;
+        sum -= poisson * (1 - Math.pow(q / p, z - k));
+      }
+      return Math.max(0, Math.min(1, sum));
+    };
+    var cfNS = "http://www.w3.org/2000/svg";
+    var cfG = document.getElementById("f14b-g");
+    var cfRun = function () {
+      var n = parseInt(cfRange.value, 10), q = cfQ[parseInt(cfQRange.value, 10)], pq = Math.round(q * 100), i;
+      while (cfG.firstChild) cfG.removeChild(cfG.firstChild);
+      for (i = 0; i <= n; i++) {
+        var r = document.createElementNS(cfNS, "rect");
+        r.setAttribute("x", 26 + i * 54); r.setAttribute("y", 46); r.setAttribute("width", "44"); r.setAttribute("height", "40"); r.setAttribute("rx", "8");
+        r.setAttribute("fill", i === 0 ? "#f29500" : "#f5f5f5"); r.setAttribute("stroke", "#0a0a0a"); r.setAttribute("stroke-width", "2.5");
+        cfG.appendChild(r);
+        var t = document.createElementNS(cfNS, "text");
+        t.setAttribute("x", 26 + i * 54 + 22); t.setAttribute("y", 72); t.setAttribute("text-anchor", "middle");
+        t.setAttribute("font-size", "16"); t.setAttribute("font-weight", "700"); t.setAttribute("fill", "#0a0a0a");
+        t.textContent = i === 0 ? "T" : "+" + i;
+        cfG.appendChild(t);
+      }
+      var p = cfProb(q, n), big;
+      if (n === 0 || q > 0.5) big = "100%";
+      else if (p >= 0.2) big = Math.round(p * 100) + "%";
+      else big = "cerca de 1 em " + cfPt(1 / p);
+      document.getElementById("f14b-big").textContent = big;
+      document.getElementById("f14b-s1").textContent = "é a hipótese de um atacante, com " + pq + "% do poder";
+      var msg = n === 0 ? "Ainda pode ser desfeita, se o bloco ficar órfão" : (q > 0.5 ? "Com a maioria do poder, desfaz sempre" : (p >= 0.2 ? "Ainda há uma hipótese real de a desfazer" : (n < 6 ? "Cada bloco por cima dificulta a reversão" : (p < 0.01 ? "Costuma dar-se como definitiva" : "Ainda há uma hipótese real de a desfazer"))));
+      document.getElementById("f14b-msg").textContent = msg;
+      document.getElementById("f14b-out").textContent = n;
+      document.getElementById("f14b-qout").textContent = pq + "%";
+      cfRange.setAttribute("aria-valuetext", n + " blocos por cima da transação");
+      cfQRange.setAttribute("aria-valuetext", "atacante com " + pq + "% do poder. " + big + ". " + msg);
+    };
+    cfRange.closest(".fig-slider").hidden = false;
+    cfQRange.closest(".fig-slider").hidden = false;
+    cfRange.addEventListener("input", cfRun);
+    cfQRange.addEventListener("input", cfRun);
+    cfRun();
+  }
 })();
