@@ -788,4 +788,31 @@
     cfQRange.addEventListener("input", cfRun);
     cfRun();
   }
+  // Energia por transação (Curso 2, lição 2.1): a energia de um bloco reparte-se pelas transações que ele leva.
+  var enRange = document.getElementById("f21-range");
+  if (enRange) {
+    var enVals = [1000, 2000, 3000, 4000, 5000];
+    var enNS = "http://www.w3.org/2000/svg";
+    var enG = document.getElementById("f21-g");
+    var enPt = function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, "."); };
+    var enRun = function () {
+      var n = enVals[parseInt(enRange.value, 10)], i, units = n / 100, w = 404 / units;
+      while (enG.firstChild) enG.removeChild(enG.firstChild);
+      for (i = 0; i < units; i++) {
+        var r = document.createElementNS(enNS, "rect");
+        r.setAttribute("x", (8 + i * w).toFixed(1)); r.setAttribute("y", "32"); r.setAttribute("width", w.toFixed(1)); r.setAttribute("height", "30");
+        r.setAttribute("fill", "#f29500"); r.setAttribute("stroke", "#0a0a0a"); r.setAttribute("stroke-width", "1.8");
+        enG.appendChild(r);
+      }
+      var share = Math.round(1000 / n * 100);
+      document.getElementById("f21-bar").setAttribute("width", (404 * 1000 / n).toFixed(1));
+      document.getElementById("f21-pct").textContent = n === 1000 ? "100%, a referência" : share + "% da referência";
+      document.getElementById("f21-out").textContent = enPt(n);
+      document.getElementById("f21-msg").textContent = n === 1000 ? "Com 1.000 transações, a referência" : "Cada transação gasta só " + share + "% da referência";
+      enRange.setAttribute("aria-valuetext", enPt(n) + " transações por bloco, energia por transação a " + share + "% da referência");
+    };
+    enRange.closest(".fig-slider").hidden = false;
+    enRange.addEventListener("input", enRun);
+    enRun();
+  }
 })();

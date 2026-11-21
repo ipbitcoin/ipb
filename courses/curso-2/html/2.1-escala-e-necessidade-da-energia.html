@@ -43,6 +43,24 @@
     <p>Na prova de trabalho, a segurança vem do custo de produzir blocos: quanto mais energia os mineradores gastam, mais caro é reescrever o registo. Por isso a energia não é um defeito a corrigir, mas o que protege a rede.</p>
     <p>A energia gasta também não depende do número de transações. Por isso o cálculo do «custo energético por transação» engana.</p>
     <p>Esse cálculo divide o consumo anual da rede pelo número de transações, e dá um valor enorme por transação. Mas a rede não gasta energia por transação: gasta-a para produzir blocos, um a cada dez minutos, e um bloco custa o mesmo trabalho quer leve poucas transações, quer leve muitas. Se os blocos levarem mais transações, o consumo não muda e o custo por transação desce.</p>
+    <figure class="fig">
+      <div class="fig-slider" hidden>
+        <label for="f21-range"><span>Transações num bloco</span><output id="f21-out">1.000</output></label>
+        <input id="f21-range" type="range" min="0" max="4" step="1" value="0">
+      </div>
+      <p class="fig-note">A referência é um bloco com 1.000 transações. A energia do bloco reparte-se por elas, e a parte que cabe a cada transação é o que aqui vale 100%. O que importa é como essa parte muda quando o bloco leva mais ou menos transações.</p>
+      <svg viewBox="0 0 420 232" role="img" aria-labelledby="f21-t f21-d" style="max-width:480px">
+        <title id="f21-t">A energia de um bloco reparte-se pelas transações</title>
+        <desc id="f21-d">Uma barra que representa a energia gasta a produzir um bloco, sempre a mesma, dividida em fatias, uma por cada 100 transações. Por baixo, uma barra mostra a energia por transação em relação à referência, que é um bloco com 1.000 transações. Com 2.000 transações, a energia por transação é 50% da referência, com 3.000 é 33%, com 4.000 é 25% e com 5.000 é 20%. O cursor muda o número de transações.</desc>
+        <text x="8" y="22" font-size="16" font-weight="700" fill="#0a0a0a">Energia de um bloco, sempre a mesma</text>
+        <g id="f21-g"><rect x="8.0" y="32" width="40.4" height="30" fill="#f29500" stroke="#0a0a0a" stroke-width="1.8"/><rect x="48.4" y="32" width="40.4" height="30" fill="#f29500" stroke="#0a0a0a" stroke-width="1.8"/><rect x="88.8" y="32" width="40.4" height="30" fill="#f29500" stroke="#0a0a0a" stroke-width="1.8"/><rect x="129.2" y="32" width="40.4" height="30" fill="#f29500" stroke="#0a0a0a" stroke-width="1.8"/><rect x="169.6" y="32" width="40.4" height="30" fill="#f29500" stroke="#0a0a0a" stroke-width="1.8"/><rect x="210.0" y="32" width="40.4" height="30" fill="#f29500" stroke="#0a0a0a" stroke-width="1.8"/><rect x="250.4" y="32" width="40.4" height="30" fill="#f29500" stroke="#0a0a0a" stroke-width="1.8"/><rect x="290.8" y="32" width="40.4" height="30" fill="#f29500" stroke="#0a0a0a" stroke-width="1.8"/><rect x="331.2" y="32" width="40.4" height="30" fill="#f29500" stroke="#0a0a0a" stroke-width="1.8"/><rect x="371.6" y="32" width="40.4" height="30" fill="#f29500" stroke="#0a0a0a" stroke-width="1.8"/></g>
+        <text x="8" y="84" font-size="15" fill="#525252">cada fatia é a parte de 100 transações</text>
+        <text x="8" y="122" font-size="16" font-weight="700" fill="#0a0a0a">Energia por transação</text><text id="f21-pct" x="412" y="122" text-anchor="end" font-size="16" font-weight="700" fill="#0a0a0a">100%, a referência</text>
+        <rect x="8" y="132" width="404" height="22" rx="6" fill="#f0f0f0"/><rect id="f21-bar" x="8" y="132" width="404" height="22" rx="6" fill="#525252"/>
+        <rect x="8" y="176" width="404" height="42" rx="12" fill="#f5f5f5" stroke="#a3a3a3" stroke-width="2"/><text id="f21-msg" x="210" y="202" text-anchor="middle" font-size="16" font-weight="600" fill="#0a0a0a">Com 1.000 transações, a referência</text>
+      </svg>
+      <figcaption>A energia de um bloco é sempre a mesma, tenha poucas ou muitas transações, e reparte-se por elas. O cursor muda o número de transações. A barra de baixo mostra a parte de cada transação em relação à de um bloco com 1.000.</figcaption>
+    </figure>
     <p>O que decide o consumo é o que os mineradores ganham: quanto mais ganham, mais máquinas ligam e mais energia usam, haja mais transações ou não. E o que essa energia protege não é cada pagamento, mas o registo inteiro.</p>
     <h2>«Consome mais do que um país»</h2>
     <p>A frase é verdadeira nos números: 138 TWh por ano é mais do que a eletricidade que muitos países consomem num ano. <!-- [VERIFICAR] Confirmar com o índice de Cambridge e dados da AIE quantos países consomem menos de 138 TWh por ano. -->Mas a comparação engana.</p>
