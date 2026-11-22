@@ -68,34 +68,34 @@
       </svg>
       <figcaption style="margin:12px 0 0;font-size:15px;line-height:1.5;color:var(--muted)">Cada círculo é uma pessoa, ou um nó, e cada linha é um canal aberto entre duas pessoas. A Ana não tem um canal com o Bruno, mas consegue pagar-lhe: o pagamento (a laranja) passa pela Carla e pela Eva, em três saltos, e nenhum deles vai à blockchain. Os canais a cinzento não são usados neste pagamento.</figcaption>
     </figure>
-    <p>Um exemplo, com números inventados. A Ana e o Bruno abrem um canal e bloqueiam nele 100.000 satoshis, todos da Ana (um satoshi é a cem milionésima parte de um bitcoin). O registo inicial diz Ana 100.000 e Bruno 0. A Ana compra um café ao Bruno por 1.000 satoshis, e assinam um registo novo, com Ana 99.000 e Bruno 1.000. Compra outro, e o registo passa a Ana 98.000 e Bruno 2.000. Fazem isto cinquenta vezes. Cada registo é só uma mensagem entre os dois, e nenhuma vai à blockchain. No fim, quando fecham o canal, só o último (Ana 50.000, Bruno 50.000) é publicado. Cinquenta pagamentos custaram, na camada 1, apenas duas transações: a abertura e o fecho.</p>
+    <p>Um exemplo, com números inventados. A Ana e o Bruno abrem um canal e bloqueiam nele 100.000 satoshis, todos da Ana (um satoshi é a cem milionésima parte de um bitcoin). O registo inicial diz Ana 100.000 e Bruno 0. A Ana compra um café ao Bruno por 1.000 satoshis, e assinam um registo novo, com Ana 99.000 e Bruno 1.000. Compra outro, e o registo passa a Ana 98.000 e Bruno 2.000. Fazem isto cinquenta vezes. Cada registo é só uma mensagem entre os dois, e nenhuma vai à blockchain. No fim, quando fecham o canal, só o último (Ana 50.000, Bruno 50.000) é publicado. Cinquenta pagamentos custaram, na camada 1, apenas duas transações, a abertura e o fecho.</p>
     <p>Se alguém tentar publicar um registo antigo, que lhe dava mais, a outra pessoa pode provar que já existe um mais recente e reclamar o bitcoin. É por isso que as duas partes confiam nos registos sem precisarem de confiar uma na outra.</p>
     <p>O que impede um intermediário de ficar com o dinheiro são contratos criptográficos, que garantem que o pagamento ou chega ao destino, ou volta à origem.</p>
     <h2>Como escala para milhares de milhões de pessoas</h2>
-    <p>O que limita a camada 1 é o espaço dos blocos, e a Lightning contorna esse limite de duas maneiras. Primeiro, os pagamentos dentro de um canal não passam pela blockchain, por isso não gastam espaço: duas pessoas podem trocar milhares de pagamentos com uma só abertura e um só fecho do canal. Segundo, não é preciso um canal com cada pessoa. Como os pagamentos saltam de canal em canal, cada pessoa só precisa de estar ligada, direta ou indiretamente, à rede.</p>
+    <p>O que limita a camada 1 é o espaço dos blocos, e a Lightning contorna esse limite de duas maneiras. Primeiro, os pagamentos dentro de um canal não passam pela blockchain, por isso não gastam espaço. Duas pessoas podem trocar milhares de pagamentos com uma só abertura e um só fecho do canal. Segundo, não é preciso um canal com cada pessoa. Como os pagamentos saltam de canal em canal, cada pessoa só precisa de estar ligada, direta ou indiretamente, à rede.</p>
     <p>Mesmo assim, há um limite. Cada canal precisa de pelo menos duas transações na camada 1, uma para abrir e outra para fechar. A camada 1 trata, no máximo, algumas centenas de milhares de transações por dia, ou seja, cerca de 100 a 200 milhões por ano. Se cada uma de 8 mil milhões de pessoas abrisse e fechasse um só canal, seriam 16 mil milhões de transações, o que levaria várias décadas, mesmo com os blocos sempre cheios e sem mais ninguém a usar a camada 1. <!-- [VERIFICAR] Estimativa própria, a partir de cerca de 1 milhão de vB por bloco, 140 vB por transação simples e 144 blocos por dia; confirmar com dados atuais e data de consulta. Não foi confirmada a estimativa do artigo original da Lightning (Poon e Dryja, 2016). --></p>
     <p>Por isso, para chegar a milhares de milhões de pessoas, é preciso partilhar as transações da camada 1, em vez de dar um canal a cada pessoa. Há três caminhos:</p>
     <ul>
-      <li><strong>Nós muito ligados:</strong> muita gente liga-se a um número pequeno de nós grandes, que tratam da liquidez e da ligação ao resto da rede.</li>
-      <li><strong>Protocolos como a Ark:</strong> muitas pessoas partilham uma só transação da camada 1. Se cada pessoa abrisse e fechasse um canal, cem pessoas custariam à camada 1 duzentas transações. Num lote da Ark, as mesmas cem pessoas custam uma só. Em troca, é preciso um coordenador para organizar cada lote.</li>
-      <li><strong>Camadas custodiais ou federadas:</strong> muita gente usa o mesmo saldo, gerido por um operador, e confia nele.</li>
+      <li><strong>Nós muito ligados.</strong> Muita gente liga-se a um número pequeno de nós grandes, que tratam da liquidez e da ligação ao resto da rede.</li>
+      <li><strong>Protocolos como a Ark.</strong> Muitas pessoas partilham uma só transação da camada 1. Se cada pessoa abrisse e fechasse um canal, cem pessoas custariam à camada 1 duzentas transações. Num lote da Ark, as mesmas cem pessoas custam uma só. Em troca, é preciso um coordenador para organizar cada lote.</li>
+      <li><strong>Camadas custodiais ou federadas.</strong> Muita gente usa o mesmo saldo, gerido por um operador, e confia nele.</li>
     </ul>
     <p>A Lightning dá, assim, uma capacidade enorme de pagamentos, mas a escala para milhares de milhões de pessoas não está demonstrada. Depende destas soluções, e algumas custam confiança ou descentralização.</p>
     <h2>Os limites da Lightning</h2>
     <ul>
-      <li><strong>Liquidez:</strong> para receber, é preciso que alguém tenha aberto um canal com a pessoa, e para enviar, é preciso ter saldo no canal.</li>
-      <li><strong>Estar online:</strong> o nó tem de estar atento, para evitar que a outra parte feche o canal com um saldo antigo e fique com mais do que lhe cabe.</li>
-      <li><strong>Valores muito grandes:</strong> podem falhar, por não haver um caminho com liquidez suficiente.</li>
-      <li><strong>Complexidade:</strong> por isso muitas pessoas usam carteiras que gerem os canais por elas.</li>
+      <li><strong>Liquidez.</strong> Para receber, é preciso que alguém tenha aberto um canal com a pessoa, e para enviar, é preciso ter saldo no canal.</li>
+      <li><strong>Estar online.</strong> O nó tem de estar atento, para evitar que a outra parte feche o canal com um saldo antigo e fique com mais do que lhe cabe.</li>
+      <li><strong>Valores muito grandes.</strong> Podem falhar, por não haver um caminho com liquidez suficiente.</li>
+      <li><strong>Complexidade.</strong> Por isso muitas pessoas usam carteiras que gerem os canais por elas.</li>
     </ul>
     <div class="callout warning">
       <span class="tag">Cuidado</span>
-      <p>Uma carteira Lightning «fácil» pode ser custodial: quem gere os canais é o fornecedor, e é ele que tem o bitcoin. Antes de usar uma, convém descobrir de quem é a chave.</p>
+      <p>Uma carteira Lightning «fácil» pode ser custodial. Quem gere os canais é o fornecedor, e é ele que tem o bitcoin. Antes de usar uma, convém descobrir de quem é a chave.</p>
     </div>
     <h2>A Ark</h2>
     <p>A <strong>Ark</strong> é um protocolo de camada 2 para pagamentos com bitcoin, pensado para evitar o problema da liquidez dos canais da Lightning. Em vez de cada par de pessoas abrir um canal, muitas pessoas usam, de uma só vez, uma única transação da camada 1.</p>
-    <p>Funciona assim. Numa <em>ronda</em>, um coordenador junta os pedidos de várias pessoas, por exemplo cem, e publica na camada 1 uma única transação que bloqueia o bitcoin de todas num mesmo endereço. Esse bitcoin só pode ser gasto por uma sequência de transações que as pessoas já assinaram, mas que ficam guardadas fora da blockchain. Essas transações dividem o bitcoin bloqueado passo a passo, como os ramos de uma árvore: o total divide-se em duas partes, cada parte em outras duas, e assim sucessivamente, até cada pessoa ter a sua parte. A parte de cada pessoa chama-se <strong>VTXO</strong> (<em>virtual transaction output</em>, ou «saída de transação virtual»), e cada pessoa guarda o ramo de transações que leva até ela. <!-- [VERIFICAR] Confirmar a descrição da Ark com o Bitcoin Optech (bitcoinops.org/en/topics/ark/) e a documentação das implementações; as fontes divergem em detalhes como a duração das rondas e dos prazos de saída. --></p>
-    <p>Enquanto ninguém precisar, nenhuma dessas transações é publicada: a blockchain só vê a primeira. Se alguém quiser sair por conta própria, publica o seu ramo e reclama a sua parte na camada 1. Por isso se diz que as pessoas partilham uma só transação: cem pessoas custaram à camada 1 uma transação, e não cem.</p>
+    <p>Funciona assim. Numa <em>ronda</em>, um coordenador junta os pedidos de várias pessoas, por exemplo cem, e publica na camada 1 uma única transação que bloqueia o bitcoin de todas num mesmo endereço. Esse bitcoin só pode ser gasto por uma sequência de transações que as pessoas já assinaram, mas que ficam guardadas fora da blockchain. Essas transações dividem o bitcoin bloqueado passo a passo, como os ramos de uma árvore. O total divide-se em duas partes, cada parte em outras duas, e assim sucessivamente, até cada pessoa ter a sua parte. A parte de cada pessoa chama-se <strong>VTXO</strong> (<em>virtual transaction output</em>, ou «saída de transação virtual»), e cada pessoa guarda o ramo de transações que leva até ela. <!-- [VERIFICAR] Confirmar a descrição da Ark com o Bitcoin Optech (bitcoinops.org/en/topics/ark/) e a documentação das implementações; as fontes divergem em detalhes como a duração das rondas e dos prazos de saída. --></p>
+    <p>Enquanto ninguém precisar, nenhuma dessas transações é publicada. A blockchain só vê a primeira. Se alguém quiser sair por conta própria, publica o seu ramo e reclama a sua parte na camada 1. Por isso se diz que as pessoas partilham uma só transação. Cem pessoas custaram à camada 1 uma transação, e não cem.</p>
     <figure style="margin:24px 0;padding:16px;background:#fff;border-radius:16px;box-shadow:var(--shadow-border)">
       <svg viewBox="0 0 560 320" width="100%" role="img" aria-labelledby="ark-t ark-d" style="display:block;max-width:100%;height:auto">
         <title id="ark-t">Como as pessoas partilham uma transação na Ark</title>
@@ -135,9 +135,9 @@
     </ol>
     <p>Em comparação com a Lightning, a Ark não exige canais nem que quem paga tenha liquidez própria. Em troca, depende de um fornecedor para coordenar as rondas, e tem limites:</p>
     <ul>
-      <li><strong>Confiança:</strong> o fornecedor não pode roubar os VTXO, mas tem de estar disponível para fazer as trocas. Quem recebe fora de uma ronda tem de contar que o remetente e o fornecedor não se combinam para gastar o mesmo VTXO duas vezes.</li>
-      <li><strong>Prazo:</strong> os VTXO têm um prazo, e têm de ser renovados ou levantados antes de expirarem.</li>
-      <li><strong>Custo da saída:</strong> a saída unilateral é mais cara do que o levantamento normal, e, se as taxas da camada 1 subirem muito, pode custar mais do que o valor de um VTXO pequeno.</li>
+      <li><strong>Confiança.</strong> O fornecedor não pode roubar os VTXO, mas tem de estar disponível para fazer as trocas. Quem recebe fora de uma ronda tem de contar que o remetente e o fornecedor não se combinam para gastar o mesmo VTXO duas vezes.</li>
+      <li><strong>Prazo.</strong> Os VTXO têm um prazo, e têm de ser renovados ou levantados antes de expirarem.</li>
+      <li><strong>Custo da saída.</strong> A saída unilateral é mais cara do que o levantamento normal, e, se as taxas da camada 1 subirem muito, pode custar mais do que o valor de um VTXO pequeno.</li>
     </ul>
     <h2>As camadas</h2>
     <div class="table-wrap">
@@ -145,7 +145,7 @@
         <thead><tr><th>Camada</th><th>O que é</th><th>Confiança necessária</th></tr></thead>
         <tbody>
           <tr><td>1 · Base</td><td>Liquidação final na blockchain</td><td>Nenhuma entidade</td></tr>
-          <tr><td>2 · Lightning</td><td>Canais de pagamento abertos, sem autorização de ninguém</td><td>Pouca: os pagamentos protegem-se por contratos criptográficos</td></tr>
+          <tr><td>2 · Lightning</td><td>Canais de pagamento abertos, sem autorização de ninguém</td><td>Pouca, porque os pagamentos protegem-se por contratos criptográficos</td></tr>
           <tr><td>2 · Ark</td><td>Pagamentos fora da cadeia, em saldos partilhados (VTXO), coordenados por um fornecedor</td><td>No fornecedor, com saída unilateral para a camada 1</td></tr>
           <tr><td>Sidechains federadas (por exemplo, a Liquid)</td><td>Outra blockchain, gerida por um grupo de entidades, com tokens ligados ao bitcoin, para liquidações maiores e mais rápidas</td><td>No grupo que gere a sidechain</td></tr>
           <tr><td>3 · Custodial</td><td>Exchanges e aplicações, em que o operador guarda o bitcoin. Há protocolos, como o Fedimint, em que a custódia é partilhada por uma comunidade</td><td>Total, no operador</td></tr>
@@ -158,7 +158,7 @@
     <p>O ecossistema precisa de todas as camadas, porque as empresas tratam melhor da complexidade, do cumprimento das regras e do atendimento ao cliente. Nas camadas superiores pode haver abusos, mas a possibilidade de levantar o bitcoin e mudar de custodiante limita-os, e nenhum outro ativo oferece essa opção.</p>
     <div class="callout key">
       <span class="tag">Ideia-chave</span>
-      A Lightning e a Ark não substituem o Bitcoin: usam a sua segurança. A camada 1 liquida, a camada 2 paga os cafés, e quanto mais acima, mais é preciso confiar num operador.
+      A Lightning e a Ark não substituem o Bitcoin, mas usam a sua segurança. A camada 1 liquida, a camada 2 paga os cafés, e quanto mais acima, mais é preciso confiar num operador.
     </div>
     <h2>Verificação do módulo 3</h2>
 

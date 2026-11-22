@@ -54,7 +54,7 @@
       </svg>
       <figcaption>O hash de «Bitcoin» e o de «bitcoin», que só diferem numa letra. Os caracteres a laranja são os que mudaram.</figcaption>
     </figure>
-    <p>Um exemplo conhecido: o SHA-256 de <code>abc</code> é <code>ba7816bf…f20015ad</code>. Pode escrever-se acima para confirmar.</p>
+    <p>Um exemplo conhecido. O SHA-256 de <code>abc</code> é <code>ba7816bf…f20015ad</code>. Pode escrever-se acima para confirmar.</p>
     <h2>Para que serve no Bitcoin</h2>
     <div class="cards two">
       <div class="card"><span class="n">1 · LIGAR BLOCOS</span><h3>Cada bloco guarda o hash do anterior</h3><p>Se alguém mudar um bloco antigo, o hash muda e a ligação quebra-se.</p></div>
@@ -75,7 +75,7 @@
     </figure>
     <p>A raiz serve também para provar que uma transação está num bloco sem descarregar o bloco todo. Uma carteira leve guarda apenas os cabeçalhos, com 80 bytes cada. Para confirmar um pagamento, pede a um nó só os hashes do caminho da transação até à raiz, a que se chama prova de Merkle. Num bloco com cerca de quatro mil transações bastam uns doze hashes. A carteira recalcula a raiz com eles e compara-a com a do cabeçalho, e se coincidir, a transação está no bloco. Satoshi descreveu este método no documento original, com o nome de verificação simplificada de pagamentos. A mesma ideia reaparece no Taproot, que esconde várias condições de gasto numa árvore e revela só a que se usa, e no SegWit, onde as assinaturas têm uma árvore própria. <!-- [VERIFICAR] Confirmar com fonte o número de hashes de uma prova de Merkle (cerca de log2 de 4000, ou seja 12), a secção 8 do documento de Satoshi, o uso de árvores de Merkle no Taproot (BIP 341) e a raiz das testemunhas no SegWit (BIP 141). --></p>
     <h2>O que o SHA-256 não faz</h2>
-    <p>O SHA-256 <strong>não assina transações</strong>: serve para a mineração e para encadear blocos. A assinatura usa outra matemática (curvas elípticas). Esta distinção importa para o risco quântico, porque quebrar o SHA-256 não permitiria gastar as moedas de ninguém, ao passo que forjar assinaturas permitiria.</p>
+    <p>O SHA-256 <strong>não assina transações</strong>. Serve para a mineração e para encadear blocos. A assinatura usa outra matemática (curvas elípticas). Esta distinção importa para o risco quântico, porque quebrar o SHA-256 não permitiria gastar as moedas de ninguém, ao passo que forjar assinaturas permitiria.</p>
     <h2>O cabeçalho de um bloco</h2>
     <p>O que entra no hash de um bloco é o seu <strong>cabeçalho</strong>, com 80 bytes e seis campos:</p>
     <div class="table-wrap">
@@ -94,7 +94,7 @@
     <p>Na prática, o Bitcoin aplica o SHA-256 duas vezes seguidas (SHA-256d). Para perceber a ideia, uma vez chega.</p>
     <div class="callout key">
       <span class="tag">Ideia-chave</span>
-      Um hash é uma impressão digital: fácil de calcular, impossível de inverter, e qualquer alteração muda-o por completo. É isto que torna a cadeia de blocos infalsificável.
+      Um hash é uma impressão digital, fácil de calcular, impossível de inverter, e qualquer alteração muda-o por completo. É isto que torna a cadeia de blocos infalsificável.
     </div>
     <h2>Verificação</h2>
 
@@ -105,7 +105,7 @@
       <label class="opt"><input type="radio" name="q1"><span>Muda por completo</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>É o efeito de avalanche: mudar um bit na entrada muda a saída de forma imprevisível.</p>
+      <p class="explanation" hidden>É o efeito de avalanche. Mudar um bit na entrada muda a saída de forma imprevisível.</p>
     </fieldset>
 
     <fieldset class="quiz" data-answer="0">

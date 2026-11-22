@@ -29,7 +29,7 @@
     <p class="meta"><span>12 min de leitura</span><span>3 perguntas</span></p>
     <h2>Poucas transações por segundo</h2>
     <p>A camada base do Bitcoin (a <em>camada 1</em>) processa, em média, entre 3 e 7 transações por segundo. <!-- [VERIFICAR] Confirmar a capacidade média da camada base (3 a 7 transações por segundo) e a data de consulta. -->Isto não é uma falha. A camada 1 não foi desenhada para pagar cafés, mas para <strong>liquidar</strong>. Liquidar é concluir de forma definitiva a transferência de valor entre duas partes, sem que nenhuma tenha de confiar na outra.</p>
-    <p>Esta capacidade vem do espaço limitado de cada bloco: alguns milhares de transações, de dez em dez minutos, e não mais.</p>
+    <p>Esta capacidade vem do espaço limitado de cada bloco, ou seja, alguns milhares de transações, de dez em dez minutos, e não mais.</p>
     <p>É por isso que o Bitcoin se compara a sistemas como o Fedwire, a rede que a Reserva Federal dos Estados Unidos usa para os bancos liquidarem entre si grandes pagamentos. Por cima de redes assim, funcionam outras, como a Visa ou o PayPal, que tratam muitos pagamentos pequenos com promessas de pagamento (<em>IOU</em>, de «eu devo») entre bancos, acertadas mais tarde na camada de liquidação.</p>
     <ol class="flow">
       <li><strong>Camada 1</strong>Liquidação final entre quem não confia uns nos outros. Pouca velocidade, máxima segurança.</li>
@@ -37,11 +37,11 @@
       <li><strong>Camadas 3 e 4</strong>Serviços de empresas, mais cómodos, em que se confia no operador.</li>
     </ol>
     <h2>A camada 1 como base</h2>
-    <p>A camada 1 existe para liquidar somas grandes com segurança e para durar décadas. Deve ser como uma rocha de base: pouco rápida, mas segura e quase imutável. Por isso não aumenta a velocidade à custa da segurança.</p>
+    <p>A camada 1 existe para liquidar somas grandes com segurança e para durar décadas. Deve ser como uma rocha de base, pouco rápida, mas segura e quase imutável. Por isso não aumenta a velocidade à custa da segurança.</p>
     <p>Aumentar a velocidade obrigaria a blocos maiores, e blocos maiores exigem mais largura de banda e mais armazenamento para correr um nó. Com isso, menos pessoas conseguiriam verificar a rede por si, e mais teriam de confiar em grandes fornecedores. É um preço que a camada 1 não quer pagar.</p>
     <h2>A taxa de transação distribui o uso</h2>
     <p>O espaço de cada bloco é limitado, e quem quer ver a sua transação incluída depressa paga uma <strong>taxa de transação</strong> mais alta do que os outros. Quando há muita procura, as taxas sobem. Os pagamentos pequenos deixam de compensar na camada 1 e passam para a camada 2, e a base fica para as liquidações grandes.</p>
-    <p>Isto tem uma consequência para o custo da segurança. Proteger um bloco custa o mesmo, quer ele leve muitas transações pequenas, quer leve poucas e grandes: a energia gasta pelos mineradores é a mesma. O que muda é o valor que essa energia protege.</p>
+    <p>Isto tem uma consequência para o custo da segurança. Proteger um bloco custa o mesmo, quer ele leve muitas transações pequenas, quer leve poucas e grandes. A energia gasta pelos mineradores é a mesma. O que muda é o valor que essa energia protege.</p>
     <p>Um exemplo, com números inventados. Imagine-se um bloco com mil pagamentos de 10 euros, ou seja, 10 mil euros no total. O custo de o proteger pesa muito sobre cada pagamento. Agora imagine-se um bloco com dez liquidações de 10 milhões de euros, ou seja, 100 milhões no total. O custo de proteção é o mesmo, mas pesa muito menos em relação ao valor liquidado. Quanto mais valor cada bloco liquida, menor é o custo da segurança em relação ao valor transferido.</p>
     <h2>O Bitcoin não é a Visa</h2>
     <p>Compara-se muitas vezes a capacidade do Bitcoin com a da Visa. A Visa trata cerca de 4.000 transações por segundo e a camada base do Bitcoin cerca de 5, mais ou menos mil vezes menos. <!-- [VERIFICAR] Números de 2019 (Visa, cerca de 124 mil milhões de transações por ano; Bitcoin, cerca de 145 milhões por ano); atualizar com dados recentes e fonte. -->Mas a comparação é errada, porque as duas fazem trabalhos diferentes. A Visa não liquida nada em tempo real. Autoriza o pagamento e os bancos acertam as contas mais tarde, entre si. O que se compara com o Bitcoin é o sistema onde esse acerto final acontece, como a rede dos bancos centrais ou o ouro. Nesse terreno, o Bitcoin liquida de forma definitiva, a qualquer hora e sem pedir autorização, e a Visa podia funcionar por cima dele como hoje funciona por cima dos bancos.</p>
@@ -54,7 +54,7 @@
     <p>A internet funciona de maneira parecida. Tem um protocolo de base simples e estável, sobre o qual correm aplicações que mudam depressa. No Bitcoin, a inovação nos pagamentos faz-se nas camadas superiores, onde um erro custa menos, enquanto a camada 1 muda pouco.</p>
     <div class="callout key">
       <span class="tag">Ideia-chave</span>
-      A camada 1 não é lenta por defeito: foi desenhada para liquidar com segurança, e as taxas empurram os pagamentos pequenos para as camadas superiores.
+      A camada 1 não é lenta por defeito, mas foi desenhada para liquidar com segurança, e as taxas empurram os pagamentos pequenos para as camadas superiores.
     </div>
     <h2>Verificação</h2>
 
