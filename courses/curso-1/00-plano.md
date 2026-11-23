@@ -20,7 +20,7 @@ Regras: linguagem neutra (sem «tu»), «a Bitcoin» (rede) e «o Bitcoin» (ati
 - 2.1 O que é, fisicamente, o euro? (8 min)
 - 2.2 De onde vem o dinheiro novo (11 min)
 - 2.3 O que defendem os bancos centrais (12 min)
-- 2.4 1914 e 1971: como se chegou ao dinheiro atual (11 min)
+- 2.4 1914, 1933 e 1971: como se chegou ao dinheiro atual (11 min)
 
 ## Módulo 3 · Inflação
 - 3.1 Os sentidos de «inflação» e como se mede (10 min)

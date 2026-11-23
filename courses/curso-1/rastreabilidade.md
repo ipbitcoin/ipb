@@ -12,7 +12,7 @@ Documento interno (não é servido aos alunos). Cada módulo, as ideias da estru
 | 2.1 | O que é, fisicamente, o euro? | T1:15, T1:30 (tema 4.1); dados BCE e Banco de Inglaterra (fora da estrutura) | • Confirmar os valores mais recentes da série do BCE (notas e moedas e M3). |
 | 2.2 | De onde vem o dinheiro novo | T1:15, T1:30, T1:50–51, T1:68; T4:45–46; T5:35; T8:5–6, T8:8–9 (tema 4.1–4.3) | — |
 | 2.3 | O que defendem os bancos centrais | T1:41–42, T1:44, T1:48–51, T1:56, T1:60, T1:64–65, T1:72, T1:74, T1:78–79, T1:109, T1:112–113, T1:115; T2:17–18, T2:29, T2:63; T4:17–18 (tema 4.3–4.5) | — |
-| 2.4 | 1914 e 1971: como se chegou ao dinheiro atual | T4:8–9, T4:16, T4:30–32; T1:64, T1:66, T1:70, T1:72, T1:135; T8:11 (tema 9); dados FRED (fora da estrutura) | — |
+| 2.4 | 1914, 1933 e 1971: como se chegou ao dinheiro atual | T4:8–9, T4:16, T4:30–32; T1:64, T1:66, T1:70, T1:72, T1:135; T8:11 (tema 9); dados FRED (fora da estrutura) | — |
 | 3.1 | Os sentidos de «inflação» e como se mede | T3:3–7, T3:13; T8:7; definições de «inflação» (limitação 4 da estrutura) (tema 5.2) | • Esta é a defesa técnica habitual dos institutos de estatística; a estrutura reúne a crítica mas não detalha a resposta. |
 | 3.2 | Quanto vale a erosão | T3:8, T3:11–12; T4:18, T4:40; T5:27 (tema 5.1); dados BCE/Eurostat (fora da estrutura) | — |
 | 3.3 | O que causa a inflação | T1:131–136, T1:140–141, T1:149–150; T3:12, T3:14, T3:17; T4:19 (tema 5.3) | — |
