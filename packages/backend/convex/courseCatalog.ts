@@ -7,6 +7,9 @@
  * www server reads them from there, so the lesson list is never repeated here.
  */
 
+/** How many lessons at the start of each course anybody can read, without an account. */
+export const FREE_LESSONS = 2;
+
 /** Price of each online course, in euro cents. */
 export const COURSE_PRICE_CENTS = 3900;
 

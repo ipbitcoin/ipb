@@ -71,24 +71,36 @@
                 class="border-b border-black/10"
               >
                 <component
-                  :is="owned ? 'a' : 'div'"
-                  :href="owned ? lessonUrl(lesson) : undefined"
+                  :is="canOpen(lesson) ? 'a' : 'div'"
+                  :href="canOpen(lesson) ? lessonUrl(lesson) : undefined"
                   class="focus-ring flex items-center gap-4 py-4"
+                  :class="canOpen(lesson) ? '' : 'text-neutral-500'"
                 >
                   <span
-                    class="grid size-6 shrink-0 place-items-center rounded-full text-[11px] font-mono"
+                    class="grid size-10 shrink-0 place-items-center rounded-full font-mono text-[13px]"
                     :class="
                       isDone(lesson.id)
                         ? 'bg-neutral-950 text-white'
                         : 'bg-black/5 text-neutral-500'
                     "
                   >
-                    <IconCheck v-if="isDone(lesson.id)" class="size-3" />
+                    <IconCheck v-if="isDone(lesson.id)" class="size-4" />
+                    <IconLock
+                      v-else-if="!canOpen(lesson)"
+                      class="size-4"
+                      :aria-label="copy.locked"
+                    />
                     <template v-else>{{ lesson.id }}</template>
                   </span>
                   <span class="min-w-0 grow text-pretty">{{
                     lesson.title
                   }}</span>
+                  <span
+                    v-if="isFree(lesson) && !owned"
+                    class="shrink-0 rounded-full bg-brand px-2 py-0.5 font-mono text-[11px] text-neutral-950"
+                  >
+                    {{ copy.freeLesson }}
+                  </span>
                   <span class="shrink-0 font-mono text-xs text-neutral-500">
                     {{ lesson.minutes }} min
                   </span>
@@ -96,7 +108,10 @@
               </li>
             </ul>
           </div>
-          <p class="mt-6 text-sm text-neutral-500">{{ copy.contentNote }}</p>
+          <p v-if="!owned" class="mt-6 text-sm text-neutral-700">
+            {{ copy.freeNote }}
+          </p>
+          <p class="mt-3 text-sm text-neutral-500">{{ copy.contentNote }}</p>
         </section>
       </div>
 
@@ -107,6 +122,14 @@
           role="status"
         >
           {{ copy.cancelled }}
+        </p>
+
+        <p
+          v-if="route.query.status === 'locked' && !owned"
+          class="mb-4 rounded-xl bg-neutral-50 p-4 text-sm"
+          role="status"
+        >
+          {{ copy.lockedNotice }}
         </p>
 
         <div
@@ -150,7 +173,19 @@
           </UiButton>
         </div>
 
-        <IPBCoursePurchase v-else :course="course.slug" />
+        <div v-else class="flex flex-col gap-4">
+          <UiButton
+            v-if="lessons.length"
+            variant="outline"
+            size="lg"
+            arrow
+            target="_self"
+            :to="lessonUrl(lessons[0]!)"
+          >
+            {{ copy.startFree }}
+          </UiButton>
+          <IPBCoursePurchase :course="course.slug" />
+        </div>
       </aside>
     </div>
   </div>
@@ -213,6 +248,9 @@ const nextLesson = computed(
 );
 
 const isDone = (id: string) => Boolean(progress.value?.completed.includes(id));
+const isFree = (lesson: LessonSummary) =>
+  lessons.value.findIndex((l) => l.id === lesson.id) < FREE_LESSONS;
+const canOpen = (lesson: LessonSummary) => owned.value || isFree(lesson);
 const lessonUrl = (lesson: LessonSummary) => `/aula/${slug}/${lesson.slug}`;
 
 const title = computed(

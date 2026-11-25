@@ -1,6 +1,7 @@
 export {
   COURSE_DISCOUNT_PCT,
   COURSE_PRICE_CENTS,
+  FREE_LESSONS,
   ONLINE_COURSES,
   coursePriceCents,
 } from "@ipb/backend/courseCatalog";
@@ -64,6 +65,10 @@ export const COURSE_COPY = {
     email: "Your email",
     emailHint: "This email is all you need to get in. No password.",
     free: "Included",
+    freeLesson: "Open access",
+    freeNote: "The first two lessons are open access, with no account needed. To continue after them, buy the course.",
+    locked: "Locked. Buy the course to open this lesson.",
+    lockedNotice: "The next lesson is part of the course. Buy it to continue.",
     genericError: "Something went wrong. Please try again.",
     hours: "about 3 hours",
     iAmMember: "I am an IPB member",
@@ -83,6 +88,7 @@ export const COURSE_COPY = {
     sendCode: "Send code",
     signIn: "Sign in",
     start: "Start the course",
+    startFree: "Start with the open-access lessons",
     wrongEmail: "Enter a valid email address.",
   },
   pt: {
@@ -103,6 +109,10 @@ export const COURSE_COPY = {
     emailHint:
       "Este email é tudo o que é preciso para entrar. Sem palavra-passe.",
     free: "Incluído",
+    freeLesson: "Acesso livre",
+    freeNote: "As duas primeiras lições têm acesso livre e não exigem conta. Para continuar depois delas, é preciso comprar o curso.",
+    locked: "Bloqueada. É preciso comprar o curso para abrir esta lição.",
+    lockedNotice: "A lição seguinte faz parte do curso. É preciso comprá-lo para continuar.",
     genericError: "Ocorreu um erro. Tenta outra vez.",
     hours: "cerca de 3 horas",
     iAmMember: "Sou membro do IPB",
@@ -123,6 +133,7 @@ export const COURSE_COPY = {
     sendCode: "Enviar código",
     signIn: "Entrar",
     start: "Começar o curso",
+    startFree: "Começar pelas lições de acesso livre",
     wrongEmail: "Indicar um email válido.",
   },
 } as const;

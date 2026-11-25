@@ -1,11 +1,18 @@
-import { findCourse, ONLINE_COURSES } from "@ipb/backend/courseCatalog";
+import {
+  findCourse,
+  FREE_LESSONS,
+  ONLINE_COURSES,
+} from "@ipb/backend/courseCatalog";
 
 const LESSON_SLUG = /^\d+\.\d+-[a-z0-9-]+$/;
 
 /**
- * Serves one lesson, only to a signed-in learner who bought that course. The
- * lesson is the HTML file from `courses/`, with the shared style and script
- * inlined and its links pointed at the site.
+ * Serves one lesson. The first `FREE_LESSONS` lessons of every course are open
+ * to anybody, with no account. From the next one on, only a signed-in learner
+ * who bought that course gets the lesson. The lesson is the HTML file from
+ * `courses/`, with the shared style and script inlined and its links pointed at
+ * the site. The page also carries the course's lesson list, which the script
+ * uses for the side navigation and for unlocking each lesson after the quiz.
  */
 export default defineEventHandler(async (event) => {
   const slug = getRouterParam(event, "curso") ?? "";
@@ -15,16 +22,17 @@ export default defineEventHandler(async (event) => {
     throw createError({ message: "Not found", statusCode: 404 });
   }
 
-  const account = await getAccount(event);
-  if (!account) {
-    return sendRedirect(
-      event,
-      `/curso-online/entrar?proximo=${encodeURIComponent(`/aula/${slug}/${lessonSlug}`)}`
-    );
+  const lessons = await loadLessons(slug);
+  const index = lessons.findIndex((l) => l.slug === lessonSlug);
+  if (index === -1) {
+    throw createError({ message: "Not found", statusCode: 404 });
   }
-  const owned = account.courses.find((c) => c.courseSlug === slug);
-  if (!owned) {
-    return sendRedirect(event, `/curso-online/${slug}`);
+
+  const account = await getAccount(event);
+  const owned = account?.courses.find((c) => c.courseSlug === slug);
+  if (index >= FREE_LESSONS && !owned) {
+    // Not paid yet: the course page explains the price and how to sign in.
+    return sendRedirect(event, `/curso-online/${slug}?status=locked`);
   }
 
   const storage = courseStorage();
@@ -38,12 +46,22 @@ export default defineEventHandler(async (event) => {
     throw createError({ message: "Not found", statusCode: 404 });
   }
 
-  const lessonId = /^(\d+\.\d+)-/.exec(lessonSlug)?.[1] ?? "";
+  const lessonId = lessons[index]?.id ?? "";
   const state = JSON.stringify({
-    completed: owned.completedLessons,
+    completed: owned?.completedLessons ?? [],
+    free: FREE_LESSONS,
     lesson: lessonId,
+    lessons: lessons.map((l) => ({
+      id: l.id,
+      minutes: l.minutes,
+      module: l.module,
+      moduleName: l.moduleName,
+      slug: l.slug,
+      title: l.title,
+    })),
+    owned: Boolean(owned),
     slug,
-  }).replaceAll("<", String.raw`<`);
+  }).replaceAll("<", String.raw`\u003c`);
 
   const courseLink = (n: 1 | 2 | 3 | 4) =>
     `/curso-online/${ONLINE_COURSES.find((c) => c.number === n)?.slug}`;

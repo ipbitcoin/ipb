@@ -14,8 +14,278 @@
     try { window.localStorage.setItem(key, value); } catch (e) { /* sem armazenamento: a página funciona na mesma */ }
   }
 
-  // Quizzes: escolhe-se uma opção, verifica-se e mostra-se a explicação.
-  document.querySelectorAll(".quiz").forEach(function (quiz) {
+  // ── Curso servido pelo site: acesso, desbloqueio e navegação ───────────
+  // Fora do site (pré-visualização local) não há lista de lições nem bloqueios.
+  var LESSONS = COURSE && Array.isArray(COURSE.lessons) ? COURSE.lessons : null;
+  var FREE = COURSE && typeof COURSE.free === "number" ? COURSE.free : 0;
+  var OWNER = Boolean(COURSE && COURSE.owned);
+  var current = LESSONS ? LESSONS.findIndex(function (l) { return l.id === COURSE.lesson; }) : -1;
+  var passKey = function (id) { return "ipb:quiz:" + NS + id; };
+  var lessonHref = function (l) { return "/aula/" + COURSE.slug + "/" + l.slug; };
+  var buyHref = COURSE ? "/curso-online/" + COURSE.slug + "?status=locked" : "";
+  var escapeHtml = function (t) {
+    return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; });
+  };
+  // Uma lição está superada quando todas as perguntas foram respondidas certo
+  // (guardado neste browser) ou quando já está concluída na conta.
+  var isPassed = function (id) {
+    return read(passKey(id)) === "1" ||
+      (OWNER && Array.isArray(COURSE.completed) && COURSE.completed.indexOf(id) !== -1);
+  };
+  // "open": pode ler. "buy": é preciso comprar o curso. "locked": falta superar a lição anterior.
+  // Quem comprou o curso salta entre lições à vontade, sem responder aos quizzes.
+  var stateOf = function (i) {
+    if (OWNER) return "open";
+    if (i >= FREE) return "buy";
+    if (i > 0 && !isPassed(LESSONS[i - 1].id)) return "locked";
+    return "open";
+  };
+
+  // Ligação «Seguinte» do fim da lição.
+  var nextLink = document.querySelector(".pager a.next");
+  var updateNext = function () {
+    if (!nextLink || current < 0 || current >= LESSONS.length - 1) return;
+    var label = nextLink.querySelector("span");
+    var small = nextLink.querySelector("small");
+    if (!label || !small) return;
+    if (!nextLink.hasAttribute("data-href")) {
+      nextLink.setAttribute("data-href", nextLink.getAttribute("href") || "");
+      nextLink.setAttribute("data-label", label.textContent);
+      nextLink.setAttribute("data-small", small.textContent);
+    }
+    var st = stateOf(current + 1);
+    nextLink.classList.toggle("is-locked", st === "locked");
+    if (st === "open") {
+      nextLink.setAttribute("href", nextLink.getAttribute("data-href"));
+      nextLink.removeAttribute("aria-disabled");
+      small.textContent = nextLink.getAttribute("data-small");
+      label.textContent = nextLink.getAttribute("data-label");
+    } else if (st === "buy") {
+      nextLink.setAttribute("href", buyHref);
+      nextLink.removeAttribute("aria-disabled");
+      small.textContent = "Fim do acesso livre";
+      label.textContent = "Comprar o curso para continuar";
+    } else {
+      nextLink.removeAttribute("href");
+      nextLink.setAttribute("aria-disabled", "true");
+      small.textContent = "Lição seguinte bloqueada";
+      label.textContent = "Responder certo a todas as perguntas para a abrir";
+    }
+  };
+
+  // Navegação lateral por módulos e lições: painel à direita nos ecrãs largos
+  // e gaveta por baixo nos estreitos. O módulo em que se está fica sempre aberto.
+  var ICON_CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.9997 15.1709L19.1921 5.97852L20.6063 7.39273L9.9997 17.9993L3.63574 11.6354L5.04996 10.2212L9.9997 15.1709Z"/></svg>';
+  var ICON_LOCK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M19 10H20C20.5523 10 21 10.4477 21 11V21C21 21.5523 20.5523 22 20 22H4C3.44772 22 3 21.5523 3 21V11C3 10.4477 3.44772 10 4 10H5V9C5 5.13401 8.13401 2 12 2C15.866 2 19 5.13401 19 9V10ZM17 10V9C17 6.23858 14.7614 4 12 4C9.23858 4 7 6.23858 7 9V10H17ZM11 14V18H13V14H11Z"/></svg>';
+  var ICON_CHEV = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 15.0006L7.75732 10.758L9.17154 9.34375L12 12.1722L14.8284 9.34375L16.2426 10.758L12 15.0006Z"/></svg>';
+  var ICON_CLOSE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M11.9997 10.5865L16.9495 5.63672L18.3637 7.05093L13.4139 12.0007L18.3637 16.9504L16.9495 18.3646L11.9997 13.4149L7.04996 18.3646L5.63574 16.9504L10.5855 12.0007L5.63574 7.05093L7.04996 5.63672L11.9997 10.5865Z"/></svg>';
+  var navItems = [];
+  var navMods = [];
+  var navUi = {};
+  var el = function (tag, cls, html) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (html !== undefined) n.innerHTML = html;
+    return n;
+  };
+  var wideQuery = window.matchMedia ? window.matchMedia("(min-width: 1300px)") : { matches: false };
+  var scrollNavToCurrent = function () {
+    var a = navItems[current];
+    if (!a || !navUi.body) return;
+    var r = a.getBoundingClientRect();
+    var b = navUi.body.getBoundingClientRect();
+    navUi.body.scrollTop += (r.top - b.top) - navUi.body.clientHeight / 2 + r.height / 2;
+  };
+  var setNavOpen = function (open, returnFocus) {
+    var wide = wideQuery.matches;
+    navUi.wrap.classList.toggle("is-open", open);
+    navUi.toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    navUi.backdrop.hidden = !(open && !wide);
+    document.documentElement.classList.toggle("sn-lock", open && !wide);
+    if (wide) write("ipb:nav:open", open ? "1" : "0");
+    if (open) window.requestAnimationFrame(scrollNavToCurrent);
+    if (!open && returnFocus) navUi.toggle.focus();
+  };
+  var buildNav = function () {
+    if (!LESSONS || document.getElementById("sidenav")) return;
+    var wrap = el("div", "sn");
+    var toggle = el("button", "sn-toggle",
+      '<span class="sn-ring" aria-hidden="true"></span><span>Lições</span><span class="sn-toggle-count"></span>');
+    toggle.type = "button";
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-controls", "sidenav");
+    var backdrop = el("div", "sn-backdrop");
+    backdrop.hidden = true;
+    var panel = el("nav", "sn-panel");
+    panel.id = "sidenav";
+    panel.setAttribute("aria-label", "Módulos e lições");
+
+    var top = el("div", "sn-top");
+    var close = el("button", "sn-close", ICON_CLOSE);
+    close.type = "button";
+    close.setAttribute("aria-label", "Fechar a navegação");
+    top.appendChild(el("p", "sn-head", "Neste curso"));
+    top.appendChild(close);
+    var stat = el("p", "sn-stat");
+    var bar = el("div", "sn-bar", "<span></span>");
+    var topWrap = el("div", "sn-top-wrap");
+    topWrap.appendChild(top);
+    topWrap.appendChild(stat);
+    topWrap.appendChild(bar);
+    panel.appendChild(topWrap);
+
+    var body = el("div", "sn-body");
+    var groups = [];
+    LESSONS.forEach(function (l, i) {
+      var g = groups.length ? groups[groups.length - 1] : null;
+      if (!g || g.module !== l.module) {
+        g = { module: l.module, name: l.moduleName, items: [] };
+        groups.push(g);
+      }
+      g.items.push(i);
+    });
+    groups.forEach(function (g) {
+      var isCur = g.items.indexOf(current) !== -1;
+      var sec = el("section", "sn-mod" + (isCur ? " is-current is-open" : ""));
+      var head = el("button", "sn-mod-head");
+      head.type = "button";
+      head.innerHTML = '<span class="sn-mod-title">' + escapeHtml(g.module > 0 ? "Módulo " + g.module + " · " + g.name : g.name) +
+        '</span><span class="sn-mod-count"></span><span class="sn-chev">' + ICON_CHEV + '</span>';
+      head.setAttribute("aria-expanded", isCur ? "true" : "false");
+      if (isCur) head.setAttribute("aria-disabled", "true");
+      head.addEventListener("click", function () {
+        if (isCur) return;
+        var open = !sec.classList.contains("is-open");
+        sec.classList.toggle("is-open", open);
+        head.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+      var wrapBody = el("div", "sn-mod-body");
+      var inner = el("div", "sn-mod-inner");
+      var ol = el("ol", "sn-list");
+      g.items.forEach(function (i) {
+        var li = el("li");
+        var a = el("a", "sn-item",
+          '<span class="sn-dot"></span><span class="sn-text"><span class="sn-title">' + escapeHtml(LESSONS[i].title) +
+          '</span><span class="sn-meta"></span></span>');
+        li.appendChild(a);
+        ol.appendChild(li);
+        navItems[i] = a;
+      });
+      inner.appendChild(ol);
+      wrapBody.appendChild(inner);
+      sec.appendChild(head);
+      sec.appendChild(wrapBody);
+      body.appendChild(sec);
+      navMods.push({ sec: sec, items: g.items, count: head.querySelector(".sn-mod-count") });
+    });
+    panel.appendChild(body);
+
+    wrap.appendChild(toggle);
+    wrap.appendChild(backdrop);
+    wrap.appendChild(panel);
+    document.body.appendChild(wrap);
+    navUi = { wrap: wrap, toggle: toggle, backdrop: backdrop, panel: panel, body: body, stat: stat, bar: bar };
+
+    toggle.addEventListener("click", function () { setNavOpen(true); });
+    close.addEventListener("click", function () { setNavOpen(false, true); });
+    backdrop.addEventListener("click", function () { setNavOpen(false, true); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && wrap.classList.contains("is-open") && !wideQuery.matches) setNavOpen(false, true);
+    });
+    // Setas para cima e para baixo percorrem os módulos e as lições.
+    panel.addEventListener("keydown", function (e) {
+      if (["ArrowDown", "ArrowUp", "Home", "End"].indexOf(e.key) === -1) return;
+      var list = Array.prototype.slice.call(panel.querySelectorAll(".sn-mod-head, .sn-item[href]")).filter(function (n) {
+        return n.offsetParent !== null && window.getComputedStyle(n).visibility !== "hidden";
+      });
+      var at = list.indexOf(document.activeElement);
+      var to = e.key === "Home" ? 0 : e.key === "End" ? list.length - 1 : at + (e.key === "ArrowDown" ? 1 : -1);
+      if (at === -1 || to < 0 || to >= list.length) return;
+      e.preventDefault();
+      list[to].focus();
+    });
+    var applyDefault = function () {
+      var wide = wideQuery.matches;
+      setNavOpen(wide && read("ipb:nav:open") !== "0");
+    };
+    if (wideQuery.addEventListener) wideQuery.addEventListener("change", applyDefault);
+    applyDefault();
+    window.requestAnimationFrame(function () { window.requestAnimationFrame(scrollNavToCurrent); });
+  };
+  var updateNav = function () {
+    if (!navUi.wrap) return;
+    var passedN = 0;
+    navItems.forEach(function (a, i) {
+      var st = stateOf(i);
+      var passed = isPassed(LESSONS[i].id);
+      if (passed) passedN++;
+      var dot = a.querySelector(".sn-dot");
+      var meta = a.querySelector(".sn-meta");
+      a.classList.toggle("is-current", i === current);
+      a.classList.toggle("is-passed", passed);
+      a.classList.toggle("is-buy", st === "buy");
+      a.classList.toggle("is-locked", st === "locked");
+      if (i === current) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+      var note = "";
+      if (st === "locked") {
+        a.removeAttribute("href");
+        a.setAttribute("aria-disabled", "true");
+        note = "Responder ao quiz anterior";
+      } else {
+        a.removeAttribute("aria-disabled");
+        a.setAttribute("href", st === "buy" ? buyHref : lessonHref(LESSONS[i]));
+        if (st === "buy") note = "Requer o curso";
+        else if (i < FREE && !OWNER) note = "Acesso livre";
+      }
+      dot.innerHTML = passed ? ICON_CHECK : (st === "buy" ? ICON_LOCK : escapeHtml(LESSONS[i].id));
+      meta.textContent = LESSONS[i].minutes + " min" + (note ? " · " + note : "");
+    });
+    navMods.forEach(function (m) {
+      var n = m.items.filter(function (i) { return isPassed(LESSONS[i].id); }).length;
+      m.count.textContent = n + "/" + m.items.length;
+    });
+    var total = LESSONS.length;
+    navUi.stat.innerHTML = "<strong>" + passedN + "</strong> de " + total + " lições concluídas";
+    navUi.bar.firstChild.style.width = (total ? Math.round(passedN / total * 100) : 0) + "%";
+    navUi.toggle.querySelector(".sn-toggle-count").textContent = passedN + "/" + total;
+    navUi.toggle.querySelector(".sn-ring").style.setProperty("--p", String(total ? Math.round(passedN / total * 100) : 0));
+  };
+  var syncDone = function () {};
+  var refreshAccess = function () {
+    if (!LESSONS) return;
+    updateNext();
+    updateNav();
+    syncDone();
+  };
+
+  if (LESSONS) {
+    buildNav();
+    updateNav();
+    // Quem abre uma lição por endereço sem ter superado a anterior vê só o aviso.
+    if (current > 0 && stateOf(current) === "locked") {
+      var holder = document.querySelector("article");
+      var before = LESSONS[current - 1];
+      if (holder) {
+        holder.innerHTML = '<p class="eyebrow">Lição bloqueada</p><h1>Primeiro, a lição anterior</h1>' +
+          '<p>Esta lição abre depois de responder certo a todas as perguntas da lição anterior, «' + escapeHtml(before.title) + '».</p>' +
+          '<p><a class="btn" href="' + lessonHref(before) + '">Ir para a lição anterior</a></p>';
+      }
+      return;
+    }
+  }
+
+  // Quizzes: escolhe-se uma opção e verifica-se. No site, quem erra volta a tentar
+  // sem ver a resposta certa, e a lição seguinte só abre com todas as perguntas certas.
+  var quizzes = Array.prototype.slice.call(document.querySelectorAll(".quiz"));
+  var checkLesson = function () {
+    if (!LESSONS || !quizzes.length) return;
+    var all = quizzes.every(function (q) { return q.getAttribute("data-solved") === "1"; });
+    if (all) {
+      write(passKey(COURSE.lesson), "1");
+      refreshAccess();
+    }
+  };
+  quizzes.forEach(function (quiz) {
     var answer = Number(quiz.getAttribute("data-answer"));
     var button = quiz.querySelector("[data-check]");
     var feedback = quiz.querySelector(".feedback");
@@ -29,15 +299,27 @@
         return;
       }
       options.forEach(function (o) { o.classList.remove("is-right", "is-wrong"); });
-      options[answer].classList.add("is-right");
       var right = chosen === answer;
-      if (!right) options[chosen].classList.add("is-wrong");
       feedback.innerHTML = "";
       var lead = document.createElement("strong");
       lead.className = right ? "ok" : "bad";
+      if (LESSONS && !right) {
+        options[chosen].classList.add("is-wrong");
+        quiz.removeAttribute("data-solved");
+        lead.textContent = "Ainda não. ";
+        feedback.appendChild(lead);
+        feedback.appendChild(document.createTextNode("Tentar outra vez."));
+        return;
+      }
+      options[answer].classList.add("is-right");
+      if (!right) options[chosen].classList.add("is-wrong");
       lead.textContent = right ? "Certo. " : "Ainda não. ";
       feedback.appendChild(lead);
       feedback.appendChild(document.createTextNode(explanation.textContent));
+      if (LESSONS) {
+        quiz.setAttribute("data-solved", "1");
+        checkLesson();
+      }
     });
   });
 
@@ -260,26 +542,44 @@
     emSvg.addEventListener("pointerleave", function () { var c = document.getElementById("emission-cur"); if (c) c.innerHTML = ""; });
   }
 
-  // Lição concluída. No site, o estado vem da conta e guarda-se no servidor.
+  // Lição concluída. Quem comprou o curso guarda o estado na conta, no servidor.
+  // Quem só lê as lições de acesso livre guarda-o neste browser. No site, o botão só
+  // fica ativo depois de responder certo a todas as perguntas.
   var done = document.getElementById("done");
   if (done) {
     var lesson = done.getAttribute("data-lesson");
     var doneKey = "ipb:done:" + NS + lesson;
+    var isOn = function () { return done.getAttribute("aria-pressed") === "true"; };
     var set = function (on) {
       done.setAttribute("aria-pressed", on ? "true" : "false");
       done.textContent = on ? "Lição concluída ✓" : "Marcar como concluída";
       done.classList.toggle("secondary", on);
     };
-    if (COURSE) {
+    var hint = null;
+    if (LESSONS) {
+      hint = document.createElement("p");
+      hint.className = "done-hint";
+      hint.textContent = "Para concluir a lição e abrir a seguinte, responder certo a todas as perguntas.";
+      done.parentNode.appendChild(hint);
+    }
+    if (OWNER) {
       set(Array.isArray(COURSE.completed) && COURSE.completed.indexOf(lesson) !== -1);
     } else {
       set(read(doneKey) === "1");
     }
+    syncDone = function () {
+      if (!hint) return;
+      var ok = isPassed(lesson) || isOn();
+      done.disabled = !ok;
+      hint.hidden = ok;
+    };
     done.addEventListener("click", function () {
-      var on = done.getAttribute("aria-pressed") !== "true";
-      if (!COURSE) {
+      var on = !isOn();
+      if (LESSONS && on && !isPassed(lesson)) return;
+      if (!OWNER) {
         write(doneKey, on ? "1" : "0");
         set(on);
+        refreshAccess();
         return;
       }
       done.disabled = true;
@@ -291,15 +591,19 @@
       })
         .then(function (r) {
           if (!r.ok) throw new Error("http " + r.status);
+          var list = Array.isArray(COURSE.completed) ? COURSE.completed.filter(function (id) { return id !== lesson; }) : [];
+          if (on) list.push(lesson);
+          COURSE.completed = list;
           set(on);
         })
         .catch(function () {
           done.textContent = "Não foi possível guardar. Convém tentar outra vez.";
           window.setTimeout(function () { set(!on); }, 2500);
         })
-        .then(function () { done.disabled = false; });
+        .then(function () { done.disabled = false; refreshAccess(); });
     });
   }
+  refreshAccess();
 
   // ── Ferramentas dos Cursos 2 e 3 ────────────────────────────────────────
   var pt = function (n, max) {
