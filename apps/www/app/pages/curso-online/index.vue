@@ -91,6 +91,31 @@
       </div>
     </section>
 
+    <section aria-labelledby="verify-heading" class="section pb-20 sm:pb-28">
+      <div
+        class="flex flex-col gap-6 rounded-2xl bg-neutral-50 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8"
+      >
+        <div class="flex max-w-2xl flex-col gap-2">
+          <h2
+            id="verify-heading"
+            class="text-2xl font-medium tracking-[-0.02em]"
+          >
+            {{ copy.verifyTitle }}
+          </h2>
+          <p class="text-pretty text-neutral-600">{{ copy.verifyText }}</p>
+        </div>
+        <UiButton
+          class="shrink-0 whitespace-nowrap"
+          size="lg"
+          variant="outline"
+          arrow
+          :to="localePath('curso-online-verificar')"
+        >
+          {{ copy.verifyCta }}
+        </UiButton>
+      </div>
+    </section>
+
     <section aria-labelledby="faq-heading" class="section pb-20 sm:pb-28">
       <h2 id="faq-heading" class="section-title max-w-3xl">
         {{ copy.faqTitle }}
@@ -143,7 +168,7 @@ const COPY = {
         q: "Does access expire?",
       },
       {
-        a: "When you mark every lesson as done, you can write your name and get a diploma you can print or save as PDF. It has a code anyone can use to check it.",
+        a: "When you mark every lesson as done, you can write your name and get a diploma you can print or save as PDF. It has a code anyone can use to check it, in the section «Check a diploma» on this page.",
         q: "How does the diploma work?",
       },
       {
@@ -156,6 +181,10 @@ const COPY = {
       },
     ],
     faqTitle: "Questions",
+    verifyCta: "Check a diploma",
+    verifyText:
+      "Every diploma has a code. Anyone can type it to confirm that the Portuguese Bitcoin Institute issued it.",
+    verifyTitle: "Do you have a diploma to check?",
     howTitle: "How it works",
     membersEyebrow: "Members",
     membersText:
@@ -202,7 +231,7 @@ const COPY = {
         q: "O acesso expira?",
       },
       {
-        a: "Depois de todas as lições estarem marcadas como concluídas, escreve-se o nome e obtém-se um diploma que pode ser impresso ou guardado em PDF. Tem um código que qualquer pessoa pode usar para o verificar.",
+        a: "Depois de todas as lições estarem marcadas como concluídas, escreve-se o nome e obtém-se um diploma que pode ser impresso ou guardado em PDF. Tem um código que qualquer pessoa pode usar para o verificar, na secção «Verificar um diploma» desta página.",
         q: "Como funciona o diploma?",
       },
       {
@@ -215,6 +244,10 @@ const COPY = {
       },
     ],
     faqTitle: "Perguntas",
+    verifyCta: "Verificar um diploma",
+    verifyText:
+      "Cada diploma tem um código. Qualquer pessoa o pode escrever para confirmar que foi emitido pelo Instituto Português de Bitcoin.",
+    verifyTitle: "Tem um diploma para verificar?",
     howTitle: "Como funciona",
     membersEyebrow: "Membros",
     membersText:

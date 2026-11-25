@@ -9,6 +9,16 @@ export type { OnlineCourse } from "@ipb/backend/courseCatalog";
 
 export type Lang = "pt" | "en";
 
+/**
+ * Turns what somebody typed into a diploma code ("IPB-C1-ABCD-EFGH"), also when
+ * the dashes or spaces are missing. Returns "" when it cannot be a code.
+ */
+export function normalizeDiplomaCode(input: string): string {
+  const compact = input.toUpperCase().replaceAll(/[^A-Z0-9]/g, "");
+  const match = /^IPB(C[1-9])([A-Z0-9]{4})([A-Z0-9]{4})$/.exec(compact);
+  return match ? `IPB-${match[1]}-${match[2]}-${match[3]}` : "";
+}
+
 /** 5 → "5", 4.5 → "4,5" in Portuguese and "4.5" in English. */
 export function formatHoursNumber(hours: number, lang: Lang): string {
   return new Intl.NumberFormat(lang === "en" ? "en-GB" : "pt-PT", {

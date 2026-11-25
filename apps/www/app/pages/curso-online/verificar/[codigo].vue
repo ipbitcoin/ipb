@@ -81,6 +81,9 @@
             {{ copy.check }}
           </UiButton>
         </div>
+        <p v-if="otherError" class="text-sm text-red-700" role="alert">
+          {{ otherError }}
+        </p>
       </form>
     </section>
   </div>
@@ -122,6 +125,8 @@ const COPY = {
     date: "Issued on",
     eyebrow: "Diploma verification",
     invalid: "Diploma not found",
+    invalid_format:
+      "That does not look like a diploma code. It has the form IPB-C1-ABCD-EFGH.",
     invalidText:
       "No diploma matches this code. Check that it was typed correctly.",
     name: "Awarded to",
@@ -138,6 +143,8 @@ const COPY = {
     date: "Emitido em",
     eyebrow: "Verificação de diploma",
     invalid: "Diploma não encontrado",
+    invalid_format:
+      "Isto não parece um código de diploma. Tem a forma IPB-C1-ABCD-EFGH.",
     invalidText:
       "Nenhum diploma corresponde a este código. Convém confirmar se foi escrito corretamente.",
     name: "Atribuído a",
@@ -182,16 +189,20 @@ const coursePage = computed(() =>
 );
 
 const otherCode = ref("");
+const otherError = ref("");
 async function check() {
-  const next = otherCode.value.trim().toUpperCase();
-  if (next) {
-    await navigateTo(
-      localePath({
-        name: "curso-online-verificar-codigo",
-        params: { codigo: next },
-      })
-    );
+  const next = normalizeDiplomaCode(otherCode.value);
+  if (!next) {
+    otherError.value = copy.value.invalid_format;
+    return;
   }
+  otherError.value = "";
+  await navigateTo(
+    localePath({
+      name: "curso-online-verificar-codigo",
+      params: { codigo: next },
+    })
+  );
 }
 
 useSeoMeta({ robots: "noindex, nofollow", title: () => title.value });

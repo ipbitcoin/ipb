@@ -88,6 +88,10 @@ export default defineNuxtConfig({
         en: "/online-course/sign-in",
         pt: "/curso-online/entrar",
       },
+      "curso-online-verificar": {
+        en: "/online-course/verify",
+        pt: "/curso-online/verificar",
+      },
       "curso-online-verificar-codigo": {
         en: "/online-course/verify/[codigo]",
         pt: "/curso-online/verificar/[codigo]",
