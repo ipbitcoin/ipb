@@ -10,7 +10,7 @@ Regras: linguagem neutra (sem «tu»), «a Bitcoin» (rede) e «o Bitcoin» (ati
 - 0.1 Antes de começar (8 min)
 - 0.2 A escola austríaca e os seus pilares (7 min)
 
-## Módulo 1 · O dinheiro
+## Módulo 1 · A origem do dinheiro
 - 1.1 Para que serve o dinheiro (12 min)
 - 1.2 Como nasce o dinheiro (9 min)
 - 1.3 A dureza do dinheiro (12 min)

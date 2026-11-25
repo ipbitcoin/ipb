@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Funções de hash e SHA-256 | Curso 2 | Instituto Português de Bitcoin</title>
-  <meta name="description" content="Lição 1.2 do Curso 2: No fim desta lição, será possível explicar o que é uma função de hash, porque o SHA-256 é a base da ligação entre blocos e experimentá-lo.">
+  <meta name="description" content="Lição 1.2 do Curso 2: No fim desta lição, será possível explicar o que é uma função de hash, como o SHA-256 liga os blocos uns aos outros e experimentá-lo na calculadora.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
@@ -25,10 +25,10 @@
 
     <p class="eyebrow">Módulo 1 · Como funciona a rede · Lição 1.2</p>
     <h1>Funções de hash e SHA-256</h1>
-    <p class="lead">No fim desta lição, será possível explicar o que é uma função de hash, porque o SHA-256 é a base da ligação entre blocos e experimentá-lo.</p>
+    <p class="lead">No fim desta lição, será possível explicar o que é uma função de hash, como o SHA-256 liga os blocos uns aos outros e experimentá-lo na calculadora.</p>
     <p class="meta"><span>10 min de leitura</span><span>3 perguntas · 1 calculadora</span></p>
     <h2>Uma impressão digital para dados</h2>
-    <p>Uma <strong>função de hash</strong> pega em qualquer dado (uma palavra, um livro, um bloco de transações) e devolve um número de tamanho fixo, a que se chama <em>hash</em>. O Bitcoin usa a função <strong>SHA-256</strong>, que devolve sempre 256 bits, normalmente escritos como 64 caracteres em hexadecimal.</p>
+    <p>Uma <strong>função de hash</strong> recebe qualquer dado, seja uma palavra, um livro ou um bloco de transações, e devolve um número de tamanho fixo, o <em>hash</em>. A Bitcoin usa a função <strong>SHA-256</strong>, que devolve sempre 256 bits. Escrevem-se normalmente como 64 caracteres em hexadecimal, ou seja, com os algarismos de 0 a 9 e as letras de a a f.</p>
     <h2>Experimentar</h2>
     <div class="card" id="hash">
       <h3>Calculadora de SHA-256</h3>
@@ -37,12 +37,12 @@
       <input type="text" id="hash-in" value="Olá, Bitcoin" autocomplete="off">
       <pre class="ledger" id="hash-out" role="status" aria-live="polite" style="margin-top:12px;overflow-wrap:anywhere;white-space:pre-wrap"></pre>
     </div>
-    <h2>O que se repara</h2>
+    <h2>O que se observa</h2>
     <ul>
       <li><strong>O resultado tem sempre o mesmo tamanho</strong>, seja o texto de uma letra ou de um livro.</li>
-      <li><strong>O mesmo texto dá sempre o mesmo hash.</strong> É determinista.</li>
+      <li><strong>O mesmo texto dá sempre o mesmo hash.</strong> A função é determinística.</li>
       <li><strong>Mudar uma letra muda tudo.</strong> Não há «hashes parecidos» para textos parecidos.</li>
-      <li><strong>Não se volta atrás.</strong> A partir do hash não se consegue descobrir o texto. A única forma é tentar textos até acertar.</li>
+      <li><strong>Não se inverte.</strong> A partir do hash não se descobre o texto, a não ser a tentar textos até acertar.</li>
     </ul>
     <figure class="fig">
       <div id="f12-live" class="av-live" hidden></div>
@@ -54,16 +54,17 @@
       </svg>
       <figcaption>O hash de «Bitcoin» e o de «bitcoin», que só diferem numa letra. Os caracteres a laranja são os que mudaram.</figcaption>
     </figure>
-    <p>Um exemplo conhecido. O SHA-256 de <code>abc</code> é <code>ba7816bf…f20015ad</code>. Pode escrever-se acima para confirmar.</p>
-    <h2>Para que serve no Bitcoin</h2>
+    <p>O SHA-256 de <code>abc</code> é <code>ba7816bf…f20015ad</code> (aqui abreviado). Escrevendo <code>abc</code> na calculadora acima, confirma-se.</p>
+    <h2>Para que serve o hash na Bitcoin</h2>
     <div class="cards two">
-      <div class="card"><span class="n">1 · LIGAR BLOCOS</span><h3>Cada bloco guarda o hash do anterior</h3><p>Se alguém mudar um bloco antigo, o hash muda e a ligação quebra-se.</p></div>
-      <div class="card"><span class="n">2 · RESUMIR TRANSAÇÕES</span><h3>Raiz de Merkle</h3><p>Os hashes das transações combinam-se numa árvore. A raiz resume milhares de transações num só valor.</p></div>
+      <div class="card"><span class="n">1 · LIGAR BLOCOS</span><h3>Cada bloco guarda o hash do anterior</h3><p>Se alguém mudar um bloco antigo, o hash desse bloco muda e a ligação ao seguinte quebra-se.</p></div>
+      <div class="card"><span class="n">2 · RESUMIR TRANSAÇÕES</span><h3>Raiz de Merkle</h3><p>Os hashes das transações combinam-se aos pares numa árvore. A raiz resume milhares de transações num só valor.</p></div>
       <div class="card"><span class="n">3 · PROVAR TRABALHO</span><h3>Mineração</h3><p>Os mineradores procuram um bloco cujo hash comece por muitos zeros.</p></div>
-      <div class="card"><span class="n">4 · ENDEREÇOS</span><h3>Das chaves aos endereços</h3><p>O endereço de uma carteira é derivado da chave pública com funções de hash.</p></div>
+      <div class="card"><span class="n">4 · ENDEREÇOS</span><h3>Das chaves aos endereços</h3><p>O endereço de uma carteira obtém-se da chave pública através de funções de hash.</p></div>
     </div>
-    <h2>Onde se usa a raiz de Merkle</h2>
-    <p>A raiz de Merkle está no cabeçalho do bloco e resume todas as suas transações num só valor de 32 bytes. Os mineradores aplicam o SHA-256 ao cabeçalho inteiro, à procura de um hash com muitos zeros. Por isso, mudar uma única transação muda a raiz, muda o cabeçalho e invalida a prova de trabalho desse bloco. Quando o número de transações é ímpar, a última é duplicada para fechar o par.</p>
+    <h2>A raiz de Merkle</h2>
+    <p>A raiz de Merkle está no cabeçalho do bloco e resume todas as suas transações num só valor de 32 bytes. Calcula-se aos pares. Cada transação tem o seu hash, cada dois hashes dão um novo hash, e repete-se até restar um único hash, a raiz. Quando o número de transações é ímpar, a última duplica-se para fechar o par.</p>
+    <p>O trabalho dos mineradores é procurar um cabeçalho cujo hash comece por muitos zeros. Como o hash é imprevisível, a única forma de o encontrar é por tentativa e erro. Mudam um número do cabeçalho, o <em>nonce</em>, calculam o SHA-256 do cabeçalho inteiro e repetem até o resultado começar por zeros suficientes. Esse cabeçalho é a prova de que foi feito muito trabalho, a <strong>prova de trabalho</strong>, e a lição 1.3 explica-a. Por isso, mudar uma única transação muda a raiz, muda o cabeçalho e invalida a prova de trabalho desse bloco, que teria de ser refeita.</p>
     <figure class="fig">
       <div id="f12b-in" class="mk-in" hidden><label>T1<input type="text" maxlength="40" value="Tomás paga 2 a Teresa" autocomplete="off"></label><label>T2<input type="text" maxlength="40" value="Teresa paga 1 a Matilde" autocomplete="off"></label><label>T3<input type="text" maxlength="40" value="Matilde paga 1 a Carlos" autocomplete="off"></label><label>T4<input type="text" maxlength="40" value="Carlos paga 2 a Tomás" autocomplete="off"></label></div>
       <svg viewBox="0 0 420 304" role="img" aria-labelledby="f12b-t f12b-d" style="max-width:480px">
@@ -71,30 +72,29 @@
         <desc id="f12b-d">Quatro transações, T1 a T4. O hash de cada uma combina-se aos pares num hash do nível seguinte, e esses dois combinam-se no hash final, a raiz de Merkle. Alterar uma transação muda o seu hash, o do par e a raiz. É uma versão simplificada, com os seis primeiros caracteres de cada hash.</desc>
         <path d="M51 230 L104 140" stroke="#525252" stroke-width="2" fill="none"/><path d="M157 230 L104 140" stroke="#525252" stroke-width="2" fill="none"/><path d="M263 230 L316 140" stroke="#525252" stroke-width="2" fill="none"/><path d="M369 230 L316 140" stroke="#525252" stroke-width="2" fill="none"/><path d="M104 98 L210 64" stroke="#525252" stroke-width="2" fill="none"/><path d="M316 98 L210 64" stroke="#525252" stroke-width="2" fill="none"/><text x="210" y="17" text-anchor="middle" font-size="15" font-weight="700" fill="#0a0a0a">Raiz de Merkle</text><rect id="f12b-r-b" x="135.0" y="26" width="150" height="38" rx="8" fill="#f5f5f5" stroke="#0a0a0a" stroke-width="2.2"/><text id="f12b-r" x="210" y="51" text-anchor="middle" class="mono" font-size="15" font-weight="500" fill="#0a0a0a">aa5cc6</text><rect id="f12b-m0-b" x="44.0" y="102" width="120" height="38" rx="8" fill="#f5f5f5" stroke="#0a0a0a" stroke-width="2.2"/><text id="f12b-m0" x="104" y="127" text-anchor="middle" class="mono" font-size="15" font-weight="500" fill="#0a0a0a">896799</text><rect id="f12b-m1-b" x="256.0" y="102" width="120" height="38" rx="8" fill="#f5f5f5" stroke="#0a0a0a" stroke-width="2.2"/><text id="f12b-m1" x="316" y="127" text-anchor="middle" class="mono" font-size="15" font-weight="500" fill="#0a0a0a">b2c6b7</text><rect id="f12b-l0-b" x="7.0" y="230" width="88" height="38" rx="8" fill="#f5f5f5" stroke="#0a0a0a" stroke-width="2.2"/><text id="f12b-l0" x="51" y="255" text-anchor="middle" class="mono" font-size="15" font-weight="500" fill="#0a0a0a">adfad6</text><text x="51" y="290" text-anchor="middle" font-size="16" font-weight="700" fill="#0a0a0a">T1</text><rect id="f12b-l1-b" x="113.0" y="230" width="88" height="38" rx="8" fill="#f5f5f5" stroke="#0a0a0a" stroke-width="2.2"/><text id="f12b-l1" x="157" y="255" text-anchor="middle" class="mono" font-size="15" font-weight="500" fill="#0a0a0a">f57574</text><text x="157" y="290" text-anchor="middle" font-size="16" font-weight="700" fill="#0a0a0a">T2</text><rect id="f12b-l2-b" x="219.0" y="230" width="88" height="38" rx="8" fill="#f5f5f5" stroke="#0a0a0a" stroke-width="2.2"/><text id="f12b-l2" x="263" y="255" text-anchor="middle" class="mono" font-size="15" font-weight="500" fill="#0a0a0a">2310c8</text><text x="263" y="290" text-anchor="middle" font-size="16" font-weight="700" fill="#0a0a0a">T3</text><rect id="f12b-l3-b" x="325.0" y="230" width="88" height="38" rx="8" fill="#f5f5f5" stroke="#0a0a0a" stroke-width="2.2"/><text id="f12b-l3" x="369" y="255" text-anchor="middle" class="mono" font-size="15" font-weight="500" fill="#0a0a0a">129c68</text><text x="369" y="290" text-anchor="middle" font-size="16" font-weight="700" fill="#0a0a0a">T4</text>
       </svg>
-      <figcaption>Os hashes das transações combinam-se aos pares até restar um só, a raiz. Versão simplificada, com os seis primeiros caracteres de cada hash.</figcaption>
+      <figcaption>Os hashes das transações combinam-se aos pares até restar um único hash, a raiz. Versão simplificada, com os seis primeiros caracteres de cada hash.</figcaption>
     </figure>
-    <p>A raiz serve também para provar que uma transação está num bloco sem descarregar o bloco todo. Uma carteira leve guarda apenas os cabeçalhos, com 80 bytes cada. Para confirmar um pagamento, pede a um nó só os hashes do caminho da transação até à raiz, a que se chama prova de Merkle. Num bloco com cerca de quatro mil transações bastam uns doze hashes. A carteira recalcula a raiz com eles e compara-a com a do cabeçalho, e se coincidir, a transação está no bloco. Satoshi descreveu este método no documento original, com o nome de verificação simplificada de pagamentos. A mesma ideia reaparece no Taproot, que esconde várias condições de gasto numa árvore e revela só a que se usa, e no SegWit, onde as assinaturas têm uma árvore própria. <!-- [VERIFICAR] Confirmar com fonte o número de hashes de uma prova de Merkle (cerca de log2 de 4000, ou seja 12), a secção 8 do documento de Satoshi, o uso de árvores de Merkle no Taproot (BIP 341) e a raiz das testemunhas no SegWit (BIP 141). --></p>
+    <p>A raiz serve também para provar que uma transação está num bloco sem descarregar o bloco todo. Uma carteira leve (<em>light wallet</em>), que não guarda a blockchain inteira, como a de um telemóvel, guarda apenas os cabeçalhos dos blocos, com 80 bytes cada. Para confirmar um pagamento, pede a um nó só os hashes do caminho da transação até à raiz, a que se chama prova de Merkle. Num bloco com cerca de quatro mil transações bastam uns doze hashes. A carteira recalcula a raiz com eles e compara-a com a do cabeçalho. Se coincidir, a transação está no bloco. Satoshi descreveu este método no documento original, com o nome de verificação simplificada de pagamentos. <!-- [VERIFICAR] Confirmar com fonte o número de hashes de uma prova de Merkle (cerca de log2 de 4000, ou seja 12) e a secção 8 do documento de Satoshi. --></p>
     <h2>O que o SHA-256 não faz</h2>
-    <p>O SHA-256 <strong>não assina transações</strong>. Serve para a mineração e para encadear blocos. A assinatura usa outra matemática (curvas elípticas). Esta distinção importa para o risco quântico, porque quebrar o SHA-256 não permitiria gastar as moedas de ninguém, ao passo que forjar assinaturas permitiria.</p>
+    <p>O SHA-256 <strong>não assina transações</strong>. Serve para a mineração e para encadear blocos. A assinatura usa outra matemática, as curvas elípticas. A distinção importa para o risco quântico, porque quebrar o SHA-256 não permitiria, por si só, gastar as moedas de ninguém, ao passo que forjar assinaturas permitiria. <!-- [VERIFICAR] Confirmar com fonte a distinção entre quebrar o SHA-256 e forjar assinaturas de curva elíptica, incluindo o efeito sobre os endereços que só revelam o hash da chave pública. --></p>
     <h2>O cabeçalho de um bloco</h2>
-    <p>O que entra no hash de um bloco é o seu <strong>cabeçalho</strong>, com 80 bytes e seis campos:</p>
+    <p>O hash de um bloco calcula-se sobre o seu <strong>cabeçalho</strong>, que tem 80 bytes e seis campos.</p>
     <div class="table-wrap">
       <table>
         <thead><tr><th>Campo</th><th>O que é</th></tr></thead>
         <tbody>
-          <tr><td>Versão</td><td>Quais as regras que o bloco segue</td></tr>
+          <tr><td>Versão</td><td>Que regras o bloco segue</td></tr>
           <tr><td>Hash do bloco anterior</td><td>Liga este bloco ao anterior</td></tr>
           <tr><td>Raiz de Merkle</td><td>Resumo de todas as transações do bloco</td></tr>
-          <tr><td>Data e hora</td><td>Quando o bloco foi produzido, aproximadamente</td></tr>
-          <tr><td>Alvo de dificuldade</td><td>Quantos zeros o hash precisa de ter</td></tr>
-          <tr><td>Nonce</td><td>O número que o minerador vai alterando até acertar</td></tr>
+          <tr><td>Data e hora</td><td>Quando o bloco foi produzido, de forma aproximada</td></tr>
+          <tr><td>Alvo de dificuldade</td><td>O valor abaixo do qual o hash tem de ficar, o que equivale a começar por um certo número de zeros</td></tr>
+          <tr><td>Nonce</td><td>O número que o minerador vai alterando até o hash ficar abaixo do alvo</td></tr>
         </tbody>
       </table>
     </div>
-    <p>Na prática, o Bitcoin aplica o SHA-256 duas vezes seguidas (SHA-256d). Para perceber a ideia, uma vez chega.</p>
     <div class="callout key">
       <span class="tag">Ideia-chave</span>
-      Um hash é uma impressão digital, fácil de calcular, impossível de inverter, e qualquer alteração muda-o por completo. É isto que torna a cadeia de blocos infalsificável.
+      Um hash é uma impressão digital dos dados. É fácil de calcular, impraticável de inverter e muda por completo com qualquer alteração. É por isso que mudar um bloco antigo é detetado de imediato.
     </div>
     <h2>Verificação</h2>
 
@@ -105,7 +105,7 @@
       <label class="opt"><input type="radio" name="q1"><span>Muda por completo</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>É o efeito de avalanche. Mudar um bit na entrada muda a saída de forma imprevisível.</p>
+      <p class="explanation" hidden>É o efeito de avalanche. Mudar um único bit na entrada muda cerca de metade dos bits da saída, de forma imprevisível.</p>
     </fieldset>
 
     <fieldset class="quiz" data-answer="0">
@@ -125,7 +125,7 @@
       <label class="opt"><input type="radio" name="q3"><span>Só as de valor grande</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>A assinatura usa curvas elípticas. Por isso, quebrar o SHA-256 não permitiria gastar as moedas de ninguém.</p>
+      <p class="explanation" hidden>A assinatura usa curvas elípticas. Por isso, quebrar o SHA-256 não permitiria, por si só, gastar as moedas de ninguém.</p>
     </fieldset>
 
 
@@ -134,7 +134,6 @@
       <li>NIST, FIPS 180-4, Secure Hash Standard (SHA-256): <a href="https://csrc.nist.gov/pubs/fips/180-4/upd1/final" target="_blank" rel="noopener">csrc.nist.gov</a>.</li>
       <li>Bitcoin Developer Guide, «Block Chain»: <a href="https://developer.bitcoin.org/devguide/block_chain.html" target="_blank" rel="noopener">developer.bitcoin.org</a>.</li>
       <li>Satoshi Nakamoto, «Bitcoin: A Peer-to-Peer Electronic Cash System», 2008, secção 8 (verificação simplificada de pagamentos).</li>
-      <li>BIP 141 (SegWit) e BIP 341 (Taproot): <a href="https://github.com/bitcoin/bips" target="_blank" rel="noopener">github.com/bitcoin/bips</a>.</li>
     </ul>
 
     <div class="done-row">
