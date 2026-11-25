@@ -9,6 +9,13 @@ export type { OnlineCourse } from "@ipb/backend/courseCatalog";
 
 export type Lang = "pt" | "en";
 
+/** 5 → "5", 4.5 → "4,5" in Portuguese and "4.5" in English. */
+export function formatHoursNumber(hours: number, lang: Lang): string {
+  return new Intl.NumberFormat(lang === "en" ? "en-GB" : "pt-PT", {
+    maximumFractionDigits: 1,
+  }).format(hours);
+}
+
 /** "39 €" / "€39", and "35,10 €" when there are cents. */
 export function formatEur(cents: number, lang: Lang): string {
   return new Intl.NumberFormat(lang === "en" ? "en-IE" : "pt-PT", {
@@ -68,9 +75,10 @@ export const COURSE_COPY = {
     freeLesson: "Open access",
     freeNote: "The first two lessons are open access, with no account needed. To continue after them, buy the course.",
     locked: "Locked. Buy the course to open this lesson.",
+    localProgress: "Your progress in the open-access lessons is kept in this browser.",
     lockedNotice: "The next lesson is part of the course. Buy it to continue.",
     genericError: "Something went wrong. Please try again.",
-    hours: "about 3 hours",
+    hours: (h: number) => `about ${formatHoursNumber(h, "en")} hours`,
     iAmMember: "I am an IPB member",
     lessons: "lessons",
     memberDiscount: (pct: number, who: string) =>
@@ -96,11 +104,11 @@ export const COURSE_COPY = {
     alreadySignIn: "Entrar para continuar",
     buy: "Comprar com cartão",
     buying: "A abrir o pagamento seguro…",
-    cancelled: "Pagamento cancelado. Não foste cobrado.",
+    cancelled: "Pagamento cancelado. Não houve qualquer cobrança.",
     cardOnly: "Pagamento seguro com cartão, através da Stripe.",
     code: "Código de 6 dígitos",
     codeSent:
-      "Se este email for de um membro ativo, enviámos um código. Convém ver também o spam.",
+      "Se este email for de um membro ativo, foi enviado um código. Convém ver também o spam.",
     confirmCode: "Aplicar desconto",
     contentNote: "Os cursos estão escritos em português.",
     continue: "Continuar",
@@ -112,9 +120,10 @@ export const COURSE_COPY = {
     freeLesson: "Acesso livre",
     freeNote: "As duas primeiras lições têm acesso livre e não exigem conta. Para continuar depois delas, é preciso comprar o curso.",
     locked: "Bloqueada. É preciso comprar o curso para abrir esta lição.",
+    localProgress: "O progresso nas lições de acesso livre fica guardado neste browser.",
     lockedNotice: "A lição seguinte faz parte do curso. É preciso comprá-lo para continuar.",
-    genericError: "Ocorreu um erro. Tenta outra vez.",
-    hours: "cerca de 3 horas",
+    genericError: "Ocorreu um erro. Convém tentar outra vez.",
+    hours: (h: number) => `cerca de ${formatHoursNumber(h, "pt")} horas`,
     iAmMember: "Sou membro do IPB",
     lessons: "lições",
     memberDiscount: (pct: number, who: string) =>

@@ -37,10 +37,14 @@ export interface OnlineCourse {
   description: { pt: string; en: string };
   /** What the learner can do at the end. */
   outcomes: { pt: string[]; en: string[] };
-  /** Approximate study time, shown on the diploma and the course page. */
+  /**
+   * Approximate study time in hours (halves allowed), shown on the course page,
+   * the course card and the diploma. It is the sum of the lessons' "N min para
+   * fazer", rounded to the nearest half hour: update it when those times change.
+   */
   hours: number;
   /** Used in the diploma text. */
-  diplomaTopic: { pt: string };
+  diplomaTopic: { en: string; pt: string };
 }
 
 export const ONLINE_COURSES: readonly OnlineCourse[] = [
@@ -50,10 +54,11 @@ export const ONLINE_COURSES: readonly OnlineCourse[] = [
       pt: "Porque é que o dinheiro perde valor, o que a Bitcoin propõe e o que convém saber antes de comprar. Não são precisos conhecimentos prévios.",
     },
     diplomaTopic: {
+      en: "the origin of money, inflation and the fundamentals of Bitcoin",
       pt: "a origem do dinheiro, a inflação e os fundamentos da Bitcoin",
     },
     folder: "curso-1",
-    hours: 3,
+    hours: 5,
     number: 1,
     outcomes: {
       en: [
@@ -77,10 +82,11 @@ export const ONLINE_COURSES: readonly OnlineCourse[] = [
       pt: "Como a Bitcoin funciona por dentro, o que é realmente uma carteira e como guardar o próprio Bitcoin em segurança.",
     },
     diplomaTopic: {
+      en: "how the network works, wallets and self-custody",
       pt: "o funcionamento da rede, as carteiras e a autocustódia",
     },
     folder: "curso-2",
-    hours: 3,
+    hours: 4.5,
     number: 2,
     outcomes: {
       en: [
@@ -107,10 +113,11 @@ export const ONLINE_COURSES: readonly OnlineCourse[] = [
       pt: "Usar a Bitcoin no dia a dia, as regras e os impostos em Portugal e na Europa, e os argumentos a favor e contra. Termina com a primeira transação.",
     },
     diplomaTopic: {
+      en: "using Bitcoin, its regulation and taxation in Portugal",
       pt: "o uso da Bitcoin, a sua regulação e fiscalidade em Portugal",
     },
     folder: "curso-3",
-    hours: 3,
+    hours: 2.5,
     number: 3,
     outcomes: {
       en: [
@@ -134,10 +141,11 @@ export const ONLINE_COURSES: readonly OnlineCourse[] = [
       pt: "As ideias por trás da Bitcoin: o Estado, a guerra, a ordem monetária internacional, a desigualdade e a cultura, expostas como posições que cada pessoa pode avaliar.",
     },
     diplomaTopic: {
+      en: "the State, the international monetary order and the ideas behind Bitcoin",
       pt: "o Estado, a ordem monetária internacional e as ideias por trás da Bitcoin",
     },
     folder: "curso-4",
-    hours: 3,
+    hours: 4.5,
     number: 4,
     outcomes: {
       en: [

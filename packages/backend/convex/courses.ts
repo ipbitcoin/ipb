@@ -456,10 +456,13 @@ export const issueDiploma = mutation({
     if (!order) {
       throw new Error("No access");
     }
+    // A diploma that was already issued stays valid when lessons are added to
+    // the course later, so renaming it does not ask for the new lessons.
     const done = new Set(order.completedLessons);
     if (
-      args.lessonIds.length === 0 ||
-      !args.lessonIds.every((id) => done.has(id))
+      !order.diplomaCode &&
+      (args.lessonIds.length === 0 ||
+        !args.lessonIds.every((id) => done.has(id)))
     ) {
       throw new Error("not complete");
     }

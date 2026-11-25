@@ -52,7 +52,7 @@
               {{ lang === "en" ? "Lessons" : "Lições" }}
             </h2>
             <p class="font-mono text-xs text-neutral-500">
-              {{ lessons.length }} {{ copy.lessons }} · {{ copy.hours }}
+              {{ lessons.length }} {{ copy.lessons }} · {{ copy.hours(course.hours) }}
             </p>
           </div>
 
@@ -110,6 +110,9 @@
           </div>
           <p v-if="!owned" class="mt-6 text-sm text-neutral-700">
             {{ copy.freeNote }}
+          </p>
+          <p v-if="!owned && localDone.length" class="mt-2 text-sm text-neutral-500">
+            {{ copy.localProgress }}
           </p>
           <p class="mt-3 text-sm text-neutral-500">{{ copy.contentNote }}</p>
         </section>
@@ -207,7 +210,42 @@ if (!course) {
 }
 
 const copy = computed(() => COURSE_COPY[lang.value]);
-const { progressOf } = useCourseAccount();
+const { progressOf, refresh } = useCourseAccount();
+
+// Who only reads the open-access lessons has no account: the lesson page keeps
+// their progress in this browser, and the list shows it from there.
+const localDone = ref<string[]>([]);
+function readLocalProgress() {
+  try {
+    localDone.value = lessons.value
+      .filter(
+        (l) =>
+          window.localStorage.getItem(`ipb:done:${slug}:${l.id}`) === "1"
+      )
+      .map((l) => l.id);
+  } catch {
+    localDone.value = [];
+  }
+}
+function refreshProgress() {
+  readLocalProgress();
+  refresh();
+}
+function onPageShow(event: PageTransitionEvent) {
+  // Coming back with the browser's back button restores the page as it was.
+  if (event.persisted) {
+    refreshProgress();
+  }
+}
+onMounted(() => {
+  readLocalProgress();
+  window.addEventListener("pageshow", onPageShow);
+  window.addEventListener("focus", refreshProgress);
+});
+onBeforeUnmount(() => {
+  window.removeEventListener("pageshow", onPageShow);
+  window.removeEventListener("focus", refreshProgress);
+});
 
 const { data } = await useFetch<{ lessons: LessonSummary[] }>(
   `/api/curso/indice/${slug}`,
@@ -239,7 +277,8 @@ const percent = computed(() =>
 const allDone = computed(
   () =>
     Boolean(progress.value) &&
-    progress.value?.completed.length === progress.value?.total
+    (Boolean(progress.value?.diploma) ||
+      progress.value?.completed.length === progress.value?.total)
 );
 const nextLesson = computed(
   () =>
@@ -247,7 +286,10 @@ const nextLesson = computed(
     lessons.value[0]
 );
 
-const isDone = (id: string) => Boolean(progress.value?.completed.includes(id));
+const isDone = (id: string) =>
+  progress.value
+    ? progress.value.completed.includes(id)
+    : localDone.value.includes(id);
 const isFree = (lesson: LessonSummary) =>
   lessons.value.findIndex((l) => l.id === lesson.id) < FREE_LESSONS;
 const canOpen = (lesson: LessonSummary) => owned.value || isFree(lesson);

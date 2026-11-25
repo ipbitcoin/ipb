@@ -6,7 +6,7 @@
       <p class="eyebrow">
         {{ lang === "en" ? "Course" : "Curso" }} {{ course.number }}
       </p>
-      <p class="font-mono text-xs text-neutral-500">{{ copy.hours }}</p>
+      <p class="font-mono text-xs text-neutral-500">{{ copy.hours(course.hours) }}</p>
     </div>
 
     <div class="flex flex-col gap-2">
