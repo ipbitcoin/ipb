@@ -38,7 +38,7 @@
     <figure style="margin:24px 0;padding:16px;background:#fff;border-radius:16px;box-shadow:var(--shadow-border)">
       <svg viewBox="0 0 560 290" width="100%" role="img" aria-labelledby="ln-t ln-d" style="display:block;max-width:100%;height:auto">
       <title id="ln-t">Rede de canais da Lightning</title>
-      <desc id="ln-d">Sete pessoas ligadas por canais. Um pagamento da Ana ao Bruno passa por dois intermediários, a Carla e a Eva, em três saltos.</desc>
+      <desc id="ln-d">Sete pessoas ligadas por canais. Um pagamento do Tomás à Teresa passa por dois intermediários, a Marília e a Matilde, em três saltos.</desc>
       <line x1="50" y1="150" x2="170" y2="230" stroke="#c4c4c4" stroke-width="2.5" stroke-linecap="round"/>
       <line x1="170" y1="70" x2="170" y2="230" stroke="#c4c4c4" stroke-width="2.5" stroke-linecap="round"/>
       <line x1="170" y1="230" x2="300" y2="230" stroke="#c4c4c4" stroke-width="2.5" stroke-linecap="round"/>
@@ -52,23 +52,23 @@
       <circle cx="235" cy="70" r="11" fill="#0a0a0a"/><text x="235" y="75" text-anchor="middle" font-size="14" font-weight="600" fill="#fff" font-family="Inter,system-ui,sans-serif">2</text>
       <circle cx="405" cy="110" r="11" fill="#0a0a0a"/><text x="405" y="115" text-anchor="middle" font-size="14" font-weight="600" fill="#fff" font-family="Inter,system-ui,sans-serif">3</text>
       <circle cx="50" cy="150" r="22" fill="#0a0a0a" stroke="#0a0a0a" stroke-width="2.5"/>
-      <text x="50" y="194" text-anchor="middle" font-size="15" font-weight="600" fill="#262626" font-family="Inter,system-ui,sans-serif">Ana</text>
+      <text x="50" y="194" text-anchor="middle" font-size="15" font-weight="600" fill="#262626" font-family="Inter,system-ui,sans-serif">Tomás</text>
       <circle cx="170" cy="70" r="22" fill="#fef3e2" stroke="#0a0a0a" stroke-width="2.5"/>
-      <text x="170" y="38" text-anchor="middle" font-size="15" font-weight="600" fill="#262626" font-family="Inter,system-ui,sans-serif">Carla</text>
+      <text x="170" y="38" text-anchor="middle" font-size="15" font-weight="600" fill="#262626" font-family="Inter,system-ui,sans-serif">Marília</text>
       <circle cx="170" cy="230" r="22" fill="#ffffff" stroke="#8a8a8a" stroke-width="2.5"/>
-      <text x="170" y="274" text-anchor="middle" font-size="15" font-weight="600" fill="#262626" font-family="Inter,system-ui,sans-serif">Diogo</text>
+      <text x="170" y="274" text-anchor="middle" font-size="15" font-weight="600" fill="#262626" font-family="Inter,system-ui,sans-serif">Hugo</text>
       <circle cx="300" cy="70" r="22" fill="#fef3e2" stroke="#0a0a0a" stroke-width="2.5"/>
-      <text x="300" y="38" text-anchor="middle" font-size="15" font-weight="600" fill="#262626" font-family="Inter,system-ui,sans-serif">Eva</text>
+      <text x="300" y="38" text-anchor="middle" font-size="15" font-weight="600" fill="#262626" font-family="Inter,system-ui,sans-serif">Matilde</text>
       <circle cx="300" cy="230" r="22" fill="#ffffff" stroke="#8a8a8a" stroke-width="2.5"/>
-      <text x="300" y="274" text-anchor="middle" font-size="15" font-weight="600" fill="#262626" font-family="Inter,system-ui,sans-serif">Filipe</text>
+      <text x="300" y="274" text-anchor="middle" font-size="15" font-weight="600" fill="#262626" font-family="Inter,system-ui,sans-serif">António</text>
       <circle cx="430" cy="230" r="22" fill="#ffffff" stroke="#8a8a8a" stroke-width="2.5"/>
-      <text x="430" y="274" text-anchor="middle" font-size="15" font-weight="600" fill="#262626" font-family="Inter,system-ui,sans-serif">Gil</text>
+      <text x="430" y="274" text-anchor="middle" font-size="15" font-weight="600" fill="#262626" font-family="Inter,system-ui,sans-serif">Carlos</text>
       <circle cx="510" cy="150" r="22" fill="#0a0a0a" stroke="#0a0a0a" stroke-width="2.5"/>
-      <text x="510" y="194" text-anchor="middle" font-size="15" font-weight="600" fill="#262626" font-family="Inter,system-ui,sans-serif">Bruno</text>
+      <text x="510" y="194" text-anchor="middle" font-size="15" font-weight="600" fill="#262626" font-family="Inter,system-ui,sans-serif">Teresa</text>
       </svg>
-      <figcaption style="margin:12px 0 0;font-size:15px;line-height:1.5;color:var(--muted)">Cada círculo é uma pessoa, ou um nó, e cada linha é um canal aberto entre duas pessoas. A Ana não tem um canal com o Bruno, mas consegue pagar-lhe: o pagamento (a laranja) passa pela Carla e pela Eva, em três saltos, e nenhum deles vai à blockchain. Os canais a cinzento não são usados neste pagamento.</figcaption>
+      <figcaption style="margin:12px 0 0;font-size:15px;line-height:1.5;color:var(--muted)">Cada círculo é uma pessoa, ou um nó, e cada linha é um canal aberto entre duas pessoas. O Tomás não tem um canal com a Teresa, mas consegue pagar-lhe: o pagamento (a laranja) passa pela Marília e pela Matilde, em três saltos, e nenhum deles vai à blockchain. Os canais a cinzento não são usados neste pagamento.</figcaption>
     </figure>
-    <p>Um exemplo, com números inventados. A Ana e o Bruno abrem um canal e bloqueiam nele 100.000 satoshis, todos da Ana (um satoshi é a cem milionésima parte de um bitcoin). O registo inicial diz Ana 100.000 e Bruno 0. A Ana compra um café ao Bruno por 1.000 satoshis, e assinam um registo novo, com Ana 99.000 e Bruno 1.000. Compra outro, e o registo passa a Ana 98.000 e Bruno 2.000. Fazem isto cinquenta vezes. Cada registo é só uma mensagem entre os dois, e nenhuma vai à blockchain. No fim, quando fecham o canal, só o último (Ana 50.000, Bruno 50.000) é publicado. Cinquenta pagamentos custaram, na camada 1, apenas duas transações, a abertura e o fecho.</p>
+    <p>Um exemplo, com números inventados. O Tomás e a Teresa abrem um canal e bloqueiam nele 100.000 satoshis, todos do Tomás (um satoshi é a cem milionésima parte de um bitcoin). O registo inicial diz Tomás 100.000 e Teresa 0. O Tomás compra um café à Teresa por 1.000 satoshis, e assinam um registo novo, com Tomás 99.000 e Teresa 1.000. Compra outro, e o registo passa a Tomás 98.000 e Teresa 2.000. Fazem isto cinquenta vezes. Cada registo é só uma mensagem entre os dois, e nenhuma vai à blockchain. No fim, quando fecham o canal, só o último (Tomás 50.000, Teresa 50.000) é publicado. Cinquenta pagamentos custaram, na camada 1, apenas duas transações, a abertura e o fecho.</p>
     <p>Se alguém tentar publicar um registo antigo, que lhe dava mais, a outra pessoa pode provar que já existe um mais recente e reclamar o bitcoin. É por isso que as duas partes confiam nos registos sem precisarem de confiar uma na outra.</p>
     <p>O que impede um intermediário de ficar com o dinheiro são contratos criptográficos, que garantem que o pagamento ou chega ao destino, ou volta à origem.</p>
     <h2>Como escala para milhares de milhões de pessoas</h2>
@@ -99,7 +99,7 @@
     <figure style="margin:24px 0;padding:16px;background:#fff;border-radius:16px;box-shadow:var(--shadow-border)">
       <svg viewBox="0 0 560 320" width="100%" role="img" aria-labelledby="ark-t ark-d" style="display:block;max-width:100%;height:auto">
         <title id="ark-t">Como as pessoas partilham uma transação na Ark</title>
-        <desc id="ark-d">Uma transação da camada 1 bloqueia o bitcoin de quatro pessoas. Por baixo, fora da blockchain, uma árvore de transações já assinadas divide o bitcoin até cada pessoa ter a sua parte, o VTXO. O ramo do Bruno está destacado.</desc>
+        <desc id="ark-d">Uma transação da camada 1 bloqueia o bitcoin de quatro pessoas. Por baixo, fora da blockchain, uma árvore de transações já assinadas divide o bitcoin até cada pessoa ter a sua parte, o VTXO. O ramo da Teresa está destacado.</desc>
         <text x="10" y="22" font-size="12" letter-spacing="1.2" fill="#737373" font-family="Inter,system-ui,sans-serif">NA BLOCKCHAIN</text>
         <line x1="10" y1="96" x2="550" y2="96" stroke="#d4d4d4" stroke-width="2" stroke-dasharray="6 6"/>
         <text x="10" y="116" font-size="12" letter-spacing="1.2" fill="#737373" font-family="Inter,system-ui,sans-serif">FORA DA BLOCKCHAIN</text>
@@ -114,19 +114,19 @@
         <rect x="185" y="30" width="190" height="44" rx="10" fill="#fef3e2" stroke="#f29500" stroke-width="3"/>
         <text x="280" y="58" text-anchor="middle" font-size="16" font-weight="700" fill="#0a0a0a" font-family="Inter,system-ui,sans-serif">1 transação</text>
         <rect x="62" y="250" width="96" height="52" rx="10" fill="#fff" stroke="#0a0a0a" stroke-width="2.5"/>
-        <text x="110" y="272" text-anchor="middle" font-size="15" font-weight="700" fill="#262626" font-family="Inter,system-ui,sans-serif">Ana</text>
+        <text x="110" y="272" text-anchor="middle" font-size="15" font-weight="700" fill="#262626" font-family="Inter,system-ui,sans-serif">Tomás</text>
         <text x="110" y="291" text-anchor="middle" font-size="12" fill="#737373" font-family="Inter,system-ui,sans-serif">VTXO</text>
         <rect x="182" y="250" width="96" height="52" rx="10" fill="#fff" stroke="#f29500" stroke-width="4"/>
-        <text x="230" y="272" text-anchor="middle" font-size="15" font-weight="700" fill="#262626" font-family="Inter,system-ui,sans-serif">Bruno</text>
+        <text x="230" y="272" text-anchor="middle" font-size="15" font-weight="700" fill="#262626" font-family="Inter,system-ui,sans-serif">Teresa</text>
         <text x="230" y="291" text-anchor="middle" font-size="12" fill="#737373" font-family="Inter,system-ui,sans-serif">VTXO</text>
         <rect x="282" y="250" width="96" height="52" rx="10" fill="#fff" stroke="#0a0a0a" stroke-width="2.5"/>
-        <text x="330" y="272" text-anchor="middle" font-size="15" font-weight="700" fill="#262626" font-family="Inter,system-ui,sans-serif">Carla</text>
+        <text x="330" y="272" text-anchor="middle" font-size="15" font-weight="700" fill="#262626" font-family="Inter,system-ui,sans-serif">Marília</text>
         <text x="330" y="291" text-anchor="middle" font-size="12" fill="#737373" font-family="Inter,system-ui,sans-serif">VTXO</text>
         <rect x="402" y="250" width="96" height="52" rx="10" fill="#fff" stroke="#0a0a0a" stroke-width="2.5"/>
-        <text x="450" y="272" text-anchor="middle" font-size="15" font-weight="700" fill="#262626" font-family="Inter,system-ui,sans-serif">Diogo</text>
+        <text x="450" y="272" text-anchor="middle" font-size="15" font-weight="700" fill="#262626" font-family="Inter,system-ui,sans-serif">Hugo</text>
         <text x="450" y="291" text-anchor="middle" font-size="12" fill="#737373" font-family="Inter,system-ui,sans-serif">VTXO</text>
       </svg>
-      <figcaption style="margin:12px 0 0;font-size:15px;line-height:1.5;color:var(--muted)">Quatro pessoas partilham uma só transação da camada 1, a caixa de cima. Por baixo, as linhas tracejadas são transações já assinadas, guardadas fora da blockchain, que dividem o bitcoin até cada pessoa ter a sua parte (o VTXO). Se o Bruno quisesse sair por conta própria, publicaria só o seu ramo, a laranja, e reclamaria a sua parte na camada 1.</figcaption>
+      <figcaption style="margin:12px 0 0;font-size:15px;line-height:1.5;color:var(--muted)">Quatro pessoas partilham uma só transação da camada 1, a caixa de cima. Por baixo, as linhas tracejadas são transações já assinadas, guardadas fora da blockchain, que dividem o bitcoin até cada pessoa ter a sua parte (o VTXO). Se a Teresa quisesse sair por conta própria, publicaria só o seu ramo, a laranja, e reclamaria a sua parte na camada 1.</figcaption>
     </figure>
     <ol>
       <li><strong>Entrar.</strong> Um coordenador, o fornecedor do serviço Ark, junta de tempos a tempos os pedidos de várias pessoas num lote, a que se chama <em>ronda</em>, e publica na camada 1 uma só transação que os cobre a todos. Cada pessoa fica com o seu VTXO.</li>

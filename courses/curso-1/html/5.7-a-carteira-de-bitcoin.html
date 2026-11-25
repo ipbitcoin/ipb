@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A carteira de Bitcoin | Curso 1 | Instituto Português de Bitcoin</title>
+  <meta name="description" content="Lição 5.7 do Curso 1: No fim desta lição, será possível explicar o que é uma carteira de bitcoin, a diferença entre chave privada, chave pública e endereço, e o que é a frase de recuperação.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="lesson.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#curso">← Curso 1 · A Génese</a>
+    <span class="where">Lição 24 de 29</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progresso no curso" aria-valuemin="0" aria-valuemax="29" aria-valuenow="24"><span style="width:82.8%"></span></div>
+</header>
+
+<main class="page">
+  <article>
+
+        <p class="eyebrow">Módulo 5 · O Bitcoin como resposta · Lição 5.7</p>
+    <h1>A carteira de Bitcoin</h1>
+    <p class="lead">No fim desta lição, será possível explicar o que é uma carteira de bitcoin, a diferença entre frase de recuperação, chave privada, chave pública e endereço, e o que se pode ou não partilhar.</p>
+    <p class="meta"><span>8 min de leitura</span><span>3 perguntas</span></p>
+    <h2>Os bitcoins não estão dentro da carteira</h2>
+    <p>Uma carteira de bitcoin não funciona como uma carteira de notas. Os bitcoins não estão guardados no telemóvel nem no computador. Estão registados na cadeia de blocos, que todos os nós da rede mantêm e verificam, e esse registo mostra a que endereço pertence cada unidade.</p>
+    <p>O que permite gastar essas unidades é uma <strong>chave privada</strong>. A <strong>carteira</strong> é o programa ou o aparelho que guarda as chaves e as usa para assinar transações. Por isso, quem diz que «tem» bitcoins quer dizer que controla as chaves que lhe dão o direito de os gastar. Quem perde essas chaves perde esse direito.</p>
+    <h2>As quatro peças de uma carteira</h2>
+    <p>Uma carteira trabalha com quatro peças, e cada uma calcula-se a partir da anterior.</p>
+    <div class="cards two">
+      <div class="card"><span class="n">1 · FRASE DE RECUPERAÇÃO</span><p>Uma lista de 12 ou 24 palavras, gerada quando se cria a carteira. É a origem de todas as outras peças.</p></div>
+      <div class="card"><span class="n">2 · CHAVE PRIVADA</span><p>Um número secreto, longo e aleatório, calculado a partir da frase. Quem o conhece pode gastar os bitcoins associados a ele.</p></div>
+      <div class="card"><span class="n">3 · CHAVE PÚBLICA</span><p>Calcula-se a partir da chave privada. Serve para qualquer pessoa verificar que uma assinatura foi feita com a chave privada correspondente.</p></div>
+      <div class="card"><span class="n">4 · ENDEREÇO</span><p>Deriva da chave pública e é o que se dá a quem quer enviar bitcoins. Pode ser partilhado, tal como se partilha um número de conta.</p></div>
+    </div>
+    <figure class="fig">
+      <svg viewBox="0 0 420 392" role="img" aria-labelledby="f57-t f57-d" style="max-width:440px"><title id="f57-t">Da frase de recuperação ao endereço, e o que se pode partilhar</title><desc id="f57-d">Quatro caixas empilhadas, ligadas por setas para baixo. Primeiro a frase de recuperação, de 12 ou 24 palavras. Dela calcula-se a chave privada, desta a chave pública e desta o endereço. À direita, as duas primeiras caixas, a frase e a chave privada, têm a indicação a vermelho de que nunca se partilham, porque dão o controlo dos bitcoins. As duas últimas, a chave pública e o endereço, têm a indicação a verde de que se podem partilhar, porque só permitem verificar e receber. Em baixo, uma nota a vermelho diz que o caminho inverso, de baixo para cima, é impraticável.</desc><defs><marker id="f57-k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><path d="M1 1 L9 5 L1 9 z" fill="#0a0a0a"/></marker><marker id="f57-r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><path d="M1 1 L9 5 L1 9 z" fill="#991b1b"/></marker></defs><rect x="8" y="8" width="238" height="56" rx="12" fill="#fff" stroke="#991b1b" stroke-width="2.5"/><circle cx="32" cy="36" r="12" fill="#991b1b"/><text x="32" y="42" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">1</text><text x="54" y="33" font-size="16" font-weight="700" fill="#0a0a0a">Frase de recuperação</text><text x="54" y="53" font-size="15" fill="#525252">12 ou 24 palavras</text><path d="M127 64 V94" stroke="#0a0a0a" stroke-width="2.5" fill="none" marker-end="url(#f57-k)"/><rect x="8" y="100" width="238" height="56" rx="12" fill="#fff" stroke="#991b1b" stroke-width="2.5"/><circle cx="32" cy="128" r="12" fill="#991b1b"/><text x="32" y="134" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">2</text><text x="54" y="125" font-size="16" font-weight="700" fill="#0a0a0a">Chave privada</text><text x="54" y="145" font-size="15" fill="#525252">número secreto</text><path d="M127 156 V186" stroke="#0a0a0a" stroke-width="2.5" fill="none" marker-end="url(#f57-k)"/><rect x="8" y="192" width="238" height="56" rx="12" fill="#fff" stroke="#166534" stroke-width="2.5"/><circle cx="32" cy="220" r="12" fill="#166534"/><text x="32" y="226" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">3</text><text x="54" y="217" font-size="16" font-weight="700" fill="#0a0a0a">Chave pública</text><text x="54" y="237" font-size="15" fill="#525252">verifica assinaturas</text><path d="M127 248 V278" stroke="#0a0a0a" stroke-width="2.5" fill="none" marker-end="url(#f57-k)"/><rect x="8" y="284" width="238" height="56" rx="12" fill="#fff" stroke="#166534" stroke-width="2.5"/><circle cx="32" cy="312" r="12" fill="#166534"/><text x="32" y="318" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">4</text><text x="54" y="309" font-size="16" font-weight="700" fill="#0a0a0a">Endereço</text><text x="54" y="329" font-size="15" fill="#525252">recebe bitcoins</text><rect x="262" y="8" width="150" height="148" rx="12" fill="#fdeeee" stroke="#991b1b" stroke-width="2.5"/><text x="337" y="62" text-anchor="middle" font-size="16" font-weight="700" fill="#991b1b">Nunca</text><text x="337" y="84" text-anchor="middle" font-size="16" font-weight="700" fill="#991b1b">partilhar</text><text x="337" y="112" text-anchor="middle" font-size="15" fill="#525252">dá o controlo</text><text x="337" y="132" text-anchor="middle" font-size="15" fill="#525252">dos bitcoins</text><rect x="262" y="192" width="150" height="148" rx="12" fill="#ecf8f0" stroke="#166534" stroke-width="2.5"/><text x="337" y="246" text-anchor="middle" font-size="16" font-weight="700" fill="#166534">Pode</text><text x="337" y="268" text-anchor="middle" font-size="16" font-weight="700" fill="#166534">partilhar-se</text><text x="337" y="296" text-anchor="middle" font-size="15" fill="#525252">só permite verificar</text><text x="337" y="316" text-anchor="middle" font-size="15" fill="#525252">e receber</text><path d="M24 378 V356" stroke="#991b1b" stroke-width="2.5" stroke-dasharray="6 5" fill="none" marker-end="url(#f57-r)"/><text x="42" y="372" font-size="15" font-weight="600" fill="#991b1b">o caminho inverso é impraticável</text></svg>
+      <figcaption>Cada peça calcula-se a partir da anterior, mas ninguém consegue fazer o caminho contrário. Por isso a frase e a chave privada nunca se partilham, e a chave pública e o endereço podem partilhar-se.</figcaption>
+    </figure>
+    <h2>Como a carteira paga</h2>
+    <p>Quando o Tomás quer pagar à Teresa, a Teresa dá-lhe um endereço. A carteira do Tomás cria uma transação que passa os bitcoins para esse endereço, assina-a com a sua chave privada e envia-a para a rede. Os nós verificam a assinatura com a chave pública e confirmam que esses bitcoins ainda não foram gastos. Se tudo estiver certo, a transação entra num bloco (lição 5.3).</p>
+    <p>A assinatura prova que quem paga controla a chave privada, sem a revelar. E cada assinatura só vale para aquela transação, por isso quem a vê não consegue reutilizá-la para gastar outros bitcoins.</p>
+    <h2>A frase de recuperação</h2>
+    <p>Se o aparelho onde está a carteira se perder, avariar ou for roubado, a frase de recuperação permite recuperar tudo. Basta instalar uma carteira compatível noutro aparelho e introduzir a frase. A carteira volta a calcular todas as chaves e todos os endereços, e mostra os mesmos bitcoins.</p>
+    <p>O contrário também é verdade. Quem tiver a frase controla os bitcoins, mesmo sem o aparelho, por isso a frase nunca se partilha, nem se fotografa, nem se guarda na nuvem. E quem perde o aparelho e a frase perde o acesso aos bitcoins para sempre, porque ninguém os pode recuperar.</p>
+    <h2>Onde ficam as chaves</h2>
+    <p>Os tipos de carteira distinguem-se por quem guarda as chaves e onde.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Tipo</th><th>Onde estão as chaves</th><th>O que implica</th></tr></thead>
+        <tbody>
+          <tr><td>Conta numa plataforma</td><td>Na plataforma, que as guarda em nome do cliente</td><td>Usa-se com facilidade, mas o cliente tem um direito perante a plataforma e não os próprios bitcoins</td></tr>
+          <tr><td>Carteira de software</td><td>No telemóvel ou no computador do titular, que estão ligados à internet</td><td>O titular controla as chaves, mas um aparelho infetado põe-nas em risco</td></tr>
+          <tr><td>Carteira de hardware</td><td>Num aparelho próprio, que assina as transações sem mostrar as chaves ao computador <!-- [VERIFICAR] Confirmar com fonte a descrição das carteiras de hardware e o risco comparado com o software. --></td><td>O titular controla as chaves e fica menos exposto a software malicioso, mas tem de comprar o aparelho e guardá-lo com cuidado</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Quem guarda as próprias chaves tem autocustódia. O Curso 2 explica cada tipo de carteira e a forma de guardar as chaves com segurança.</p>
+    <div class="callout key">
+      <span class="tag">Ideia-chave</span>
+      Uma carteira não guarda bitcoins, guarda as chaves que permitem gastá-los. Quem controla as chaves controla os bitcoins, e quem perde as chaves e a frase de recuperação perde-os para sempre.
+    </div>
+    <h2>Verificação</h2>
+
+    <fieldset class="quiz" data-answer="1">
+      <legend>Onde estão os bitcoins de quem usa uma carteira?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>Dentro do aparelho onde está a carteira, como o telemóvel ou o computador</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Registados na cadeia de blocos, e a carteira guarda as chaves que permitem gastá-los</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Na empresa que criou a carteira</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>Os bitcoins são um registo partilhado pela rede. A carteira guarda as chaves e assina as transações.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="2">
+      <legend>Qual destas informações se pode partilhar para receber bitcoins?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>A chave privada</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>A frase de recuperação</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>O endereço</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>O endereço serve para receber, e pode ser partilhado. A chave privada e a frase de recuperação dão controlo sobre os bitcoins e nunca se partilham.</p>
+    </fieldset>
+
+    <fieldset class="quiz" data-answer="0">
+      <legend>O que acontece a quem perde o aparelho onde tem a carteira, mas guardou a frase de recuperação em segurança?</legend>
+      <label class="opt"><input type="radio" name="q3"><span>Recupera o acesso aos bitcoins numa carteira compatível, com a frase</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Perde os bitcoins para sempre</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>Pede ao suporte da Bitcoin que reponha as chaves</span></label>
+      <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
+      <div class="feedback" role="status" aria-live="polite"></div>
+      <p class="explanation" hidden>A frase permite voltar a calcular as chaves. Não existe suporte da Bitcoin, e ninguém pode repor chaves perdidas.</p>
+    </fieldset>
+
+    <h2>Fontes</h2>
+    <ul class="sources">
+      <li>Satoshi Nakamoto, «Bitcoin: A Peer-to-Peer Electronic Cash System», 2008, secção sobre transações e assinaturas digitais.</li>
+      <li>Bitcoin Improvement Proposal 39 (BIP 39), «Mnemonic code for generating deterministic keys», 2013: frase de recuperação.</li>
+      <li>Andreas M. Antonopoulos, <em>Mastering Bitcoin</em>, capítulo sobre chaves e endereços. <!-- [VERIFICAR] Confirmar a edição e o capítulo. --></li>
+    </ul>
+
+    <div class="done-row">
+      <button id="done" class="btn" type="button" aria-pressed="false" data-lesson="5.7">Marcar como concluída</button>
+    </div>
+
+    <nav class="pager" aria-label="Navegação entre lições">
+      <a href="5.6-o-bitcoin-e-dinheiro.html" rel="prev"><small>← Anterior</small><span>5.6 O Bitcoin é dinheiro?</span></a>
+      <a class="next" href="5.8-riscos-e-criticas.html" rel="next"><small>Seguinte →</small><span>5.8 Riscos e críticas</span></a>
+    </nav>
+  </article>
+</main>
+
+<script src="lesson.js"></script>
+</body>
+</html>

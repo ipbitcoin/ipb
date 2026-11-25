@@ -519,7 +519,7 @@
     netRange.addEventListener("input", netRun);
     netRun();
   }
-  // Tamanho da posição (lição 5.7): o cursor muda a parte das poupanças em bitcoin e o efeito de uma queda de 80%.
+  // Tamanho da posição (lição 5.8): o cursor muda a parte das poupanças em bitcoin e o efeito de uma queda de 80%.
   var posRange = document.getElementById("f57b-range");
   if (posRange) {
     var posFmt = function (n) { return String(Math.round(n * 10) / 10).replace(".", ","); };
@@ -579,7 +579,7 @@
       return hex;
     };
     window.ipbSha256 = sha256;
-    var chainTx = ["Ana paga 2 a Rui", "Rui paga 1 a Eva", "Eva paga 1 a Leo", "Leo paga 2 a Ana"];
+    var chainTx = ["Tomás paga 2 a Teresa", "Teresa paga 1 a Matilde", "Matilde paga 1 a Carlos", "Carlos paga 2 a Tomás"];
     var chainShort = function (txt, prev) { return sha256(prev + "|" + txt).slice(0, 8); };
     var chainPrev = ["00000000"], chainHash = [];
     var chainEls = [];

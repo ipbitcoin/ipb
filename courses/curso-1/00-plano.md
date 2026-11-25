@@ -1,6 +1,6 @@
 # Curso 1 · A Génese: plano
 
-Reescrito em novembro de 2026 a partir da estrutura temática (escola austríaca e Bitcoin). 28 lições, cerca de 4 h 43 min.
+Reescrito em novembro de 2026 a partir da estrutura temática (escola austríaca e Bitcoin). 29 lições, cerca de 4 h 53 min.
 
 Método de cada módulo: como funciona hoje → o que defendem os bancos centrais e os planeadores → o problema à luz da escola austríaca → como o Bitcoin responde → limites e objeções → verificação.
 
@@ -40,7 +40,8 @@ Regras: linguagem neutra (sem «tu»), «a Bitcoin» (rede) e «o Bitcoin» (ati
 - 5.4 O que dá valor ao Bitcoin (10 min)
 - 5.5 O que sustenta o valor do Bitcoin? (8 min)
 - 5.6 O Bitcoin é dinheiro? (11 min)
-- 5.7 Riscos e críticas (13 min)
+- 5.7 A carteira de Bitcoin (8 min)
+- 5.8 Riscos e críticas (13 min)
 
 ## Módulo 6 · Primeiros passos
 - 6.1 Onde se compra (10 min)
