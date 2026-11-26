@@ -1154,7 +1154,7 @@
   if (q24) {
     var st24 = "1";
     var msg24 = {
-      "1": "Com o Bitcoin usado como dinheiro, a energia protege o valor de uma moeda de oferta fixa. O gasto vale a pena.",
+      "1": "Com o bitcoin usado como dinheiro, a energia protege o valor de uma moeda de oferta fixa. O gasto vale a pena.",
       "0": "Se as pessoas continuarem a preferir o dólar e o euro, a energia protege o que ninguém usa. O gasto não se justifica."
     };
     var run24 = function () {
