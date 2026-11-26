@@ -13,7 +13,7 @@ Regras: linguagem neutra, «mineradores», «energia desperdiçada», «a Bitcoi
 - 1.3 Mineração e prova de trabalho (13 min)
 - 1.4 Finalidade, reorganizações e ataque de 51% (10 min)
 - 1.5 Quem decide as regras: forks e governação (11 min)
-- 1.6 O Bitcoin sob stress (10 min)
+- 1.6 A Bitcoin sob stress (10 min)
 
 ## Módulo 2 · Energia
 - 2.1 Escala e necessidade da energia (10 min)

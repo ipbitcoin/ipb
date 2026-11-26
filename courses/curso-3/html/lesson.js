@@ -640,32 +640,53 @@
     var powDiff = document.getElementById("pow-diff");
     var powOut = document.getElementById("pow-out");
     powOut.textContent = "Carregar em «Minerar» para começar.";
+    var powRunning = false;
+    var powStop = false;
     powRun.addEventListener("click", function () {
+      if (powRunning) { powStop = true; return; }
       var data = powData.value;
       var target = "0".repeat(parseInt(powDiff.value, 10) || 1);
-      var nonce = 0;
+      // Cada tentativa começa num nonce aleatório, como cada minerador na rede real,
+      // para que o resultado varie e se veja o papel da sorte.
+      var first = Math.floor(Math.random() * 1e9);
+      var nonce = first;
       var started = performance.now();
-      powRun.disabled = true;
+      powRunning = true;
+      powStop = false;
+      powRun.textContent = "Parar";
+      powDiff.disabled = true;
+      powData.disabled = true;
+      var finish = function () {
+        powRunning = false;
+        powRun.textContent = "Minerar";
+        powDiff.disabled = false;
+        powData.disabled = false;
+      };
       var step = function () {
+        if (powStop) {
+          powOut.textContent = "Parado após " + pt(nonce - first, 0) + " tentativas, sem encontrar um bloco.";
+          finish();
+          return;
+        }
         var batch = [];
         for (var i = 0; i < 300; i++) batch.push(sha256Hex(data + ":" + (nonce + i)));
         Promise.all(batch).then(function (hashes) {
           for (var j = 0; j < hashes.length; j++) {
             if (hashes[j].indexOf(target) === 0) {
-              var tries = nonce + j + 1;
+              var tries = nonce + j + 1 - first;
               var secs = (performance.now() - started) / 1000;
-              powOut.textContent = "Bloco encontrado!\nNonce: " + (nonce + j) + "\nHash: " + hashes[j] +
+              powOut.textContent = "Bloco encontrado!\nNonce: " + pt(nonce + j, 0) + "\nHash: " + hashes[j] +
                 "\nTentativas: " + pt(tries, 0) + " em " + pt(secs, 1) + " s";
-              powRun.disabled = false;
+              finish();
               return;
             }
           }
           nonce += batch.length;
-          powOut.textContent = "A minerar… " + pt(nonce, 0) + " tentativas";
+          powOut.textContent = "A minerar… " + pt(nonce - first, 0) + " tentativas";
           window.setTimeout(step, 0);
         }).catch(function () {
           powOut.textContent = "O browser não suporta esta demonstração.";
-          powRun.disabled = false;
+          finish();
         });
       };
       step();
@@ -1079,7 +1100,15 @@
       else big = "cerca de 1 em " + cfPt(1 / p);
       document.getElementById("f14b-big").textContent = big;
       document.getElementById("f14b-s1").textContent = "é a hipótese de um atacante, com " + pq + "% do poder";
-      var msg = n === 0 ? "Ainda pode ser desfeita, se o bloco ficar órfão" : (q > 0.5 ? "Com a maioria do poder, desfaz sempre" : (p >= 0.2 ? "Ainda há uma hipótese real de a desfazer" : (n < 6 ? "Cada bloco por cima dificulta a reversão" : (p < 0.01 ? "Costuma dar-se como definitiva" : "Ainda há uma hipótese real de a desfazer"))));
+      // A mensagem segue a probabilidade, e não o número de blocos.
+      var msg = n === 0 ? "Ainda pode ser desfeita, se o bloco ficar órfão"
+        : q > 0.5 ? "Com a maioria do poder, desfaz sempre"
+        : p >= 0.5 ? "É mais provável que seja desfeita"
+        : p >= 0.2 ? "A hipótese de a desfazer é elevada"
+        : p >= 0.05 ? "A hipótese de a desfazer é considerável"
+        : p >= 0.01 ? "Hipótese pequena, mas ainda a ter em conta"
+        : p >= 0.001 ? "A hipótese de a desfazer é muito pequena"
+        : "Costuma dar-se como definitiva";
       document.getElementById("f14b-msg").textContent = msg;
       document.getElementById("f14b-out").textContent = n;
       document.getElementById("f14b-qout").textContent = pq + "%";

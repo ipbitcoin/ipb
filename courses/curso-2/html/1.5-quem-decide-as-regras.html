@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Quem decide as regras: forks e governação | Curso 2 | Instituto Português de Bitcoin</title>
-  <meta name="description" content="Lição 1.5 do Curso 2: No fim desta lição, será possível distinguir hard fork de soft fork, contar o que aconteceu na guerra do tamanho do bloco, explicar porque se diz que">
+  <meta name="description" content="Lição 1.5 do Curso 2: No fim desta lição, será possível distinguir hard fork de soft fork, contar o que aconteceu na guerra do tamanho do bloco e explicar porque se diz que a Bitcoin é «imutável».">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
@@ -25,10 +25,10 @@
 
     <p class="eyebrow">Módulo 1 · Como funciona a rede · Lição 1.5</p>
     <h1>Quem decide as regras: forks e governação</h1>
-    <p class="lead">No fim desta lição, será possível distinguir hard fork de soft fork, contar o que aconteceu na guerra do tamanho do bloco, explicar porque se diz que o Bitcoin é «imutável» e rever o módulo.</p>
+    <p class="lead">No fim desta lição, será possível distinguir hard fork de soft fork, contar o que aconteceu na guerra do tamanho do bloco e explicar porque se diz que a Bitcoin é «imutável».</p>
     <p class="meta"><span>11 min de leitura</span><span>3 perguntas</span></p>
     <h2>Dois tipos de mudança</h2>
-    <p>Um <strong>hard fork</strong> é uma alteração incompatível com as regras dos nós existentes e cria uma cadeia paralela. Um <strong>soft fork</strong> só restringe as regras, e por isso é compatível, já que os nós antigos continuam a aceitar os blocos novos.</p>
+    <p>Mudar as regras da Bitcoin chama-se fazer um <em>fork</em>, ou bifurcação, e há dois tipos. Num <strong>soft fork</strong>, as regras novas são mais restritivas do que as antigas, por isso os blocos novos também cumprem as regras antigas e os nós que não se atualizaram continuam a aceitá-los. Num <strong>hard fork</strong>, as regras novas deixam de ser compatíveis com as antigas, e os nós que não se atualizaram rejeitam os blocos novos e ficam numa cadeia à parte.</p>
     <figure class="fig">
       <div class="fig-tabs" role="group" aria-label="Escolher o tipo de fork" hidden>
         <button type="button" data-fig-show="f15-s1" aria-pressed="true">Soft fork</button>
@@ -41,32 +41,28 @@
       </svg>
       <figcaption>As regras novas dentro das antigas, no soft fork, e fora delas, no hard fork, e o que acontece à cadeia em cada caso. Os botões mostram os dois casos.</figcaption>
     </figure>
-    <p>Quando houve hard forks, quem tinha bitcoin recebeu também moedas da nova cadeia. Isto acontece porque as duas cadeias partilham o mesmo histórico até ao momento da divisão. Quem controlava as chaves de uma quantia antes do fork passa a controlar a mesma quantia nas duas cadeias. Foi o que aconteceu em 2017 com a Bitcoin Cash, quando cada bitcoin passou a ter uma moeda correspondente na nova cadeia. Muitos venderam-nas, e elas perderam valor em relação ao Bitcoin com o passar dos anos, como a maioria das cadeias que nasceram assim. <!-- [VERIFICAR] Confirmar a data da divisão da Bitcoin Cash (1 de agosto de 2017) e a evolução do seu preço em relação ao Bitcoin, com fonte e data de consulta. --></p>
     <h2>A guerra do tamanho do bloco (<em>blocksize war</em>)</h2>
-    <p>Entre 2015 e 2017, houve um conflito sobre o tamanho dos blocos. A proposta SegWit2x, que duplicava o limite do bloco de 1 MB para 2 MB, teve o apoio de mais de 80% do poder de mineração, do maior fabricante de equipamento, de antigos programadores e de grandes custodiantes e <em>exchanges</em>. Mesmo assim, falhou. Os operadores de nós recusaram-na.</p>
-    <div class="callout tip">
-      <span class="tag">SegWit2x</span>
-      <p>A SegWit2x era uma proposta de 2017 que juntava duas mudanças. A primeira, o SegWit, é uma atualização técnica que permite, entre outras coisas, que cada bloco comporte mais transações. A segunda duplicava o limite do tamanho do bloco, de 1 MB para 2 MB. O SegWit foi ativado em 2017, por soft fork. A duplicação exigia um hard fork e foi cancelada em novembro desse ano. <!-- [VERIFICAR] Confirmar as datas: ativação do SegWit (agosto de 2017) e cancelamento da parte de 2 MB (novembro de 2017). --></p>
-    </div>
-    <p>A razão é que blocos maiores exigem mais largura de banda e mais armazenamento para correr um nó. Com o tempo, isso afasta o utilizador comum, que deixa de conseguir verificar a rede por si e passa a ter de confiar em grandes fornecedores que o façam por ele. Para quem defendia os blocos pequenos, a descentralização só existe enquanto qualquer pessoa puder correr um nó com hardware modesto. Foi uma crise constitucional que a rede Bitcoin superou. <!-- [VERIFICAR] Percentagens e atores de T7:15; confirmar com fonte histórica (2015 a 2017). --></p>
+    <p>Entre 2015 e 2017, a comunidade Bitcoin discutiu se o limite de tamanho de cada bloco, na altura de 1 MB, devia aumentar. Quem queria blocos maiores dizia que assim cabiam mais transações e as taxas desciam. Quem queria manter o limite respondia que blocos maiores exigem mais largura de banda e mais armazenamento para correr um nó, e que com o tempo o utilizador comum deixaria de o conseguir fazer e passaria a depender de grandes fornecedores para verificar a rede. Para quem queria manter o limite, a descentralização só existe enquanto qualquer pessoa puder correr um nó com hardware modesto.</p>
+    <p>Em 2017, a proposta SegWit2x tentou resolver o conflito juntando duas mudanças. A primeira, o SegWit, é uma atualização técnica que permite, entre outras coisas, que cada bloco comporte mais transações, e foi ativada em agosto desse ano por soft fork. A segunda duplicava o limite do bloco para 2 MB e exigia um hard fork. A proposta teve o apoio de mais de 80% do poder de mineração, do maior fabricante de equipamento, de antigos programadores e de grandes custodiantes e corretoras (<em>exchanges</em>). Mesmo assim, a parte do hard fork falhou, porque os operadores de nós a recusaram, e foi cancelada em novembro. <!-- [VERIFICAR] Confirmar com fonte histórica (2015 a 2017) o apoio à SegWit2x (mais de 80% do poder de mineração, o maior fabricante, antigos programadores, custodiantes e corretoras), a ativação do SegWit (agosto de 2017), o cancelamento da parte de 2 MB (novembro de 2017) e a recusa pelos operadores de nós. --></p>
+    <p>Parte de quem queria blocos maiores deixou de esperar por um acordo e criou a sua própria cadeia, através de um hard fork. Nasceu assim a Bitcoin Cash, em agosto de 2017. Quem tinha bitcoin antes da divisão ficou com a mesma quantia nas duas cadeias, porque ambas partilham o histórico até ao momento da divisão, e passou a ter uma moeda nova por cada bitcoin. Muitos venderam-nas, e a Bitcoin Cash perdeu valor em relação ao bitcoin com o passar dos anos, como a maioria das cadeias que nasceram assim. <!-- [VERIFICAR] Confirmar a data da divisão da Bitcoin Cash (1 de agosto de 2017) e a evolução do seu preço em relação ao bitcoin, com fonte e data de consulta. --></p>
     <ol class="timeline">
-      <li><span class="when">Entre 2015 e 2017</span><strong>Debate sobre o tamanho do bloco</strong><p>Parte da indústria defende blocos maiores, para caberem mais transações em cada bloco.</p></li>
-      <li><span class="when">2017</span><strong>A proposta falha</strong><p>Os nós e os programadores recusam-na, e os mineradores não conseguem impor a mudança.</p></li>
-      <li><span class="when">Depois</span><strong>As cadeias de blocos maiores</strong><p>Nascem de hard forks e perdem valor de mercado e poder de computação.</p></li>
+      <li><span class="when">2015 a 2017</span><strong>Debate sobre o tamanho do bloco</strong><p>Parte da indústria quer blocos maiores, para caberem mais transações em cada bloco.</p></li>
+      <li><span class="when">Agosto de 2017</span><strong>Nasce a Bitcoin Cash</strong><p>Quem queria blocos maiores faz um hard fork e cria uma cadeia própria.</p></li>
+      <li><span class="when">Novembro de 2017</span><strong>A SegWit2x é cancelada</strong><p>Os nós recusam o hard fork, e os mineradores não conseguem impor a mudança.</p></li>
     </ol>
     <h2>Uma separação de poderes</h2>
-    <p>O Bitcoin tem uma espécie de separação de poderes, em que cada papel limita os outros. Os programadores propõem alterações ao software, mas ninguém é obrigado a instalá-las. Os utilizadores e os nós decidem que software correm e, por isso, que regras aplicam. Os mineradores ordenam as transações, mas só recebem a recompensa se os nós aceitarem os seus blocos. Nenhum dos três consegue impor sozinho uma mudança, e qualquer um pode recusá-la.</p>
-    <p>Por isso uma alteração só passa se os utilizadores a aceitarem de forma esmagadora, e de preferência por soft fork. Como os nós antigos continuam a funcionar, ninguém é forçado a mudar e a rede não se divide. Quem quer mudar as regras tem de convencer utilizadores e nós, e não só mineradores ou empresas.</p>
+    <p>Na Bitcoin há uma espécie de separação de poderes, em que cada papel limita os outros. Os programadores propõem alterações ao software, mas ninguém é obrigado a instalá-las. Os utilizadores e os nós escolhem o software que correm e, por isso, as regras que aplicam. Os mineradores ordenam as transações, mas só recebem a recompensa se os nós aceitarem os seus blocos. Nenhum dos três consegue impor sozinho uma mudança, e qualquer um pode recusá-la.</p>
+    <p>Por isso uma alteração só passa se quase todos a aceitarem. O caminho mais seguro é o soft fork, porque os nós antigos continuam a funcionar, ninguém é obrigado a atualizar e a rede não se divide. Quem quer mudar as regras tem de convencer utilizadores e nós, e não apenas mineradores ou empresas.</p>
     <h2>A «imutabilidade»</h2>
-    <p>Diz-se que o Bitcoin é «imutável», e isto não quer dizer que o código não se possa alterar. Qualquer pessoa pode copiá-lo e mudá-lo no seu computador. Quer dizer que ninguém consegue mudar as regras da rede sem que quase todos os utilizadores e operadores de nós aceitem a mudança. As regras essenciais, como o limite de 21 milhões de bitcoins, são as mesmas desde 2009.</p>
-    <p>Não há ninguém a quem pedir uma mudança. O criador era anónimo e desapareceu há mais de uma década, e nenhuma pessoa nem empresa comanda a rede. As tentativas de mudar parâmetros essenciais, como o aumento do tamanho do bloco entre 2015 e 2017, falharam porque os operadores de nós as recusaram. As alterações que passaram, como o SegWit e o Taproot, foram soft forks, que os nós antigos continuaram a aceitar. <!-- [VERIFICAR] Confirmar com fonte o desaparecimento de Satoshi Nakamoto (última mensagem conhecida em 2011) e as datas do SegWit (2017) e do Taproot (2021) como soft forks. --></p>
+    <p>Diz-se que a Bitcoin é «imutável», mas isto não quer dizer que o código não se possa alterar. Qualquer pessoa o pode copiar e modificar no seu próprio computador. O que ninguém consegue é impor uma mudança nas regras da rede sem que quase todos os utilizadores e operadores de nós a aceitem. As regras essenciais, como o limite de 21 milhões de bitcoins, não mudaram desde 2009.</p>
+    <p>Também não há ninguém a quem pedir uma mudança. O criador era anónimo e deixou de dar notícias em 2011, e nenhuma pessoa nem empresa comanda a rede. As tentativas de mudar parâmetros essenciais, como a duplicação do limite do bloco em 2017, falharam porque os operadores de nós as recusaram. As alterações que passaram, como o SegWit e o Taproot, foram soft forks, que os nós antigos continuaram a aceitar. <!-- [VERIFICAR] Confirmar com fonte o desaparecimento de Satoshi Nakamoto (última mensagem conhecida em 2011) e as datas do SegWit (2017) e do Taproot (2021) como soft forks. --></p>
     <div class="positions">
-      <div class="pos"><span class="k">No Bitcoin</span><p>Os parâmetros de consenso estão praticamente fixos, e a mudança exige consenso esmagador.</p></div>
-      <div class="pos"><span class="k">Em muitas outras criptomoedas</span><p>Os parâmetros mudam com frequência, em hard forks decididos por um grupo restrito, como numa empresa.</p><p>Quem controla as atualizações pode mudar até a oferta de moeda, e já houve projetos que dividiram a cadeia por erros de atualização. <!-- [VERIFICAR] Dar exemplos de projetos com divisão de cadeia por erro de atualização, com fonte. --></p></div>
+      <div class="pos"><span class="k">Na Bitcoin</span><p>Os parâmetros de consenso estão praticamente fixos, e mudá-los exige um consenso esmagador.</p></div>
+      <div class="pos"><span class="k">Em várias outras criptomoedas</span><p>Os parâmetros mudam com frequência, em hard forks decididos por um grupo restrito, como numa empresa.</p><p>Quem controla as atualizações pode alterar até a oferta de moeda, e já houve projetos cuja cadeia se dividiu por erros de atualização. <!-- [VERIFICAR] Dar exemplos de projetos com divisão de cadeia por erro de atualização, com fonte. --></p></div>
     </div>
     <div class="callout key">
       <span class="tag">Ideia-chave</span>
-      Quem decide as regras do Bitcoin são os utilizadores e os nós, e não os mineradores nem as empresas. Em 2017, nem uma coligação com a maioria do poder de mineração conseguiu mudá-las.
+      Quem decide as regras da Bitcoin são os utilizadores e os nós, e não os mineradores nem as empresas. Em 2017, nem uma coligação com a maioria do poder de mineração conseguiu mudá-las.
     </div>
     <h2>Verificação</h2>
 
@@ -74,10 +70,10 @@
       <legend>Qual é a diferença entre hard fork e soft fork?</legend>
       <label class="opt"><input type="radio" name="q1"><span>O soft fork é mais rápido</span></label>
       <label class="opt"><input type="radio" name="q1"><span>O hard fork é incompatível com os nós antigos, o soft fork não</span></label>
-      <label class="opt"><input type="radio" name="q1"><span>Só o hard fork cria bitcoins</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>Só o soft fork divide a cadeia</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>O soft fork restringe as regras e continua aceite pelos nós antigos. O hard fork cria uma cadeia paralela.</p>
+      <p class="explanation" hidden>O soft fork restringe as regras e continua aceite pelos nós antigos. O hard fork é incompatível com elas e divide a cadeia.</p>
     </fieldset>
 
     <fieldset class="quiz" data-answer="0">
@@ -87,11 +83,11 @@
       <label class="opt"><input type="radio" name="q2"><span>Foi imposta pelo maior fabricante</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>Mesmo com a maioria do poder de mineração, a proposta não passou, porque os nós aplicam as regras.</p>
+      <p class="explanation" hidden>Mesmo com a maioria do poder de mineração, a parte do hard fork não passou, porque os nós aplicam as regras.</p>
     </fieldset>
 
     <fieldset class="quiz" data-answer="2">
-      <legend>O que significa dizer que o Bitcoin é «imutável»?</legend>
+      <legend>O que significa dizer que a Bitcoin é «imutável»?</legend>
       <label class="opt"><input type="radio" name="q3"><span>Que nunca se atualiza</span></label>
       <label class="opt"><input type="radio" name="q3"><span>Que não tem nós</span></label>
       <label class="opt"><input type="radio" name="q3"><span>Que resiste à mudança</span></label>
@@ -107,7 +103,7 @@
 
     <nav class="pager" aria-label="Navegação entre lições">
       <a href="1.4-finalidade-e-ataque-de-51.html" rel="prev"><small>← Anterior</small><span>1.4 Finalidade, reorganizações e ataque de 51%</span></a>
-      <a class="next" href="1.6-o-bitcoin-sob-stress.html" rel="next"><small>Seguinte →</small><span>1.6 O Bitcoin sob stress</span></a>
+      <a class="next" href="1.6-o-bitcoin-sob-stress.html" rel="next"><small>Seguinte →</small><span>1.6 A Bitcoin sob stress</span></a>
     </nav>
   </article>
 </main>

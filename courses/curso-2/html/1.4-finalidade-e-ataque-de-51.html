@@ -28,7 +28,8 @@
     <p class="lead">No fim desta lição, será possível explicar que cadeia a rede escolhe quando há duas versões, quando uma transação se pode considerar definitiva, o que um ataque de 51% pode e não pode fazer e o que aconteceu à rede quando a China proibiu a mineração.</p>
     <p class="meta"><span>10 min de leitura</span><span>3 perguntas</span></p>
     <h2>A rede escolhe a cadeia com mais trabalho</h2>
-    <p>Quando dois mineradores encontram um bloco quase ao mesmo tempo, a rede fica por instantes com duas versões do passado recente. A regra que resolve o impasse é simples. Os nós adotam a <strong>cadeia com mais trabalho acumulado que cumpre as regras</strong>. A outra fica órfã.</p>
+    <p>Quando dois mineradores encontram um bloco quase ao mesmo tempo, a rede fica por instantes com duas versões do passado recente. Cada nó recebe primeiro um dos dois blocos e passa a trabalhar sobre ele. A regra que resolve o impasse é simples. Os nós adotam a <strong>cadeia com mais trabalho acumulado que cumpre as regras</strong>. Quando é encontrado o bloco seguinte, ele assenta num dos dois ramos, e esse ramo passa a ter mais trabalho do que o outro.</p>
+    <p>Os nós que seguiam o ramo mais curto mudam para o mais comprido, e o bloco que ficou para trás torna-se <strong>órfão</strong>. O minerador que o encontrou perde a recompensa, e as transações que só estavam nesse bloco voltam à <em>mempool</em>, a lista das transações à espera, para entrarem num bloco seguinte. O requisito de cumprir as regras pesa tanto como o trabalho, porque uma cadeia com mais trabalho mas com um bloco inválido é ignorada. Isto acontece de vez em quando e é normal, e é uma das razões para esperar por vários blocos antes de dar uma transação por definitiva.</p>
     <ol class="flow">
       <li><strong>Dois blocos quase juntos</strong>Dois mineradores encontram um bloco quase ao mesmo tempo, e a rede divide-se.</li>
       <li><strong>Cada nó escolhe</strong>Cada nó trabalha sobre o bloco que viu primeiro.</li>
@@ -70,13 +71,15 @@
         <text id="f14b-s1" x="26" y="164" font-size="15" fill="#525252">é a hipótese de um atacante, com 10% do poder</text>
         <text x="26" y="184" font-size="15" fill="#525252">de computação, conseguir desfazer a transação</text>
         <rect x="8" y="198" width="404" height="50" rx="12" fill="#f5f5f5" stroke="#a3a3a3" stroke-width="2"/>
-        <text id="f14b-msg" x="210" y="229" text-anchor="middle" font-size="16" font-weight="600" fill="#0a0a0a">Cada bloco por cima dificulta a reversão</text>
+        <text id="f14b-msg" x="210" y="229" text-anchor="middle" font-size="16" font-weight="600" fill="#0a0a0a">Hipótese pequena, mas ainda a ter em conta</text>
       </svg>
       <figcaption>Cada bloco acrescentado por cima torna a transação mais difícil de desfazer. Os cursores mudam o número de blocos por cima e o poder de computação do atacante. Com mais de metade do poder, o atacante desfaz sempre a transação. Fonte: Satoshi Nakamoto, «Bitcoin: A Peer-to-Peer Electronic Cash System», 2008, secção 11.</figcaption>
     </figure>
     <!-- [VERIFICAR] Confirmar com a secção 11 do documento de Satoshi os valores da probabilidade de um atacante com 10% do poder (1; 0,2046; 0,0510; 0,0132; 0,0035; 0,0009; 0,0002 para 0 a 6 blocos). -->
     <h2>O ataque de 51%</h2>
-    <p>O ataque à rede Bitcoin mais temido é o dos <strong>51%</strong>. Quem controlasse a maioria do poder de computação da rede poderia reescrever blocos recentes e gastar a mesma moeda duas vezes. Não poderia roubar bitcoin de outra pessoa, criar moedas além do limite nem alterar as regras que os nós aplicam, porque os nós rejeitariam esses blocos.</p>
+    <p>O ataque à rede Bitcoin mais temido é o dos <strong>51%</strong>. Quem controlasse a maioria do poder de computação da rede poderia reescrever blocos recentes e gastar a mesma moeda duas vezes.</p>
+    <p>Os nós seguem sempre a cadeia com mais trabalho. Quem controla a maioria do poder de computação consegue produzir mais trabalho do que todos os outros juntos, e por isso consegue impor a sua versão dos blocos. Pode então substituir blocos recentes por outros em que um pagamento seu já não consta, e gastar essas moedas outra vez. Só o consegue com blocos recentes, porque quanto mais antigos, mais trabalho é preciso refazer.</p>
+    <p>Não poderia roubar bitcoin de outra pessoa, criar moedas além do limite nem alterar as regras que os nós aplicam, porque os nós rejeitariam esses blocos.</p>
     <div class="table-wrap">
       <table>
         <thead><tr><th>Um atacante com mais de 50% pode…</th><th>Não pode…</th></tr></thead>
@@ -87,9 +90,10 @@
         </tbody>
       </table>
     </div>
-    <p>No Bitcoin, o ataque é possível em teoria e muito caro na prática. Exigiria uma quantidade enorme de máquinas e de eletricidade, e faria cair a confiança na rede, e com ela o valor do que o atacante ganhasse. É nas redes copiadas, protegidas por pouca energia, que o ataque se torna realista.</p>
+    <p>Na Bitcoin, o ataque é possível em teoria e caríssimo na prática. Exigiria uma quantidade enorme de máquinas e de eletricidade, e faria cair a confiança na rede, e com ela o valor do que o atacante ganhasse. É nas redes copiadas, protegidas por pouca energia, que o ataque se torna realista.</p>
     <h2>Um teste real, a China em 2021</h2>
-    <p>Em 2021, a China proibiu a mineração e deixou cerca de metade da rede offline. <!-- [VERIFICAR] Confirmar a queda de 50% a 55% do poder de computação e a recuperação em poucos meses com uma fonte, e a data de consulta. -->A rede continuou a funcionar sem interrupções, a dificuldade ajustou-se e o poder de computação recuperou em poucos meses, com os mineradores a instalarem-se noutros países. Foi um teste real à capacidade de a rede aguentar a saída súbita de metade dos mineradores.</p>
+    <p>Em 2021, a China proibiu a mineração e deixou cerca de metade da rede offline. <!-- [VERIFICAR] Confirmar a queda de 50% a 55% do poder de computação e a recuperação em poucos meses com uma fonte, e a data de consulta. -->A rede continuou a funcionar sem interrupções, a dificuldade ajustou-se e o poder de computação recuperou em poucos meses, com os mineradores a instalarem-se noutros países. Foi um teste real porque o poder de computação caiu de uma só vez para cerca de metade, por decisão de um governo e não por uma falha técnica, e a rede teve de continuar a funcionar só com a outra metade.</p>
+    <p>Durante algumas semanas, com metade das máquinas desligadas, os blocos apareceram mais devagar do que um a cada dez minutos. A rede não parou e as transações continuaram a ser confirmadas, só que mais devagar. No ajuste seguinte, o maior em baixa até então, a dificuldade desceu e o ritmo dos blocos voltou ao normal. Entretanto, os mineradores chineses transferiram as máquinas para outros países, como os Estados Unidos e o Cazaquistão, e o poder de computação voltou a subir. A mineração ficou menos concentrada num só país, e ficou provado que a decisão de um único governo não consegue travar a rede. <!-- [VERIFICAR] Confirmar com fonte o abrandamento dos blocos em 2021, o ajuste de dificuldade de 3 de julho de 2021 (o maior em baixa até então), a mudança dos mineradores para os Estados Unidos e o Cazaquistão e a redução da concentração geográfica (Cambridge Centre for Alternative Finance, mapa da mineração). --></p>
     <div class="callout key">
       <span class="tag">Ideia-chave</span>
       Quando há duas versões, a rede escolhe a cadeia com mais trabalho que cumpre as regras. Cada bloco por cima torna uma transação mais difícil de desfazer, e esse trabalho custa energia real.
@@ -131,6 +135,7 @@
     <ul class="sources">
       <li>Satoshi Nakamoto, «Bitcoin: A Peer-to-Peer Electronic Cash System», 2008, secção 11.</li>
       <li>Imprensa especializada (Decrypt, Bitcoin Magazine, Cointelegraph), 2021, sobre a queda e a recuperação do poder de computação após a proibição chinesa.</li>
+      <li>Cambridge Centre for Alternative Finance, mapa da mineração de Bitcoin: <a href="https://ccaf.io/cbnsi/cbeci/mining_map" target="_blank" rel="noopener">ccaf.io</a>.</li>
     </ul>
 
     <div class="done-row">
