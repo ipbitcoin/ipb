@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>A rede de liquidação | Curso 2 | Instituto Português de Bitcoin</title>
-  <meta name="description" content="Lição 3.1 do Curso 2: No fim desta lição, será possível explicar porque a camada base do Bitcoin é uma rede de liquidação, porque a sua baixa capacidade é uma virtude e c">
+  <meta name="description" content="Lição 3.1 do Curso 2: No fim desta lição, será possível explicar porque a camada base da Bitcoin é uma rede de liquidação, porque a sua baixa capacidade é uma virtude e como as taxas de transação levam os pagamentos pequenos para as camadas superiores.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
@@ -25,41 +25,41 @@
 
     <p class="eyebrow">Módulo 3 · Camadas e escala · Lição 3.1</p>
     <h1>A rede de liquidação</h1>
-    <p class="lead">No fim desta lição, será possível explicar porque a camada base do Bitcoin é uma rede de liquidação, porque a sua baixa capacidade é uma virtude e como a taxa de transação distribui o uso pelas camadas.</p>
+    <p class="lead">No fim desta lição, será possível explicar porque a camada base da Bitcoin é uma rede de liquidação, porque a sua baixa capacidade é uma virtude e como as taxas de transação levam os pagamentos pequenos para as camadas superiores.</p>
     <p class="meta"><span>12 min de leitura</span><span>3 perguntas</span></p>
     <h2>Poucas transações por segundo</h2>
-    <p>A camada base do Bitcoin (a <em>camada 1</em>) processa, em média, entre 3 e 7 transações por segundo. <!-- [VERIFICAR] Confirmar a capacidade média da camada base (3 a 7 transações por segundo) e a data de consulta. -->Isto não é uma falha. A camada 1 não foi desenhada para pagar cafés, mas para <strong>liquidar</strong>. Liquidar é concluir de forma definitiva a transferência de valor entre duas partes, sem que nenhuma tenha de confiar na outra.</p>
-    <p>Esta capacidade vem do espaço limitado de cada bloco, ou seja, alguns milhares de transações, de dez em dez minutos, e não mais.</p>
-    <p>É por isso que o Bitcoin se compara a sistemas como o Fedwire, a rede que a Reserva Federal dos Estados Unidos usa para os bancos liquidarem entre si grandes pagamentos. Por cima de redes assim, funcionam outras, como a Visa ou o PayPal, que tratam muitos pagamentos pequenos com promessas de pagamento (<em>IOU</em>, de «eu devo») entre bancos, acertadas mais tarde na camada de liquidação.</p>
+    <p>A camada base da Bitcoin (a <em>camada 1</em>) processa, em média, entre 3 e 7 transações por segundo. <!-- [VERIFICAR] Confirmar a capacidade média da camada base (3 a 7 transações por segundo) e a data de consulta. -->Isto acontece porque cada bloco só tem espaço para alguns milhares de transações, e a rede acrescenta um novo bloco de dez em dez minutos.</p>
+    <p>Não é uma falha. A camada 1 não foi desenhada para pagar cafés, mas para <strong>liquidar</strong>. Liquidar é concluir de forma definitiva a transferência de valor entre duas partes, sem que nenhuma tenha de confiar na outra.</p>
+    <p>Por isso a Bitcoin compara-se a sistemas como o Fedwire, a rede que a Reserva Federal dos Estados Unidos usa para os bancos liquidarem entre si grandes pagamentos. Por cima de redes assim funcionam outras, como a Visa ou o PayPal. Estas tratam muitos pagamentos pequenos com promessas de pagamento entre bancos (<em>IOU</em>, de «eu devo»), que só mais tarde se acertam na camada de liquidação.</p>
     <ol class="flow">
-      <li><strong>Camada 1</strong>Liquidação final entre quem não confia uns nos outros. Pouca velocidade, máxima segurança.</li>
-      <li><strong>Camada 2</strong>Pagamentos rápidos entre canais (como a Lightning), com a segurança herdada da camada 1.</li>
-      <li><strong>Camadas 3 e 4</strong>Serviços de empresas, mais cómodos, em que se confia no operador.</li>
+      <li><strong>Camada 1</strong>Liquida pagamentos de forma definitiva, mesmo entre quem não confia uns nos outros. É lenta, mas é a mais segura.</li>
+      <li><strong>Camada 2</strong>É onde funciona a rede Lightning, que permite pagamentos rápidos e baratos e se apoia na segurança da camada 1.</li>
+      <li><strong>Camadas 3 e 4</strong>São serviços de empresas, mais cómodos de usar, mas em que é preciso confiar na empresa que os gere.</li>
     </ol>
     <h2>A camada 1 como base</h2>
-    <p>A camada 1 existe para liquidar somas grandes com segurança e para durar décadas. Deve ser como uma rocha de base, pouco rápida, mas segura e quase imutável. Por isso não aumenta a velocidade à custa da segurança.</p>
-    <p>Aumentar a velocidade obrigaria a blocos maiores, e blocos maiores exigem mais largura de banda e mais armazenamento para correr um nó. Com isso, menos pessoas conseguiriam verificar a rede por si, e mais teriam de confiar em grandes fornecedores. É um preço que a camada 1 não quer pagar.</p>
-    <h2>A taxa de transação distribui o uso</h2>
-    <p>O espaço de cada bloco é limitado, e quem quer ver a sua transação incluída depressa paga uma <strong>taxa de transação</strong> mais alta do que os outros. Quando há muita procura, as taxas sobem. Os pagamentos pequenos deixam de compensar na camada 1 e passam para a camada 2, e a base fica para as liquidações grandes.</p>
-    <p>Isto tem uma consequência para o custo da segurança. Proteger um bloco custa o mesmo, quer ele leve muitas transações pequenas, quer leve poucas e grandes. A energia gasta pelos mineradores é a mesma. O que muda é o valor que essa energia protege.</p>
-    <p>Um exemplo, com números inventados. Imagine-se um bloco com mil pagamentos de 10 euros, ou seja, 10 mil euros no total. O custo de o proteger pesa muito sobre cada pagamento. Agora imagine-se um bloco com dez liquidações de 10 milhões de euros, ou seja, 100 milhões no total. O custo de proteção é o mesmo, mas pesa muito menos em relação ao valor liquidado. Quanto mais valor cada bloco liquida, menor é o custo da segurança em relação ao valor transferido.</p>
-    <h2>O Bitcoin não é a Visa</h2>
-    <p>Compara-se muitas vezes a capacidade do Bitcoin com a da Visa. A Visa trata cerca de 4.000 transações por segundo e a camada base do Bitcoin cerca de 5, mais ou menos mil vezes menos. <!-- [VERIFICAR] Números de 2019 (Visa, cerca de 124 mil milhões de transações por ano; Bitcoin, cerca de 145 milhões por ano); atualizar com dados recentes e fonte. -->Mas a comparação é errada, porque as duas fazem trabalhos diferentes. A Visa não liquida nada em tempo real. Autoriza o pagamento e os bancos acertam as contas mais tarde, entre si. O que se compara com o Bitcoin é o sistema onde esse acerto final acontece, como a rede dos bancos centrais ou o ouro. Nesse terreno, o Bitcoin liquida de forma definitiva, a qualquer hora e sem pedir autorização, e a Visa podia funcionar por cima dele como hoje funciona por cima dos bancos.</p>
-    <p>A capacidade limitada tem ainda outra função. O espaço de cada bloco é escasso, e quem quer entrar depressa paga uma taxa. Se o espaço fosse ilimitado, as taxas seriam nulas, e quando o subsídio de bloco acabar ninguém pagaria a segurança da rede. Como a oferta de bitcoin é fixa, a segurança não pode ser paga com moeda nova, e tem de ser paga pelas taxas.</p>
-    <h2>Defeito ou virtude?</h2>
+    <p>A camada 1 serve para liquidar somas grandes com segurança e para durar décadas. É a base, e por isso deve ser pouco rápida, mas segura e quase imutável. Não aumenta a velocidade à custa da segurança.</p>
+    <p>Para aumentar a velocidade seriam precisos blocos maiores, e blocos maiores exigem mais largura de banda e mais armazenamento a quem corre um nó. Menos pessoas conseguiriam verificar a rede por conta própria, e mais teriam de depender de grandes empresas. A camada 1 não troca essa independência por velocidade.</p>
+    <h2>Como as taxas separam os pagamentos pequenos dos grandes</h2>
+    <p>O espaço de cada bloco é limitado, e quem quer ver a sua transação incluída depressa paga uma <strong>taxa de transação</strong> mais alta do que os outros. Quando há muita procura por espaço nos blocos, as taxas sobem. Os pagamentos pequenos deixam de compensar na camada 1 e passam para a camada 2, e a base fica para as liquidações grandes.</p>
+    <p>Isto afeta o custo da segurança. Minerar um bloco custa o mesmo, leve ele muitas transações pequenas ou poucas e grandes, porque os mineradores gastam a mesma energia. O que muda é o valor que esse gasto protege.</p>
+    <p>Por exemplo, num bloco com mil pagamentos de 10 euros, o total é de 10 mil euros, e o custo de o minerar pesa muito sobre cada pagamento. Num bloco com dez liquidações de 10 milhões de euros, o total é de 100 milhões. O custo de o minerar é o mesmo, mas pesa muito menos em relação ao valor liquidado. Quanto mais valor cada bloco liquida, menor é o custo da segurança em relação ao valor transferido.</p>
+    <h2>A Bitcoin não é a Visa</h2>
+    <p>Compara-se muitas vezes a capacidade de processamento de transações da Bitcoin com a da Visa ou a Mastercard. Estas redes conseguem tratar milhares de transações por segundo, e a camada base da Bitcoin, poucas. <!-- [VERIFICAR] A comparação vem de números de 2019 (Visa, cerca de 124 mil milhões de transações por ano; Bitcoin, cerca de 145 milhões por ano). O texto já não os cita; confirmar com dados recentes e fonte que a diferença continua a ser desta ordem. -->Mas a comparação é errada, porque fazem trabalhos diferentes. A Visa e a Mastercard não liquidam nada em tempo real. Autorizam o pagamento, e os bancos acertam as contas entre si mais tarde. A Bitcoin compara-se com o sistema onde esse acerto final se faz, como a rede dos bancos centrais ou o ouro. Como rede de liquidação, a Bitcoin liquida de forma definitiva, a qualquer hora e sem precisar da autorização de ninguém. A Visa e a Mastercard poderiam funcionar por cima dela, como hoje funcionam por cima da rede bancária mundial.</p>
+    <p>O espaço limitado dos blocos serve ainda para pagar a segurança da rede. Como há pouco espaço, as transações disputam um lugar no bloco, e quem quer ser incluído depressa paga uma taxa aos mineradores. Se houvesse espaço para todas, ninguém teria motivo para pagar. Hoje os mineradores recebem o subsídio de bloco, que são os bitcoins novos, e as taxas. O subsídio diminui até acabar, e como a quantidade de bitcoins é fixa, não pode ser compensado com mais moeda nova. A segurança da rede passará então a depender só das taxas, que só existem enquanto o espaço for escasso.</p>
+    <h2>A baixa capacidade é um defeito ou uma virtude?</h2>
     <div class="positions">
-      <div class="pos"><span class="k">Defeito</span><p>Uma rede que só faz poucas transações por segundo não pode ser dinheiro de uso corrente.</p><p>Sem as camadas por cima, o Bitcoin não serve de meio de troca para a maioria das pessoas.</p></div>
-      <div class="pos"><span class="k">Virtude</span><p>A segurança da liquidação importa mais do que a velocidade, e outros sistemas liquidam com menos garantia de que a transferência é definitiva.</p><p>O Bitcoin só precisa de ser reserva de valor e rede de liquidação, e deixa os pagamentos pequenos para as camadas superiores. Não tenta ser a rede de pagamentos mais barata.</p></div>
+      <div class="pos"><span class="k">Defeito</span><p>Uma rede que só consegue processar poucas transações por segundo não serve como dinheiro do dia a dia.</p><p>Sem as camadas por cima, a maioria das pessoas não conseguiria usar a Bitcoin para pagar.</p></div>
+      <div class="pos"><span class="k">Virtude</span><p>Numa liquidação, a segurança importa mais do que a velocidade. Outros sistemas oferecem menos garantia de que a transferência é definitiva.</p><p>À Bitcoin basta liquidar e guardar valor. Os pagamentos pequenos ficam para as camadas superiores, e ser a rede de pagamentos mais barata não é função dela.</p></div>
     </div>
-    <p>A internet funciona de maneira parecida. Tem um protocolo de base simples e estável, sobre o qual correm aplicações que mudam depressa. No Bitcoin, a inovação nos pagamentos faz-se nas camadas superiores, onde um erro custa menos, enquanto a camada 1 muda pouco.</p>
+    <p>A internet funciona de forma parecida, com um protocolo de base simples e estável, sobre o qual correm aplicações que mudam depressa. Na Bitcoin, a inovação nos pagamentos faz-se nas camadas superiores, onde um erro custa menos, e a camada 1 muda pouco.</p>
     <div class="callout key">
       <span class="tag">Ideia-chave</span>
-      A camada 1 não é lenta por defeito, mas foi desenhada para liquidar com segurança, e as taxas empurram os pagamentos pequenos para as camadas superiores.
+      A camada 1 não é lenta por defeito. Foi desenhada para liquidar com segurança, e as taxas empurram os pagamentos pequenos para as camadas superiores.
     </div>
     <h2>Verificação</h2>
 
     <fieldset class="quiz" data-answer="1">
-      <legend>Para que foi desenhada a camada base do Bitcoin?</legend>
+      <legend>Para que foi desenhada a camada base da Bitcoin?</legend>
       <label class="opt"><input type="radio" name="q1"><span>Para pagar cafés</span></label>
       <label class="opt"><input type="radio" name="q1"><span>Para liquidar valor com segurança</span></label>
       <label class="opt"><input type="radio" name="q1"><span>Para guardar ficheiros</span></label>
@@ -75,7 +75,7 @@
       <label class="opt"><input type="radio" name="q2"><span>Empurra os pagamentos pequenos para a camada 2</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>O espaço de cada bloco é limitado, por isso as taxas sobem quando há muita procura. Os pagamentos pequenos passam para a camada 2, e a base fica para liquidações grandes.</p>
+      <p class="explanation" hidden>O espaço de cada bloco é limitado, por isso as taxas sobem quando há muita procura por esse espaço. Os pagamentos pequenos passam para a camada 2, e a base fica para liquidações grandes.</p>
     </fieldset>
 
     <fieldset class="quiz" data-answer="0">
