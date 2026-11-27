@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Prova de trabalho ou prova de participação | Curso 2 | Instituto Português de Bitcoin</title>
-  <meta name="description" content="Lição 4.2 do Curso 2: No fim desta lição, será possível explicar como funcionam a prova de trabalho e a prova de participação e porque a prova de trabalho é a escolha certa para">
+  <meta name="description" content="Lição 4.2 do Curso 2: No fim desta lição, será possível explicar como funcionam a prova de trabalho e a prova de participação e porque a prova de trabalho é a escolha certa para dinheiro descentralizado.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap">
@@ -25,45 +25,46 @@
 
     <p class="eyebrow">Módulo 4 · Bitcoin e outras criptomoedas · Lição 4.2</p>
     <h1>Prova de trabalho ou prova de participação</h1>
-    <p class="lead">No fim desta lição, será possível explicar como funcionam a prova de trabalho e a prova de participação e porque a prova de trabalho é a escolha certa para um dinheiro descentralizado.</p>
+    <p class="lead">No fim desta lição, será possível explicar como funcionam a prova de trabalho e a prova de participação e porque a prova de trabalho é a escolha certa para dinheiro descentralizado.</p>
     <p class="meta"><span>14 min de leitura</span><span>3 perguntas</span></p>
     <h2>O problema que as duas procuram resolver</h2>
-    <p>Numa rede em que ninguém manda, é preciso decidir quem escreve o próximo bloco, e fazê-lo de modo que ninguém consiga escrever blocos falsos de graça. A prova de trabalho e a prova de participação são duas respostas a este problema. Ambas exigem que quem quer escrever o registo ponha algo em jogo, para que mentir saia caro. A diferença está no que se põe em jogo.</p>
+    <p>Numa blockchain, os computadores da rede mantêm todos o mesmo registo e ninguém manda. É preciso decidir quem escreve o próximo bloco no registo, e fazê-lo de modo que ninguém consiga escrever blocos falsos de graça. A prova de trabalho e a prova de participação são duas respostas a este problema. Ambas exigem que quem quer escrever no registo ponha algo em jogo, para que mentir saia caro. A diferença está no que se põe em jogo.</p>
     <h2>Como funciona cada uma</h2>
-    <p>Na <strong>prova de trabalho</strong> (<em>Proof of Work</em>, ou PoW), quem valida (o minerador) gasta energia a procurar, por tentativa e erro, um número (a <em>nonce</em>) que faça o hash do bloco começar por um certo número de zeros, e escreve o bloco quem o encontrar primeiro. Perde o gasto de energia se o bloco for rejeitado.</p>
-    <p>Na <strong>prova de participação</strong> (<em>proof of stake</em>), quem valida (o validador) bloqueia moedas como garantia. O protocolo escolhe, por sorteio, quem escreve o próximo bloco, e quem tem mais moedas bloqueadas tem mais probabilidade de ser escolhido. Se fizer batota, perde as moedas bloqueadas. Esta penalização chama-se <em>slashing</em>.</p>
+    <p>Na <strong>prova de trabalho</strong> (<em>Proof of Work</em>, ou PoW), quem escreve os blocos, o minerador, gasta energia a procurar, por tentativa e erro, um número (a <em>nonce</em>) que faça o hash do bloco começar por um certo número de zeros. Escreve o bloco quem o encontrar primeiro, e quem escreve um bloco rejeitado perde a energia que gastou.</p>
+    <p>Na <strong>prova de participação</strong> (<em>proof of stake</em>), quem valida, o validador, bloqueia moedas como garantia. O protocolo sorteia quem escreve o próximo bloco, e quem tem mais moedas bloqueadas tem mais probabilidade de ser escolhido. Quem violar as regras, por exemplo assinando blocos contraditórios, perde as moedas que bloqueou, no todo ou em parte. Esta penalização chama-se <em>slashing</em>.</p>
     <div class="table-wrap">
       <table>
         <thead><tr><th></th><th>Prova de trabalho</th><th>Prova de participação</th></tr></thead>
         <tbody>
-          <tr><td>O que se põe em jogo</td><td>Energia gasta, no mundo físico</td><td>Moedas bloqueadas, dentro do sistema</td></tr>
-          <tr><td>Quem escreve o próximo bloco</td><td>Quem encontrar primeiro a <em>nonce</em> que serve</td><td>Quem for sorteado, com mais probabilidade para quem tem mais moedas</td></tr>
-          <tr><td>Quem decide</td><td>Os nós, pela cadeia com mais trabalho</td><td>Os detentores das moedas, na proporção do que têm</td></tr>
-          <tr><td>Castigo</td><td>Ter gasto eletricidade</td><td>Perder as moedas (<em>slashing</em>)</td></tr>
-          <tr><td>Consumo de energia</td><td>Muito</td><td>Muito menos</td></tr>
-          <tr><td>Crítica principal</td><td>Gasta muita energia</td><td>A riqueza inicial tende a perpetuar o poder</td></tr>
+          <tr><td>O que se arrisca</td><td>Energia, gasta no mundo físico</td><td>Moedas, bloqueadas dentro do sistema</td></tr>
+          <tr><td>Quem escreve o próximo bloco</td><td>Quem encontra primeiro a <em>nonce</em> certa</td><td>Quem for sorteado, com mais hipóteses para quem tem mais moedas</td></tr>
+          <tr><td>Quem decide</td><td>Os nós, que seguem a cadeia com mais trabalho</td><td>Quem tem moedas, na proporção do que tem</td></tr>
+          <tr><td>O que acontece a quem falha</td><td>Perde a energia que gastou</td><td>Perde moedas (<em>slashing</em>)</td></tr>
+          <tr><td>Gasto de energia</td><td>Muito</td><td>Muito menos</td></tr>
+          <tr><td>Crítica principal</td><td>Gasta muita energia</td><td>Quem já tem mais moedas tende a manter o poder</td></tr>
         </tbody>
       </table>
     </div>
-    <h2>O que a prova de participação promete, e a resposta</h2>
-    <p>Quem defende a prova de participação aponta três vantagens.</p>
+    <h2>Os argumentos a favor da prova de participação</h2>
+    <p>Quem prefere a prova de participação aponta três vantagens, e quem prefere a prova de trabalho responde a cada uma.</p>
     <ul>
-      <li><strong>Gasta menos energia.</strong> Em setembro de 2022, a rede Ethereum passou de prova de trabalho para prova de participação, e a Fundação Ethereum diz que o consumo desceu mais de 99%. <!-- [VERIFICAR] Confirmar a data (setembro de 2022) e a redução do consumo (mais de 99%) com a Fundação Ethereum e uma fonte independente. -->A resposta é que a energia é o custo que protege a rede, e não um defeito a eliminar. Sem esse custo, a segurança passa a depender das regras e de quem as aplica.</li>
-      <li><strong>É mais rápida.</strong> Os blocos podem ser confirmados mais depressa. A resposta é que, num dinheiro, o que interessa é a segurança da liquidação, e não a rapidez. Os pagamentos rápidos fazem-se noutras camadas, por cima.</li>
-      <li><strong>Castiga o atacante.</strong> Um atacante pode perder as moedas que bloqueou. A resposta é que, na prova de trabalho, o castigo é automático. O atacante gasta energia e máquinas, e as máquinas de mineração de Bitcoin só servem para minerar Bitcoin. Se atacasse a rede, o preço do bitcoin cairia, e com ele o valor dos bitcoins que minera e das próprias máquinas.</li>
+      <li><strong>Gasta menos energia.</strong> Em setembro de 2022, a Ethereum passou de prova de trabalho para prova de participação, e a Fundação Ethereum diz que o consumo desceu mais de 99%. <!-- [VERIFICAR] Confirmar a data (setembro de 2022) e a redução do consumo (mais de 99%) com a Fundação Ethereum e uma fonte independente. -->Para quem prefere a prova de trabalho, essa energia é o custo que protege a rede e não um desperdício a eliminar. Sem ele, a segurança passa a depender de regras num sistema digital. As regras são só informação, e quem controla o sistema pode sempre reescrevê-las sem pagar nada por isso. Um custo físico, como a energia gasta, não se altera depois de feito nem se simula. Quem quiser reescrever blocos no registo tem de voltar a gastar toda a energia que foi necessária para os escrever, e é isso que prende o registo ao mundo real e o torna caro de falsificar. <!-- [VERIFICAR] Ideia próxima da de Jason Lowery («Softwar», tese do MIT, 2023): distingue o poder «abstrato» (leis, lógica, regras) do poder físico (energia) e defende que a prova de trabalho traz um custo físico para o mundo digital. Confirmado só através do registo do MIT e de resumos e críticas (por exemplo, a de Jameson Lopp, que discute o peso da prova de trabalho face aos nós); confirmar no texto da tese antes de a citar. --></li>
+      <li><strong>É mais rápida.</strong> Os blocos podem ser confirmados mais depressa, mas num dinheiro importa mais a segurança da liquidação do que a rapidez. Os pagamentos rápidos fazem-se noutras camadas, por cima.</li>
+      <li><strong>Castiga o atacante.</strong> Quem atacar a rede pode perder as moedas que bloqueou. Na prova de trabalho também há castigo, e não depende de ninguém. O atacante tem de gastar energia e de comprar máquinas que só servem para minerar bitcoin. Se o ataque resultasse, o preço do bitcoin cairia, e com ele o valor das máquinas e dos bitcoins que o atacante tivesse minerado.</li>
     </ul>
     <h2>Porque a prova de participação não serve para dinheiro</h2>
+    <p>Como base de um dinheiro descentralizado, a prova de participação tem cinco problemas.</p>
     <ul>
-      <li><strong>Custo real.</strong> Na prova de trabalho, o castigo de quem valida o ramo errado é ter gasto eletricidade, um recurso real que não se recupera. Na prova de participação, é preciso punir quem vota em cadeias erradas ou em várias ao mesmo tempo. A resposta é o <em>slashing</em>, mas isso exige regras e alguém que as aplique.</li>
-      <li><strong>Complexidade.</strong> A prova de participação é muito mais complicada de desenhar e de proteger, e tem ataques que não existem na prova de trabalho. Um é votar em duas cadeias ao mesmo tempo, o que, sem castigo, não custa nada. Outro são os ataques de longo alcance. Quem foi validador há muito tempo e já retirou as suas moedas deixou de ter algo a perder, mas ainda tem as chaves com que assinava blocos. Pode usá-las para assinar uma história alternativa a partir desse ponto do passado, tão válida na aparência como a verdadeira. <!-- [VERIFICAR] Confirmar com a documentação técnica das redes de prova de participação (por exemplo, a do Ethereum) que estes ataques são específicos deste mecanismo. --></li>
-      <li><strong>Lógica circular.</strong> Falta um custo que ninguém consiga forjar. O estado do registo determina quem decide o registo, e criar histórias alternativas custa quase nada. Se a rede pára, só validadores de confiança ou pontos de controlo centralizados conseguem restaurar a história.</li>
-      <li><strong>Centralização.</strong> Quem tem mais moedas tem mais votos e mais recompensas sem gastar recursos, por isso a sua influência cresce depressa. Na prova de trabalho, os mineradores novos conseguem competir com os antigos, com máquinas melhores ou energia mais barata, e ninguém acumula uma vantagem que se perpetue.</li>
-      <li><strong>Quem fica com o poder.</strong> A prova de trabalho dá o poder aos nós. A prova de participação dá-o aos detentores de moedas.</li>
+      <li><strong>Custo real.</strong> Na prova de trabalho, quem minera um bloco que a rede rejeita perde a eletricidade que gastou. Ninguém tem de lhe aplicar o castigo, porque a perda acontece por si. Na prova de participação, é preciso punir quem vota numa cadeia errada ou em várias cadeias ao mesmo tempo. Essa punição é o <em>slashing</em>, que exige regras e alguém que as aplique.</li>
+      <li><strong>Complexidade.</strong> A prova de participação é bastante mais complicada de desenhar e de proteger, e tem ataques que não existem na prova de trabalho. Há, por exemplo, o voto em várias cadeias ao mesmo tempo. Na prova de trabalho, quem quer minerar em duas cadeias tem de dividir a energia entre elas, mas na prova de participação votar nas duas não custa nada, e por isso, sem castigo, ninguém tem motivo para escolher só uma. E há os ataques de longo alcance, em que um antigo validador, que já retirou as moedas, usa as chaves que ainda tem para criar uma história alternativa.</li>
+      <li><strong>Lógica circular.</strong> A segurança não assenta em nenhum custo que ninguém possa forjar. É o próprio registo que decide quem tem poder sobre o registo, e por isso quem teve esse poder no passado pode assinar, quase sem custo, uma versão falsa do histórico. Se a rede pára, só validadores de confiança ou pontos de controlo centralizados conseguem restaurar a história.</li>
+      <li><strong>Centralização.</strong> Quem tem mais moedas tem mais votos e mais recompensas sem gastar recursos, e por isso a sua influência cresce depressa. Na prova de trabalho, os mineradores novos conseguem competir com os antigos, com máquinas melhores ou energia mais barata, e ninguém acumula uma vantagem que se perpetue.</li>
+      <li><strong>Quem fica com o poder.</strong> Na prova de trabalho, o poder fica nos nós, que verificam tudo. Na prova de participação, fica com os detentores de moedas.</li>
     </ul>
-    <h3>O exemplo do nó que chega agora à rede</h3>
-    <p>Imagine-se uma pessoa que liga um nó novo, sem saber nada da rede. Na prova de trabalho, pede os blocos a qualquer nó e escolhe a cadeia com mais trabalho acumulado. Não precisa de confiar em ninguém, porque o trabalho não se pode forjar.</p>
-    <p>Na prova de participação, pode haver vários históricos que parecem válidos. Quem já vendeu as suas moedas pode ter guardado as chaves antigas, e assinar uma história alternativa sem custo nenhum. O nó novo não tem como saber qual é a verdadeira e precisa de um ponto de controlo, dado por uma fonte de confiança. É o problema dos ataques de longo alcance.</p>
-    <p>A solução que a prova de participação propõe chama-se «subjetividade fraca». O nó novo aceita um ponto de controlo que lhe é dado por uma fonte de confiança. Funciona na prática, mas choca com a ideia do Bitcoin de sincronizar do zero sem confiar em ninguém.</p>
+    <h3>O exemplo do nó que acaba de chegar à rede</h3>
+    <p>Uma pessoa liga um nó novo, que ainda não sabe nada da rede. Na prova de trabalho, pede os blocos a qualquer nó e fica com a cadeia que tiver mais trabalho acumulado. Não precisa de confiar em ninguém, porque o trabalho não se pode forjar.</p>
+    <p>Na prova de participação, o nó novo pode receber vários históricos que parecem válidos. Quem foi validador há muito tempo e já retirou as moedas deixou de ter algo a perder, mas ainda guarda as chaves com que assinava blocos. Pode usá-las para assinar uma história alternativa a partir de um ponto do passado, tão válida na aparência como a verdadeira. É o ataque de longo alcance. O nó novo não tem como saber qual é a verdadeira, e por isso precisa de um ponto de controlo dado por uma fonte de confiança. <!-- [VERIFICAR] Confirmar com a documentação técnica das redes de prova de participação (por exemplo, a do Ethereum) que estes ataques são específicos deste mecanismo. --></p>
+    <p>A solução que a prova de participação propõe chama-se «subjetividade fraca». Como o nó novo não consegue saber sozinho qual é o histórico verdadeiro, tem de começar por um ponto de controlo recente, isto é, o estado da rede num momento recente, que lhe é dado por uma fonte em que confia, como outros utilizadores ou uma empresa. A partir daí só aceita os históricos que passam por esse ponto, e as histórias alternativas assinadas por antigos validadores ficam de fora. Funciona na prática, mas obriga a confiar em quem dá o ponto de controlo. Na Bitcoin não é assim, porque um nó novo parte do primeiro bloco e chega sozinho à verdade, escolhendo a cadeia com mais trabalho.</p>
     <figure class="fig">
       <div class="fig-tabs" role="group" aria-label="Escolher o mecanismo" hidden>
         <button type="button" data-fig-show="f42-s1" aria-pressed="true">Prova de trabalho</button>
@@ -77,49 +78,48 @@
       <figcaption>Um nó novo recebe duas histórias do passado da rede e tem de escolher uma. Os botões trocam o mecanismo.</figcaption>
     </figure>
     <h3>O exemplo da concentração das moedas</h3>
-    <p>Na prática, muita gente deposita as moedas numa exchange ou num serviço que valida por ela. Esse serviço passa a ter os votos de todos os que lhe confiaram as moedas, e uns poucos serviços podem acabar a decidir uma parte grande da rede. Na prova de trabalho, ter muita eletricidade barata ajuda, mas é preciso continuar a gastá-la, e há sempre quem possa entrar com máquinas novas.</p>
-    <p>A prova de participação assemelha-se a um banco central. Quem já tem a moeda decide as regras e recebe a moeda nova, e os restantes ficam com a sua parte diluída. Na prova de trabalho, ninguém decide as regras por ter mais moedas, e a moeda nova só se obtém gastando energia.</p>
+    <p>Na prova de participação, quem quer ganhar recompensas com as suas moedas tem de as bloquear e de validar, o que exige conhecimentos técnicos e, em algumas redes, um mínimo de moedas. Por isso muita gente entrega as moedas a uma exchange ou a outro serviço que valida em seu nome. Como o peso de cada voto depende das moedas, esse serviço passa a controlar os votos de todos os que lhe confiaram as moedas, e uns poucos serviços podem acabar por decidir uma parte grande da rede. <!-- [VERIFICAR] Confirmar a quota de validação dos maiores serviços de staking no Ethereum, com fonte e data de consulta. -->Na prova de trabalho, ter eletricidade barata dá vantagem, mas é preciso continuar a gastá-la todos os dias, e qualquer pessoa pode competir comprando máquinas novas.</p>
+    <p>A prova de participação lembra o modelo de um banco central. O poder e a moeda nova vão para quem já tem moedas, porque as recompensas de validar são proporcionais às moedas bloqueadas. Quem já tem muitas recebe mais, e quem não participa vê a sua parte do total diminuir, ou seja, diluída. Na prova de trabalho, ter mais moedas não dá poder sobre as regras nem moeda nova. A moeda nova só se obtém gastando energia a minerar.</p>
     <h2>Onde a prova de participação pode ser aceitável</h2>
-    <p>A prova de participação pode servir a outras criptomoedas, se estas se comportarem como empresas. Num projeto assim, há um grupo identificável que o constrói e decide as regras, e o token funciona como uma ação. Quem tem mais moedas tem mais peso nas decisões. A prova de participação encaixa nesse modelo, porque dá o poder a quem tem as moedas.</p>
-    <p>Nesse caso, a centralização é aceitável, tal como numa empresa. Os grandes detentores têm muito a perder se a moeda cair, e por isso um atacante teria de os convencer ou de comprar a maioria das moedas, o que sai caro. <!-- [VERIFICAR] Confirmar a posição intermédia e o argumento do custo de ataque com a fonte do curso (estrutura temática, tema 15.4). -->E há serviços voluntários e concorrentes. Quem usa o projeto pode escolher entre vários validadores, carteiras e plataformas, e mudar de um para outro.</p>
-    <p>Mas um dinheiro global, descentralizado e resistente à censura tem de ser neutro. Nenhum grupo pode decidir as regras, nem impedir ninguém de o usar. A prova de participação entrega o poder a quem tem moedas, e isso torna-a inadequada para esse papel. Resumindo, a prova de participação funciona como capital próprio, como as ações, e a prova de trabalho como dinheiro.</p>
+    <p>A prova de participação pode servir a outras criptomoedas, desde que estas se comportem como empresas. Num projeto assim, um grupo identificável cria o projeto e decide as regras, e o token funciona como uma ação, em que quem tem mais moedas tem mais peso nas decisões. A prova de participação adapta-se bem a este modelo, porque dá o poder a quem tem as moedas.</p>
+    <p>Nesse caso, a centralização é aceitável, tal como numa empresa. Os grandes detentores têm muito a perder se a moeda cair, e por isso um atacante teria de os convencer ou de comprar a maioria das moedas, o que sai caro. <!-- [VERIFICAR] Confirmar a posição intermédia e o argumento do custo de ataque com a fonte do curso (estrutura temática, tema 15.4). -->Além disso, os serviços à volta do projeto são voluntários e concorrentes, de modo que quem usa o projeto pode escolher entre vários validadores, carteiras e plataformas, e mudar de um para outro.</p>
+    <p>Mas um dinheiro global, descentralizado e resistente à censura tem de ser neutro, e por isso nenhum grupo pode ter o poder de decidir as regras ou de impedir alguém de o usar. A prova de participação entrega o poder a quem tem moedas, o que a torna inadequada para um dinheiro que tem de ser neutro. Em resumo, a prova de participação serve para capital próprio, como as ações, e a prova de trabalho para dinheiro descentralizado.</p>
     <h2>O que mostra a prática</h2>
-    <p>A Solana, uma plataforma de contratos inteligentes que usa prova de participação, parou durante cerca de 17 horas em setembro de 2021. Os validadores tiveram de coordenar um reinício da rede, combinando entre si, fora do protocolo, a partir de que ponto do registo a retomar. <!-- [VERIFICAR] Dados de T7:18-20 (2021 a 2023); confirmar o caso da Solana (17 horas, setembro de 2021) e o estado atual da rede com fontes. --></p>
-    <p>Isto mostra um limite das redes de prova de participação. Quando param, o protocolo sozinho não basta para as pôr a andar, e é preciso um acordo entre pessoas, em que quem o conduz tem poder. Na prova de trabalho, se alguns mineradores falham, os restantes continuam a produzir blocos, e a cadeia com mais trabalho decide, sem acordo prévio.</p>
-    <p>Há também o hardware. Os validadores de redes como a Solana precisam de máquinas potentes, de centro de dados, o que reduz o número de pessoas que as podem correr. O Bitcoin foi desenhado para que um nó funcione em hardware modesto. <!-- [VERIFICAR] Confirmar os requisitos de hardware dos validadores da Solana e a comparação com um nó do Bitcoin. --></p>
-    <p>Por fim, a concentração. Nas redes de prova de participação, muita gente confia as suas moedas a uns poucos serviços e exchanges, em vez de validar por conta própria. Esses serviços passam a ter nas mãos uma parte grande dos votos. <!-- [VERIFICAR] Confirmar a quota de validação dos maiores serviços de staking no Ethereum, com fonte e data de consulta. --></p>
+    <p>A Solana, uma plataforma de contratos inteligentes que usa prova de participação, esteve parada cerca de 17 horas em setembro de 2021. Para a pôr a funcionar outra vez, os validadores tiveram de se coordenar fora do protocolo e combinar entre si a partir de que ponto do registo retomar. <!-- [VERIFICAR] Confirmar o caso da Solana (17 horas, setembro de 2021) e o estado atual da rede com fontes. --></p>
+    <p>O caso mostra um limite das redes de prova de participação. Quando param, o protocolo sozinho não chega para as pôr a andar, e é preciso um acordo entre pessoas, em que quem o coordena acaba por ter poder sobre a decisão. Na prova de trabalho, se alguns mineradores falham, os restantes continuam a produzir blocos, e a cadeia com mais trabalho decide sem acordo prévio.</p>
+    <p>O hardware é outro ponto. Os validadores de redes como a Solana precisam de máquinas potentes, de centro de dados, e isso reduz o número de pessoas que podem validar. A Bitcoin foi desenhada para que um nó funcione em hardware modesto, o que deixa mais gente verificar a rede por si. <!-- [VERIFICAR] Confirmar os requisitos de hardware dos validadores da Solana e a comparação com um nó da Bitcoin. --></p>
     <h2>Porque a prova de trabalho é a escolha certa</h2>
-    <p>O Bitcoin usa prova de trabalho por três razões que se reforçam:</p>
+    <p>A Bitcoin usa prova de trabalho por três razões que se reforçam.</p>
     <ul>
-      <li><strong>O custo é externo e verificável.</strong> A energia gasta existe no mundo físico, e qualquer pessoa pode verificá-la. Quem quer reescrever a história tem de refazer esse trabalho, e não o pode comprar com moedas que o próprio sistema criou.</li>
-      <li><strong>O poder fica nos nós.</strong> Os nós verificam tudo por si e rejeitam o que quebra as regras, e os mineradores só são pagos se obedecerem. Ninguém ganha poder por acumular moedas.</li>
-      <li><strong>Não é preciso confiar em ninguém.</strong> Um nó novo reconstrói o estado a partir do zero, pela cadeia com mais trabalho, sem pontos de controlo dados por terceiros.</li>
+      <li><strong>O custo é externo e verificável.</strong> A energia gasta existe no mundo físico, e qualquer pessoa pode confirmar que o trabalho foi feito, porque a prova está no próprio bloco. Quem quiser reescrever a história tem de refazer todo esse trabalho, e não o pode comprar com moedas que o próprio sistema criou.</li>
+      <li><strong>O poder fica nos nós.</strong> Cada nó verifica sozinho todos os blocos e rejeita os que quebram as regras, por exemplo os que criam mais bitcoins do que o permitido. Um minerador cujo bloco é rejeitado perde o trabalho e a recompensa, por isso só lhe compensa seguir as regras que os nós aplicam. E ter muitas moedas não dá a ninguém poder para as mudar.</li>
+      <li><strong>Não é preciso confiar em ninguém.</strong> Um nó novo reconstrói o estado da rede a partir do primeiro bloco e escolhe a cadeia com mais trabalho, sem precisar de pontos de controlo dados por terceiros.</li>
     </ul>
-    <p>Por estar ligado ao mundo físico, o Bitcoin é um dinheiro duro. Custa muito a produzir, e por isso é difícil de manipular.</p>
+    <p>Por estar ligado ao mundo físico, o bitcoin é dinheiro duro. Cada bitcoin novo custou energia a produzir, e quem quiser criar mais ou alterar o registo tem de pagar essa energia outra vez. Por isso é difícil de criar e de manipular.</p>
     <div class="callout key">
       <span class="tag">Ideia-chave</span>
-      Na prova de trabalho, o custo é externo e verificável, e o poder está nos nós. Na prova de participação, a segurança vem de dentro do sistema. O Bitcoin usa prova de trabalho porque ela dá ao dinheiro um custo real, e o poder aos nós, e não aos detentores de moedas.
+      Na prova de trabalho, o custo é externo e verificável, e o poder está nos nós. Na prova de participação, a segurança vem de dentro do sistema. A Bitcoin usa prova de trabalho porque ela dá ao dinheiro um custo real e dá o poder aos nós, e não aos detentores de moedas ou tokens.
     </div>
     <h2>Verificação</h2>
 
     <fieldset class="quiz" data-answer="1">
-      <legend>Qual é o castigo de quem valida o ramo errado na prova de trabalho?</legend>
-      <label class="opt"><input type="radio" name="q1"><span>Perder as moedas bloqueadas</span></label>
-      <label class="opt"><input type="radio" name="q1"><span>Ter gasto a eletricidade</span></label>
-      <label class="opt"><input type="radio" name="q1"><span>Ser expulso da rede</span></label>
+      <legend>O que perde quem minera um bloco que a rede rejeita?</legend>
+      <label class="opt"><input type="radio" name="q1"><span>As moedas que bloqueou</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>A energia que gastou</span></label>
+      <label class="opt"><input type="radio" name="q1"><span>O direito de voltar a minerar</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>O custo é externo. A energia gasta não se recupera.</p>
+      <p class="explanation" hidden>Na prova de trabalho, o castigo é a energia gasta, que não se recupera, e ninguém tem de o aplicar. Na prova de participação, é o <em>slashing</em>, que exige regras e alguém que as aplique.</p>
     </fieldset>
 
     <fieldset class="quiz" data-answer="2">
-      <legend>O que significa «lógica circular», na crítica à prova de participação?</legend>
-      <label class="opt"><input type="radio" name="q2"><span>O preço sobe e desce em ciclos repetidos</span></label>
-      <label class="opt"><input type="radio" name="q2"><span>As máquinas de mineração são trocadas de tempos a tempos</span></label>
-      <label class="opt"><input type="radio" name="q2"><span>O próprio registo define quem tem poder para o decidir</span></label>
+      <legend>Porque precisa um nó novo de um ponto de controlo, na prova de participação?</legend>
+      <label class="opt"><input type="radio" name="q2"><span>Porque não tem moedas para votar</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Porque os blocos são grandes demais</span></label>
+      <label class="opt"><input type="radio" name="q2"><span>Porque não consegue saber sozinho qual dos históricos é o verdadeiro</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>Sem um custo que ninguém consiga forjar, é fácil fabricar histórias alternativas, e a recuperação exige pontos de controlo.</p>
+      <p class="explanation" hidden>Um antigo validador pode usar as chaves que ainda tem para assinar uma história alternativa, tão válida na aparência como a verdadeira. Por isso o nó novo precisa de um ponto de controlo dado por uma fonte de confiança.</p>
     </fieldset>
 
     <fieldset class="quiz" data-answer="0">
