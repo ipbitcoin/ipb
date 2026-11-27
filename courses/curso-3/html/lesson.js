@@ -1187,14 +1187,13 @@
       crRes.classList.toggle("bad", off.length > 0);
       if (!off.length) {
         strong.textContent = "Propriedade digital";
-        p.textContent = "Cumpre os quatro critérios, como o Bitcoin. Como ninguém o controla, ninguém ganha mais por o promover.";
+        p.textContent = "Foi o que o bitcoin conseguiu. Como ninguém o controla, ninguém ganha mais do que os outros por o promover, e por isso não há conflito de interesses.";
         return;
       }
       strong.textContent = "Não é propriedade digital";
-      var why = ["O código não é público.", "Nem toda a gente o pode usar sem pedir autorização.", "Pode ser censurado.", "Há um Estado ou uma empresa a controlá-lo."];
-      var t = off.length === 1 ? "Falha um dos quatro critérios." : "Falham " + off.length + " dos quatro critérios.";
-      off.forEach(function (k) { t += " " + why[k]; });
-      if (off.indexOf(3) !== -1) t += " Quem o controla ganha se o preço subir, e por isso tem conflito de interesses.";
+      var why = ["Ninguém consegue verificar o que o código faz, por isso é preciso confiar em quem o escreveu.", "Alguém decide quem o pode usar, e o acesso depende dessa autorização.", "Alguém pode bloquear os pagamentos, por isso nada garante que uma transação chegue ao destino.", "Quem o controla pode mudar as regras e criar mais unidades, e ganha se o preço subir. Por isso tem um conflito de interesses."];
+      var t = "";
+      off.forEach(function (k) { t += (t ? " " : "") + why[k]; });
       p.textContent = t;
     };
     crRows.forEach(function (b) {
