@@ -56,14 +56,14 @@
     <p>Como não tem ligação, é a carteira mais difícil de atacar à distância, mas dá mais trabalho a usar e pede mais prática.</p>
     <h3>Multiassinatura</h3>
     <p>Na multiassinatura, a carteira tem várias chaves, e a transação só é válida com um número mínimo delas, por exemplo duas de três. As chaves ficam em aparelhos diferentes e, muitas vezes, em sítios diferentes. Quem roubar uma só chave não consegue gastar, e quem perder uma não perde o bitcoin, desde que restem as suficientes. É indicada para valores grandes, empresas e famílias.</p>
-    <p>O preço a pagar é a complexidade. Para recuperar uma carteira multiassinatura, as frases não bastam. É preciso guardar também a descrição da carteira, que lista as chaves públicas de todas as chaves e diz quantas são precisas para assinar. Sem ela, mesmo quem tem as frases de duas das três chaves não consegue calcular de novo os endereços da carteira, porque lhe falta a chave pública da terceira e a regra de quantas assinaturas são precisas. E sem os endereços não encontra o bitcoin para o gastar. A descrição não permite gastar, por isso pode guardar-se em várias cópias. <!-- [VERIFICAR] Confirmar com fonte (por exemplo, a documentação sobre descritores de carteira) que a recuperação de uma carteira multiassinatura exige a descrição da carteira (chaves públicas de todos os cossignatários, regra m de n e tipo de script), que as frases de m chaves não bastam para a reconstruir, e que a descrição não permite gastar. --></p>
+    <p>O preço a pagar é a complexidade. Para recuperar uma carteira multiassinatura, as frases de recuperação não bastam. É preciso guardar também a descrição da carteira, que lista as chaves públicas de todas as chaves e diz quantas são precisas para assinar. Sem ela, mesmo quem tem as frases de recuperação de duas das três chaves não consegue calcular de novo os endereços da carteira, porque lhe falta a chave pública da terceira e a regra de quantas assinaturas são precisas. E sem os endereços não encontra o bitcoin para o gastar. A descrição não permite gastar, por isso pode guardar-se em várias cópias. <!-- [VERIFICAR] Confirmar com fonte (por exemplo, a documentação sobre descritores de carteira) que a recuperação de uma carteira multiassinatura exige a descrição da carteira (chaves públicas de todos os cossignatários, regra m de n e tipo de script), que as frases de recuperação de m chaves não bastam para a reconstruir, e que a descrição não permite gastar. --></p>
     <h2>Como escolher uma carteira</h2>
     <p>Há muitas marcas e aplicações, e vão mudando, por isso a lição não recomenda nenhuma em particular. Em vez disso, dá quatro critérios que servem para avaliar qualquer carteira.</p>
     <ul>
       <li><strong>Código aberto.</strong> Qualquer pessoa pode examinar o que o programa faz, por isso é mais difícil esconder lá uma falha ou uma fraude.</li>
       <li><strong>Marca com reputação.</strong> Uma marca com anos de existência e sem problemas graves conhecidos merece mais confiança do que uma recém-chegada.</li>
       <li><strong>Frase de recuperação padrão.</strong> A carteira deve usar o padrão BIP-39, que muitas outras carteiras também aceitam.</li>
-      <li><strong>Saída livre.</strong> Deve ser possível restaurar a frase noutra marca, para que o bitcoin não fique preso se a marca desaparecer.</li>
+      <li><strong>Saída livre.</strong> Deve ser possível restaurar a frase de recuperação noutra marca, para que o bitcoin não fique preso se a marca desaparecer.</li>
     </ul>
     <div class="callout tip">
       <span class="tag">Regra prática</span>
@@ -72,7 +72,7 @@
     <div class="callout warning">
       <span class="tag">Atenção</span>
       <p>Uma carteira «fácil», em que nunca se vê a frase de recuperação, é provavelmente custodial, ou seja, é a empresa que guarda as chaves. Também há aplicações falsas nas lojas de aplicações, por isso convém confirmar o nome do fabricante e o site oficial.</p>
-      <p>Uma carteira de hardware nova gera a frase quando se liga pela primeira vez. Se vier com uma frase já escrita, é uma burla, porque quem conhece a frase tem o bitcoin. Uma carteira comprada em segunda mão pode ter sido adulterada, por isso convém comprá-la nova, ao fabricante ou a um revendedor autorizado.</p>
+      <p>Uma carteira de hardware nova gera a frase de recuperação quando se liga pela primeira vez. Se vier com uma frase de recuperação já escrita, é uma burla, porque quem conhece a frase de recuperação tem o bitcoin. Uma carteira comprada em segunda mão pode ter sido adulterada, por isso convém comprá-la nova, ao fabricante ou a um revendedor autorizado.</p>
     </div>
     <div class="callout key">
       <span class="tag">Ideia-chave</span>
@@ -104,10 +104,10 @@
       <legend>Uma carteira de hardware nova já traz a frase de recuperação escrita. O que significa?</legend>
       <label class="opt"><input type="radio" name="q3"><span>É normal, para facilitar a primeira utilização</span></label>
       <label class="opt"><input type="radio" name="q3"><span>Que a carteira é de multiassinatura</span></label>
-      <label class="opt"><input type="radio" name="q3"><span>É uma burla, porque a frase deve ser gerada pela carteira quando se liga pela primeira vez</span></label>
+      <label class="opt"><input type="radio" name="q3"><span>É uma burla, porque a frase de recuperação deve ser gerada pela carteira quando se liga pela primeira vez</span></label>
       <div class="actions"><button type="button" class="btn" data-check>Verificar</button></div>
       <div class="feedback" role="status" aria-live="polite"></div>
-      <p class="explanation" hidden>Quem conhece a frase tem o bitcoin. A frase só é segura se for gerada pelo próprio titular, no aparelho.</p>
+      <p class="explanation" hidden>Quem conhece a frase de recuperação tem o bitcoin. A frase de recuperação só é segura se for gerada pelo próprio titular, no aparelho.</p>
     </fieldset>
 
 
